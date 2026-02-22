@@ -1,0 +1,478 @@
+{
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v1\\final",
+  "date": "2026-02-22T10:47:14.990229",
+  "summary": {
+    "total": 11,
+    "passed": 7,
+    "avg_score": 0.677,
+    "avg_time": 254.4
+  },
+  "results": [
+    {
+      "test_id": "T1_01",
+      "tier": 1,
+      "prompt": "Create a Blueprint that prints 'Hello World' when the game starts.",
+      "passed": true,
+      "score": 0.75,
+      "output": "## DSL FORMAT RULES\n\nYour output MUST follow this exact format:\n\n```\nBLUEPRINT: HelloWorld\nPARENT: Actor\n\nVAR Text:String = \"Hello World\"\n\nGRAPH: EventGraph\n\nNODE 0: Event \u2014 Executes:exec\nEXEC 0 -> Then:exec\n\nNODE 1: Sequence \u2014 Then_0:exec, Then_1:exec\nEXEC 0 -> Then_0\nEXEC 0 -> Then_1\n\nNODE 2: FlipFlop \u2014 A:exec, B:exec, IsA:Bool\nEXEC 0 -> A\nEXEC 1 -> B\nEXEC 0 -> IsA\n\nNODE 3: DoOnce \u2014 Execute:exec, Reset:exec\nEXEC 0 -> Completed:exec\nEXEC 1 -> Reset\n\nNODE 4: Delay \u2014 Execute:exec, Duration:Float\nEXEC 0 -> Completed:exec\nEXEC 1 -> Duration\n\nNODE 5: ForEachLoop \u2014 Execute:exec, Array:Array\nLOOP Body:exec, ArrayElement:Object, ArrayIndex:Int, Completed:exec\nEXEC 0 -> LoopBody\nEXEC 1 -> ArrayElement\nEXEC 2 -> ArrayIndex\nEXEC 3 -> Completed\n\nNODE 6: Gate \u2014 Enter:exec, Open:exec, Close:exec, Toggle:exec\nEXIT Exit:exec\nEXEC 0 -> Enter\nEXEC 1 -> Open\nEXEC 2 -> Close\nEXEC 3 -> Toggle\nEXEC 4 -> Exit\n\nNODE 7: AddFloat \u2014 A:exec, B:exec\nRETURN Value:exec\nEXEC 0 -> A\nEXEC 1 -> B\nEXEC 2 -> Return\n\nNODE 8: SubtractFloat \u2014 A:exec, B:exec\nRETURN Value:exec\nEXEC 0 -> A\nEXEC 1 -> B\nEXEC 2 -> Return\n\nNODE 9: MultiplyFloat \u2014 A:exec, B:exec\nRETURN Value:exec\nEXEC 0 -> A\nEXEC 1 -> B\nEXEC 2 -> Return\n\nNODE 10: GetGreaterThan \u2014 A:exec, B:exec\nRETURN Value:exec\nEXEC 0 -> A\nEXEC 1 -> B\nEXEC 2 -> Return\n\nNODE 11: LessThan \u2014 A:exec, B:exec\nRETURN Value:exec\nEXEC 0 -> A\nEXEC 1 -> B\nEXEC 2 -> Return\n\nNODE 12: ClampFloat \u2014 Value:exec, Min:exec, Max:exec\nRETURN Value:exec\nEXEC 0 -> Value\nEXEC 1 -> Min\nEXEC 2 -> Max\nEXEC 3 -> Return\n\nNODE 13: MakeRotator \u2014 Roll:exec, Pitch:exec, Yaw:exec\nRETURN Value:exec\nEXEC 0 -> Roll\nEXEC 1 -> Pitch\nEXEC 2 -> Yaw\nEXEC 3 -> Return\n\nNODE 14: MakeVector \u2014 X:exec, Y:exec, Z:exec\nRETURN Value:exec\nEXEC 0 -> X\nEXEC 1 -> Y\nEXEC 2 -> Z\nEXEC 3 -> Return\n\nNODE 15: PrintString \u2014 Execute:exec, InString:String\nTHEN Then:exec\nEXEC 0 -> Execute\nEXEC 1 -> InString\nEXEC 2 -> Then\n\nNODE 16: SetTimerByFunctionName \u2014 Execute:exec, FunctionName:String, Time:exec, bLooping:exec\nTHEN Then:exec\nEXEC 0 -> Execute\nEXEC 1 -> FunctionName\nEXEC 2 -> Time\nEXEC 3 -> bLooping\nEXEC 4 -> Then\n\nNODE 17: GetWorldDeltaSeconds \u2014 THEN ReturnValue:exec\nEXEC 0 -> Then\n\nNODE",
+      "generation_time": 2127.48,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 4,
+          "expected": 4
+        },
+        "nodes": {
+          "score": 10,
+          "max": 20,
+          "found": 1,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 55,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing expected node: Event_BeginPlay",
+        "Parse error: Line 0: Found 70 parse errors:\nLine 3: Unknown directive: Your output MUST fol... | 'Your output MUS"
+      ]
+    },
+    {
+      "test_id": "T1_02",
+      "tier": 1,
+      "prompt": "Create a Blueprint that destroys itself on begin play.",
+      "passed": true,
+      "score": 0.85,
+      "output": "## DSL FORMAT RULES\n\nYour output MUST follow this exact format:\n\n```\nBLUEPRINT: DestroyActor\nPARENT: Actor\n\nVAR DestroyRequested:exec = False\n\nGRAPH: EventGraph\n\nNODE 0: Event_BeginPlay [exec]\nNODE 1: Then [exec]\nEXEC 0 -> 1\n\nNODE 2: SetActorHiddenInGame [exec] NODE 3: Then [exec] EXEC 2.Execute -> 3.Then-exec EXEC 2.BNewHidden -> 3.Then-execexec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec exec",
+      "generation_time": 70.57,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 3,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Parse error: Line 0: Found 3 parse errors:\nLine 3: Unknown directive: Your output MUST fol... | 'Your output MUST"
+      ]
+    },
+    {
+      "test_id": "T1_03",
+      "tier": 1,
+      "prompt": "Make an Actor Blueprint that prints 'Game Over' at the start.",
+      "passed": true,
+      "score": 0.75,
+      "output": "## DSL FORMAT RULES\n\nYour output MUST follow this exact format:\n\n```\nBLUEPRINT: Actor\nPARENT: Actor\n\nVAR Health: Int = 100\nVAR CurrentScene: Scene = Scene:exec\n\nGRAPH: EventGraph\n\nNODE Execute: Event\nEXEC Then:exec\n\nNODE SetActorHiddenInGame: Custom\nEXEC Execute:exec, bNewHidden:Bool\nOUT Then:exec\n\nNODE AddActorLocalRotation: Custom\nEXEC Execute:exec, DeltaRotation:Rotator\nOUT Then:exec\n\nNODE GetDistanceTo: Custom\nEXEC Execute:exec, OtherActor:Actor\nOUT Then:exec, ReturnValue:Float\n\nNODE PlaySound: Audio\nEXEC Execute:exec, Sound:Object\nOUT Then:exec\n\nNODE CastToCharacter: Casting\nEXEC Execute:exec, Object:Object\nOUT CastSucceeded:exec, CastFailed:exec, AsCharacter:Object\n\nNODE SetVisibility: Component\nEXEC Execute:exec, Target:Object, NewVisibility:Bool\nOUT Then:exec\n\nNODE SetRelativeRotation: Component\nEXEC Execute:exec, Target:Object, NewRotation:Rotator\nOUT Then:exec\n\nNODE Event_BeginPlay: Events\nOUT Then:exec\n\nNODE Event_Tick: Events\nEXEC Then:exec, DeltaSeconds:Float\nOUT Then:exec\n\nNODE Event_ActorBeginOverlap: Events\nEXEC Then:exec, OtherActor:Actor\nOUT Then:exec\n\nNODE Event_ActorEndOverlap: Events\nEXEC Then:exec, OtherActor:Actor\nOUT Then:exec\n\nNODE Event_InputAction: Events\nEXEC Pressed:exec, Released:exec\nOUT Then:exec\n\nNODE Event_CustomEvent: Events\nEXEC Then:exec\nOUT Then:exec\n\nNODE Branch: FlowControl\nEXEC Execute:exec, Condition:Bool\nOUT True:exec, False:exec\n\nNODE Sequence: FlowControl\nEXEC Then_0:exec, Then_1:exec, Then_2:exec\nOUT Then_0:exec, Then_1:exec, Then_2:exec\n\nNODE FlipFlop: FlowControl\nEXEC A:exec, B:exec, IsA:Bool\nOUT A:exec, B:exec, IsA:exec\n\nNODE DoOnce: FlowControl\nEXEC Execute:exec, Reset:exec\nOUT Completed:exec\n\nNODE Delay: FlowControl\nEXEC Execute:exec, Duration:Float\nOUT Completed:exec\n\nNODE ForEachLoop: FlowControl\nEXEC Execute:exec, Array:Array\nOUT LoopBody:exec, ArrayElement:Object, ArrayIndex:Int, Completed:exec\n\nNODE Gate: FlowControl\nEXEC Enter:exec, Open:exec, Close:exec, Toggle:exec\nOUT Exit:exec\n\nNODE AddFloat: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE SubtractFloat: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE MultiplyFloat: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE GreaterThan: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE LessThan: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE ClampFloat: Math\nEXEC Value:exec, Min:exec, Max:exec\nOUT ReturnValue:exec\n\nNODE MakeRotator: Math\nEXEC Roll:exec, Pitch:exec, Yaw:exec\nOUT ReturnValue:exec\n\nNODE MakeVector: Math\nEXEC X:exec, Y:exec, Z:exec\nOUT ReturnValue:exec\n\nNODE PrintString: Utility\nEXEC Execute:exec, InString:exec\nOUT Then:exec\n\nNODE SetTimerByFunctionName: Utility\nEXEC Execute:",
+      "generation_time": 68.03,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 10,
+          "max": 20,
+          "found": 1,
+          "expected": 2
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 30,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing required keyword: 'Game Over'",
+        "Parse error: Line 0: Found 61 parse errors:\nLine 3: Unknown directive: Your output MUST fol... | 'Your output MUS"
+      ]
+    },
+    {
+      "test_id": "T2_01",
+      "tier": 2,
+      "prompt": "Create a Blueprint for an actor that rotates continuously on the yaw axis.",
+      "passed": false,
+      "score": 0.51,
+      "output": "BLUEPRINT: Actor_PivotActor\nPARENT: Actor\n\nVAR Rotation: Rotator = Rotator(0, 180, 0)\n\nGRAPH: EventGraph\n\nNODE 0: Event_BeginPlay\nEXEC Enter:exec\nOUT Then:exec\n\nNODE 1: Sequence\nEXEC Enter_0:exec, Enter_1:exec, Enter_2:exec\nOUT Then_0:exec, Then_1:exec, Then_2:exec\n\nNODE 2: FlipFlop\nEXEC Enter:exec\nOUT A:exec, B:exec, IsA:Bool\n\nNODE 3: DoOnce\nEXEC Enter:exec, Reset:exec\nOUT Completed:exec\n\nNODE 4: Delay\nEXEC Enter:exec, Duration:Float\nOUT Completed:exec\n\nNODE 5: ForEachLoop\nEXEC Enter:exec, Array:Array\nOUT LoopBody:exec, ArrayElement:Object, ArrayIndex:Int, Completed:exec\n\nNODE 6: Gate\nEXEC Enter:exec, Open:exec, Close:exec, Toggle:exec\nOUT Exit:exec\n\nNODE 7: AddFloat\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE 8: SubtractFloat\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE 9: MultiplyFloat\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE 10: GreaterThan\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE 11: LessThan\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE 12: ClampFloat\nEXEC Value:exec, Min:exec, Max:exec\nOUT ReturnValue:exec\n\nNODE 13: MakeRotator\nEXEC Roll:exec, Pitch:exec, Yaw:exec\nOUT ReturnValue:exec\n\nNODE 14: MakeVector\nEXEC X:exec, Y:exec, Z:exec\nOUT ReturnValue:exec\n\nNODE 15: PrintString\nEXEC Execute:exec, InString:String\nOUT Then:exec\n\nNODE 16: SetTimerByFunctionName\nEXEC Execute:exec, FunctionName:String, Time:exec, bLooping:exec\nOUT Then:exec\n\nNODE 17: GetWorldDeltaSeconds\nOUT ReturnValue:exec\n\nNODE 18: GetVar\nEXEC Execute:exec\nOUT Value:Object\n\nNODE 19: SetVar\nEXEC Execute:exec, Value:Object\nOUT Then:exec\n\nEXEC Chain: Event_BeginPlay -> Then\nEXEC Chain: Enter_0 -> Then_0, Enter_1 -> Then_1, Enter_2 -> Then_2\nEXEC Chain: Enter -> A, Enter -> B, Enter -> IsA\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed\nEXEC Chain: Enter -> Completed",
+      "generation_time": 67.73,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 13,
+          "max": 20,
+          "found": 2,
+          "expected": 3
+        },
+        "nodes": {
+          "score": 0,
+          "max": 20,
+          "found": 0,
+          "expected": 1
+        },
+        "connections": {
+          "score": 8,
+          "max": 15,
+          "exec_found": 51,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing required keyword: 'DATA'",
+        "Missing expected node: Event_Tick",
+        "Too few DATA connections: got 0, expected >= 1",
+        "Parse error: Line 0: Found 71 parse errors:\nLine 9: Invalid EXEC syntax | 'EXEC Enter:exec'\nLine 10: Unknown dire"
+      ]
+    },
+    {
+      "test_id": "T2_02",
+      "tier": 2,
+      "prompt": "Create a Blueprint that toggles a light on and off when the player presses E.",
+      "passed": true,
+      "score": 0.75,
+      "output": "BLUEPRINT: PlayerBlueprint\nPARENT: Actor\n\nVAR Camera:Object = Camera\nVAR Sound:Object = SoundEffect\nVAR IsPlaying:Bool = False\n\nGRAPH: EventGraph\n\nNODE Enter:exec -> Then:exec\nNODE Press:exec -> Then:exec, SetIsPlaying:exec\nNODE Release:exec -> Then:exec, ClearIsPlaying:exec\nNODE Update:exec -> Then:exec, SetCamera:Object, SetRelativeRotation:Object\nNODE Audio:exec -> Then:exec, Play:Object\nNODE Exit:exec -> Then:exec\n\nEXEC Enter -> Then\nEXEC Press -> SetIsPlaying, EXEC Release -> ClearIsPlaying, EXEC Update -> SetCamera, EXEC Audio -> Play\nDATA Enter -> Then [exec] -> Exit [exec] [Bool]\nDATA Press -> Then [exec] -> Exit [exec] [Bool], DATA Release -> Then [exec] -> Exit [exec] [Bool], DATA Update -> Then [exec] -> Exit [exec] [Transform]\nDATA Audio -> Then [exec] -> Exit [exec] [Object]\n\n## DSL FORMAT RULES\n\nYour output MUST follow this exact format:\n\n```\nBLUEPRINT: <Name>\nPARENT: <ParentClass>\n\nVAR <Name>: <Type> = <DefaultValue>\n\nGRAPH: EventGraph\n\nNODE <id>: <NodeType> [Property=Value]\n\nEXEC <from_id>.<pin> -> <to_id>.<pin>\nDATA <from_id>.<pin> -> <to_id>.<pin> [<DataType>]\n```\n\nRules:\n- Node IDs use n1, n2, n3... numbering\n- EXEC lines = white execution wires\n- DATA lines = colored data wires, always include [Type]\n- Every exec chain must start from an Event node\n- Only use node types and pin names from the reference below\n\n## NODE REFERENCE\n\nValid node types with their pins. Use ONLY these exact names.\n\n### Actor\n\n**SetActorHiddenInGame** \u2014 Shows or hides the actor in game\n  IN: Execute:exec, bNewHidden:Bool\n  OUT: Then:exec\n\n**AddActorLocalRotation** \u2014 Adds rotation to the actor in local space\n  IN: Execute:exec, DeltaRotation:Rotator\n  OUT: Then:exec\n\n**GetDistanceTo** \u2014 Gets the distance between this actor and another\n  IN: Execute:exec, OtherActor:Actor\n  OUT: Then:exec, ReturnValue:Float\n\n### Audio\n\n**PlaySound** \u2014 Plays a sound effect\n  IN: Execute:exec, Sound:Object\n  OUT: Then:exec\n\n### Casting\n\n**CastToCharacter** \u2014 Attempts to cast an object to the Character class\n  IN: Execute:exec, Object:Object\n  OUT: CastSucceeded:exec, CastFailed:exec, AsCharacter:Object\n\n### Components\n\n**SetVisibility** \u2014 Sets visibility of a component\n  IN: Execute:exec, Target:Object, NewVisibility:Bool\n  OUT: Then:exec\n\n**SetRelativeRotation** \u2014 Sets the relative rotation of a component\n  IN: Execute:exec, Target:Object, NewRotation:Rotator\n  OUT: Then:exec\n\n### Events\n\n**Event_BeginPlay** \u2014 Fires once when the game starts or the actor is spawned\n  OUT: Then:exec\n\n**Event_Tick** \u2014 Fires every frame\n  OUT: Then:exec, DeltaSeconds:Float\n\n**Event_ActorBeginOverlap** \u2014 Fires when another actor overlaps this actor\n  OUT: Then:exec, OtherActor:Actor\n\n**Event_ActorEndOverlap** \u2014 Fires when an overlapping actor stops overlapping\n  OUT: Then:exec, OtherActor:Actor\n\n**Event_InputAction** \u2014",
+      "generation_time": 68.36,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "nodes": {
+          "score": 10,
+          "max": 20,
+          "found": 1,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 7,
+          "data_found": 7
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing expected node: FlipFlop",
+        "Parse error: Line 0: Found 49 parse errors:\nLine 17: Invalid EXEC syntax | 'EXEC Enter -> Then'\nLine 18: Invalid "
+      ]
+    },
+    {
+      "test_id": "T2_03",
+      "tier": 2,
+      "prompt": "Create a Blueprint that prints a message when a player overlaps with it.",
+      "passed": true,
+      "score": 0.71,
+      "output": "BLUEPRINT: OverlapActor\nPARENT: Actor\n\nVAR Player:Object = Player\nVAR OtherActor:Object = OtherActor\nVAR IsOverlapping:Bool = IsOverlapping\n\nGRAPH: EventGraph\n\nNODE Event_BeginPlay: Event\nEXEC Then:exec\n\nNODE SetActorHiddenInGame: Actor\nEXEC Execute:exec, NewHidden:Bool\nOUT Then:exec\n\nNODE AddActorLocalRotation: Actor\nEXEC Execute:exec, DeltaRotation:Rotator\nOUT Then:exec\n\nNODE GetDistanceTo: Actor\nEXEC Execute:exec, OtherActor:Object\nOUT Then:exec, ReturnValue:Float\n\nNODE PlaySound: Audio\nEXEC Execute:exec, Sound:Object\nOUT Then:exec\n\nNODE CastToCharacter: Casting\nEXEC Execute:exec, Object:Object\nOUT CastSucceeded:exec, CastFailed:exec, AsCharacter:Object\n\nNODE SetVisibility: ActorComponent\nEXEC Execute:exec, Target:Object, NewVisibility:Bool\nOUT Then:exec\n\nNODE SetRelativeRotation: ActorComponent\nEXEC Execute:exec, Target:Object, NewRotation:Rotator\nOUT Then:exec\n\nNODE Event_Tick: Event\nEXEC Then:exec, DeltaSeconds:Float\nOUT\n\nNODE Event_ActorBeginOverlap: Event\nEXEC Then:exec, OtherActor:Object\nOUT\n\nNODE Event_ActorEndOverlap: Event\nEXEC Then:exec, OtherActor:Object\nOUT\n\nNODE Event_InputAction: Event\nEXEC Pressed:exec, Released:exec\nOUT\n\nNODE Event_CustomEvent: Event\nEXEC Then:exec\nOUT\n\nNODE Branch: FlowControl\nEXEC Execute:exec, Condition:Bool\nOUT True:exec, False:exec\n\nNODE Sequence: FlowControl\nEXEC Then_0:exec, Then_1:exec, Then_2:exec\nOUT\n\nNODE FlipFlop: FlowControl\nEXEC A:exec, B:exec, IsA:Bool\nOUT\n\nNODE DoOnce: FlowControl\nEXEC Execute:exec, Reset:exec\nOUT Completed:exec\n\nNODE Delay: FlowControl\nEXEC Execute:exec, Duration:Float\nOUT Completed:exec\n\nNODE ForEachLoop: FlowControl\nEXEC Execute:exec, Array:Array\nOUT LoopBody:exec, ArrayElement:Object, ArrayIndex:Int, Completed:exec\n\nNODE Gate: FlowControl\nEXEC Enter:exec, Open:exec, Close:exec, Toggle:exec\nOUT Exit:exec\n\nNODE AddFloat: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE SubtractFloat: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE MultiplyFloat: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE GreaterThan: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE LessThan: Math\nEXEC A:exec, B:exec\nOUT ReturnValue:exec\n\nNODE ClampFloat: Math\nEXEC Value:exec, Min:exec, Max:exec\nOUT ReturnValue:exec\n\nNODE MakeRotator: Math\nEXEC Roll:exec, Pitch:exec, Yaw:exec\nOUT ReturnValue:exec\n\nNODE MakeVector: Math\nEXEC X:exec, Y:exec, Z:exec\nOUT ReturnValue:exec\n\nNODE PrintString: Utility\nEXEC Execute:exec, InString:exec\nOUT Then:exec\n\nNODE SetTimerByFunctionName: Utility\nEXEC Execute:exec, FunctionName:exec, Time:exec, bLooping:exec\nOUT Then:exec\n\nNODE GetWorldDeltaSeconds: Utility\nOUT ReturnValue:exec\n\nNODE GetVar: Variables\nEXEC Execute:exec\nOUT Value:exec\n\nNODE SetVar: Variables\nEXEC Execute:exec, Value",
+      "generation_time": 68.03,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 13,
+          "max": 20,
+          "found": 2,
+          "expected": 3
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 1,
+          "expected": 1
+        },
+        "connections": {
+          "score": 8,
+          "max": 15,
+          "exec_found": 32,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing required keyword: 'DATA'",
+        "Too few DATA connections: got 0, expected >= 1",
+        "Parse error: Line 0: Found 63 parse errors:\nLine 11: Invalid EXEC syntax | 'EXEC Then:exec'\nLine 14: Invalid EXEC"
+      ]
+    },
+    {
+      "test_id": "T3_01",
+      "tier": 3,
+      "prompt": "Create a health pickup that adds 25 health on overlap and then destroys itself.",
+      "passed": false,
+      "score": 0.53,
+      "output": "BLUEPRINT: HealthPickup\nPARENT: Actor\n\nVAR Health: Int = 100\n\nGRAPH: EventGraph\n\nNODE Actor: Execute:exec, Then:exec\nNODE SetActorHiddenInGame: Execute:exec, Then:exec, bNewHidden:Bool\nNODE AddActorLocalRotation: Execute:exec, Then:exec, DeltaRotation:Rotator\nNODE GetDistanceTo: Execute:exec, Then:exec, OtherActor:Actor\nNODE PlaySound: Execute:exec, Then:exec, Sound:Object\nNODE CastToCharacter: Execute:exec, CastSucceeded:exec, CastFailed:exec, AsCharacter:Object\nNODE SetVisibility: Execute:exec, Then:exec, Target:Object, NewVisibility:Bool\nNODE SetRelativeRotation: Execute:exec, Then:exec, Target:Object, NewRotation:Rotator\nNODE Event_BeginPlay: Then:exec\nNODE Event_Tick: Then:exec, DeltaSeconds:Float\nNODE Event_ActorBeginOverlap: Then:exec, OtherActor:Actor\nNODE Event_ActorEndOverlap: Then:exec, OtherActor:Actor\nNODE Event_InputAction: Pressed:exec, Released:exec\nNODE Event_CustomEvent: Then:exec\nNODE Branch: Execute:exec, Condition:Bool\nNODE Sequence: Execute:exec, Then_0:exec, Then_1:exec, Then_2:exec\nNODE FlipFlop: Execute:exec, A:exec, B:exec, IsA:Bool\nNODE DoOnce: Execute:exec, Reset:exec, Completed:exec\nNODE Delay: Execute:exec, Duration:Float, Completed:exec\nNODE ForEachLoop: Execute:exec, Array:Array, LoopBody:exec, ArrayElement:Object, ArrayIndex:Int, Completed:exec\nNODE Gate: Enter:exec, Open:exec, Close:exec, Toggle:exec, Exit:exec\nNODE AddFloat: A:exec, B:exec, ReturnValue:exec\nNODE SubtractFloat: A:exec, B:exec, ReturnValue:exec\nNODE MultiplyFloat: A:exec, B:exec, ReturnValue:exec\nNODE GreaterThan: A:exec, B:exec, ReturnValue:exec\nNODE LessThan: A:exec, B:exec, ReturnValue:exec\nNODE ClampFloat: Value:exec, Min:exec, Max:exec, ReturnValue:exec\nNODE MakeRotator: Roll:exec, Pitch:exec, Yaw:exec, ReturnValue:exec\nNODE MakeVector: X:exec, Y:exec, Z:exec, ReturnValue:exec\nNODE PrintString: Execute:exec, InString:exec, Then:exec\nNODE SetTimerByFunctionName: Execute:exec, FunctionName:exec, Time:exec, bLooping:exec, Then:exec\nNODE GetWorldDeltaSeconds: ReturnValue:exec\nNODE GetVar: Execute:exec, Name:exec, Value:exec\nNODE SetVar: Execute:exec, Name:exec, Value:exec, Then:exec",
+      "generation_time": 56.92,
+      "checks": {
+        "structure": {
+          "score": 23,
+          "max": 30
+        },
+        "keywords": {
+          "score": 5,
+          "max": 20,
+          "found": 1,
+          "expected": 4
+        },
+        "nodes": {
+          "score": 10,
+          "max": 20,
+          "found": 1,
+          "expected": 2
+        },
+        "connections": {
+          "score": 0,
+          "max": 15,
+          "exec_found": 0,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing EXEC connections",
+        "Missing required keyword: 'EXEC'",
+        "Missing required keyword: 'DATA'",
+        "Missing required keyword: '25'",
+        "Missing expected node: DestroyActor",
+        "Too few EXEC connections: got 0, expected >= 4",
+        "Too few DATA connections: got 0, expected >= 2"
+      ]
+    },
+    {
+      "test_id": "T3_02",
+      "tier": 3,
+      "prompt": "Create a health system with 100 max HP that checks if health reaches zero and destroys the actor.",
+      "passed": false,
+      "score": 0.45,
+      "output": "## DSL FORMAT RULES\n\nYour output MUST follow this exact format:\n\n```\nBLUEPRINT: Health\nPARENT: Actor\n\nVAR Health: Int = 100\n\nGRAPH: EventGraph\n\nNODE Actor: Actor [exec]\nNODE SetActorHiddenInGame:exec [exec], bNewHidden:Bool [exec] -> Then:exec\nNODE AddActorLocalRotation:exec [exec], DeltaRotation:Rotator [exec] -> Then:exec\nNODE GetDistanceTo:exec [exec], OtherActor:Actor [exec] -> Then:exec, ReturnValue:Float [exec]\nNODE PlaySound:exec [exec], Sound:Object [exec] -> Then:exec\nNODE CastToCharacter:exec [exec], Object:Object [exec] -> CastSucceeded:exec, CastFailed:exec, AsCharacter:Object [exec]\nNODE SetVisibility:exec [exec], Target:Object, NewVisibility:Bool [exec] -> Then:exec\nNODE SetRelativeRotation:exec [exec], Target:Object, NewRotation:Rotator [exec] -> Then:exec\nNODE Event_BeginPlay:exec [exec] -> Then:exec\nNODE Event_Tick:exec [exec], DeltaSeconds:Float [exec] -> Then:exec\nNODE Event_ActorBeginOverlap:exec [exec], OtherActor:Actor [exec] -> Then:exec\nNODE Event_ActorEndOverlap:exec [exec], OtherActor:Actor [exec] -> Then:exec\nNODE Event_InputAction:exec [exec], Pressed:exec [exec], Released:exec [exec] -> Then:exec\nNODE Event_CustomEvent:exec [exec] -> Then:exec\nNODE Branch:exec [exec], Condition:Bool [exec] -> True:exec, False:exec\nNODE Sequence:exec [exec] -> Then_0:exec, Then_1:exec, Then_2:exec\nNODE FlipFlop:exec [exec] -> A:exec, B:exec, IsA:Bool [exec]\nNODE DoOnce:exec [exec], Reset:exec [exec] -> Completed:exec\nNODE Delay:exec [exec], Duration:Float [exec] -> Completed:exec\nNODE ForEachLoop:exec [exec], Array:Array [exec] -> LoopBody:exec, ArrayElement:Object, ArrayIndex:Int, Completed:exec\nNODE Gate:exec [exec], Enter:exec, Open:exec, Close:exec, Toggle:exec -> Exit:exec\nNODE AddFloat:exec [exec], A:Float, B:Float [exec] -> ReturnValue:Float [exec]\nNODE SubtractFloat:exec [exec], A:Float, B:Float [exec] -> ReturnValue:Float [exec]\nNODE MultiplyFloat:exec [exec], A:Float, B:Float [exec] -> ReturnValue:Float [exec]\nNODE GreaterThan:exec [exec], A:Float, B:Float [exec] -> ReturnValue:Bool [exec]\nNODE LessThan:exec [exec], A:Float, B:Float [exec] -> ReturnValue:Bool [exec]\nNODE ClampFloat:exec [exec], Value:Float, Min:Float, Max:Float [exec] -> ReturnValue:Float [exec]\nNODE MakeRotator:exec [exec], Roll:Float, Pitch:Float, Yaw:Float [exec] -> ReturnValue:Rotator [exec]\nNODE MakeVector:exec [exec], X:Float, Y:Float, Z:Float [exec] -> ReturnValue:Vector [exec]\nNODE PrintString:exec [exec], InString:String [exec] -> Then:exec\nNODE SetTimerByFunctionName:exec [exec], Execute:Object, FunctionName:String, Time:Float, bLooping:",
+      "generation_time": 67.85,
+      "checks": {
+        "structure": {
+          "score": 23,
+          "max": 30
+        },
+        "keywords": {
+          "score": 12,
+          "max": 20,
+          "found": 3,
+          "expected": 5
+        },
+        "nodes": {
+          "score": 10,
+          "max": 20,
+          "found": 1,
+          "expected": 2
+        },
+        "connections": {
+          "score": 0,
+          "max": 15,
+          "exec_found": 0,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing EXEC connections",
+        "Missing required keyword: 'EXEC'",
+        "Missing required keyword: 'DATA'",
+        "Missing expected node: DestroyActor",
+        "Too few EXEC connections: got 0, expected >= 3",
+        "Too few DATA connections: got 0, expected >= 3",
+        "Parse error: Line 0: Found 2 parse errors:\nLine 3: Unknown directive: Your output MUST fol... | 'Your output MUST"
+      ]
+    },
+    {
+      "test_id": "T3_03",
+      "tier": 3,
+      "prompt": "Create a Blueprint with a timer that prints 'Tick' every 2 seconds.",
+      "passed": true,
+      "score": 0.75,
+      "output": "Given a natural language description of desired game behavior, generate valid Blueprint DSL code that implements that behavior {\r\r\n\u0648\u06cc\u0632\u06cc\u200c\u067e\u062f\u06cc\u0627\u200c\u067e\u062f\u06cc\u3002wwwsystem\u3002wwwreference.wwwexecution.wwwexecchain.wwwexecin.wwwexecout.wwwdatatype.wwwvar.wwwparentclass.wwwrules.wwwformat.wwwnode.reference.wwwconnection.rules.wwwdatatype\uff01\n\n\n\nBLUEPRINT: ExampleBlueprint\nPARENT: Actor\n\nVAR Camera:Object = Camera\nVAR Target:Object = Player\nVAR FieldOfView:Float = 60\nVAR ZoomSpeed:Float = 1.5\n\nGRAPH: EventGraph\n\nNODE Exit: Event\nEXEC Exit -> Then:exec\n\nNODE SetVisibility: ActorComponent\nEXEC SetVisibility -> Then:exec, NewVisibility:Bool\nDATA SetVisibility -> NewVisibility:Bool [Bool]\n\nNODE AddActorLocalRotation: Actor\nEXEC AddActorLocalRotation -> Then:exec, DeltaRotation:Rotator\nDATA AddActorLocalRotation -> DeltaRotation:Rotator [Rotator]\n\nNODE GetDistanceTo: Actor\nEXEC GetDistanceTo -> Then:exec, OtherActor:Actor\nDATA GetDistanceTo -> OtherActor:Actor [Actor]\nOUT Then:exec, ReturnValue:Float [Float]\n\nNODE PlaySound: SoundEffect\nEXEC PlaySound -> Then:exec, Sound:Object\nDATA PlaySound -> Sound:Object [Object]\nOUT Then:exec\n\nNODE CastToCharacter: Object\nEXEC CastToCharacter -> CastSucceeded:exec, CastFailed:exec, AsCharacter:Object\nDATA CastToCharacter -> Object:Object [Object]\nOUT CastSucceeded:exec, CastFailed:exec, AsCharacter:Object\n\nNODE SetVisibility: ActorComponent\nEXEC SetVisibility -> Then:exec, Target:Object, NewVisibility:Bool\nDATA SetVisibility -> Target:Object [Actor], NewVisibility:Bool [Bool]\nOUT Then:exec\n\nNODE SetRelativeRotation: ActorComponent\nEXEC SetRelativeRotation -> Then:exec, Target:Object, NewRotation:Rotator\nDATA SetRelativeRotation -> Target:Object [Actor], NewRotation:Rotator [Rotator]\nOUT Then:exec\n\nNODE Event_BeginPlay: Event\nEXEC Event_BeginPlay -> Then:exec\nOUT Then:exec\n\nNODE Event_Tick: Event\nEXEC Event_Tick -> Then:exec, DeltaSeconds:Float\nDATA Event_Tick -> DeltaSeconds:Float [Float]\nOUT Then:exec, DeltaSeconds:Float\n\nNODE Event_ActorBeginOverlap: Event\nEXEC Event_ActorBeginOverlap -> Then:exec, OtherActor:Actor\nDATA Event_ActorBeginOverlap -> OtherActor:Actor [Actor]\nOUT Then:exec, OtherActor:Actor\n\nNODE Event_ActorEndOverlap: Event\nEXEC Event_ActorEndOverlap -> Then:exec, OtherActor:Actor\nDATA Event_ActorEndOverlap -> OtherActor:Actor [Actor]\nOUT Then:exec, OtherActor:Actor\n\nNODE Event_InputAction: Event\nEXEC Event_InputAction -> Pressed:exec, Released:exec\nDATA Event_InputAction -> Pressed:exec [exec], Released:exec [exec]\nOUT Pressed:exec, Released:exec\n\nNODE Event_CustomEvent: Event\nEXEC Event_CustomEvent -> Then:exec\nOUT Then:exec\n\nNODE Branch: FlowControl\nEXEC Branch -> True:exec, False:exec\nDATA Branch -> Condition:Bool [Bool]\nOUT True:exec, False:exec\n\nNODE Sequence: FlowControl\nEXEC Sequence -> Then_0:exec, Then_1:exec, Then_2:exec\nDATA Sequence -> Then_0:exec [exec], Then_1:exec [exec], Then_2:exec [exec]\nOUT Then_0:exec, Then_1:exec, Then_2:exec\n\nNODE FlipFlop: FlowControl\nEXEC FlipFlop -> A:exec,",
+      "generation_time": 67.37,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "nodes": {
+          "score": 10,
+          "max": 20,
+          "found": 1,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 17,
+          "data_found": 13
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing expected node: SetTimerByFunctionName",
+        "Parse error: Line 0: Found 45 parse errors:\nLine 1: Unknown directive: Given a natural lang... | 'Given a natural"
+      ]
+    },
+    {
+      "test_id": "T4_01",
+      "tier": 4,
+      "prompt": "Create a door that opens when a player presses E within 200 units. The door should rotate 90 degrees on the yaw axis.",
+      "passed": true,
+      "score": 0.77,
+      "output": "## DSL FORMAT RULES\n\n```\nBLUEPRINT: Door\nPARENT: Actor\n\nVAR Open: Bool = False\n\nGRAPH: EventGraph\n\nNODE OpenEvent: Event\nEXEC Enter:exec, Pressed:exec, Released:exec, Open:exec, Close:exec\nDATA Enter:exec -> Pressed:exec [Bool]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> Released:exec [Bool]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> Open:exec [Bool]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> Close:exec [Bool]\n\nNODE Actor: Actor\nEXEC Execute:exec, SetActorHiddenInGame:exec, AddActorLocalRotation:exec, GetDistanceTo:exec\nDATA Execute:exec -> SetActorHiddenInGame:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> AddActorLocalRotation:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> GetDistanceTo:exec [exec] -> ReturnValue:exec [Float]\n\nNODE Camera: Camera\nEXEC Execute:exec, SetVisibility:exec, SetRelativeRotation:exec\nDATA Execute:exec -> SetVisibility:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> SetRelativeRotation:exec [exec] -> Target:Object:exec [Actor]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> NewVisibility:exec [exec] -> ReturnValue:exec [exec] -> Target:Object:exec [exec] -> NewRotation:exec [exec] -> ReturnValue:exec [exec]\n\nNODE Event_BeginPlay: Event\nEXEC Then:exec\nDATA Then:exec -> Then:exec [exec]\n\nNODE Event_Tick: Event\nEXEC Then:exec, DeltaSeconds:exec\nDATA Then:exec -> Then:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> DeltaSeconds:exec [exec] -> Then:exec [exec]\n\nNODE Event_ActorBeginOverlap: Event\nEXEC Then:exec, OtherActor:exec\nDATA Then:exec -> Then:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> OtherActor:exec [exec] -> Then:exec [exec]\n\nNODE Event_ActorEndOverlap: Event\nEXEC Then:exec, OtherActor:exec\nDATA Then:exec -> Then:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> OtherActor:exec [exec] -> Then:exec [exec]\n\nNODE Event_InputAction: Event\nEXEC Pressed:exec, Released:exec\nDATA Pressed:exec -> Pressed:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> Released:exec [exec] -> Released:exec [exec]\n\nNODE Event_CustomEvent: Event\nEXEC Then:exec\nDATA Then:exec -> Then:exec [exec]\n\nNODE Branch: FlowControl\nEXEC Execute:exec, Condition:exec\nDATA Execute:exec -> Condition:exec [exec] -> True:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> False:exec [exec]\n\nNODE Sequence: FlowControl\nEXEC Then_0:exec, Then_1:exec, Then_2:exec\nDATA Then_0:exec -> Then_0:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> Then_1:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> Then_2:exec [exec] -> Then_2:exec [exec]\n\nNODE FlipFlop: FlowControl\nEXEC Execute:exec\nDATA Execute:exec -> A:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> B:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> IsA:exec [exec] -> A:exec [exec] -> B:exec [exec] -> IsA:exec [exec] -> A:exec [exec] -> B:exec [exec]\n\nNODE DoOnce: FlowControl\nEXEC Execute:exec, Reset:exec\nDATA Execute:exec -> Completed:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> Reset:exec [exec] -> Completed:exec [exec]\n\nNODE Delay: FlowControl\nEXEC Execute:exec, Duration:exec\nDATA Execute:exec -> Completed:exec [exec]\u3000\u3000\u3000 \u3000 \u3000 \u3000 exec -> Duration:exec [exec] -> Completed:",
+      "generation_time": 68.06,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 12,
+          "max": 20,
+          "found": 3,
+          "expected": 5
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 14,
+          "data_found": 14
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing required keyword: '200'",
+        "Missing required keyword: '90'",
+        "Parse error: Line 0: Found 29 parse errors:\nLine 3: Unknown directive: ```... | '```'\nLine 12: Invalid EXEC synta"
+      ]
+    },
+    {
+      "test_id": "T4_02",
+      "tier": 4,
+      "prompt": "Create a coin pickup Blueprint that adds 1 to a coin counter, plays a sound, and destroys itself when a player overlaps.",
+      "passed": false,
+      "score": 0.63,
+      "output": "## DSL FORMAT RULES\n\n```\nBLUEPRINT: CoinPickup\nPARENT: Actor\n\nVAR CoinCount: Int = 0\n\nGRAPH: EventGraph\n\nNODE Actor: Actor [exec]\nNODE SetActorHiddenInGame: SetActorHiddenInGame [exec, bNewHidden=Bool]\nNODE AddActorLocalRotation: AddActorLocalRotation [exec, DeltaRotation=Rotator]\nNODE GetDistanceTo: GetDistanceTo [exec, OtherActor=Actor]\nNODE PlaySound: PlaySound [exec, Sound:Object]\nNODE CastToCharacter: CastToCharacter [exec, Object:Object]\nNODE SetVisibility: SetVisibility [exec, Target:Object, NewVisibility=Bool]\nNODE SetRelativeRotation: SetRelativeRotation [exec, Target:Object, NewRotation=Rotator]\nNODE Event_BeginPlay: Event_BeginPlay [exec]\nNODE Event_Tick: Event_Tick [exec, DeltaSeconds=Float]\nNODE Event_ActorBeginOverlap: Event_ActorBeginOverlap [exec, OtherActor=Actor]\nNODE Event_ActorEndOverlap: Event_ActorEndOverlap [exec, OtherActor=Actor]\nNODE Event_InputAction: Event_InputAction [exec, Pressed=exec, Released=exec]\nNODE Event_CustomEvent: Event_CustomEvent [exec]\nNODE Branch: Branch [exec, Condition=Bool]\nNODE Sequence: Sequence [exec, Then_0=exec, Then_1=exec, Then_2=exec]\nNODE FlipFlop: FlipFlop [exec, A=exec, B=exec, IsA=Bool]\nNODE DoOnce: DoOnce [exec, Reset=exec]\nNODE Delay: Delay [exec, Duration=Float]\nNODE ForEachLoop: ForEachLoop [exec, Array:Array]\nNODE Gate: Gate [exec, Enter=exec, Open=exec, Close=exec, Toggle=exec]\nNODE AddFloat: AddFloat [exec, A=Float, B=Float]\nNODE SubtractFloat: SubtractFloat [exec, A=Float, B=Float]\nNODE MultiplyFloat: MultiplyFloat [exec, A=Float, B=Float]\nNODE GreaterThan: GreaterThan [exec, A=Float, B=Float]\nNODE LessThan: LessThan [exec, A=Float, B=Float]\nNODE ClampFloat: ClampFloat [exec, Value=Float, Min=Float, Max=Float]\nNODE MakeRotator: MakeRotator [exec, Roll=Float, Pitch=Float, Yaw=Float]\nNODE MakeVector: MakeVector [exec, X=Float, Y=Float, Z=Float]\nNODE PrintString: PrintString [exec, InString/String]\nNODE SetTimerByFunctionName: SetTimerByFunctionName [exec, FunctionName/String, Time=Float, bLooping=Bool]\nNODE GetWorldDeltaSeconds: GetWorldDeltaSeconds []\nNODE GetVar: GetVar [exec, Name/String]\nNODE SetVar: SetVar [exec, Name/String, Value/Object]\n\nEXEC Actor -> Event_BeginPlay\nEXEC Actor -> SetActorHiddenInGame -> Then\nEXEC Actor -> AddActorLocalRotation -> Then\nEXEC Actor -> GetDistanceTo -> Then, ReturnValue\nEXEC Actor -> PlaySound -> Then\nEXEC Actor -> CastToCharacter -> CastSucceeded, AsCharacter\nEXEC Actor -> SetVisibility -> Then, Target, NewVisibility\nEXEC Actor -> SetRelativeRotation -> Then, Target, NewRotation\nEXEC Event_BeginPlay -> Then\nEXEC Event_Tick -> Then, DeltaSeconds\nEXEC Event_ActorBeginOverlap -> Then, OtherActor\nEXEC Event_ActorEndOverlap -> Then, OtherActor\nEXEC Event_InputAction -> Pressed, Released\nEXEC Event_CustomEvent -> Then\nEXEC Branch -> True, False\nEXEC Sequence -> Then_0, Then",
+      "generation_time": 68.0,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 15,
+          "max": 20,
+          "found": 3,
+          "expected": 4
+        },
+        "nodes": {
+          "score": 10,
+          "max": 20,
+          "found": 1,
+          "expected": 2
+        },
+        "connections": {
+          "score": 8,
+          "max": 15,
+          "exec_found": 16,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 0,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing required keyword: 'DATA'",
+        "Missing expected node: DestroyActor",
+        "Too few DATA connections: got 0, expected >= 2",
+        "Parse error: Line 0: Found 17 parse errors:\nLine 3: Unknown directive: ```... | '```'\nLine 46: Invalid EXEC synta"
+      ]
+    }
+  ]
+}

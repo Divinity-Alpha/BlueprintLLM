@@ -182,33 +182,14 @@ ACTIVE_SYSTEM_PROMPT = None
 # PROMPT FORMATTING
 # ============================================================
 
-## Training uses a SHORT system prompt — the model learns the DSL patterns
-# from the examples themselves, not from a huge reference table.
-# The enhanced prompt is only used at INFERENCE time as context.
-
-TRAINING_SYSTEM_PROMPT = """You are a Blueprint DSL generator for Unreal Engine 5.
-Given a description, output ONLY valid Blueprint DSL code.
-Use this exact format:
-
-BLUEPRINT: <Name>
-PARENT: <ParentClass>
-GRAPH: EventGraph
-NODE n1: <NodeType> [Property=Value]
-EXEC n1.Then -> n2.Execute
-DATA n1.Pin -> n2.Pin [Type]
-
-Output ONLY the DSL. No explanations."""
-
-
 def format_training_example(example: dict) -> str:
     """Format a training example as a chat-style prompt.
-    
-    Uses a SHORT system prompt so the model focuses on learning
-    the instruction->DSL mapping, not memorizing a huge reference.
+
+    Uses ACTIVE_SYSTEM_PROMPT so training and inference see the same prompt.
     """
     return (
         f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n"
-        f"{TRAINING_SYSTEM_PROMPT}<|eot_id|>"
+        f"{ACTIVE_SYSTEM_PROMPT}<|eot_id|>"
         f"<|start_header_id|>user<|end_header_id|>\n\n"
         f"{example['instruction']}<|eot_id|>"
         f"<|start_header_id|>assistant<|end_header_id|>\n\n"
@@ -218,14 +199,12 @@ def format_training_example(example: dict) -> str:
 
 def format_inference_prompt(instruction: str) -> str:
     """Format a prompt for inference (no expected output).
-    
-    Uses the SAME short system prompt that was used during training.
-    The enhanced node reference can optionally be prepended to the
-    user instruction for extra context.
+
+    Uses ACTIVE_SYSTEM_PROMPT — same prompt the model was trained with.
     """
     return (
         f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n"
-        f"{TRAINING_SYSTEM_PROMPT}<|eot_id|>"
+        f"{ACTIVE_SYSTEM_PROMPT}<|eot_id|>"
         f"<|start_header_id|>user<|end_header_id|>\n\n"
         f"{instruction}<|eot_id|>"
         f"<|start_header_id|>assistant<|end_header_id|>\n\n"

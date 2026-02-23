@@ -29,10 +29,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 
 
-# This MUST match TRAINING_SYSTEM_PROMPT in 04_train_blueprint_lora.py exactly.
-# The model was trained with this prompt. Using a different prompt at inference
-# causes the model to hallucinate format rules instead of generating DSL.
-SYSTEM_PROMPT = """You are a Blueprint DSL generator for Unreal Engine 5.
+# Fallback system prompt — used only when model directory has no system_prompt.txt.
+# Prefer loading the saved prompt from the model so inference matches training.
+DEFAULT_SYSTEM_PROMPT = """You are a Blueprint DSL generator for Unreal Engine 5.
 Given a description, output ONLY valid Blueprint DSL code.
 Use this exact format:
 
@@ -51,13 +50,17 @@ Output ONLY the DSL. No explanations."""
 # ============================================================
 
 def load_hf_model(model_path: str, base_model: str = None):
-    """Load a fine-tuned LoRA model for inference."""
+    """Load a fine-tuned LoRA model for inference.
+
+    Returns (model, tokenizer, system_prompt).
+    """
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
     from peft import PeftModel
 
     # Determine base model from config if not specified
-    config_path = Path(model_path).parent / "training_config.json"
+    model_dir = Path(model_path).parent
+    config_path = model_dir / "training_config.json"
     if base_model is None and config_path.exists():
         with open(config_path) as f:
             config = json.load(f)
@@ -71,6 +74,15 @@ def load_hf_model(model_path: str, base_model: str = None):
             base_model = ac.get("base_model_name_or_path", "meta-llama/Llama-3.2-3B")
         else:
             base_model = "meta-llama/Llama-3.2-3B"
+
+    # Load saved system prompt from model directory (matches training)
+    system_prompt = DEFAULT_SYSTEM_PROMPT
+    prompt_path = model_dir / "system_prompt.txt"
+    if prompt_path.exists():
+        system_prompt = prompt_path.read_text(encoding="utf-8").strip()
+        print(f"Loaded system prompt from {prompt_path} ({len(system_prompt):,} chars)")
+    else:
+        print(f"No system_prompt.txt in {model_dir}, using default prompt")
 
     print(f"Loading base model: {base_model}")
     tokenizer = AutoTokenizer.from_pretrained(base_model)
@@ -101,16 +113,20 @@ def load_hf_model(model_path: str, base_model: str = None):
     model = PeftModel.from_pretrained(model, model_path)
     model.eval()
 
-    return model, tokenizer
+    return model, tokenizer, system_prompt
 
 
-def generate_hf(model, tokenizer, prompt: str, max_tokens: int = 512, temperature: float = 0.1) -> str:
+def generate_hf(model, tokenizer, prompt: str, max_tokens: int = 512,
+                temperature: float = 0.1, system_prompt: str = None) -> str:
     """Generate Blueprint DSL using a Hugging Face model."""
     import torch
 
+    if system_prompt is None:
+        system_prompt = DEFAULT_SYSTEM_PROMPT
+
     formatted = (
         f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n"
-        f"{SYSTEM_PROMPT}<|eot_id|>"
+        f"{system_prompt}<|eot_id|>"
         f"<|start_header_id|>user<|end_header_id|>\n\n"
         f"{prompt}<|eot_id|>"
         f"<|start_header_id|>assistant<|end_header_id|>\n\n"
@@ -199,7 +215,7 @@ def generate_ollama(model_name: str, prompt: str) -> str:
 
     payload = json.dumps({
         "model": model_name,
-        "system": SYSTEM_PROMPT,
+        "system": DEFAULT_SYSTEM_PROMPT,
         "prompt": prompt,
         "stream": False,
         "options": {
@@ -376,9 +392,9 @@ def main():
         print(f"Using Ollama model: {args.ollama}")
         generate_fn = lambda prompt: generate_ollama(args.ollama, prompt)
     elif args.model:
-        model, tokenizer = load_hf_model(args.model, args.base_model)
+        model, tokenizer, system_prompt = load_hf_model(args.model, args.base_model)
         generate_fn = lambda prompt: generate_hf(
-            model, tokenizer, prompt, args.max_tokens, args.temperature
+            model, tokenizer, prompt, args.max_tokens, args.temperature, system_prompt
         )
     else:
         print("Error: Specify --model (HuggingFace) or --ollama (Ollama)")

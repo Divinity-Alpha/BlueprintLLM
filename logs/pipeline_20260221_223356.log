@@ -1,0 +1,13 @@
+[22:33:56] [INFO] ============================================================
+[22:33:56] [INFO]   BLUEPRINT LLM PIPELINE — TRAIN-ONLY
+[22:33:56] [INFO] ============================================================
+[22:33:56] [INFO] Root: C:\BlueprintLLM
+[22:33:56] [INFO] Time: 2026-02-21 22:33:56
+[22:33:56] [INFO] Last run: 2026-02-21T20:30:05.181759
+[22:33:56] [INFO] Model: v0
+[22:33:56] [INFO] ============================================================
+[22:33:56] [INFO]   STEP 5: Train Model
+[22:33:56] [INFO] ============================================================
+[22:33:56] [INFO] Training v1 (data hash: 4cc7d21000d801d5)
+[22:33:56] [INFO] Running: Fine-tuning v1
+[22:33:56] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\04_train_blueprint_lora.py --base_model meta-llama/Llama-3.2-3B --dataset C:\BlueprintLLM\datasets\train.jsonl --output C:\BlueprintLLM\models\blueprint-lora-v1 --epochs 3 --batch_size 1 --lr 0.0002 --lora_r 64

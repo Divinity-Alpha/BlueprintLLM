@@ -1,0 +1,45 @@
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO]   BLUEPRINT LLM PIPELINE — DATA-ONLY
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO] Root: C:\BlueprintLLM
+[10:00:00] [INFO] Time: 2026-02-21 10:00:00
+[10:00:00] [INFO] Last run: 2026-02-21T08:00:00.416789
+[10:00:00] [INFO] Model: v0
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO]   STEP 1: Analyze New Blueprint Exports
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO] Found 1 new export(s)
+[10:00:00] [INFO] Running: Analyzing hello_world.txt
+[10:00:00] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\01_analyze_blueprint_clipboard.py C:\BlueprintLLM\raw-data\clipboard-exports\hello_world.txt
+[10:00:00] [ERROR]   FAILED (exit 2)
+[10:00:00] [ERROR]   ERR| C:\Program Files\Python311\python.exe: can't open file 'C:\\BlueprintLLM\\scripts\\01_analyze_blueprint_clipboard.py': [Errno 2] No such file or directory
+[10:00:00] [INFO] Analyzed 1/1
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO]   STEP 2: Validate DSL Files
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO] No DSL files. Skipping.
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO]   STEP 3: Build Training Dataset
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO] Running: Generating 500 synthetic examples
+[10:00:00] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\03_generate_synthetic_data.py --count 500 --output C:\BlueprintLLM\datasets\synthetic_train.jsonl --seed 42
+[10:00:00] [ERROR]   FAILED (exit 2)
+[10:00:00] [ERROR]   ERR| C:\Program Files\Python311\python.exe: can't open file 'C:\\BlueprintLLM\\scripts\\03_generate_synthetic_data.py': [Errno 2] No such file or directory
+[10:00:00] [INFO]   Total: 0 training examples
+[10:00:00] [INFO] Running: Validating merged dataset
+[10:00:00] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\datasets\train.jsonl
+[10:00:00] [ERROR]   FAILED (exit 2)
+[10:00:00] [ERROR]   ERR| C:\Program Files\Python311\python.exe: can't open file 'C:\\BlueprintLLM\\scripts\\06_validate_dsl.py': [Errno 2] No such file or directory
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO]   STEP 4: Generate System Prompt
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO] Running: Generating system prompt
+[10:00:00] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\08_generate_system_prompt.py --output C:\BlueprintLLM\scripts\system_prompt.txt
+[10:00:00] [ERROR]   FAILED (exit 2)
+[10:00:00] [ERROR]   ERR| C:\Program Files\Python311\python.exe: can't open file 'C:\\BlueprintLLM\\scripts\\08_generate_system_prompt.py': [Errno 2] No such file or directory
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO]   PIPELINE COMPLETE
+[10:00:00] [INFO] ============================================================
+[10:00:00] [INFO] Time: 0m 0s
+[10:00:00] [INFO] Version: v0
+[10:00:00] [INFO] Errors: 8

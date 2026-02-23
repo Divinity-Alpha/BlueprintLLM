@@ -1,0 +1,31 @@
+﻿[20:27:43] ============================================
+[20:27:43]   Blueprint LLM Startup Check
+[20:27:44] ============================================
+[20:27:44] Time: 2026-02-21 20:27:44
+[20:27:44] Project: C:\BlueprintLLM
+[20:27:44] [OK] Project root exists
+[20:27:44] [OK] Python: Python 3.11.9
+[20:27:57] [OK] torch 2.5.1+cu121
+[20:28:20] [OK] transformers 5.2.0
+[20:28:31] [FAIL] peft not installed
+[20:28:34] [OK] trl 0.28.0
+[20:28:38] [FAIL] bitsandbytes not installed
+[20:28:41] [OK] GPU: 
+[20:28:43] [WARN] HuggingFace login not found or expired
+[20:28:43]        Cached models still work, but can't download new ones.
+[20:28:43]        To fix: python -c "from huggingface_hub import login; login(token=input('Token: '))"
+[20:28:43] [OK] All directories present
+[20:28:43] [OK] All scripts present
+[20:28:44] [OK] Task active: BlueprintLLM - Data Processing (next run: MSFT_TaskTimeTrigger)
+[20:28:45] [OK] Task active: BlueprintLLM - Nightly Training (next run: MSFT_TaskDailyTrigger)
+[20:28:45] [OK] Task active: BlueprintLLM - Weekly Evaluation (next run: MSFT_TaskWeeklyTrigger)
+[20:28:45] [OK] Latest model: blueprint-lora-v1 (1 version(s) total)
+[20:28:46]      Last run: 2026-02-21T17:01:12.934334
+[20:28:46] [INFO] No pending exports. Drop .txt files in raw-data\clipboard-exports\
+[20:28:46] 
+[20:28:46] ============================================
+[20:28:46]   SOME CHECKS FAILED - Review [FAIL] items above
+[20:28:46] ============================================
+[20:28:46] 
+[20:28:46] Startup check complete.
+[20:28:46] Log: C:\BlueprintLLM\logs\startup_20260221_202743.log

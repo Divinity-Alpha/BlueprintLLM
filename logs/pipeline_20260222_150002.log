@@ -1,0 +1,174 @@
+[15:00:02] [INFO] ============================================================
+[15:00:02] [INFO]   BLUEPRINT LLM PIPELINE — DATA-ONLY
+[15:00:02] [INFO] ============================================================
+[15:00:02] [INFO] Root: C:\BlueprintLLM
+[15:00:02] [INFO] Time: 2026-02-22 15:00:02
+[15:00:02] [INFO] Last run: 2026-02-22T14:00:02.837522
+[15:00:02] [INFO] Model: v1
+[15:00:02] [INFO] ============================================================
+[15:00:02] [INFO]   STEP 1: Analyze & Auto-Translate New Blueprint Exports
+[15:00:02] [INFO] ============================================================
+[15:00:02] [INFO] No new exports found. Skipping.
+[15:00:02] [INFO] ============================================================
+[15:00:02] [INFO]   STEP 2: Validate DSL Files
+[15:00:02] [INFO] ============================================================
+[15:00:02] [INFO] Running: Validating Demo111_auto.dsl
+[15:00:02] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo111_auto.dsl
+[15:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo111_auto.dsl
+[15:00:03] [INFO]   | ============================================================
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Valid: YES
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Stats:
+[15:00:03] [INFO]   |   nodes: 9
+[15:00:03] [INFO]   |   exec_connections: 0
+[15:00:03] [INFO]   |   data_connections: 0
+[15:00:03] [INFO]   |   variables: 0
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Warnings:
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Do (node n3) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: FinishTask (node n5) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n6) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n5 (FinishTask) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n8 (Branch) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n9 (Branch) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n3 (Do) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n4 (Event_CustomEvent) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n6 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n7 (GetVar) is disconnected
+[15:00:03] [INFO] Running: Validating Demo112_auto.dsl
+[15:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo112_auto.dsl
+[15:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo112_auto.dsl
+[15:00:03] [INFO]   | ============================================================
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Valid: YES
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Stats:
+[15:00:03] [INFO]   |   nodes: 9
+[15:00:03] [INFO]   |   exec_connections: 0
+[15:00:03] [INFO]   |   data_connections: 0
+[15:00:03] [INFO]   |   variables: 0
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Warnings:
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n2) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: K2_SetFocus (node n3) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n5) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: K2_ClearFocus (node n9) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n3 (K2_SetFocus) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n2 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n5 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n8 (Branch) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n1 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n7 (Branch) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n9 (K2_ClearFocus) is disconnected
+[15:00:03] [INFO] Running: Validating Demo113_auto.dsl
+[15:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo113_auto.dsl
+[15:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo113_auto.dsl
+[15:00:03] [INFO]   | ============================================================
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Valid: YES
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Stats:
+[15:00:03] [INFO]   |   nodes: 9
+[15:00:03] [INFO]   |   exec_connections: 0
+[15:00:03] [INFO]   |   data_connections: 0
+[15:00:03] [INFO]   |   variables: 0
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Warnings:
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n2) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n3) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: K2_SetFocalPoint (node n7) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: K2_ClearFocus (node n9) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n3 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n7 (K2_SetFocalPoint) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n2 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n5 (Branch) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n1 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n9 (K2_ClearFocus) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n6 (Branch) is disconnected
+[15:00:03] [INFO] Running: Validating Demo114_auto.dsl
+[15:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo114_auto.dsl
+[15:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo114_auto.dsl
+[15:00:03] [INFO]   | ============================================================
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Valid: YES
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Stats:
+[15:00:03] [INFO]   |   nodes: 12
+[15:00:03] [INFO]   |   exec_connections: 0
+[15:00:03] [INFO]   |   data_connections: 0
+[15:00:03] [INFO]   |   variables: 0
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Warnings:
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerPawn (node n1) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n3) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n5) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n10) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: VSize (node n11) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n2 (SetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n5 (_MACRO_) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n3 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n1 (GetPlayerPawn) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n11 (VSize) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n9 (GetActorLocation) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n12 (SetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n6 (GetActorLocation) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n10 (UnknownMath) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n7 (SetVar) is disconnected
+[15:00:03] [INFO] Running: Validating Demo115_auto.dsl
+[15:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo115_auto.dsl
+[15:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo115_auto.dsl
+[15:00:03] [INFO]   | ============================================================
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Valid: YES
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Stats:
+[15:00:03] [INFO]   |   nodes: 6
+[15:00:03] [INFO]   |   exec_connections: 0
+[15:00:03] [INFO]   |   data_connections: 0
+[15:00:03] [INFO]   |   variables: 0
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Warnings:
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n2 (Branch) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n5 (SetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[15:00:03] [INFO] Running: Validating Demo116_auto.dsl
+[15:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo116_auto.dsl
+[15:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo116_auto.dsl
+[15:00:03] [INFO]   | ============================================================
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Valid: YES
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Stats:
+[15:00:03] [INFO]   |   nodes: 8
+[15:00:03] [INFO]   |   exec_connections: 0
+[15:00:03] [INFO]   |   data_connections: 0
+[15:00:03] [INFO]   |   variables: 0
+[15:00:03] [INFO]   | 
+[15:00:03] [INFO]   | Warnings:
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: FinishTask (node n3) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n4) — may be valid, not in vocabulary yet
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n4 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n6 (Branch) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n3 (FinishTask) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n7 (Branch) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[15:00:03] [INFO]   |   [!] [EventGraph] Event node n8 (Event_CustomEvent) has no connections
+[15:00:03] [INFO] Running: Validating Demo117_auto.dsl
+[15:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo117_auto.dsl

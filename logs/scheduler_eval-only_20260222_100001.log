@@ -1,0 +1,98 @@
+﻿[20260222_100001] Starting pipeline: eval-only
+Command: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\11_pipeline_orchestrator.py --eval-only
+
+GPU: NVIDIA GeForce RTX 4070 (12 GB) -> Using 3B model
+[10:00:04] [INFO] ============================================================
+[10:00:04] [INFO]   BLUEPRINT LLM PIPELINE — EVAL-ONLY
+[10:00:04] [INFO] ============================================================
+[10:00:04] [INFO] Root: C:\BlueprintLLM
+[10:00:04] [INFO] Time: 2026-02-22 10:00:04
+[10:00:04] [INFO] Last run: 2026-02-22T09:00:02.904715
+[10:00:04] [INFO] Model: v1
+[10:00:04] [INFO] ============================================================
+[10:00:04] [INFO]   STEP 6: Evaluate Model
+[10:00:04] [INFO] ============================================================
+[10:00:04] [INFO] Running: Evaluating C:\BlueprintLLM\models\blueprint-lora-v1\final
+[10:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\09_evaluate_model.py --model C:\BlueprintLLM\models\blueprint-lora-v1\final --report C:\BlueprintLLM\results\eval_v1_20260222.json
+[10:47:18] [INFO]   | Running full test suite (11 prompts)...
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   | Loading model: C:\BlueprintLLM\models\blueprint-lora-v1\final
+[10:47:18] [INFO]   |   Loaded system prompt from C:\BlueprintLLM\models\blueprint-lora-v1\system_prompt.txt
+[10:47:18] [INFO]   | Loading base: meta-llama/Llama-3.2-3B
+[10:47:18] [INFO]   | Loading LoRA: C:\BlueprintLLM\models\blueprint-lora-v1\final
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   | Running evaluation...
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   |   [1/11] T1_01 (Tier 1): Create a Blueprint that prints 'Hello World' when ... PASS (75%, 2127.5s)
+[10:47:18] [INFO]   |   [2/11] T1_02 (Tier 1): Create a Blueprint that destroys itself on begin p... PASS (85%, 70.6s)
+[10:47:18] [INFO]   |   [3/11] T1_03 (Tier 1): Make an Actor Blueprint that prints 'Game Over' at... PASS (75%, 68.0s)
+[10:47:18] [INFO]   |   [4/11] T2_01 (Tier 2): Create a Blueprint for an actor that rotates conti... FAIL (51%, 67.7s)
+[10:47:18] [INFO]   |   [5/11] T2_02 (Tier 2): Create a Blueprint that toggles a light on and off... PASS (75%, 68.4s)
+[10:47:18] [INFO]   |   [6/11] T2_03 (Tier 2): Create a Blueprint that prints a message when a pl... PASS (71%, 68.0s)
+[10:47:18] [INFO]   |   [7/11] T3_01 (Tier 3): Create a health pickup that adds 25 health on over... FAIL (53%, 56.9s)
+[10:47:18] [INFO]   |   [8/11] T3_02 (Tier 3): Create a health system with 100 max HP that checks... FAIL (45%, 67.9s)
+[10:47:18] [INFO]   |   [9/11] T3_03 (Tier 3): Create a Blueprint with a timer that prints 'Tick'... PASS (75%, 67.4s)
+[10:47:18] [INFO]   |   [10/11] T4_01 (Tier 4): Create a door that opens when a player presses E w... PASS (77%, 68.1s)
+[10:47:18] [INFO]   |   [11/11] T4_02 (Tier 4): Create a coin pickup Blueprint that adds 1 to a co... FAIL (63%, 68.0s)
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   | ======================================================================
+[10:47:18] [INFO]   | EVALUATION REPORT — C:\BlueprintLLM\models\blueprint-lora-v1\final
+[10:47:18] [INFO]   | Date: 2026-02-22 10:47
+[10:47:18] [INFO]   | ======================================================================
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   | Overall: 7/11 passed (64%)
+[10:47:18] [INFO]   | Average score: 67.7%
+[10:47:18] [INFO]   | Average generation time: 254.4s
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   | Tier     Passed       Avg Score    Status
+[10:47:18] [INFO]   | --------------------------------------------------
+[10:47:18] [INFO]   | Tier 1    3/3          78.3%        GOOD
+[10:47:18] [INFO]   | Tier 2    2/3          65.7%        LEARNING
+[10:47:18] [INFO]   | Tier 3    1/3          57.7%        LEARNING
+[10:47:18] [INFO]   | Tier 4    1/2          70.0%        GOOD
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   | ID       Tier   Score    Time     Result   Errors
+[10:47:18] [INFO]   | ----------------------------------------------------------------------
+[10:47:18] [INFO]   | T1_01    1      75%      2127.5   PASS     Missing expected node: Event_BeginPla...
+[10:47:18] [INFO]   | T1_02    1      85%      70.6     PASS     Parse error: Line 0: Found 3 parse er...
+[10:47:18] [INFO]   | T1_03    1      75%      68.0     PASS     Missing required keyword: 'Game Over'...
+[10:47:18] [INFO]   | T2_01    2      51%      67.7     FAIL     Missing required keyword: 'DATA'; Mis...
+[10:47:18] [INFO]   | T2_02    2      75%      68.4     PASS     Missing expected node: FlipFlop; Pars...
+[10:47:18] [INFO]   | T2_03    2      71%      68.0     PASS     Missing required keyword: 'DATA'; Too...
+[10:47:18] [INFO]   | T3_01    3      53%      56.9     FAIL     Missing EXEC connections; Missing req...
+[10:47:18] [INFO]   | T3_02    3      45%      67.8     FAIL     Missing EXEC connections; Missing req...
+[10:47:18] [INFO]   | T3_03    3      75%      67.4     PASS     Missing expected node: SetTimerByFunc...
+[10:47:18] [INFO]   | T4_01    4      77%      68.1     PASS     Missing required keyword: '200'; Miss...
+[10:47:18] [INFO]   | T4_02    4      63%      68.0     FAIL     Missing required keyword: 'DATA'; Mis...
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   | ----------------------------------------------------------------------
+[10:47:18] [INFO]   | RECOMMENDATIONS:
+[10:47:18] [INFO]   |   The model is learning! Basic patterns work but complex ones need more data.
+[10:47:18] [INFO]   |   -> Add more training examples for the specific patterns that are failing.
+[10:47:18] [INFO]   |   -> Check the errors above for common failure modes.
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   |   Worst failures (fix these first):
+[10:47:18] [INFO]   |     T3_02: Create a health system with 100 max HP that checks if health
+[10:47:18] [INFO]   |       -> Missing EXEC connections
+[10:47:18] [INFO]   |       -> Missing required keyword: 'EXEC'
+[10:47:18] [INFO]   |     T2_01: Create a Blueprint for an actor that rotates continuously on
+[10:47:18] [INFO]   |       -> Missing required keyword: 'DATA'
+[10:47:18] [INFO]   |       -> Missing expected node: Event_Tick
+[10:47:18] [INFO]   |     T3_01: Create a health pickup that adds 25 health on overlap and th
+[10:47:18] [INFO]   |       -> Missing EXEC connections
+[10:47:18] [INFO]   |       -> Missing required keyword: 'EXEC'
+[10:47:18] [INFO]   | ======================================================================
+[10:47:18] [INFO]   | 
+[10:47:18] [INFO]   | Detailed report saved to: C:\BlueprintLLM\results\eval_v1_20260222.json
+[10:47:18] [INFO] ============================================================
+[10:47:18] [INFO]   PIPELINE COMPLETE
+[10:47:18] [INFO] ============================================================
+[10:47:18] [INFO] Time: 47m 14s
+[10:47:18] [INFO] Version: v1
+[10:47:18] [INFO] Errors: 0
+[10:47:18] [INFO] Eval: 7/11 (68%)
+
+Log: C:\BlueprintLLM\logs\pipeline_20260222_100004.log
+
+RESULT: SUCCESS
+Finished at 2026-02-22 10:47:19

@@ -1,0 +1,73 @@
+﻿[20260221_103938] Starting pipeline: data-only
+Command: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\11_pipeline_orchestrator.py --data-only
+
+[10:39:38] [INFO] ============================================================
+[10:39:38] [INFO]   BLUEPRINT LLM PIPELINE — DATA-ONLY
+[10:39:38] [INFO] ============================================================
+[10:39:38] [INFO] Root: C:\BlueprintLLM
+[10:39:38] [INFO] Time: 2026-02-21 10:39:38
+[10:39:38] [INFO] Last run: 2026-02-21T10:35:51.705492
+[10:39:38] [INFO] Model: v0
+[10:39:38] [INFO] ============================================================
+[10:39:38] [INFO]   STEP 1: Analyze & Auto-Translate New Blueprint Exports
+[10:39:38] [INFO] ============================================================
+[10:39:38] [INFO] No new exports found. Skipping.
+[10:39:38] [INFO] ============================================================
+[10:39:38] [INFO]   STEP 2: Validate DSL Files
+[10:39:38] [INFO] ============================================================
+[10:39:38] [INFO] No DSL files. Skipping.
+[10:39:38] [INFO] ============================================================
+[10:39:38] [INFO]   STEP 3: Build Training Dataset
+[10:39:38] [INFO] ============================================================
+[10:39:38] [INFO] Running: Generating 500 synthetic examples
+[10:39:38] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\03_generate_synthetic_data.py --count 500 --output C:\BlueprintLLM\datasets\synthetic_train.jsonl --seed 42
+[10:39:39] [INFO]   | Generated 295 unique examples from 2500 attempts
+[10:39:39] [INFO]   | Saved 265 examples to C:\BlueprintLLM\datasets\synthetic_train.jsonl
+[10:39:39] [INFO]   | Saved 30 examples to C:\BlueprintLLM\datasets\validation.jsonl
+[10:39:39] [INFO]   | 
+[10:39:39] [INFO]   | Pattern distribution:
+[10:39:39] [INFO]   |   pattern_delay_sequence: 163 (55.3%)
+[10:39:39] [INFO]   |   pattern_key_press_action: 35 (11.9%)
+[10:39:39] [INFO]   |   pattern_health_system: 20 (6.8%)
+[10:39:39] [INFO]   |   pattern_toggle_visibility: 16 (5.4%)
+[10:39:39] [INFO]   |   pattern_branch_condition: 16 (5.4%)
+[10:39:39] [INFO]   |   pattern_rotating_actor: 15 (5.1%)
+[10:39:39] [INFO]   |   pattern_timer_loop: 15 (5.1%)
+[10:39:39] [INFO]   |   pattern_print_on_begin_play: 6 (2.0%)
+[10:39:39] [INFO]   |   pattern_pickup_item: 5 (1.7%)
+[10:39:39] [INFO]   |   pattern_overlap_trigger: 4 (1.4%)
+[10:39:39] [INFO]   265 synthetic examples
+[10:39:39] [INFO]   Total: 265 training examples
+[10:39:39] [INFO] Running: Validating merged dataset
+[10:39:39] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\datasets\train.jsonl
+[10:39:39] [INFO]   | Validating JSONL dataset: C:\BlueprintLLM\datasets\train.jsonl
+[10:39:39] [INFO]   | ============================================================
+[10:39:39] [INFO]   | 
+[10:39:39] [INFO]   | Total examples:  265
+[10:39:39] [INFO]   | Valid:           265 (100.0%)
+[10:39:39] [INFO]   | Invalid:         0
+[10:39:39] [INFO]   | Total warnings:  15
+[10:39:39] [INFO] ============================================================
+[10:39:39] [INFO]   STEP 4: Generate System Prompt
+[10:39:39] [INFO] ============================================================
+[10:39:39] [INFO] Running: Generating system prompt
+[10:39:39] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\08_generate_system_prompt.py --output C:\BlueprintLLM\scripts\system_prompt.txt
+[10:39:39] [INFO]   | Enhanced system prompt saved to: C:\BlueprintLLM\scripts\system_prompt.txt
+[10:39:39] [INFO]   |   Characters: 5,656
+[10:39:39] [INFO]   |   Estimated tokens: ~1,414
+[10:39:39] [INFO]   |   Node types: 34
+[10:39:39] [INFO]   | 
+[10:39:39] [INFO]   | NEXT STEPS:
+[10:39:39] [INFO]   |   This prompt is automatically used by the updated training and inference scripts.
+[10:39:39] [INFO]   |   If you add new nodes to blueprint_patterns.py, re-run this script to regenerate.
+[10:39:39] [INFO] ============================================================
+[10:39:39] [INFO]   PIPELINE COMPLETE
+[10:39:39] [INFO] ============================================================
+[10:39:39] [INFO] Time: 0m 0s
+[10:39:39] [INFO] Version: v0
+[10:39:39] [INFO] Errors: 0
+
+Log: C:\BlueprintLLM\logs\pipeline_20260221_103938.log
+
+RESULT: SUCCESS
+Finished at 2026-02-21 10:39:39

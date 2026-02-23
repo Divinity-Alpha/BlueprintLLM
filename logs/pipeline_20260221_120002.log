@@ -1,0 +1,65 @@
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO]   BLUEPRINT LLM PIPELINE — DATA-ONLY
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO] Root: C:\BlueprintLLM
+[12:00:02] [INFO] Time: 2026-02-21 12:00:02
+[12:00:02] [INFO] Last run: 2026-02-21T10:39:38.970437
+[12:00:02] [INFO] Model: v0
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO]   STEP 1: Analyze & Auto-Translate New Blueprint Exports
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO] No new exports found. Skipping.
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO]   STEP 2: Validate DSL Files
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO] No DSL files. Skipping.
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO]   STEP 3: Build Training Dataset
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO] Running: Generating 500 synthetic examples
+[12:00:02] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\03_generate_synthetic_data.py --count 500 --output C:\BlueprintLLM\datasets\synthetic_train.jsonl --seed 42
+[12:00:02] [INFO]   | Generated 295 unique examples from 2500 attempts
+[12:00:02] [INFO]   | Saved 265 examples to C:\BlueprintLLM\datasets\synthetic_train.jsonl
+[12:00:02] [INFO]   | Saved 30 examples to C:\BlueprintLLM\datasets\validation.jsonl
+[12:00:02] [INFO]   | 
+[12:00:02] [INFO]   | Pattern distribution:
+[12:00:02] [INFO]   |   pattern_delay_sequence: 163 (55.3%)
+[12:00:02] [INFO]   |   pattern_key_press_action: 35 (11.9%)
+[12:00:02] [INFO]   |   pattern_health_system: 20 (6.8%)
+[12:00:02] [INFO]   |   pattern_toggle_visibility: 16 (5.4%)
+[12:00:02] [INFO]   |   pattern_branch_condition: 16 (5.4%)
+[12:00:02] [INFO]   |   pattern_rotating_actor: 15 (5.1%)
+[12:00:02] [INFO]   |   pattern_timer_loop: 15 (5.1%)
+[12:00:02] [INFO]   |   pattern_print_on_begin_play: 6 (2.0%)
+[12:00:02] [INFO]   |   pattern_pickup_item: 5 (1.7%)
+[12:00:02] [INFO]   |   pattern_overlap_trigger: 4 (1.4%)
+[12:00:02] [INFO]   265 synthetic examples
+[12:00:02] [INFO]   Total: 265 training examples
+[12:00:02] [INFO] Running: Validating merged dataset
+[12:00:02] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\datasets\train.jsonl
+[12:00:02] [INFO]   | Validating JSONL dataset: C:\BlueprintLLM\datasets\train.jsonl
+[12:00:02] [INFO]   | ============================================================
+[12:00:02] [INFO]   | 
+[12:00:02] [INFO]   | Total examples:  265
+[12:00:02] [INFO]   | Valid:           265 (100.0%)
+[12:00:02] [INFO]   | Invalid:         0
+[12:00:02] [INFO]   | Total warnings:  15
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO]   STEP 4: Generate System Prompt
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO] Running: Generating system prompt
+[12:00:02] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\08_generate_system_prompt.py --output C:\BlueprintLLM\scripts\system_prompt.txt
+[12:00:02] [INFO]   | Enhanced system prompt saved to: C:\BlueprintLLM\scripts\system_prompt.txt
+[12:00:02] [INFO]   |   Characters: 5,656
+[12:00:02] [INFO]   |   Estimated tokens: ~1,414
+[12:00:02] [INFO]   |   Node types: 34
+[12:00:02] [INFO]   | 
+[12:00:02] [INFO]   | NEXT STEPS:
+[12:00:02] [INFO]   |   This prompt is automatically used by the updated training and inference scripts.
+[12:00:02] [INFO]   |   If you add new nodes to blueprint_patterns.py, re-run this script to regenerate.
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO]   PIPELINE COMPLETE
+[12:00:02] [INFO] ============================================================
+[12:00:02] [INFO] Time: 0m 0s
+[12:00:02] [INFO] Version: v0
+[12:00:02] [INFO] Errors: 0

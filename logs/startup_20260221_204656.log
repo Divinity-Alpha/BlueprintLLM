@@ -1,0 +1,37 @@
+﻿[20:46:56] ============================================
+[20:46:56]   Blueprint LLM Startup Check
+[20:46:56] ============================================
+[20:46:56] Time: 2026-02-21 20:46:56
+[20:46:56] Project: C:\BlueprintLLM
+[20:46:56] [OK] Project root exists
+[20:46:56] [OK] Python: Python 3.11.9
+[20:47:32] [OK] torch 2.5.1+cu121
+[20:48:00] [OK] transformers 5.2.0
+[20:48:20] [OK] peft 0.18.1
+[20:48:25] [OK] trl 0.28.0
+[20:48:31] [OK] bitsandbytes 0.49.2
+[20:48:35] [OK] GPU: NVIDIA GeForce RTX 4070 | 12.0 GB | Compute 8.9
+[20:48:36] [OK] HuggingFace: logged in as srmetalart
+[20:48:36] [OK] All directories present
+[20:48:36] [OK] All scripts present
+[20:48:38] [OK] Task active: BlueprintLLM - Data Processing (next run: MSFT_TaskTimeTrigger)
+[20:48:38] [OK] Task active: BlueprintLLM - Nightly Training (next run: MSFT_TaskDailyTrigger)
+[20:48:39] [OK] Task active: BlueprintLLM - Weekly Evaluation (next run: MSFT_TaskWeeklyTrigger)
+[20:48:39] [OK] Latest model: blueprint-lora-v1 (1 version(s) total)
+[20:48:39]      Last run: 2026-02-21T20:30:05.181759
+[20:48:39] [INFO] No pending exports. Drop .txt files in raw-data\clipboard-exports\
+[20:48:39] 
+[20:48:39] ============================================
+[20:48:39]   ALL CHECKS PASSED - System is ready
+[20:48:39] ============================================
+[20:48:39] 
+[20:48:39]   Scheduled tasks handle everything automatically:
+[20:48:39]     Every 2 hrs:  Process new exports
+[20:48:39]     2:00 AM:      Train + evaluate
+[20:48:39]     Sunday 10 AM: Weekly progress report
+[20:48:39] 
+[20:48:39]   Your only job: drop Blueprint .txt files in
+[20:48:39]     C:\BlueprintLLM\raw-data\clipboard-exports\
+[20:48:39] 
+[20:48:39] Startup check complete.
+[20:48:39] Log: C:\BlueprintLLM\logs\startup_20260221_204656.log

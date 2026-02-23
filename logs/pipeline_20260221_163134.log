@@ -1,0 +1,67 @@
+[16:31:34] [INFO] ============================================================
+[16:31:34] [INFO]   BLUEPRINT LLM PIPELINE — TRAIN-ONLY
+[16:31:34] [INFO] ============================================================
+[16:31:34] [INFO] Root: C:\BlueprintLLM
+[16:31:34] [INFO] Time: 2026-02-21 16:31:34
+[16:31:34] [INFO] Last run: 2026-02-21T16:28:19.527763
+[16:31:34] [INFO] Model: v0
+[16:31:34] [INFO] ============================================================
+[16:31:34] [INFO]   STEP 5: Train Model
+[16:31:34] [INFO] ============================================================
+[16:31:34] [INFO] Training v1 (data hash: 4cc7d21000d801d5)
+[16:31:34] [INFO] Running: Fine-tuning v1
+[16:31:34] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\04_train_blueprint_lora.py --base_model meta-llama/Llama-3.2-3B --dataset C:\BlueprintLLM\datasets\train.jsonl --output C:\BlueprintLLM\models\blueprint-lora-v1 --epochs 3 --batch_size 1 --lr 0.0002 --lora_r 64
+[16:31:51] [INFO]   | Loading enhanced system prompt with node reference...
+[16:31:51] [INFO]   |   Loaded enhanced system prompt from C:\BlueprintLLM\scripts\system_prompt.txt
+[16:31:51] [INFO]   |   (5,660 chars, ~1,415 tokens)
+[16:31:51] [INFO]   | GPU: NVIDIA GeForce GTX 1070
+[16:31:51] [INFO]   | VRAM: 8.0 GB
+[16:31:51] [INFO]   | NOTE: 8 GB VRAM detected. Adjusting config for low-VRAM GPU.
+[16:31:51] [INFO]   |   Reduced LoRA rank to 32 (alpha=64)
+[16:31:51] [INFO]   |   Reduced max_seq_length to 2048
+[16:31:51] [INFO]   |   Gradient checkpointing enabled
+[16:31:51] [INFO]   | Loaded 1393 examples from C:\BlueprintLLM\datasets\train.jsonl
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | --- Sample formatted example (first 300 chars) ---
+[16:31:51] [INFO]   | <|begin_of_text|><|start_header_id|>system<|end_header_id|>
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | You are a Blueprint programming assistant for Unreal Engine 5. Given a natural language description of desired game behavior, you generate valid Blueprint DSL code that implements that behavior.
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | ## DSL FORMAT RULES
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | Your output MUST follo
+[16:31:51] [INFO]   | --- End sample ---
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | Loaded 30 examples from C:\BlueprintLLM\datasets\validation.jsonl
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | --- Sample formatted example (first 300 chars) ---
+[16:31:51] [INFO]   | <|begin_of_text|><|start_header_id|>system<|end_header_id|>
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | You are a Blueprint programming assistant for Unreal Engine 5. Given a natural language description of desired game behavior, you generate valid Blueprint DSL code that implements that behavior.
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | ## DSL FORMAT RULES
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | Your output MUST follo
+[16:31:51] [INFO]   | --- End sample ---
+[16:31:51] [INFO]   | 
+[16:31:51] [INFO]   | Loading base model: meta-llama/Llama-3.2-3B
+[16:31:51] [INFO]   | Using 4-bit quantization (QLoRA)
+[16:31:51] [INFO]   | Trainable parameters: 48,627,712 / 3,261,377,536 (1.49%)
+[16:31:51] [ERROR]   FAILED (exit 1)
+[16:31:51] [ERROR]   ERR| warmup_ratio is deprecated and will be removed in v5.2. Use `warmup_steps` instead.
+[16:31:51] [ERROR]   ERR| Traceback (most recent call last):
+[16:31:51] [ERROR]   ERR|   File "C:\BlueprintLLM\scripts\04_train_blueprint_lora.py", line 510, in <module>
+[16:31:51] [ERROR]   ERR|     main()
+[16:31:51] [ERROR]   ERR|   File "C:\BlueprintLLM\scripts\04_train_blueprint_lora.py", line 503, in main
+[16:31:51] [ERROR]   ERR|     model_path = train(config)
+[16:31:51] [ERROR]   ERR|                  ^^^^^^^^^^^^^
+[16:31:51] [ERROR]   ERR|   File "C:\BlueprintLLM\scripts\04_train_blueprint_lora.py", line 332, in train
+[16:31:51] [ERROR]   ERR|     trainer = SFTTrainer(
+[16:31:51] [ERROR]   ERR|               ^^^^^^^^^^^
+[16:31:51] [ERROR]   ERR| TypeError: SFTTrainer.__init__() got an unexpected keyword argument 'tokenizer'
+[16:31:51] [INFO] ============================================================
+[16:31:51] [INFO]   PIPELINE COMPLETE
+[16:31:51] [INFO] ============================================================
+[16:31:51] [INFO] Time: 0m 17s
+[16:31:51] [INFO] Version: v0
+[16:31:51] [INFO] Errors: 12

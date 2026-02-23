@@ -1,0 +1,63 @@
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO]   BLUEPRINT LLM PIPELINE — FULL
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO] Root: C:\BlueprintLLM
+[10:32:58] [INFO] Time: 2026-02-21 10:32:58
+[10:32:58] [INFO] Last run: 2026-02-21T10:00:00.462900
+[10:32:58] [INFO] Model: v0
+[10:32:58] [INFO] *** DRY RUN ***
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO]   STEP 1: Analyze & Auto-Translate New Blueprint Exports
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO] Found 1 new export(s)
+[10:32:58] [INFO] Running: Analyzing hello_world.txt
+[10:32:58] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\01_analyze_blueprint_clipboard.py C:\BlueprintLLM\raw-data\clipboard-exports\hello_world.txt
+[10:32:58] [INFO]   [DRY RUN] Skipped
+[10:32:58] [INFO] Running: Auto-translating hello_world.txt
+[10:32:58] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\05_auto_translate_export.py C:\BlueprintLLM\raw-data\clipboard-exports\hello_world.txt --training --dsl-dir C:\BlueprintLLM\cleaned-data\parsed-blueprints --jsonl C:\BlueprintLLM\datasets\auto_translated.jsonl
+[10:32:58] [INFO]   [DRY RUN] Skipped
+[10:32:58] [INFO] Analyzed and translated 1/1
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO]   STEP 2: Validate DSL Files
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO] No DSL files. Skipping.
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO]   STEP 3: Build Training Dataset
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO] Running: Generating 500 synthetic examples
+[10:32:58] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\03_generate_synthetic_data.py --count 500 --output C:\BlueprintLLM\datasets\synthetic_train.jsonl --seed 42
+[10:32:58] [INFO]   [DRY RUN] Skipped
+[10:32:58] [INFO] Running: Validating merged dataset
+[10:32:58] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\datasets\train.jsonl
+[10:32:58] [INFO]   [DRY RUN] Skipped
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO]   STEP 4: Generate System Prompt
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO] Running: Generating system prompt
+[10:32:58] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\08_generate_system_prompt.py --output C:\BlueprintLLM\scripts\system_prompt.txt
+[10:32:58] [INFO]   [DRY RUN] Skipped
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO]   STEP 5: Train Model
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO] Training v1 (data hash: 7eb70257593da06f)
+[10:32:58] [INFO] Running: Fine-tuning v1
+[10:32:58] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\04_train_blueprint_lora.py --base_model meta-llama/Meta-Llama-3.1-8B --dataset C:\BlueprintLLM\datasets\train.jsonl --output C:\BlueprintLLM\models\blueprint-lora-v1 --epochs 3 --batch_size 1 --lr 0.0002 --lora_r 64
+[10:32:58] [INFO]   [DRY RUN] Skipped
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO]   STEP 6: Evaluate Model
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO] Running: Evaluating C:\BlueprintLLM\models\blueprint-lora-v1\final
+[10:32:58] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\09_evaluate_model.py --model C:\BlueprintLLM\models\blueprint-lora-v1\final --report C:\BlueprintLLM\results\eval_v1_20260221.json
+[10:32:58] [INFO]   [DRY RUN] Skipped
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO]   STEP 7: Training Summary
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO] Running: Training summary
+[10:32:58] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\10_training_dashboard.py --summary C:\BlueprintLLM\models\blueprint-lora-v1
+[10:32:58] [INFO]   [DRY RUN] Skipped
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO]   PIPELINE COMPLETE
+[10:32:58] [INFO] ============================================================
+[10:32:58] [INFO] Time: 0m 0s
+[10:32:58] [INFO] Version: v1
+[10:32:58] [INFO] Errors: 0

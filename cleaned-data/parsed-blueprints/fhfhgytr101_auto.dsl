@@ -1,0 +1,74 @@
+BLUEPRINT: BP_Fhfhgytr101
+PARENT: Actor
+
+GRAPH: EventGraph
+
+NODE n1: AddControllerPitchInput
+NODE n2: AddControllerYawInput
+NODE n3: AddMovementInput
+NODE n4: AddMovementInput
+NODE n5: GetControlRotation
+NODE n6: StopJumping
+NODE n7: GetForwardVector
+NODE n8: GetRightVector
+NODE n9: GetControlRotation
+NODE n10: CastToPlayerController
+NODE n11: AddMappingContext
+NODE n12: Event_BeginPlay
+NODE n13: GetController
+NODE n14: _MACRO_
+NODE n15: Event_CustomEvent
+NODE n16: SetVar
+NODE n17: Crouch
+NODE n18: Event_CustomEvent
+NODE n19: SetVar
+NODE n20: UnCrouch
+NODE n21: _MACRO_
+NODE n22: Event_CustomEvent
+NODE n23: SetVar
+NODE n24: GetVar
+NODE n25: SetVar
+NODE n26: Event_CustomEvent
+NODE n27: SetVar
+NODE n28: GetVar
+NODE n29: SetVar
+NODE n30: GetVar
+NODE n31: SetVar
+NODE n32: Lerp
+NODE n33: Jump
+NODE n34: GetActorLocation
+NODE n35: GetActorRotation
+NODE n36: GetUpVector
+NODE n37: UnknownMath
+NODE n38: UnknownMath
+NODE n39: BooleanNOT
+NODE n40: Branch
+NODE n41: SphereTraceSingle
+NODE n42: Sequence
+NODE n43: Start_Crouch
+NODE n44: Stop_Crouch
+NODE n45: Start_Sprint
+NODE n46: Stop_Sprint
+NODE n47: GetVar
+NODE n48: IsFalling
+NODE n49: Branch
+NODE n50: BooleanNOT
+NODE n51: SetVar
+NODE n52: ClampFloat
+NODE n53: Branch
+NODE n54: GetVar
+NODE n55: IsCrouching
+NODE n56: BooleanNOT
+NODE n57: GetVar
+NODE n58: BeginSettings
+NODE n59: GetVar
+NODE n60: GetVar
+NODE n61: Character_Interact
+NODE n62: Open Loadout Menu
+NODE n63: GetVar
+NODE n64: GetController
+NODE n65: CastToPlayerController
+NODE n66: GetVar
+NODE n67: EventToggleAttachment
+NODE n68: GetVar
+NODE n69: FireWeapon

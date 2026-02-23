@@ -1,0 +1,136 @@
+[17:01:12] [INFO] ============================================================
+[17:01:12] [INFO]   BLUEPRINT LLM PIPELINE — TRAIN-ONLY
+[17:01:12] [INFO] ============================================================
+[17:01:12] [INFO] Root: C:\BlueprintLLM
+[17:01:12] [INFO] Time: 2026-02-21 17:01:12
+[17:01:12] [INFO] Last run: 2026-02-21T17:00:00.785902
+[17:01:12] [INFO] Model: v0
+[17:01:12] [INFO] ============================================================
+[17:01:12] [INFO]   STEP 5: Train Model
+[17:01:12] [INFO] ============================================================
+[17:01:12] [INFO] Training v1 (data hash: 4cc7d21000d801d5)
+[17:01:12] [INFO] Running: Fine-tuning v1
+[17:01:12] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\04_train_blueprint_lora.py --base_model meta-llama/Llama-3.2-3B --dataset C:\BlueprintLLM\datasets\train.jsonl --output C:\BlueprintLLM\models\blueprint-lora-v1 --epochs 3 --batch_size 1 --lr 0.0002 --lora_r 64
+[18:25:57] [INFO]   | Loading enhanced system prompt with node reference...
+[19:08:59] [INFO]   |   Loaded enhanced system prompt from C:\BlueprintLLM\scripts\system_prompt.txt
+[19:08:59] [INFO]   |   (5,660 chars, ~1,415 tokens)
+[19:08:59] [INFO]   | GPU: NVIDIA GeForce GTX 1070
+[19:08:59] [INFO]   | VRAM: 8.0 GB
+[19:08:59] [INFO]   | Compute capability: 6.1
+[19:08:59] [INFO]   |   Precision: float32 training (Pascal/older GPU — fp16/bf16 grad scaling unreliable)
+[19:08:59] [INFO]   | NOTE: 8 GB VRAM detected. Adjusting config for low-VRAM GPU.
+[19:08:59] [INFO]   |   Reduced LoRA rank to 32 (alpha=64)
+[19:08:59] [INFO]   |   Reduced max_seq_length to 2048
+[19:08:59] [INFO]   |   Gradient checkpointing enabled
+[19:08:59] [INFO]   | Loaded 1393 examples from C:\BlueprintLLM\datasets\train.jsonl
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | --- Sample formatted example (first 300 chars) ---
+[19:08:59] [INFO]   | <|begin_of_text|><|start_header_id|>system<|end_header_id|>
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | You are a Blueprint programming assistant for Unreal Engine 5. Given a natural language description of desired game behavior, you generate valid Blueprint DSL code that implements that behavior.
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | ## DSL FORMAT RULES
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | Your output MUST follo
+[19:08:59] [INFO]   | --- End sample ---
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | Loaded 30 examples from C:\BlueprintLLM\datasets\validation.jsonl
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | --- Sample formatted example (first 300 chars) ---
+[19:08:59] [INFO]   | <|begin_of_text|><|start_header_id|>system<|end_header_id|>
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | You are a Blueprint programming assistant for Unreal Engine 5. Given a natural language description of desired game behavior, you generate valid Blueprint DSL code that implements that behavior.
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | ## DSL FORMAT RULES
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | Your output MUST follo
+[19:08:59] [INFO]   | --- End sample ---
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | Loading base model: meta-llama/Llama-3.2-3B
+[19:08:59] [INFO]   | Using 4-bit quantization (QLoRA)
+[19:08:59] [INFO]   | Trainable parameters: 48,627,712 / 3,261,377,536 (1.49%)
+[19:08:59] [INFO]   | Using TrainingArguments (older trl API)
+[19:08:59] [INFO]   | SFTTrainer params detected: ['model', 'train_dataset', 'eval_dataset', 'processing_class']
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | ============================================================
+[19:08:59] [INFO]   | STARTING TRAINING
+[19:08:59] [INFO]   | ============================================================
+[19:08:59] [INFO]   |   Model: meta-llama/Llama-3.2-3B
+[19:08:59] [INFO]   |   System prompt: ENHANCED (with node reference)
+[19:08:59] [INFO]   |   System prompt size: ~1,415 tokens
+[19:08:59] [INFO]   |   Dataset: 1393 examples
+[19:08:59] [INFO]   |   Epochs: 3
+[19:08:59] [INFO]   |   Max sequence length: 2048
+[19:08:59] [INFO]   |   Effective batch size: 8
+[19:08:59] [INFO]   |   Learning rate: 0.0002
+[19:08:59] [INFO]   |   LoRA rank: 32
+[19:08:59] [INFO]   |   Output: C:\BlueprintLLM\models\blueprint-lora-v1
+[19:08:59] [INFO]   | ============================================================
+[19:08:59] [INFO]   | 
+[19:08:59] [INFO]   | {'loss': '1.068', 'grad_norm': '0.2275', 'learning_rate': '0.00018', 'entropy': '1.226', 'num_tokens': '8.192e+04', 'mean_token_accuracy': '0.7674', 'epoch': '0.05743'}
+[19:08:59] [INFO]   | {'loss': '0.08155', 'grad_norm': '0.06348', 'learning_rate': '0.0001965', 'entropy': '0.1162', 'num_tokens': '1.638e+05', 'mean_token_accuracy': '0.9873', 'epoch': '0.1149'}
+[19:08:59] [INFO]   | {'loss': '0.03596', 'grad_norm': '0.003967', 'learning_rate': '0.0001926', 'entropy': '0.04359', 'num_tokens': '2.458e+05', 'mean_token_accuracy': '0.9967', 'epoch': '0.1723'}
+[19:08:59] [INFO]   | {'loss': '0.03205', 'grad_norm': '0.003189', 'learning_rate': '0.0001887', 'entropy': '0.04037', 'num_tokens': '3.277e+05', 'mean_token_accuracy': '0.9971', 'epoch': '0.2297'}
+[19:08:59] [INFO]   | {'loss': '0.02947', 'grad_norm': '0.00351', 'learning_rate': '0.0001849', 'entropy': '0.03985', 'num_tokens': '4.096e+05', 'mean_token_accuracy': '0.9971', 'epoch': '0.2872'}
+[19:08:59] [INFO]   | {'loss': '0.02622', 'grad_norm': '0.00412', 'learning_rate': '0.000181', 'entropy': '0.03895', 'num_tokens': '4.915e+05', 'mean_token_accuracy': '0.9971', 'epoch': '0.3446'}
+[19:08:59] [INFO]   | {'loss': '0.02216', 'grad_norm': '0.003113', 'learning_rate': '0.0001771', 'entropy': '0.03248', 'num_tokens': '5.734e+05', 'mean_token_accuracy': '0.998', 'epoch': '0.402'}
+[19:08:59] [INFO]   | {'loss': '0.02091', 'grad_norm': '0.00209', 'learning_rate': '0.0001732', 'entropy': '0.02157', 'num_tokens': '6.554e+05', 'mean_token_accuracy': '0.998', 'epoch': '0.4594'}
+[19:08:59] [INFO]   | {'loss': '0.01971', 'grad_norm': '0.002106', 'learning_rate': '0.0001693', 'entropy': '0.02977', 'num_tokens': '7.373e+05', 'mean_token_accuracy': '0.998', 'epoch': '0.5169'}
+[19:08:59] [INFO]   | {'loss': '0.01881', 'grad_norm': '0.001877', 'learning_rate': '0.0001654', 'entropy': '0.02638', 'num_tokens': '8.192e+05', 'mean_token_accuracy': '0.998', 'epoch': '0.5743'}
+[19:08:59] [ERROR]   FAILED (exit 1)
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR| The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'pad_token_id': 128001}.
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                   
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                   
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                   
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                   
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                   
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                   
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                   
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                     
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                     
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|                                                      
+[19:08:59] [ERROR]   ERR| 
+[19:08:59] [ERROR]   ERR|   File "C:\BlueprintLLM\scripts\04_train_blueprint_lora.py", line 589, in <module>
+[19:08:59] [ERROR]   ERR|     main()
+[19:08:59] [ERROR]   ERR|   File "C:\BlueprintLLM\scripts\04_train_blueprint_lora.py", line 582, in main
+[19:08:59] [ERROR]   ERR|     model_path = train(config)
+[19:08:59] [ERROR]   ERR|                  ^^^^^^^^^^^^^
+[19:08:59] [ERROR]   ERR|   File "C:\BlueprintLLM\scripts\04_train_blueprint_lora.py", line 412, in train
+[19:08:59] [ERROR]   ERR|     trainer.train()
+[19:08:59] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\transformers\trainer.py", line 1412, in train
+[19:08:59] [ERROR]   ERR|     return inner_training_loop(
+[19:08:59] [ERROR]   ERR|            ^^^^^^^^^^^^^^^^^^^^
+[19:08:59] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\transformers\trainer.py", line 1813, in _inner_training_loop
+[19:08:59] [ERROR]   ERR|     self._maybe_log_save_evaluate(
+[19:08:59] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\transformers\trainer.py", line 2125, in _maybe_log_save_evaluate
+[19:08:59] [ERROR]   ERR|     metrics = self._evaluate(trial, ignore_keys_for_eval)
+[19:08:59] [ERROR]   ERR|               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[19:08:59] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\transformers\trainer.py", line 2983, in _evaluate
+[19:08:59] [ERROR]   ERR|     metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+[19:08:59] [ERROR]   ERR|               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[19:08:59] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\transformers\trainer.py", line 2568, in evaluate
+[19:08:59] [ERROR]   ERR|     output = self.evaluation_loop(
+[19:08:59] [ERROR]   ERR|              ^^^^^^^^^^^^^^^^^^^^^
+[19:08:59] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\transformers\trainer.py", line 2695, in evaluation_loop
+[19:08:59] [INFO] ============================================================
+[19:08:59] [INFO]   PIPELINE COMPLETE
+[19:08:59] [INFO] ============================================================
+[19:08:59] [INFO] Time: 127m 46s
+[19:08:59] [INFO] Version: v0
+[19:08:59] [INFO] Errors: 51

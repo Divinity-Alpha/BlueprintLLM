@@ -1,0 +1,105 @@
+[16:37:03] [INFO] ============================================================
+[16:37:03] [INFO]   BLUEPRINT LLM PIPELINE — TRAIN-ONLY
+[16:37:03] [INFO] ============================================================
+[16:37:03] [INFO] Root: C:\BlueprintLLM
+[16:37:03] [INFO] Time: 2026-02-21 16:37:03
+[16:37:03] [INFO] Last run: 2026-02-21T16:33:59.446097
+[16:37:03] [INFO] Model: v0
+[16:37:03] [INFO] ============================================================
+[16:37:03] [INFO]   STEP 5: Train Model
+[16:37:03] [INFO] ============================================================
+[16:37:03] [INFO] Training v1 (data hash: 4cc7d21000d801d5)
+[16:37:03] [INFO] Running: Fine-tuning v1
+[16:37:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\04_train_blueprint_lora.py --base_model meta-llama/Llama-3.2-3B --dataset C:\BlueprintLLM\datasets\train.jsonl --output C:\BlueprintLLM\models\blueprint-lora-v1 --epochs 3 --batch_size 1 --lr 0.0002 --lora_r 64
+[16:38:13] [INFO]   | Loading enhanced system prompt with node reference...
+[16:38:13] [INFO]   |   Loaded enhanced system prompt from C:\BlueprintLLM\scripts\system_prompt.txt
+[16:38:13] [INFO]   |   (5,660 chars, ~1,415 tokens)
+[16:38:13] [INFO]   | GPU: NVIDIA GeForce GTX 1070
+[16:38:13] [INFO]   | VRAM: 8.0 GB
+[16:38:13] [INFO]   | NOTE: 8 GB VRAM detected. Adjusting config for low-VRAM GPU.
+[16:38:13] [INFO]   |   Reduced LoRA rank to 32 (alpha=64)
+[16:38:13] [INFO]   |   Reduced max_seq_length to 2048
+[16:38:13] [INFO]   |   Gradient checkpointing enabled
+[16:38:13] [INFO]   | Loaded 1393 examples from C:\BlueprintLLM\datasets\train.jsonl
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | --- Sample formatted example (first 300 chars) ---
+[16:38:13] [INFO]   | <|begin_of_text|><|start_header_id|>system<|end_header_id|>
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | You are a Blueprint programming assistant for Unreal Engine 5. Given a natural language description of desired game behavior, you generate valid Blueprint DSL code that implements that behavior.
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | ## DSL FORMAT RULES
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | Your output MUST follo
+[16:38:13] [INFO]   | --- End sample ---
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | Loaded 30 examples from C:\BlueprintLLM\datasets\validation.jsonl
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | --- Sample formatted example (first 300 chars) ---
+[16:38:13] [INFO]   | <|begin_of_text|><|start_header_id|>system<|end_header_id|>
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | You are a Blueprint programming assistant for Unreal Engine 5. Given a natural language description of desired game behavior, you generate valid Blueprint DSL code that implements that behavior.
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | ## DSL FORMAT RULES
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | Your output MUST follo
+[16:38:13] [INFO]   | --- End sample ---
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | Loading base model: meta-llama/Llama-3.2-3B
+[16:38:13] [INFO]   | Using 4-bit quantization (QLoRA)
+[16:38:13] [INFO]   | Trainable parameters: 48,627,712 / 3,261,377,536 (1.49%)
+[16:38:13] [INFO]   | Using TrainingArguments (older trl API)
+[16:38:13] [INFO]   | SFTTrainer params detected: ['model', 'train_dataset', 'eval_dataset', 'processing_class']
+[16:38:13] [INFO]   | 
+[16:38:13] [INFO]   | ============================================================
+[16:38:13] [INFO]   | STARTING TRAINING
+[16:38:13] [INFO]   | ============================================================
+[16:38:13] [INFO]   |   Model: meta-llama/Llama-3.2-3B
+[16:38:13] [INFO]   |   System prompt: ENHANCED (with node reference)
+[16:38:13] [INFO]   |   System prompt size: ~1,415 tokens
+[16:38:13] [INFO]   |   Dataset: 1393 examples
+[16:38:13] [INFO]   |   Epochs: 3
+[16:38:13] [INFO]   |   Max sequence length: 2048
+[16:38:13] [INFO]   |   Effective batch size: 8
+[16:38:13] [INFO]   |   Learning rate: 0.0002
+[16:38:13] [INFO]   |   LoRA rank: 32
+[16:38:13] [INFO]   |   Output: C:\BlueprintLLM\models\blueprint-lora-v1
+[16:38:13] [INFO]   | ============================================================
+[16:38:13] [ERROR]   FAILED (exit 1)
+[16:38:13] [ERROR]   ERR| 
+[16:38:13] [ERROR]   ERR| 
+[16:38:13] [ERROR]   ERR| 
+[16:38:13] [ERROR]   ERR| 
+[16:38:13] [ERROR]   ERR| 
+[16:38:13] [ERROR]   ERR| 
+[16:38:13] [ERROR]   ERR| The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'pad_token_id': 128001}.
+[16:38:13] [ERROR]   ERR| 
+[16:38:13] [ERROR]   ERR|   File "C:\BlueprintLLM\scripts\04_train_blueprint_lora.py", line 558, in <module>
+[16:38:13] [ERROR]   ERR|     main()
+[16:38:13] [ERROR]   ERR|   File "C:\BlueprintLLM\scripts\04_train_blueprint_lora.py", line 551, in main
+[16:38:13] [ERROR]   ERR|     model_path = train(config)
+[16:38:13] [ERROR]   ERR|                  ^^^^^^^^^^^^^
+[16:38:13] [ERROR]   ERR|   File "C:\BlueprintLLM\scripts\04_train_blueprint_lora.py", line 407, in train
+[16:38:13] [ERROR]   ERR|     trainer.train()
+[16:38:13] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\transformers\trainer.py", line 1412, in train
+[16:38:13] [ERROR]   ERR|     return inner_training_loop(
+[16:38:13] [ERROR]   ERR|            ^^^^^^^^^^^^^^^^^^^^
+[16:38:13] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\transformers\trainer.py", line 1775, in _inner_training_loop
+[16:38:13] [ERROR]   ERR|     _grad_norm = self.accelerator.clip_grad_norm_(
+[16:38:13] [ERROR]   ERR|                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[16:38:13] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\accelerate\accelerator.py", line 3008, in clip_grad_norm_
+[16:38:13] [ERROR]   ERR|     self.unscale_gradients()
+[16:38:13] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\accelerate\accelerator.py", line 2946, in unscale_gradients
+[16:38:13] [ERROR]   ERR|     self.scaler.unscale_(opt)
+[16:38:13] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\torch\amp\grad_scaler.py", line 338, in unscale_
+[16:38:13] [ERROR]   ERR|     optimizer_state["found_inf_per_device"] = self._unscale_grads_(
+[16:38:13] [ERROR]   ERR|                                               ^^^^^^^^^^^^^^^^^^^^^
+[16:38:13] [ERROR]   ERR|   File "C:\BlueprintLLM\venv\Lib\site-packages\torch\amp\grad_scaler.py", line 279, in _unscale_grads_
+[16:38:13] [ERROR]   ERR|     torch._amp_foreach_non_finite_check_and_unscale_(
+[16:38:13] [ERROR]   ERR| RuntimeError: "_amp_foreach_non_finite_check_and_unscale_cuda" not implemented for 'BFloat16'
+[16:38:13] [ERROR]   ERR| 
+[16:38:13] [INFO] ============================================================
+[16:38:13] [INFO]   PIPELINE COMPLETE
+[16:38:13] [INFO] ============================================================
+[16:38:13] [INFO] Time: 1m 9s
+[16:38:13] [INFO] Version: v0
+[16:38:13] [INFO] Errors: 33

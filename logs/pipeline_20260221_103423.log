@@ -1,0 +1,55 @@
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO]   BLUEPRINT LLM PIPELINE — DATA-ONLY
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO] Root: C:\BlueprintLLM
+[10:34:23] [INFO] Time: 2026-02-21 10:34:23
+[10:34:23] [INFO] Last run: 2026-02-21T10:00:00.462900
+[10:34:23] [INFO] Model: v0
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO]   STEP 1: Analyze & Auto-Translate New Blueprint Exports
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO] No new exports found. Skipping.
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO]   STEP 2: Validate DSL Files
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO] No DSL files. Skipping.
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO]   STEP 3: Build Training Dataset
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO] Running: Generating 500 synthetic examples
+[10:34:23] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\03_generate_synthetic_data.py --count 500 --output C:\BlueprintLLM\datasets\synthetic_train.jsonl --seed 42
+[10:34:23] [INFO]   | Generated 295 unique examples from 2500 attempts
+[10:34:23] [INFO]   | Saved 265 examples to C:\BlueprintLLM\datasets\synthetic_train.jsonl
+[10:34:23] [INFO]   | Saved 30 examples to C:\BlueprintLLM\datasets\validation.jsonl
+[10:34:23] [INFO]   | 
+[10:34:23] [INFO]   | Pattern distribution:
+[10:34:23] [INFO]   |   pattern_delay_sequence: 163 (55.3%)
+[10:34:23] [INFO]   |   pattern_key_press_action: 35 (11.9%)
+[10:34:23] [INFO]   |   pattern_health_system: 20 (6.8%)
+[10:34:23] [INFO]   |   pattern_toggle_visibility: 16 (5.4%)
+[10:34:23] [INFO]   |   pattern_branch_condition: 16 (5.4%)
+[10:34:23] [INFO]   |   pattern_rotating_actor: 15 (5.1%)
+[10:34:23] [INFO]   |   pattern_timer_loop: 15 (5.1%)
+[10:34:23] [INFO]   |   pattern_print_on_begin_play: 6 (2.0%)
+[10:34:23] [INFO]   |   pattern_pickup_item: 5 (1.7%)
+[10:34:23] [INFO]   |   pattern_overlap_trigger: 4 (1.4%)
+[10:34:23] [INFO]   265 synthetic examples
+[10:34:23] [INFO]   Total: 265 training examples
+[10:34:23] [ERROR] Pipeline exception: 'C:\\BlueprintLLM\\datasets\\validation.jsonl' and 'C:\\BlueprintLLM\\datasets\\validation.jsonl' are the same file
+[10:34:23] [ERROR] Traceback (most recent call last):
+  File "C:\BlueprintLLM\scripts\11_pipeline_orchestrator.py", line 292, in run_pipeline
+    step_merge(cfg, log, dry_run)
+  File "C:\BlueprintLLM\scripts\11_pipeline_orchestrator.py", line 209, in step_merge
+    shutil.copy2(str(sv), str(cfg.val_data))
+  File "C:\Program Files\Python311\Lib\shutil.py", line 448, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "C:\Program Files\Python311\Lib\shutil.py", line 236, in copyfile
+    raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+shutil.SameFileError: 'C:\\BlueprintLLM\\datasets\\validation.jsonl' and 'C:\\BlueprintLLM\\datasets\\validation.jsonl' are the same file
+
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO]   PIPELINE COMPLETE
+[10:34:23] [INFO] ============================================================
+[10:34:23] [INFO] Time: 0m 0s
+[10:34:23] [INFO] Version: v0
+[10:34:23] [INFO] Errors: 2

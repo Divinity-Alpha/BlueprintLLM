@@ -1,0 +1,2397 @@
+[09:00:02] [INFO] ============================================================
+[09:00:02] [INFO]   BLUEPRINT LLM PIPELINE — DATA-ONLY
+[09:00:02] [INFO] ============================================================
+[09:00:02] [INFO] Root: C:\BlueprintLLM
+[09:00:02] [INFO] Time: 2026-02-22 09:00:02
+[09:00:02] [INFO] Last run: 2026-02-22T08:00:02.813515
+[09:00:02] [INFO] Model: v1
+[09:00:02] [INFO] ============================================================
+[09:00:02] [INFO]   STEP 1: Analyze & Auto-Translate New Blueprint Exports
+[09:00:02] [INFO] ============================================================
+[09:00:02] [INFO] No new exports found. Skipping.
+[09:00:02] [INFO] ============================================================
+[09:00:02] [INFO]   STEP 2: Validate DSL Files
+[09:00:02] [INFO] ============================================================
+[09:00:02] [INFO] Running: Validating Demo111_auto.dsl
+[09:00:02] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo111_auto.dsl
+[09:00:02] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo111_auto.dsl
+[09:00:02] [INFO]   | ============================================================
+[09:00:02] [INFO]   | 
+[09:00:02] [INFO]   | Valid: YES
+[09:00:02] [INFO]   | 
+[09:00:02] [INFO]   | Stats:
+[09:00:02] [INFO]   |   nodes: 9
+[09:00:02] [INFO]   |   exec_connections: 0
+[09:00:02] [INFO]   |   data_connections: 0
+[09:00:02] [INFO]   |   variables: 0
+[09:00:02] [INFO]   | 
+[09:00:02] [INFO]   | Warnings:
+[09:00:02] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:02] [INFO]   |   [!] [EventGraph] Unknown node type: Do (node n3) — may be valid, not in vocabulary yet
+[09:00:02] [INFO]   |   [!] [EventGraph] Unknown node type: FinishTask (node n5) — may be valid, not in vocabulary yet
+[09:00:02] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n6) — may be valid, not in vocabulary yet
+[09:00:02] [INFO]   |   [!] [EventGraph] Node n8 (Branch) is disconnected
+[09:00:02] [INFO]   |   [!] [EventGraph] Node n7 (GetVar) is disconnected
+[09:00:02] [INFO]   |   [!] [EventGraph] Node n3 (Do) is disconnected
+[09:00:02] [INFO]   |   [!] [EventGraph] Event node n4 (Event_CustomEvent) has no connections
+[09:00:02] [INFO]   |   [!] [EventGraph] Node n9 (Branch) is disconnected
+[09:00:02] [INFO]   |   [!] [EventGraph] Node n5 (FinishTask) is disconnected
+[09:00:02] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:02] [INFO]   |   [!] [EventGraph] Event node n6 (Event_Unknown) has no connections
+[09:00:02] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[09:00:02] [INFO] Running: Validating Demo112_auto.dsl
+[09:00:02] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo112_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo112_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 9
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n2) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: K2_SetFocus (node n3) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n5) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: K2_ClearFocus (node n9) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n5 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n7 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n3 (K2_SetFocus) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n9 (K2_ClearFocus) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n2 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n8 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n1 (GetVar) is disconnected
+[09:00:03] [INFO] Running: Validating Demo113_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo113_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo113_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 9
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n2) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n3) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: K2_SetFocalPoint (node n7) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: K2_ClearFocus (node n9) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n9 (K2_ClearFocus) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n2 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n3 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n7 (K2_SetFocalPoint) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n5 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n1 (GetVar) is disconnected
+[09:00:03] [INFO] Running: Validating Demo114_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo114_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo114_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 12
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerPawn (node n1) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n3) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n5) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n10) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: VSize (node n11) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n1 (GetPlayerPawn) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n7 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n9 (GetActorLocation) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n3 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n11 (VSize) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (GetActorLocation) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n10 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n2 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n5 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n12 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:03] [INFO] Running: Validating Demo115_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo115_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo115_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 6
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n5 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n2 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:03] [INFO] Running: Validating Demo116_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo116_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo116_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 8
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: FinishTask (node n3) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n4) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n4 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n7 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n8 (Event_CustomEvent) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n3 (FinishTask) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[09:00:03] [INFO] Running: Validating Demo117_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo117_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo117_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 27
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: K2_GetComponentToWorld (node n4) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n9) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Spawn (node n11) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Spawn (node n15) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n16) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n21) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Spawn (node n22) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n24) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n27) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n5 (Event_CustomEvent) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n9 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n20 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n18 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n15 (Spawn) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n25 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n19 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n23 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n11 (Spawn) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n2 (Event_CustomEvent) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n7 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n21 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n22 (Spawn) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (K2_GetComponentToWorld) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n24 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n27 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (RetriggerableDelay) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n14 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n12 (Delay) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n16 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n13 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n1 (Event_BeginPlay) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n17 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n10 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n26 (Delay) is disconnected
+[09:00:03] [INFO] Running: Validating Demo118_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo118_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo118_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 131
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n2) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n5) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n6) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: ApplyDamage (node n8) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetUserWidgetObject (node n13) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: CastToObject (node n14) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Set (node n17) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n19) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SetHiddenInGame (node n22) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: DisableMovement (node n28) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SetCollisionEnabled (node n30) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SpawnSystemAtLocation (node n31) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_VectorToRotator (node n32) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetMass (node n35) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n36) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: IsSimulatingPhysics (node n37) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n39) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n41) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n43) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SphereTraceMultiForObjects (node n44) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n47) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: BreakHitResult (node n48) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n50) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n52) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Vector_Up (node n54) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n55) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n56) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: ActorHasTag (node n57) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetAnimInstance (node n60) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Montage_Stop (node n61) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n62) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetSocketLocation (node n64) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SetPhysicsBlendWeight (node n65) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n67) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SetPhysicsBlendWeight (node n68) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n71) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SetBodySimulatePhysics (node n73) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n77) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n81) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetAnimInstance (node n83) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Montage_JumpToSection (node n85) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Handle (node n91) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n92) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n99) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n115) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n117) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n118) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetAnimInstance (node n121) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SelectName (node n122) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Montage_JumpToSection (node n125) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Montage_Stop (node n130) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n130 (Montage_Stop) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n111 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n8 (ApplyDamage) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n123 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n57 (ActorHasTag) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n82 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n19 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n126 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n65 (SetPhysicsBlendWeight) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n79 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n87 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n14 (CastToObject) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n89 (RandomInteger) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n121 (GetAnimInstance) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n81 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n98 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n15 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n44 (SphereTraceMultiForObjects) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n92 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n60 (GetAnimInstance) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n26 (SetSimulatePhysics) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n49 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n17 (Set) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n5 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n83 (GetAnimInstance) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n42 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n45 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n108 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n24 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n124 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n84 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n27 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n13 (GetUserWidgetObject) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n128 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n64 (GetSocketLocation) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n71 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n16 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n112 (RandomInteger) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n1 (Event_BeginPlay) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n78 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n77 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n99 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n75 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n119 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n117 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n46 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n58 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n69 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n18 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n31 (SpawnSystemAtLocation) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n113 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n105 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n54 (Vector_Up) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n25 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n40 (GetActorForwardVector) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n70 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n76 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n109 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n73 (SetBodySimulatePhysics) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n28 (DisableMovement) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n94 (AddImpulse) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n97 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n102 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n107 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n11 (DestroyActor) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n10 (Delay) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n39 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n110 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n41 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n116 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n20 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n62 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n101 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n118 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n114 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n34 (AddImpulse) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n35 (GetMass) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n59 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n51 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n90 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n50 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n106 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n48 (BreakHitResult) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n55 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n86 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n52 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n100 (Event_CustomEvent) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n56 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n68 (SetPhysicsBlendWeight) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n120 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n103 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n38 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n22 (SetHiddenInGame) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n104 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n30 (SetCollisionEnabled) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n129 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n72 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n61 (Montage_Stop) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n21 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n67 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n33 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n127 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n122 (SelectName) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n93 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n2 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n125 (Montage_JumpToSection) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n96 (Sequence) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n47 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n66 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n80 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n32 (Conv_VectorToRotator) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n43 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n131 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n91 (Handle) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n12 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n63 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n85 (Montage_JumpToSection) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n36 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n29 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n74 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n95 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n115 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n88 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n9 (Event_AnyDamage) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n23 (Event_CustomEvent) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n53 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n3 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n7 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n37 (IsSimulatingPhysics) is disconnected
+[09:00:03] [INFO] Running: Validating Demo119_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo119_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo119_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 10
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n2) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerPawn (node n3) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n6) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n8) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n9) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerPawn (node n10) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n8 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n1 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n7 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n2 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n10 (GetPlayerPawn) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n9 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n3 (GetPlayerPawn) is disconnected
+[09:00:03] [INFO] Running: Validating Demo120_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo120_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo120_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 16
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n2) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerPawn (node n3) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n6) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n8) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n9) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerPawn (node n10) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n12) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetController (node n13) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Set (node n15) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetTransform (node n16) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n10 (GetPlayerPawn) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n12 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n2 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (_MACRO_) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n7 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n9 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n1 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n15 (Set) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n16 (GetTransform) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n3 (GetPlayerPawn) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n14 (CastToPlayerController) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n13 (GetController) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n11 (CastToCharacter) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n8 (_MACRO_) is disconnected
+[09:00:03] [INFO] Running: Validating Demo121_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo121_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo121_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 30
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n4) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n7) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SetCollisionObjectType (node n8) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SpawnSystemAtLocation (node n9) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_VectorToRotator (node n10) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: GetMass (node n13) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n14) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n17) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Destroy (node n20) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n26) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SetActorScale3D (node n27) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_DoubleToVector (node n28) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n12 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n17 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n19 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n18 (SetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n26 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n29 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n2 (Sequence) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n6 (DestroyActor) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n20 (Destroy) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n5 (Delay) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n10 (Conv_VectorToRotator) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n16 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n24 (Branch) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n28 (Conv_DoubleToVector) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n8 (SetCollisionObjectType) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n7 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n30 (SetSimulatePhysics) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n11 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n21 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n15 (AddImpulse) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n9 (SpawnSystemAtLocation) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n23 (Sequence) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Event node n3 (Event_CustomEvent) has no connections
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n27 (SetActorScale3D) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n25 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n13 (GetMass) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n14 (UnknownMath) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n22 (SetMaterial) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (_MACRO_) is disconnected
+[09:00:03] [INFO] Running: Validating Demo122_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo122_auto.dsl
+[09:00:03] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo122_auto.dsl
+[09:00:03] [INFO]   | ============================================================
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Valid: YES
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Stats:
+[09:00:03] [INFO]   |   nodes: 4
+[09:00:03] [INFO]   |   exec_connections: 0
+[09:00:03] [INFO]   |   data_connections: 0
+[09:00:03] [INFO]   |   variables: 0
+[09:00:03] [INFO]   | 
+[09:00:03] [INFO]   | Warnings:
+[09:00:03] [INFO]   |   [!] [EventGraph] Unknown node type: SetConstrainedComponents (node n2) — may be valid, not in vocabulary yet
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n1 (GetVar) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n2 (SetConstrainedComponents) is disconnected
+[09:00:03] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:03] [INFO] Running: Validating Demo123_auto.dsl
+[09:00:03] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo123_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo123_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 2
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n1 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n2 (GetActorLocation) is disconnected
+[09:00:04] [INFO] Running: Validating Demo124_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo124_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo124_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 6
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: SetPercent (node n2) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: SetFillColorAndOpacity (node n4) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n4 (SetFillColorAndOpacity) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n3 (Event_CustomEvent) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n2 (SetPercent) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n1 (Event_CustomEvent) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[09:00:04] [INFO] Running: Validating Demo125_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo125_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo125_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 109
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n3) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Jump (node n5) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: StopJumping (node n6) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Try (node n7) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Activate (node n10) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Deactivate (node n12) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n17) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n19) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: SphereTraceSingle (node n20) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: BreakHitResult (node n22) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n23) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n25) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Vector_Up (node n26) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n27) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: LaunchCharacter (node n30) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: IsFalling (node n31) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_VectorToRotator (node n36) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Activate (node n51) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Activate (node n53) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Activate (node n56) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: SetColorParameter (node n65) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: IsMovingOnGround (node n68) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Deactivate (node n71) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Jump (node n83) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Aim (node n84) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n85) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Aim (node n86) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Move (node n87) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n88) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Move (node n89) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n90) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n91) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n92) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Aim (node n93) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: GetTimeSeconds (node n98) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: GetTimeSeconds (node n100) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n102) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n103) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Activate (node n106) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Jump (node n109) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n20 (SphereTraceSingle) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n44 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n29 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n58 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n80 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n13 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n47 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n66 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n67 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n81 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n51 (Activate) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n84 (Aim) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n74 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n87 (Move) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n85 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n10 (Activate) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n15 (GetActorLocation) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n18 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n48 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n62 (Event_BeginPlay) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n75 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n99 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n105 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n42 (RetriggerableDelay) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n27 (UnknownMath) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n64 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n93 (Aim) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n32 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n70 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n73 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n50 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n77 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n11 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n39 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n63 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n94 (Event_CustomEvent) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n101 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n96 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n23 (UnknownMath) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n3 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n53 (Activate) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n104 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n102 (UnknownMath) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n72 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n43 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n36 (Conv_VectorToRotator) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n83 (Jump) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n78 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n90 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n108 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n40 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n17 (UnknownMath) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n33 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n60 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n68 (IsMovingOnGround) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n7 (Try) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n88 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n95 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n41 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n24 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n31 (IsFalling) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n55 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n52 (Sequence) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n65 (SetColorParameter) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n76 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n14 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n97 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n107 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n103 (UnknownMath) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n16 (GetActorForwardVector) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n49 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n1 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n91 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n69 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n38 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n106 (Activate) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n54 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n89 (Move) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n6 (StopJumping) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n12 (Deactivate) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n57 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n5 (Jump) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n61 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n9 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n19 (UnknownMath) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n109 (Jump) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n100 (GetTimeSeconds) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n22 (BreakHitResult) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n46 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n56 (Activate) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n4 (Event_CustomEvent) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n71 (Deactivate) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n82 (Event_CustomEvent) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n59 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n79 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n92 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n2 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n86 (Aim) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n26 (Vector_Up) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n30 (LaunchCharacter) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n45 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n98 (GetTimeSeconds) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n34 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n28 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n21 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n25 (UnknownMath) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n35 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n37 (SetActorRotation) is disconnected
+[09:00:04] [INFO] Running: Validating Demo126_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo126_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo126_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 15
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: GetAllActorsOfClass (node n3) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: GetTransform (node n5) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Possess (node n6) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: AddMappingContext (node n8) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: IsLocalPlayerController (node n10) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: AddToPlayerScreen (node n12) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: AddMappingContext (node n13) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlatformName (node n15) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n10 (IsLocalPlayerController) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n3 (GetAllActorsOfClass) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n7 (Event_BeginPlay) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n8 (AddMappingContext) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n13 (AddMappingContext) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n15 (GetPlatformName) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n14 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n5 (GetTransform) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n4 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n12 (AddToPlayerScreen) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n6 (Possess) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n9 (Sequence) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n11 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n2 (Event_CustomEvent) has no connections
+[09:00:04] [INFO] Running: Validating Demo127_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo127_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo127_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 3
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n3 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[09:00:04] [INFO] Running: Validating Demo128_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo128_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo128_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 8
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n4) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n6) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n3 (Event_Tick) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n1 (Event_BeginPlay) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n5 (DestroyActor) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n7 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n6 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n8 (SetVisibility) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n2 (Event_ActorBeginOverlap) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n4 (Event_Unknown) has no connections
+[09:00:04] [INFO] Running: Validating Demo129_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo129_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo129_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 9
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: SetIntensity (node n2) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: SetIntensity (node n4) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n6) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: SetHiddenInGame (node n8) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: SetHiddenInGame (node n9) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n7 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n6 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n4 (SetIntensity) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n9 (SetHiddenInGame) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n2 (SetIntensity) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n8 (SetHiddenInGame) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n1 (GetVar) is disconnected
+[09:00:04] [INFO] Running: Validating Demo130_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo130_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\Demo130_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 8
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: K2_AttachToComponent (node n4) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: K2_DestroyComponent (node n7) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: SetWorldScale3D (node n8) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n8 (SetWorldScale3D) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n5 (SetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n7 (K2_DestroyComponent) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n4 (K2_AttachToComponent) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n2 (Branch) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[09:00:04] [INFO] Running: Validating DemoBP_ThirdPersonCharacter_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoBP_ThirdPersonCharacter_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoBP_ThirdPersonCharacter_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 11
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: StopJumping (node n1) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Jump (node n2) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n3) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n4) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n5) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n6) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Move (node n7) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Move (node n8) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Aim (node n9) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Aim (node n10) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Aim (node n11) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n7 (Move) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n8 (Move) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n5 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n11 (Aim) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n3 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n2 (Jump) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n10 (Aim) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n1 (StopJumping) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n6 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n9 (Aim) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n4 (Event_Unknown) has no connections
+[09:00:04] [INFO] Running: Validating DemoBP_ThirdPersonController_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoBP_ThirdPersonController_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoBP_ThirdPersonController_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 9
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: AddMappingContext (node n2) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: IsLocalPlayerController (node n4) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: AddToPlayerScreen (node n6) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: AddMappingContext (node n7) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlatformName (node n9) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n4 (IsLocalPlayerController) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n7 (AddMappingContext) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n9 (GetPlatformName) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n2 (AddMappingContext) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n3 (Sequence) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n1 (Event_BeginPlay) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n6 (AddToPlayerScreen) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n5 (Branch) is disconnected
+[09:00:04] [INFO] Running: Validating DemoEnvQueryContext_Player_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoEnvQueryContext_Player_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoEnvQueryContext_Player_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 1
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerPawn (node n1) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n1 (GetPlayerPawn) is disconnected
+[09:00:04] [INFO] Running: Validating DemoFirstPersonCharacter_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFirstPersonCharacter_auto.dsl
+[09:00:04] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFirstPersonCharacter_auto.dsl
+[09:00:04] [INFO]   | ============================================================
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Valid: YES
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Stats:
+[09:00:04] [INFO]   |   nodes: 11
+[09:00:04] [INFO]   |   exec_connections: 0
+[09:00:04] [INFO]   |   data_connections: 0
+[09:00:04] [INFO]   |   variables: 0
+[09:00:04] [INFO]   | 
+[09:00:04] [INFO]   | Warnings:
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Jump (node n1) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: StopJumping (node n2) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Move (node n3) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Move (node n4) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Aim (node n5) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Aim (node n6) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Aim (node n7) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n8) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n9) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n10) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n11) — may be valid, not in vocabulary yet
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n7 (Aim) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n10 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n3 (Move) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n8 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n4 (Move) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n6 (Aim) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n2 (StopJumping) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n11 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n1 (Jump) is disconnected
+[09:00:04] [INFO]   |   [!] [EventGraph] Event node n9 (Event_Unknown) has no connections
+[09:00:04] [INFO]   |   [!] [EventGraph] Node n5 (Aim) is disconnected
+[09:00:04] [INFO] Running: Validating DemoFPSBP_DoorFrame_auto.dsl
+[09:00:04] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSBP_DoorFrame_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSBP_DoorFrame_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 32
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Warnings:
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Lerp (node n9) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n11) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n13) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SelectFloat (node n18) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Lerp (node n19) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SelectFloat (node n20) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n21) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Lerp (node n23) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n24) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n29) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n30) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetOverlappingActors (node n32) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n27 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n31 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n17 (SetRelativeLocation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n13 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n18 (SelectFloat) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n4 (SetRelativeLocation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n12 (Event_ActorEndOverlap) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n7 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n32 (GetOverlappingActors) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n14 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n15 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n29 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n24 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n26 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n19 (Lerp) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n9 (Lerp) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n22 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n20 (SelectFloat) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n28 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n1 (Event_BeginPlay) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n10 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n16 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n11 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n25 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n2 (Event_ActorBeginOverlap) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n21 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n23 (Lerp) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n30 (UnknownMath) is disconnected
+[09:00:05] [INFO] Running: Validating DemoFPSController_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSController_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSController_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 9
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Warnings:
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: AddMappingContext (node n2) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: IsLocalPlayerController (node n4) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: AddToPlayerScreen (node n6) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: AddMappingContext (node n7) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlatformName (node n9) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n7 (AddMappingContext) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n9 (GetPlatformName) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n2 (AddMappingContext) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n3 (Sequence) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n6 (AddToPlayerScreen) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n4 (IsLocalPlayerController) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n1 (Event_BeginPlay) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n5 (Branch) is disconnected
+[09:00:05] [INFO] Running: Validating DemoFPSCR_Mannequin_Body_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSCR_Mannequin_Body_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSCR_Mannequin_Body_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 0
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | [OK] Blueprint DSL is valid with no warnings!
+[09:00:05] [INFO] Running: Validating DemoFPSCR_Mannequin_FootIK_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSCR_Mannequin_FootIK_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSCR_Mannequin_FootIK_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 0
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | [OK] Blueprint DSL is valid with no warnings!
+[09:00:05] [INFO] Running: Validating DemoFPSCR_Mannequin_Procedural_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSCR_Mannequin_Procedural_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSCR_Mannequin_Procedural_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 0
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | [OK] Blueprint DSL is valid with no warnings!
+[09:00:05] [INFO] Running: Validating DemoFPSUIThumbstick_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSUIThumbstick_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSUIThumbstick_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 50
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Warnings:
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n2) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetInputTouchState (node n5) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerController (node n6) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n8) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n9) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SetRenderTranslation (node n10) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n12) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n13) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n17) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n18) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n19) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n20) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n21) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SetRenderTranslation (node n22) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SelectFloat (node n25) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n26) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SelectFloat (node n28) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n30) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n31) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SelectFloat (node n32) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SelectFloat (node n33) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SetHeightOverride (node n35) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SetWidthOverride (node n36) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Touch (node n37) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Touch (node n38) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: LocalToViewport (node n44) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n47) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetViewportScale (node n48) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n49) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n43 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n14 (ClampFloat) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n38 (Touch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n34 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n17 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n22 (SetRenderTranslation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n33 (SelectFloat) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n47 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n50 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n8 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n11 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n40 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n49 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n27 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n41 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n35 (SetHeightOverride) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n19 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n2 (Event_Unknown) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n15 (ClampFloat) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n37 (Touch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n46 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n25 (SelectFloat) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n9 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n5 (GetInputTouchState) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n39 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n30 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n3 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n36 (SetWidthOverride) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n12 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n42 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n28 (SelectFloat) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n23 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n32 (SelectFloat) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n48 (GetViewportScale) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n18 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n31 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n45 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n10 (SetRenderTranslation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n16 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n6 (GetPlayerController) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n20 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n7 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n26 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n21 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n44 (LocalToViewport) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n13 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n24 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n29 (GetVar) is disconnected
+[09:00:05] [INFO] Running: Validating DemoFPSUITouchSimple_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSUITouchSimple_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoFPSUITouchSimple_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 8
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Warnings:
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetOwningPlayer (node n2) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SetInputMode_GameAndUIEx (node n4) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetOwningPlayer (node n5) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: K2_GetPawn (node n6) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetOwningPlayer (node n7) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: K2_GetPawn (node n8) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n3 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n2 (GetOwningPlayer) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n5 (GetOwningPlayer) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n7 (GetOwningPlayer) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n8 (K2_GetPawn) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n4 (SetInputMode_GameAndUIEx) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n6 (K2_GetPawn) is disconnected
+[09:00:05] [INFO] Running: Validating DemoStateTreeCondition_IsCharacterGrounded_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoStateTreeCondition_IsCharacterGrounded_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoStateTreeCondition_IsCharacterGrounded_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 5
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Warnings:
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetMovementComponent (node n2) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: IsMovingOnGround (node n3) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n3 (IsMovingOnGround) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n5 (BooleanNOT) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n2 (GetMovementComponent) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n1 (GetVar) is disconnected
+[09:00:05] [INFO] Running: Validating DemoStateTreeTask_ChargedAttack_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoStateTreeTask_ChargedAttack_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\DemoStateTreeTask_ChargedAttack_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 9
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Warnings:
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: FinishTask (node n4) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n5) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Do (node n9) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n7 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n9 (Do) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n3 (Event_CustomEvent) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n8 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n4 (FinishTask) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n5 (Event_Unknown) has no connections
+[09:00:05] [INFO] Running: Validating fhfhgytr101_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr101_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr101_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 69
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Warnings:
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: AddControllerPitchInput (node n1) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: AddControllerYawInput (node n2) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: AddMovementInput (node n3) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: AddMovementInput (node n4) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetControlRotation (node n5) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: StopJumping (node n6) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetForwardVector (node n7) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetRightVector (node n8) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetControlRotation (node n9) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: AddMappingContext (node n11) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetController (node n13) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n14) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Crouch (node n17) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnCrouch (node n20) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n21) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Lerp (node n32) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Jump (node n33) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetUpVector (node n36) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n37) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n38) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SphereTraceSingle (node n41) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Start_Crouch (node n43) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Stop_Crouch (node n44) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Start_Sprint (node n45) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Stop_Sprint (node n46) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: IsFalling (node n48) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: IsCrouching (node n55) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: BeginSettings (node n58) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Character_Interact (node n61) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Open (node n62) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: GetController (node n64) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: EventToggleAttachment (node n67) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: FireWeapon (node n69) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n34 (GetActorLocation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n29 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n38 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n51 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n52 (ClampFloat) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n43 (Start_Crouch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n13 (GetController) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n53 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n59 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n11 (AddMappingContext) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n19 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n37 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n46 (Stop_Sprint) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n41 (SphereTraceSingle) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n17 (Crouch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n58 (BeginSettings) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n27 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n50 (BooleanNOT) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n21 (_MACRO_) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n1 (AddControllerPitchInput) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n7 (GetForwardVector) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n10 (CastToPlayerController) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n9 (GetControlRotation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n4 (AddMovementInput) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n66 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n14 (_MACRO_) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n28 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n32 (Lerp) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n65 (CastToPlayerController) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n56 (BooleanNOT) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n35 (GetActorRotation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n48 (IsFalling) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n47 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n24 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n12 (Event_BeginPlay) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n42 (Sequence) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n62 (Open) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n63 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n8 (GetRightVector) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n39 (BooleanNOT) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n44 (Stop_Crouch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n45 (Start_Sprint) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n54 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n67 (EventToggleAttachment) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n64 (GetController) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n16 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n20 (UnCrouch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n30 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n33 (Jump) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n57 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n2 (AddControllerYawInput) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n18 (Event_CustomEvent) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n25 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n61 (Character_Interact) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n60 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n40 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n3 (AddMovementInput) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n68 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n31 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n49 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n22 (Event_CustomEvent) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n36 (GetUpVector) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n55 (IsCrouching) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n69 (FireWeapon) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n5 (GetControlRotation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n23 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n6 (StopJumping) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n26 (Event_CustomEvent) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n15 (Event_CustomEvent) has no connections
+[09:00:05] [INFO] Running: Validating fhfhgytr102_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr102_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr102_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 22
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Warnings:
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: RLerp (node n5) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: DegSin (node n8) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n9) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n10) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: DegCos (node n11) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Multicast (node n16) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: MakeRotFromX (node n17) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: NormalizedDeltaRotator (node n18) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n21 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n2 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n5 (RLerp) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n18 (NormalizedDeltaRotator) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n8 (DegSin) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n22 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n19 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n17 (MakeRotFromX) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n14 (Event_CustomEvent) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n13 (GetActorRotation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n4 (SetWorldRotation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n16 (Multicast) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n15 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n10 (UnknownMath) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n7 (GetActorRotation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n11 (DegCos) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n20 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n12 (GetActorRotation) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n9 (UnknownMath) is disconnected
+[09:00:05] [INFO] Running: Validating fhfhgytr103_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr103_auto.dsl
+[09:00:05] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr103_auto.dsl
+[09:00:05] [INFO]   | ============================================================
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Valid: YES
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Stats:
+[09:00:05] [INFO]   |   nodes: 17
+[09:00:05] [INFO]   |   exec_connections: 0
+[09:00:05] [INFO]   |   data_connections: 0
+[09:00:05] [INFO]   |   variables: 0
+[09:00:05] [INFO]   | 
+[09:00:05] [INFO]   | Warnings:
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: CreateSaveGameObject (node n1) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: DoesSaveGameExist (node n2) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n5) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: LoadGameFromSlot (node n6) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: CastToObject (node n8) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: CreateSaveWeapon (node n9) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: SaveGameToSlot (node n10) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Unknown node type: Save (node n17) — may be valid, not in vocabulary yet
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n7 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n10 (SaveGameToSlot) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n15 (Event_CustomEvent) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n3 (Branch) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Event node n5 (Event_Unknown) has no connections
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n4 (SetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n2 (DoesSaveGameExist) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n6 (LoadGameFromSlot) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n9 (CreateSaveWeapon) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n17 (Save) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n13 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n1 (CreateSaveGameObject) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n14 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n12 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n11 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n16 (GetVar) is disconnected
+[09:00:05] [INFO]   |   [!] [EventGraph] Node n8 (CastToObject) is disconnected
+[09:00:05] [INFO] Running: Validating fhfhgytr104_auto.dsl
+[09:00:05] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr104_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr104_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 7
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: K2_AttachToComponent (node n1) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: RemoveAttachment (node n5) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetSocketTransform (node n7) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (RemoveAttachment) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n7 (GetSocketTransform) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n1 (K2_AttachToComponent) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:06] [INFO] Running: Validating fhfhgytr105_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr105_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr105_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 7
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetColorAndOpacity (node n4) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n6) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_StringToText (node n7) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n7 (Conv_StringToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n4 (SetColorAndOpacity) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n6 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:06] [INFO] Running: Validating fhfhgytr106_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr106_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr106_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 17
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n1) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_StringToText (node n3) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetColorAndOpacity (node n4) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n6) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n7) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToString (node n9) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_TextToString (node n10) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_StringToInt (node n11) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToString (node n15) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToString (node n17) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n1 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n3 (Conv_StringToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n15 (Conv_IntToString) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n17 (Conv_IntToString) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n14 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n16 (SubtractInt) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n11 (Conv_StringToInt) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n6 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n7 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n12 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n10 (Conv_TextToString) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n4 (SetColorAndOpacity) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n9 (Conv_IntToString) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n13 (AddInt) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:06] [INFO] Running: Validating fhfhgytr107_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr107_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr107_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 157
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetViewportSize (node n2) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n4) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n5) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n8) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n12) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n14) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: AddChildToCanvas (node n17) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetPosition (node n18) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToDouble (node n19) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: DegCos (node n21) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n23) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n25) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: DegSin (node n28) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n30) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n32) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetAllChildren (node n34) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n35) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n37) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n38) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SlotAsCanvasSlot (node n39) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetPosition (node n40) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: RotateAngleAxis (node n42) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n43) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: MakeRotFromX (node n48) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetRenderTransformAngle (node n50) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToDouble (node n51) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetAnchors (node n52) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: RotateAngleAxis (node n54) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetRenderTransformAngle (node n55) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetAlignment (node n59) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n61) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n63) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetSocketTransform (node n64) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n65) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerController (node n66) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ProjectWorldToScreen (node n67) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ScreenToViewport (node n69) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetSocketTransform (node n72) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerController (node n73) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ProjectWorldToScreen (node n74) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ScreenToViewport (node n75) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetPosition (node n76) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SlotAsCanvasSlot (node n78) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ScreenToWidgetLocal (node n79) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetCachedGeometry (node n81) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetPosition (node n85) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SlotAsCanvasSlot (node n87) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ScreenToWidgetLocal (node n88) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetCachedGeometry (node n90) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetSize (node n94) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SlotAsCanvasSlot (node n95) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetSize (node n96) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SlotAsCanvasSlot (node n97) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetSocketTransform (node n99) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerController (node n100) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ProjectWorldToScreen (node n101) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ScreenToViewport (node n102) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SlotAsCanvasSlot (node n104) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetPosition (node n105) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetAnchors (node n107) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetAnchors (node n108) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetAnchors (node n109) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ScreenToWidgetLocal (node n110) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetCachedGeometry (node n111) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetSize (node n115) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SlotAsCanvasSlot (node n116) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ScreenToViewport (node n117) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: LocalToViewport (node n120) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n121) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n122) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetActorOfClass (node n124) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n130) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetSocketTransform (node n131) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetPlayerController (node n132) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ProjectWorldToScreen (node n133) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ScreenToViewport (node n134) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetCachedGeometry (node n139) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ScreenToWidgetLocal (node n141) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: AddChildToCanvas (node n143) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetPosition (node n144) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n146) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetChildAt (node n148) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SlotAsCanvasSlot (node n149) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetAutoSize (node n150) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetPosition (node n151) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ProjectWorldLocationToScreen (node n152) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ProjectWorldLocationToWidgetPosition (node n153) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n154) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetViewportScale (node n155) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetSocketLocation (node n157) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n106 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n57 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n53 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n64 (GetSocketTransform) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n48 (MakeRotFromX) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n63 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n55 (SetRenderTransformAngle) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n36 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n59 (SetAlignment) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n79 (ScreenToWidgetLocal) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n126 (Delay) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n121 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n58 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n43 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n91 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n96 (GetSize) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n92 (ClampFloat) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n141 (ScreenToWidgetLocal) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n44 (BreakVector) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n8 (_MACRO_) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n42 (RotateAngleAxis) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n82 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n120 (LocalToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n137 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n35 (_MACRO_) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n26 (MakeVector) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n122 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n11 (AddInt) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n151 (SetPosition) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n25 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n156 (MultiplyFloat) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n123 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n119 (PrintString) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n54 (RotateAngleAxis) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n69 (ScreenToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n49 (BreakRotator) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n133 (ProjectWorldToScreen) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n68 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n77 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n93 (ClampFloat) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n148 (GetChildAt) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n72 (GetSocketTransform) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n111 (GetCachedGeometry) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n150 (SetAutoSize) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n94 (GetSize) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n105 (SetPosition) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (GetViewportSize) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n20 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n12 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n24 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n132 (GetPlayerController) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n140 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n39 (SlotAsCanvasSlot) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n65 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n51 (Conv_IntToDouble) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n16 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n95 (SlotAsCanvasSlot) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n33 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n155 (GetViewportScale) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n99 (GetSocketTransform) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n149 (SlotAsCanvasSlot) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n78 (SlotAsCanvasSlot) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n76 (SetPosition) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n87 (SlotAsCanvasSlot) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n88 (ScreenToWidgetLocal) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n98 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n31 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n104 (SlotAsCanvasSlot) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n89 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n139 (GetCachedGeometry) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n19 (Conv_IntToDouble) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n41 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n125 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n128 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n103 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n21 (DegCos) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n17 (AddChildToCanvas) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n32 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n113 (ClampFloat) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n145 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n30 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n73 (GetPlayerController) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n52 (SetAnchors) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n146 (_MACRO_) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n45 (MakeVector) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n6 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n56 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n13 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n154 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n134 (ScreenToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n70 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n27 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n4 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n114 (ClampFloat) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n135 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n143 (AddChildToCanvas) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n37 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n14 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n22 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n74 (ProjectWorldToScreen) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n108 (SetAnchors) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n147 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n67 (ProjectWorldToScreen) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n101 (ProjectWorldToScreen) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n131 (GetSocketTransform) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n15 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n118 (Abs) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n10 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n50 (SetRenderTransformAngle) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n84 (ClampFloat) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n100 (GetPlayerController) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n28 (DegSin) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n90 (GetCachedGeometry) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n86 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n144 (SetPosition) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n46 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n116 (SlotAsCanvasSlot) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n115 (GetSize) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n142 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n109 (SetAnchors) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n1 (Sequence) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n129 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n138 (Delay) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n153 (ProjectWorldLocationToWidgetPosition) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n29 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n124 (GetActorOfClass) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n157 (GetSocketLocation) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n110 (ScreenToWidgetLocal) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n7 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n80 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n112 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n61 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n75 (ScreenToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n62 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n60 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n102 (ScreenToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n40 (SetPosition) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n136 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n130 (_MACRO_) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n71 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n18 (SetPosition) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n9 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n34 (GetAllChildren) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n81 (GetCachedGeometry) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n66 (GetPlayerController) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n83 (ClampFloat) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n117 (ScreenToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n3 (BreakVector) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n85 (SetPosition) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n152 (ProjectWorldLocationToScreen) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n23 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n127 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n47 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n38 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n107 (SetAnchors) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n97 (SlotAsCanvasSlot) is disconnected
+[09:00:06] [INFO] Running: Validating fhfhgytr108_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr108_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr108_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 46
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetOwningPlayer (node n4) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n7) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ActiveCameraCharacter (node n13) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Remove (node n15) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetOwningPlayer (node n19) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n26) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_NameToText (node n27) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n29) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_NameToText (node n30) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushFromTexture (node n32) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushFromTexture (node n33) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n36) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n37) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n39) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n40) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ActiveCameraCharacter (node n46) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n34 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n15 (Remove) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n19 (GetOwningPlayer) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n29 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n26 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n36 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n37 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n7 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n14 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n28 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n24 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n12 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n44 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n41 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (AddToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n42 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n21 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n27 (Conv_NameToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n17 (AddToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n35 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n10 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n30 (Conv_NameToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n32 (SetBrushFromTexture) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n38 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n6 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n31 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n9 (DestroyActor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n33 (SetBrushFromTexture) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n23 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n40 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n4 (GetOwningPlayer) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n25 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n39 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n3 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n22 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n18 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n16 (RemoveFromParent) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n13 (ActiveCameraCharacter) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n11 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n20 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n43 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n45 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n46 (ActiveCameraCharacter) is disconnected
+[09:00:06] [INFO] Running: Validating fhfhgytr109_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr109_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr109_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 77
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetDataTableRowNames (node n2) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n3) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetOwningPlayer (node n4) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: AddChild (node n6) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ClearChildren (node n8) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n13) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetTypeWeaponList (node n14) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetButtonSelect (node n15) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetTypeWeaponList (node n18) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetButtonSelect (node n19) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Equip (node n24) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n26) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n29) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: BeginModifyWeapon (node n33) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SelectWeapon (node n37) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n39) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Get (node n44) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UpdateStatusWeapon (node n46) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SelectWeapon (node n53) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ReturnMainLoadout (node n55) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ReturnMainLoadout (node n63) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Get (node n67) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SelectWeapon (node n71) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Get (node n75) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n8 (ClearChildren) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n27 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n13 (_MACRO_) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n77 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n26 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n40 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n72 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n43 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n63 (ReturnMainLoadout) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (GetDataTableRowNames) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n50 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n66 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n20 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n54 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n38 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n53 (SelectWeapon) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n32 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n23 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n75 (Get) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n76 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n49 (RemoveFromParent) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n6 (AddChild) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n29 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n45 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n35 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n70 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n19 (SetButtonSelect) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n16 (Sequence) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n7 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n22 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n59 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n17 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n9 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n11 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n41 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n21 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n37 (SelectWeapon) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n68 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n56 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n31 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n71 (SelectWeapon) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n28 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n58 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n30 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n18 (GetTypeWeaponList) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n12 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n33 (BeginModifyWeapon) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n51 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n14 (GetTypeWeaponList) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n47 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n3 (_MACRO_) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n39 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n69 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n74 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n36 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n48 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n55 (ReturnMainLoadout) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n25 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n61 (BooleanOR) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n10 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n65 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n15 (SetButtonSelect) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n73 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n34 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n44 (Get) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n4 (GetOwningPlayer) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n24 (Equip) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n62 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n46 (UpdateStatusWeapon) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n57 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n42 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n67 (Get) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n60 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n52 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n64 (RemoveFromParent) is disconnected
+[09:00:06] [INFO] Running: Validating fhfhgytr110_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr110_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr110_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 30
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n2) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n3) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n7) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n9) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n11) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n13) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: MouseEnter (node n14) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: MouseEnter (node n15) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: MouseEnter (node n16) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n21) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SelectWeapon_Event (node n30) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n17 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n13 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n9 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n10 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n22 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n23 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n3 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n6 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n18 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n11 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n15 (MouseEnter) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n21 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n14 (MouseEnter) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n4 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n20 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n19 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n7 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n12 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n28 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n16 (MouseEnter) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n26 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n30 (SelectWeapon_Event) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n2 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n25 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n24 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n29 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n27 (GetVar) is disconnected
+[09:00:06] [INFO] Running: Validating fhfhgytr111_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr111_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr111_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 52
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n3) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_NameToText (node n4) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n6) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToText (node n7) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n9) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_StringToText (node n10) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToString (node n11) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n12) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UpdateProgressBar (node n13) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UpdateProgressBar (node n15) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n17) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UpdateProgressBar (node n18) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToText (node n21) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n22) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UpdateProgressBar (node n23) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToText (node n26) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n27) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UpdateProgressBar (node n28) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToText (node n31) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n33) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UpdateProgressBar (node n34) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToText (node n36) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n37) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_DoubleToText (node n39) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n40) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_IntToText (node n42) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetModeWeapon (node n43) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n45) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_DoubleToText (node n46) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n47) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_StringToText (node n49) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_StringToText (node n50) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n51) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_TextToString (node n52) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n3 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n45 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n52 (Conv_TextToString) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n36 (Conv_IntToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n17 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n27 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n18 (UpdateProgressBar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n24 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n12 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n20 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n7 (Conv_IntToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n23 (UpdateProgressBar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n4 (Conv_NameToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n28 (UpdateProgressBar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n8 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n13 (UpdateProgressBar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n43 (GetModeWeapon) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n1 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n11 (Conv_IntToString) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n31 (Conv_IntToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n21 (Conv_IntToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n48 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n38 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n22 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n47 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n42 (Conv_IntToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n25 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n26 (Conv_IntToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n15 (UpdateProgressBar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n33 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n46 (Conv_DoubleToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n6 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n44 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n30 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n37 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n41 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n32 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n19 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n51 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n29 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n49 (Conv_StringToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n9 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n10 (Conv_StringToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n34 (UpdateProgressBar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n40 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n16 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n14 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n39 (Conv_DoubleToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n50 (Conv_StringToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n35 (GetVar) is disconnected
+[09:00:06] [INFO] Running: Validating fhfhgytr112_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr112_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr112_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 19
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Event_Unknown (node n1) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Conv_StringToText (node n3) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetText (node n5) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n13) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetBrushColor (node n14) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n11 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n15 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n7 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n12 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n19 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n4 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n14 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (SetText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n13 (SetBrushColor) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n3 (Conv_StringToText) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Unknown) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n18 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n9 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n8 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n16 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n6 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n10 (SetVisibility) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n17 (GetVar) is disconnected
+[09:00:06] [INFO] Running: Validating fhfhgytr113_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr113_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\fhfhgytr113_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 47
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n1) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: LineTraceSingle (node n2) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n3) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: BreakHitResult (node n4) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: K2_GetComponentLocation (node n6) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: K2_GetComponentRotation (node n7) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetForwardVector (node n8) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: SetViewTargetWithBlend (node n13) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: Load (node n20) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: _MACRO_ (node n24) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: LineTraceSingle (node n32) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: K2_GetComponentLocation (node n34) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: GetForwardVector (node n35) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n36) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: UnknownMath (node n37) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: BreakHitResult (node n38) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Unknown node type: ApplyPointDamage (node n40) — may be valid, not in vocabulary yet
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n39 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n21 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n9 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n38 (BreakHitResult) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n36 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n47 (RemoveFromParent) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n14 (AddToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n8 (GetForwardVector) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n45 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n32 (LineTraceSingle) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n3 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n18 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n12 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n1 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n35 (GetForwardVector) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n17 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n31 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n6 (K2_GetComponentLocation) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n20 (Load) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n26 (Branch) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n23 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n22 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n37 (UnknownMath) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n41 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n5 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n11 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n40 (ApplyPointDamage) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n24 (_MACRO_) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n42 (AddToViewport) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n46 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (LineTraceSingle) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n7 (K2_GetComponentRotation) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n43 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n34 (K2_GetComponentLocation) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n30 (Event_CustomEvent) has no connections
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n4 (BreakHitResult) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n19 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n33 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n29 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n28 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n27 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n44 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n13 (SetViewTargetWithBlend) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n25 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n16 (GetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n10 (SetVar) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n15 (Event_CustomEvent) has no connections
+[09:00:06] [INFO] Running: Validating hello_world_auto.dsl
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\cleaned-data\parsed-blueprints\hello_world_auto.dsl
+[09:00:06] [INFO]   | Validating DSL file: C:\BlueprintLLM\cleaned-data\parsed-blueprints\hello_world_auto.dsl
+[09:00:06] [INFO]   | ============================================================
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Valid: YES
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Stats:
+[09:00:06] [INFO]   |   nodes: 2
+[09:00:06] [INFO]   |   exec_connections: 0
+[09:00:06] [INFO]   |   data_connections: 0
+[09:00:06] [INFO]   |   variables: 0
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Warnings:
+[09:00:06] [INFO]   |   [!] [EventGraph] Node n2 (PrintString) is disconnected
+[09:00:06] [INFO]   |   [!] [EventGraph] Event node n1 (Event_Tick) has no connections
+[09:00:06] [INFO] ============================================================
+[09:00:06] [INFO]   STEP 3: Build Training Dataset
+[09:00:06] [INFO] ============================================================
+[09:00:06] [INFO] Running: Generating 500 synthetic examples
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\03_generate_synthetic_data.py --count 500 --output C:\BlueprintLLM\datasets\synthetic_train.jsonl --seed 42
+[09:00:06] [INFO]   | Generated 295 unique examples from 2500 attempts
+[09:00:06] [INFO]   | Saved 265 examples to C:\BlueprintLLM\datasets\synthetic_train.jsonl
+[09:00:06] [INFO]   | Saved 30 examples to C:\BlueprintLLM\datasets\validation.jsonl
+[09:00:06] [INFO]   | 
+[09:00:06] [INFO]   | Pattern distribution:
+[09:00:06] [INFO]   |   pattern_delay_sequence: 163 (55.3%)
+[09:00:06] [INFO]   |   pattern_key_press_action: 35 (11.9%)
+[09:00:06] [INFO]   |   pattern_health_system: 20 (6.8%)
+[09:00:06] [INFO]   |   pattern_toggle_visibility: 16 (5.4%)
+[09:00:06] [INFO]   |   pattern_branch_condition: 16 (5.4%)
+[09:00:06] [INFO]   |   pattern_rotating_actor: 15 (5.1%)
+[09:00:06] [INFO]   |   pattern_timer_loop: 15 (5.1%)
+[09:00:06] [INFO]   |   pattern_print_on_begin_play: 6 (2.0%)
+[09:00:06] [INFO]   |   pattern_pickup_item: 5 (1.7%)
+[09:00:06] [INFO]   |   pattern_overlap_trigger: 4 (1.4%)
+[09:00:06] [INFO]   265 synthetic examples
+[09:00:06] [INFO]   1128 auto-translated examples
+[09:00:06] [INFO]   Total: 1393 training examples
+[09:00:06] [INFO] Running: Validating merged dataset
+[09:00:06] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\06_validate_dsl.py C:\BlueprintLLM\datasets\train.jsonl
+[09:00:07] [INFO]   | Validating JSONL dataset: C:\BlueprintLLM\datasets\train.jsonl
+[09:00:07] [INFO]   | ============================================================
+[09:00:07] [INFO]   | 
+[09:00:07] [INFO]   | Total examples:  1393
+[09:00:07] [INFO]   | Valid:           1393 (100.0%)
+[09:00:07] [INFO]   | Invalid:         0
+[09:00:07] [INFO]   | Total warnings:  20103
+[09:00:07] [INFO] ============================================================
+[09:00:07] [INFO]   STEP 4: Generate System Prompt
+[09:00:07] [INFO] ============================================================
+[09:00:07] [INFO] Running: Generating system prompt
+[09:00:07] [INFO]   Cmd: C:\BlueprintLLM\venv\Scripts\python.exe C:\BlueprintLLM\scripts\08_generate_system_prompt.py --output C:\BlueprintLLM\scripts\system_prompt.txt
+[09:00:07] [INFO]   | Enhanced system prompt saved to: C:\BlueprintLLM\scripts\system_prompt.txt
+[09:00:07] [INFO]   |   Characters: 5,660
+[09:00:07] [INFO]   |   Estimated tokens: ~1,415
+[09:00:07] [INFO]   |   Node types: 34
+[09:00:07] [INFO]   | 
+[09:00:07] [INFO]   | NEXT STEPS:
+[09:00:07] [INFO]   |   This prompt is automatically used by the updated training and inference scripts.
+[09:00:07] [INFO]   |   If you add new nodes to blueprint_patterns.py, re-run this script to regenerate.
+[09:00:07] [INFO] ============================================================
+[09:00:07] [INFO]   PIPELINE COMPLETE
+[09:00:07] [INFO] ============================================================
+[09:00:07] [INFO] Time: 0m 4s
+[09:00:07] [INFO] Version: v1
+[09:00:07] [INFO] Errors: 0

@@ -20,6 +20,9 @@ import os, sys, json, shutil, subprocess, hashlib, argparse
 from pathlib import Path
 from datetime import datetime
 
+sys.path.insert(0, str(Path(__file__).parent))
+from stop_signal_utils import is_stop_requested, clear_signal
+
 
 class PipelineConfig:
     def __init__(self, root=None):
@@ -318,19 +321,39 @@ def run_pipeline(mode, dry_run=False, force=False, root=None):
 
     model_path = None
     eval_report = None
+    stopped = False
+
+    def check_stop():
+        """Return True if a graceful stop was requested between stages."""
+        if is_stop_requested():
+            log.log("GRACEFUL STOP requested between pipeline stages.")
+            clear_signal()
+            return True
+        return False
 
     try:
         if mode in ("full", "data-only"):
             step_analyze(cfg, log, dry_run)
-            step_validate(cfg, log, dry_run)
-            step_merge(cfg, log, dry_run)
-            step_prompt(cfg, log, dry_run)
-        if mode in ("full", "train-only"):
-            model_path = step_train(cfg, log, state, dry_run, force)
-            if model_path:
+            if check_stop(): stopped = True
+            if not stopped:
+                step_validate(cfg, log, dry_run)
+            if not stopped and not check_stop():
+                step_merge(cfg, log, dry_run)
+            else:
+                stopped = True
+            if not stopped and not check_stop():
+                step_prompt(cfg, log, dry_run)
+            else:
+                stopped = True
+        if not stopped and mode in ("full", "train-only"):
+            if check_stop(): stopped = True
+            if not stopped:
+                model_path = step_train(cfg, log, state, dry_run, force)
+            if not stopped and model_path and not check_stop():
                 eval_report = step_evaluate(cfg, log, model_path, state, dry_run)
+            if not stopped and model_path and not check_stop():
                 step_summary(cfg, log, model_path, dry_run)
-        if mode == "eval-only":
+        if not stopped and mode == "eval-only":
             m = get_latest_model(cfg)
             if m:
                 eval_report = step_evaluate(cfg, log, str(m), state, dry_run)
@@ -342,7 +365,7 @@ def run_pipeline(mode, dry_run=False, force=False, root=None):
         log.log(traceback.format_exc(), "ERROR")
 
     elapsed = (datetime.now() - start).total_seconds()
-    log.section("PIPELINE COMPLETE")
+    log.section("PIPELINE STOPPED EARLY" if stopped else "PIPELINE COMPLETE")
     log.log(f"Time: {int(elapsed//60)}m {int(elapsed%60)}s")
     log.log(f"Version: v{state.get('last_model_version', '?')}")
     log.log(f"Errors: {len(log.errors)}")

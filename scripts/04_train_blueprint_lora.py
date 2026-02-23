@@ -34,6 +34,7 @@ import os
 import json
 import sys
 import argparse
+import logging
 from pathlib import Path
 
 import torch
@@ -43,12 +44,44 @@ from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
     TrainingArguments,
+    TrainerCallback,
+    TrainerControl,
+    TrainerState,
 )
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from trl import SFTTrainer
 
 # Add parent to path so we can import the prompt generator
 sys.path.insert(0, str(Path(__file__).parent))
+
+from stop_signal_utils import is_stop_requested, clear_signal
+
+logger = logging.getLogger(__name__)
+
+
+# ============================================================
+# GRACEFUL STOP CALLBACK
+# ============================================================
+
+class GracefulStopCallback(TrainerCallback):
+    """Checks for STOP_SIGNAL file at each logging step.
+
+    If found: saves a checkpoint, clears the signal, and stops training.
+    The checkpoint is a normal HF checkpoint that can be resumed with
+    --resume_from_checkpoint.
+    """
+
+    def on_log(self, args, state: TrainerState, control: TrainerControl, **kwargs):
+        if is_stop_requested():
+            print("\n" + "=" * 60)
+            print("  GRACEFUL STOP REQUESTED")
+            print("  Saving checkpoint before exiting...")
+            print("=" * 60)
+            logger.info("Graceful stop requested via STOP_SIGNAL")
+            control.should_save = True
+            control.should_training_stop = True
+            clear_signal()
+        return control
 
 
 # ============================================================
@@ -396,7 +429,10 @@ def train(config: dict):
     if "packing" in sft_params:
         trainer_kwargs["packing"] = False
 
-    print(f"SFTTrainer params detected: {[k for k in trainer_kwargs.keys() if k != 'args']}")
+    # Graceful stop support
+    trainer_kwargs["callbacks"] = [GracefulStopCallback()]
+
+    print(f"SFTTrainer params detected: {[k for k in trainer_kwargs.keys() if k not in ('args', 'callbacks')]}")
     trainer = SFTTrainer(**trainer_kwargs)
 
     prompt_type = "ENHANCED (with node reference)" if ACTIVE_SYSTEM_PROMPT != BASIC_SYSTEM_PROMPT else "BASIC (no node reference)"

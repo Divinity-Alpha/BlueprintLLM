@@ -24,6 +24,8 @@ from datetime import datetime
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from stop_signal_utils import is_stop_requested, clear_signal
+
 # Must match TRAINING_SYSTEM_PROMPT in 04_train_blueprint_lora.py
 SYSTEM_PROMPT = """You are a Blueprint DSL generator for Unreal Engine 5.
 Given a description, output ONLY valid Blueprint DSL code.
@@ -277,6 +279,13 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
         # Write incrementally
         with open(results_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(result, ensure_ascii=False) + "\n")
+
+        # Check for graceful stop between prompts
+        if is_stop_requested():
+            print(f"\n  GRACEFUL STOP REQUESTED after {i+1}/{len(lesson['prompts'])} prompts.")
+            print(f"  Partial results saved to: {results_file}")
+            clear_signal()
+            break
 
     # Summary
     avg_score = total_score / max(len(results), 1)

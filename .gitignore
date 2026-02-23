@@ -7,3 +7,4 @@ __pycache__/
 *.safetensors
 .env
 STOP_SIGNAL
+backups/

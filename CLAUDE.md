@@ -116,3 +116,47 @@ JSONL with `instruction` and `output` fields:
 ## State Tracking
 
 `.pipeline_state.json` at project root tracks run history, training data hashes, and the current model version number. The orchestrator uses this to skip redundant training when data hasn't changed.
+
+## Backup System
+
+An automatic backup system protects datasets, results, lessons, pipeline state, and the system prompt against accidental loss. Models are NOT backed up by default (too large); only pre-training safety backups include the current best model's `final/` directory.
+
+### Commands
+
+```bash
+# Manual milestone backup
+python scripts/16_backup.py
+
+# List all backups
+python scripts/16_backup.py --list
+
+# Run retention cleanup
+python scripts/16_backup.py --cleanup
+
+# Start background watchdog (checks every 6 hours)
+start_backup_watchdog.bat
+python scripts/17_scheduled_backup.py --interval 6
+python scripts/17_scheduled_backup.py --once        # single check
+
+# Restore a backup
+python scripts/18_restore_backup.py --list
+python scripts/18_restore_backup.py --restore <label>
+```
+
+### Automatic Triggers
+
+Backups are created automatically at these pipeline milestones:
+- **Pre-training** (`04_train_blueprint_lora.py`) — includes current best model weights
+- **Post-training** (`04_train_blueprint_lora.py`) — milestone after training completes
+- **Post-exam** (`12_run_exam.py`) — milestone after exam results are saved
+- **Post-merge** (`13_lesson_to_training.py`) — milestone after lesson data is merged
+
+### Retention Policy
+
+- **Milestone** backups (train_complete, exam_complete, lesson_merged, manual): kept forever
+- **Scheduled** backups: last 5 kept
+- **Pre-train** backups: last 3 kept
+
+### Restore Safety
+
+The restore utility (`18_restore_backup.py`) always creates a safety backup of the current state before overwriting files, and asks for confirmation before proceeding.

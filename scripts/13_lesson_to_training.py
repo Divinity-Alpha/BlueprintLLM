@@ -17,7 +17,12 @@ Usage:
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+
+from backup_utils import auto_backup
 
 
 def generate_variations(instruction: str, category: str) -> list[str]:
@@ -85,6 +90,13 @@ def lesson_to_training(lesson_path: str, output_path: str, append: bool = True):
 
     print(f"Wrote {len(entries)} training entries from {lesson['lesson_id']} to {output}")
     print(f"  ({len(lesson['prompts'])} prompts x ~{len(entries)//len(lesson['prompts'])} variations each)")
+
+    # Post-merge backup
+    try:
+        auto_backup(trigger="lesson_merged", lesson=lesson["lesson_id"])
+    except Exception as e:
+        print(f"[Backup] Post-merge backup failed (non-fatal): {e}")
+
     return entries
 
 

@@ -55,6 +55,7 @@ from trl import SFTTrainer
 sys.path.insert(0, str(Path(__file__).parent))
 
 from stop_signal_utils import is_stop_requested, clear_signal
+from backup_utils import auto_backup
 
 logger = logging.getLogger(__name__)
 
@@ -451,6 +452,15 @@ def train(config: dict):
     print(f"  Output: {config['output_dir']}")
     print("=" * 60 + "\n")
 
+    # Pre-training backup
+    import re as _re
+    _ver_match = _re.search(r'v(\d+)', config["output_dir"])
+    _version = f"v{_ver_match.group(1)}" if _ver_match else None
+    try:
+        auto_backup(trigger="pre_train", version=_version)
+    except Exception as e:
+        logger.warning(f"Pre-training backup failed (non-fatal): {e}")
+
     trainer.train()
 
     # Save final model
@@ -472,6 +482,12 @@ def train(config: dict):
     with open(prompt_save_path, "w", encoding="utf-8") as f:
         f.write(ACTIVE_SYSTEM_PROMPT)
     print(f"System prompt saved to: {prompt_save_path}")
+
+    # Post-training backup
+    try:
+        auto_backup(trigger="train_complete", version=_version)
+    except Exception as e:
+        logger.warning(f"Post-training backup failed (non-fatal): {e}")
 
     return final_path
 

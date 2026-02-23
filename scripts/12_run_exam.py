@@ -25,6 +25,7 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent))
 
 from stop_signal_utils import is_stop_requested, clear_signal
+from backup_utils import auto_backup
 
 # Must match TRAINING_SYSTEM_PROMPT in 04_train_blueprint_lora.py
 SYSTEM_PROMPT = """You are a Blueprint DSL generator for Unreal Engine 5.
@@ -327,6 +328,16 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
     print(f"  Results:          {results_file}")
     print(f"  Summary:          {summary_file}")
     print(f"{'='*60}\n")
+
+    # Post-exam backup
+    import re as _re
+    _ver_match = _re.search(r'v(\d+)', str(model_path))
+    _version = f"v{_ver_match.group(1)}" if _ver_match else None
+    _lesson_id = lesson.get("lesson_id")
+    try:
+        auto_backup(trigger="exam_complete", version=_version, lesson=_lesson_id)
+    except Exception as e:
+        print(f"[Backup] Post-exam backup failed (non-fatal): {e}")
 
     return summary
 

@@ -38,7 +38,25 @@ python scripts/07_inference.py --model models/blueprint-lora/final --prompt "Cre
 
 # Windows Task Scheduler wrapper
 .\run_pipeline.ps1 -Mode full
+
+# Graceful shutdown (one-click or CLI)
+stop.bat                                        # request stop
+resume.bat                                      # clear stop signal
+python scripts/15_stop_signal.py stop           # CLI alternative
+python scripts/15_stop_signal.py resume
+python scripts/15_stop_signal.py status         # check if stop is pending
 ```
+
+## Graceful Shutdown
+
+A file-based `STOP_SIGNAL` mechanism lets you stop long-running operations without losing work. Double-click `stop.bat` (or run `python scripts/15_stop_signal.py stop`) to request a stop. The running process finishes its current unit of work, saves state, and exits cleanly.
+
+Where it's checked:
+- **`04_train_blueprint_lora.py`** — Custom `TrainerCallback` checks at each logging step (~every 10 batches). Saves a resumable HF checkpoint before exiting.
+- **`12_run_exam.py`** — Checks between each prompt. Saves partial results already collected to the JSONL output file.
+- **`11_pipeline_orchestrator.py`** — Checks between each pipeline stage (analyze, validate, merge, prompt, train, evaluate, summary). Finishes the current stage before stopping.
+
+Key principle: never interrupt mid-operation. The signal is only checked at safe boundaries. The signal file is automatically deleted after being handled. Use `resume.bat` to clear a signal that was set but not yet consumed.
 
 ## Architecture
 
@@ -60,7 +78,7 @@ lessons/lesson_XX.json            feed back into next training cycle
 
 ### Script Numbering Convention
 
-Scripts are numbered `01`–`13` reflecting pipeline order. The orchestrator (`11_pipeline_orchestrator.py`) chains them together. Each script is self-contained with its own `argparse` CLI and can run independently.
+Scripts are numbered `01`–`15` reflecting pipeline order. The orchestrator (`11_pipeline_orchestrator.py`) chains them together. Each script is self-contained with its own `argparse` CLI and can run independently.
 
 ### Key Modules
 

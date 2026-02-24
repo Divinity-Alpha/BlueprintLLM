@@ -17,6 +17,8 @@ from dataclasses import dataclass
 # Add parent to path so we can import utils
 sys.path.insert(0, str(Path(__file__).parent))
 from utils.dsl_parser import parse_dsl, DSLParseError, ConnectionType
+from pipeline_logger import get_logger as _get_pipeline_logger
+plog = _get_pipeline_logger(step_prefix="2")
 
 
 # ============================================================
@@ -243,6 +245,7 @@ def main():
         print(f"Error: File not found: {path}")
         sys.exit(1)
 
+    plog.start_step("2.1", "Validate DSL", path.name)
     if path.suffix == ".jsonl":
         print(f"Validating JSONL dataset: {path}")
         print("=" * 60)
@@ -284,6 +287,8 @@ def main():
 
         if result.is_valid and not result.warnings:
             print("\n[OK] Blueprint DSL is valid with no warnings!")
+
+    plog.complete_step("2.1", "Validate DSL")
 
 
 if __name__ == "__main__":

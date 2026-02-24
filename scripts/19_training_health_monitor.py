@@ -27,6 +27,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
 
+sys.path.insert(0, str(Path(__file__).parent))
+from pipeline_logger import get_logger as _get_pipeline_logger
+plog = _get_pipeline_logger(step_prefix="8")
+
 
 # ═══════════════════════════════════════════════════
 # Alert data model
@@ -996,9 +1000,15 @@ def main():
                         help="Project root directory")
     args = parser.parse_args()
 
+    plog.start_step("8.1", "Training health check",
+                      args.version or "auto-detect")
     report = run_health_check(version=args.version, project_root=args.project_root)
     if not report:
+        plog.complete_step("8.1", "Training health check", "FAILED")
         sys.exit(1)
+
+    overall = report.get("summary", {}).get("overall_health", "?")
+    plog.complete_step("8.1", "Training health check", f"Health: {overall}")
 
     # Exit with non-zero if critical alerts
     critical = report.get("summary", {}).get("by_level", {}).get("CRITICAL", 0)

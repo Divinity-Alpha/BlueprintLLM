@@ -35,6 +35,8 @@ from dataclasses import dataclass, field, asdict
 from datetime import datetime
 
 sys.path.insert(0, str(Path(__file__).parent))
+from pipeline_logger import get_logger as _get_pipeline_logger
+plog = _get_pipeline_logger(step_prefix="6")
 
 
 # ============================================================
@@ -423,6 +425,7 @@ def run_evaluation(model, tokenizer, system_prompt: str, test_ids: list = None) 
         print(f"{status} ({result.score:.0%}, {gen_time:.1f}s)")
 
         results.append(result)
+        plog.progress("6.2", i + 1, len(tests), f"{test['id']} {status}")
 
     return results
 
@@ -576,12 +579,20 @@ def main():
         print(f"Running full test suite ({len(TEST_SUITE)} prompts)...")
 
     # Load and evaluate primary model
+    plog.start_step("6.1", "Load model", f"Model: {args.model}")
     print(f"\nLoading model: {args.model}")
     model, tokenizer, system_prompt = load_model(args.model, args.base_model)
+    plog.complete_step("6.1", "Load model")
 
+    plog.start_step("6.2", "Run test suite", f"{len(test_ids) if test_ids else len(TEST_SUITE)} tests")
     print("\nRunning evaluation...\n")
     results = run_evaluation(model, tokenizer, system_prompt, test_ids)
+    plog.complete_step("6.2", "Run test suite",
+                        f"{sum(1 for r in results if r.passed)}/{len(results)} passed")
+
+    plog.start_step("6.3", "Print report")
     print_report(results, args.model)
+    plog.complete_step("6.3", "Print report")
 
     # Comparison mode
     if args.compare:
@@ -594,6 +605,7 @@ def main():
 
     # Save report
     if args.report:
+        plog.start_step("6.4", "Save report")
         report_path = Path(args.report)
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report = {
@@ -610,6 +622,7 @@ def main():
         with open(report_path, "w") as f:
             json.dump(report, f, indent=2)
         print(f"\nDetailed report saved to: {report_path}")
+        plog.complete_step("6.4", "Save report", str(report_path))
 
 
 if __name__ == "__main__":

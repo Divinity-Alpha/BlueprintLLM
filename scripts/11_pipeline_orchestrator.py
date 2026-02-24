@@ -16,12 +16,13 @@ Usage:
 Exit codes: 0=Success, 1=Failure, 2=Skipped (no new data)
 """
 
-import os, sys, json, shutil, subprocess, hashlib, argparse
+import os, sys, json, re, shutil, subprocess, hashlib, argparse, uuid
 from pathlib import Path
 from datetime import datetime
 
 sys.path.insert(0, str(Path(__file__).parent))
 from stop_signal_utils import is_stop_requested, clear_signal
+from pipeline_logger import PipelineLogger, format_duration
 
 
 class PipelineConfig:
@@ -33,8 +34,10 @@ class PipelineConfig:
         self.clipboard_processed = self.root / "raw-data" / "clipboard-exports" / "processed"
         self.dsl_dir = self.root / "cleaned-data" / "parsed-blueprints"
         self.manual_data = self.root / "datasets" / "manual_examples.jsonl"
+        self.lesson_data = self.root / "datasets" / "lesson_data.jsonl"
         self.synthetic_data = self.root / "datasets" / "synthetic_train.jsonl"
         self.train_data = self.root / "datasets" / "train.jsonl"
+        self.struct_dedup_cap = 5  # max entries per structural fingerprint
         self.val_data = self.root / "datasets" / "validation.jsonl"
         self.models_dir = self.root / "models"
         self.results_dir = self.root / "results"
@@ -71,12 +74,24 @@ class PipelineConfig:
 
 
 class Logger:
-    def __init__(self, logs_dir):
+    """Hybrid logger: per-run log file + PipelineLogger for step tracking."""
+
+    def __init__(self, logs_dir, run_id=""):
         self.ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.run_id = run_id or str(uuid.uuid4())[:8]
         logs_dir.mkdir(parents=True, exist_ok=True)
         self.path = logs_dir / f"pipeline_{self.ts}.log"
         self.fh = open(self.path, "w", encoding="utf-8")
         self.errors = []
+        # Truncate the shared live log at pipeline start
+        live_log = logs_dir / "pipeline_live.log"
+        try:
+            live_log.write_text("", encoding="utf-8")
+        except OSError:
+            pass
+        # Set env so subprocesses pick up the run_id
+        os.environ["PIPELINE_RUN_ID"] = self.run_id
+        self.plog = PipelineLogger(step_prefix="", run_id=self.run_id)
 
     def log(self, msg, level="INFO"):
         line = f"[{datetime.now().strftime('%H:%M:%S')}] [{level}] {msg}"
@@ -91,7 +106,18 @@ class Logger:
         self.log(f"  {title}")
         self.log("=" * 60)
 
+    def start_step(self, step_id, description, details=""):
+        self.plog.start_step(step_id, description, details)
+        self.fh.write(f"[{datetime.now().strftime('%H:%M:%S')}] [STEP {step_id}] STARTING: {description}\n")
+        self.fh.flush()
+
+    def complete_step(self, step_id, description="", details=""):
+        self.plog.complete_step(step_id, description, details)
+        self.fh.write(f"[{datetime.now().strftime('%H:%M:%S')}] [STEP {step_id}] COMPLETE: {description}\n")
+        self.fh.flush()
+
     def close(self):
+        self.plog.write_live_state(status="idle")
         self.fh.close()
         return self.path
 
@@ -118,7 +144,7 @@ def hash_file(path):
     return h.hexdigest()[:16]
 
 
-def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False):
+def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False, timeout=7200):
     cmd = [str(cfg.venv_python), str(cfg.scripts / script)] + args
     log.log(f"Running: {desc}")
     log.log(f"  Cmd: {' '.join(cmd)}")
@@ -126,8 +152,11 @@ def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False):
         log.log("  [DRY RUN] Skipped")
         return True
     try:
+        sub_env = {**os.environ, "PYTHONUNBUFFERED": "1"}
+        if log.run_id:
+            sub_env["PIPELINE_RUN_ID"] = log.run_id
         r = subprocess.run(cmd, cwd=str(cfg.root), capture_output=True, text=True,
-                           timeout=7200, env={**os.environ, "PYTHONUNBUFFERED": "1"})
+                           timeout=timeout, env=sub_env)
         if r.stdout:
             for line in r.stdout.strip().splitlines():
                 log.log(f"  | {line}")
@@ -149,7 +178,8 @@ def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False):
             return allow_fail
         return True
     except subprocess.TimeoutExpired:
-        log.log("  TIMED OUT (2h limit)", "ERROR")
+        hours = timeout / 3600
+        log.log(f"  TIMED OUT ({hours:.0f}h limit)", "ERROR")
         return False
     except Exception as e:
         log.log(f"  EXCEPTION: {e}", "ERROR")
@@ -163,6 +193,7 @@ def get_latest_model(cfg):
 
 def step_analyze(cfg, log, dry_run):
     log.section("STEP 1: Analyze & Auto-Translate New Blueprint Exports")
+    log.start_step(1, "Analyze & Auto-Translate")
     # Only pick up actual clipboard exports — skip .dsl.txt, .analysis.json, and other artifacts
     new_files = []
     for f in cfg.clipboard_inbox.glob("*.txt"):
@@ -173,6 +204,7 @@ def step_analyze(cfg, log, dry_run):
         new_files.append(f)
     if not new_files:
         log.log("No new exports found. Skipping.")
+        log.complete_step(1, "Analyze & Auto-Translate", "No new exports")
         return 0
     log.log(f"Found {len(new_files)} new export(s)")
     done = 0
@@ -192,28 +224,95 @@ def step_analyze(cfg, log, dry_run):
                 cfg.clipboard_processed.mkdir(parents=True, exist_ok=True)
                 shutil.move(str(f), str(cfg.clipboard_processed / f.name))
     log.log(f"Analyzed and translated {done}/{len(new_files)}")
+    log.complete_step(1, "Analyze & Auto-Translate", f"{done}/{len(new_files)} files")
     return done
 
 
 def step_validate(cfg, log, dry_run):
     log.section("STEP 2: Validate DSL Files")
+    log.start_step(2, "Validate DSL Files")
     dsl_files = list(cfg.dsl_dir.glob("*.dsl"))
     if not dsl_files:
         log.log("No DSL files. Skipping.")
+        log.complete_step(2, "Validate DSL Files", "No DSL files")
         return True
     ok = True
     for f in dsl_files:
         if not run_script(cfg, log, "06_validate_dsl.py", [str(f)],
                           f"Validating {f.name}", dry_run, allow_fail=True):
             ok = False
+    log.complete_step(2, "Validate DSL Files", f"{len(dsl_files)} files checked")
     return ok
+
+
+def _dedup_entries(entries, struct_cap, log):
+    """Deduplicate training entries: exact output dedup + structural near-dedup cap."""
+    from collections import Counter
+
+    def structural_fingerprint(output):
+        s = re.sub(r'"[^"]*"', '"X"', output)
+        s = re.sub(r'=\d+\.?\d*', '=N', s)
+        return s
+
+    before = len(entries)
+
+    # Phase 1: Exact output dedup (keep first occurrence)
+    seen_hashes = set()
+    phase1 = []
+    for entry_line in entries:
+        try:
+            obj = json.loads(entry_line) if isinstance(entry_line, str) else entry_line
+            output = obj.get("output", "")
+        except (json.JSONDecodeError, AttributeError):
+            phase1.append(entry_line)
+            continue
+        h = hashlib.md5(output.encode()).hexdigest()
+        if h in seen_hashes:
+            continue
+        seen_hashes.add(h)
+        phase1.append(entry_line)
+
+    exact_removed = before - len(phase1)
+
+    # Phase 2: Structural near-dedup
+    if struct_cap > 0:
+        fp_counts = Counter()
+        phase2 = []
+        for entry_line in phase1:
+            try:
+                obj = json.loads(entry_line) if isinstance(entry_line, str) else entry_line
+                output = obj.get("output", "")
+            except (json.JSONDecodeError, AttributeError):
+                phase2.append(entry_line)
+                continue
+            fp = structural_fingerprint(output)
+            fp_counts[fp] += 1
+            if fp_counts[fp] > struct_cap:
+                continue
+            phase2.append(entry_line)
+        struct_removed = len(phase1) - len(phase2)
+        final = phase2
+    else:
+        struct_removed = 0
+        final = phase1
+
+    total_removed = before - len(final)
+    log.log(f"  Dedup: {before} -> {len(final)} (removed {exact_removed} exact, {struct_removed} structural)")
+    return final
 
 
 def step_merge(cfg, log, dry_run):
     log.section("STEP 3: Build Training Dataset")
+    log.start_step(3, "Build Training Dataset")
     run_script(cfg, log, "03_generate_synthetic_data.py",
                ["--count", str(cfg.synthetic_count), "--output", str(cfg.synthetic_data), "--seed", "42"],
                f"Generating {cfg.synthetic_count} synthetic examples", dry_run)
+    # Generate lesson data if lessons exist
+    lesson_dir = cfg.root / "lessons"
+    if lesson_dir.exists() and list(lesson_dir.glob("lesson_*.json")):
+        run_script(cfg, log, "13_lesson_to_training.py",
+                   ["--lesson-dir", str(lesson_dir), "--output", str(cfg.lesson_data), "--no-append"],
+                   "Converting lessons to training data", dry_run, allow_fail=True)
     if not dry_run:
         entries = []
         if cfg.synthetic_data.exists():
@@ -238,6 +337,17 @@ def step_merge(cfg, log, dry_run):
                         entries.append(l.strip())
                         mc += 1
             log.log(f"  {mc} manual examples (highest priority)")
+        # Lesson data
+        lc = 0
+        if cfg.lesson_data.exists():
+            with open(cfg.lesson_data) as f:
+                for l in f:
+                    if l.strip():
+                        entries.append(l.strip())
+                        lc += 1
+            log.log(f"  {lc} lesson examples")
+        # Deduplicate
+        entries = _dedup_entries(entries, cfg.struct_dedup_cap, log)
         with open(cfg.train_data, "w") as f:
             f.write("\n".join(entries) + "\n")
         log.log(f"  Total: {len(entries)} training examples")
@@ -246,21 +356,27 @@ def step_merge(cfg, log, dry_run):
             shutil.copy2(str(sv), str(cfg.val_data))
     run_script(cfg, log, "06_validate_dsl.py", [str(cfg.train_data)],
                "Validating merged dataset", dry_run, allow_fail=True)
+    log.complete_step(3, "Build Training Dataset")
     return True
 
 
 def step_prompt(cfg, log, dry_run):
     log.section("STEP 4: Generate System Prompt")
-    return run_script(cfg, log, "08_generate_system_prompt.py",
-                      ["--output", str(cfg.scripts / "system_prompt.txt")],
-                      "Generating system prompt", dry_run)
+    log.start_step(4, "Generate System Prompt")
+    result = run_script(cfg, log, "08_generate_system_prompt.py",
+                        ["--output", str(cfg.scripts / "system_prompt.txt")],
+                        "Generating system prompt", dry_run)
+    log.complete_step(4, "Generate System Prompt")
+    return result
 
 
 def step_train(cfg, log, state, dry_run, force):
     log.section("STEP 5: Train Model")
+    log.start_step(5, "Train Model")
     cur_hash = hash_file(cfg.train_data)
     if cur_hash == state.get("last_training_data_hash", "") and not force:
         log.log("Training data unchanged. Skipping. (Use --force to override)")
+        log.complete_step(5, "Train Model", "Skipped (data unchanged)")
         m = get_latest_model(cfg)
         return str(m) if m else None
     ver = state.get("last_model_version", 0) + 1
@@ -271,54 +387,70 @@ def step_train(cfg, log, state, dry_run, force):
         "--output", str(model_dir), "--epochs", str(cfg.epochs),
         "--batch_size", str(cfg.batch_size), "--lr", str(cfg.learning_rate),
         "--lora_r", str(cfg.lora_r)
-    ], f"Fine-tuning v{ver}", dry_run)
+    ], f"Fine-tuning v{ver}", dry_run, timeout=14400)
     if ok or dry_run:
         state["last_training_data_hash"] = cur_hash
         state["last_model_version"] = ver
+        log.complete_step(5, "Train Model", f"v{ver}")
         return str(model_dir / "final")
+    log.complete_step(5, "Train Model", "FAILED")
     return None
 
 
 def step_evaluate(cfg, log, model_path, state, dry_run):
     log.section("STEP 6: Evaluate Model")
+    log.start_step(6, "Evaluate Model")
     if not model_path:
         log.log("No model. Skipping.", "WARN")
+        log.complete_step(6, "Evaluate Model", "Skipped (no model)")
         return None
     ver = state.get("last_model_version", 0)
     rpt = cfg.results_dir / f"eval_v{ver}_{datetime.now().strftime('%Y%m%d')}.json"
     run_script(cfg, log, "09_evaluate_model.py",
                ["--model", model_path, "--report", str(rpt)],
-               f"Evaluating {model_path}", dry_run)
+               f"Evaluating {model_path}", dry_run, timeout=14400)
     if rpt.exists():
         with open(rpt) as f:
-            return json.load(f)
+            report = json.load(f)
+        s = report.get("summary", {})
+        log.complete_step(6, "Evaluate Model", f"{s.get('passed','?')}/{s.get('total','?')} passed")
+        return report
+    log.complete_step(6, "Evaluate Model")
     return None
 
 
 def step_summary(cfg, log, model_path, dry_run):
     log.section("STEP 7: Training Summary")
+    log.start_step(7, "Training Summary")
     if not model_path:
+        log.complete_step(7, "Training Summary", "Skipped (no model)")
         return
     parent = str(Path(model_path).parent) if model_path.endswith("final") else model_path
     run_script(cfg, log, "10_training_dashboard.py", ["--summary", parent],
                "Training summary", dry_run, allow_fail=True)
+    log.complete_step(7, "Training Summary")
 
 
 def step_health_monitor(cfg, log, state, dry_run):
     log.section("STEP 8: Training Health Monitor")
+    log.start_step(8, "Training Health Monitor")
     ver = state.get("last_model_version", 0)
     if ver < 1:
         log.log("No model version to check. Skipping.")
+        log.complete_step(8, "Training Health Monitor", "Skipped")
         return
     run_script(cfg, log, "19_training_health_monitor.py",
                ["--version", f"v{ver}", "--project-root", str(cfg.root)],
                f"Health check v{ver}", dry_run, allow_fail=True)
+    log.complete_step(8, "Training Health Monitor")
 
 
 def step_dashboard(cfg, log, dry_run):
     log.section("STEP 9: Update Dashboard")
+    log.start_step(9, "Update Dashboard")
     run_script(cfg, log, "14_update_dashboard.py", [],
                "Updating dashboard", dry_run, allow_fail=True)
+    log.complete_step(9, "Update Dashboard")
 
 
 def run_pipeline(mode, dry_run=False, force=False, root=None):

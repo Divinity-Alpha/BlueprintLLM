@@ -42,6 +42,8 @@ from pathlib import Path
 from collections import defaultdict
 
 sys.path.insert(0, str(Path(__file__).parent))
+from pipeline_logger import get_logger as _get_pipeline_logger
+plog = _get_pipeline_logger(step_prefix="1")
 from utils.dsl_parser import parse_dsl, DSLParseError
 
 
@@ -648,21 +650,26 @@ def main():
         if not files:
             print("No .txt files in inbox.")
             return
+        plog.start_step("1.2", "Auto-translate exports", f"{len(files)} files")
         print(f"Batch translating {len(files)} files...\n")
-        for f in files:
+        for i, f in enumerate(files):
             process_export(f, args.training, dsl_dir, jsonl_path)
+            plog.progress("1.2", i + 1, len(files), f.name)
             print()
         print(f"Done. Translated {len(files)} exports.")
+        plog.complete_step("1.2", "Auto-translate exports", f"{len(files)} files")
 
     elif args.file:
         filepath = Path(args.file)
         if not filepath.exists():
             print(f"File not found: {filepath}")
             sys.exit(1)
+        plog.start_step("1.2", "Auto-translate export", filepath.name)
         dsl = process_export(filepath, args.training, dsl_dir, jsonl_path)
         print(f"\n--- Generated DSL ---")
         print(dsl)
         print(f"--- End ---")
+        plog.complete_step("1.2", "Auto-translate export")
 
     else:
         parser.print_help()

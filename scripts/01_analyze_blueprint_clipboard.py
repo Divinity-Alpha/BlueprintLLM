@@ -16,6 +16,10 @@ import sys
 from pathlib import Path
 from collections import defaultdict
 
+sys.path.insert(0, str(Path(__file__).parent))
+from pipeline_logger import get_logger as _get_pipeline_logger
+plog = _get_pipeline_logger(step_prefix="1")
+
 
 def parse_clipboard_export(text: str) -> list[dict]:
     """Parse UE5 Blueprint clipboard text into structured node data."""
@@ -206,6 +210,7 @@ def main():
         print(f"Error: File not found: {input_path}")
         sys.exit(1)
 
+    plog.start_step("1.1", "Analyze blueprint", input_path.name)
     text = input_path.read_text(encoding="utf-8")
     print(f"Analyzing: {input_path}")
     print(f"File size: {len(text):,} characters")
@@ -253,6 +258,7 @@ def main():
     print(f"DSL sketch saved to: {output_dsl}")
     print("\n--- DSL SKETCH ---")
     print(dsl)
+    plog.complete_step("1.1", "Analyze blueprint", f"{len(nodes)} nodes")
 
 
 if __name__ == "__main__":

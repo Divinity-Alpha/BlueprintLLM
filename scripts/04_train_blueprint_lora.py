@@ -56,8 +56,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from stop_signal_utils import is_stop_requested, clear_signal
 from backup_utils import auto_backup
+from pipeline_logger import get_logger as _get_pipeline_logger
 
 logger = logging.getLogger(__name__)
+plog = _get_pipeline_logger(step_prefix="5")
 
 
 # ============================================================
@@ -70,9 +72,25 @@ class GracefulStopCallback(TrainerCallback):
     If found: saves a checkpoint, clears the signal, and stops training.
     The checkpoint is a normal HF checkpoint that can be resumed with
     --resume_from_checkpoint.
+
+    Also emits training progress via PipelineLogger at each logging step.
     """
 
-    def on_log(self, args, state: TrainerState, control: TrainerControl, **kwargs):
+    def __init__(self):
+        super().__init__()
+        self._max_steps = 0
+
+    def on_train_begin(self, args, state: TrainerState, control: TrainerControl, **kwargs):
+        self._max_steps = state.max_steps
+        return control
+
+    def on_log(self, args, state: TrainerState, control: TrainerControl, logs=None, **kwargs):
+        # Emit training progress
+        if self._max_steps > 0:
+            loss = (logs or {}).get("loss", "")
+            detail = f"loss={loss:.4f}" if isinstance(loss, float) else ""
+            plog.progress("5.6", state.global_step, self._max_steps, detail)
+
         if is_stop_requested():
             print("\n" + "=" * 60)
             print("  GRACEFUL STOP REQUESTED")
@@ -335,13 +353,17 @@ def setup_model_and_tokenizer(config: dict):
 def train(config: dict):
     """Run the full training pipeline."""
 
+    plog.start_step("5.2", "Load dataset", f"From {config['dataset']}")
     train_dataset = load_dataset(config["dataset"])
     val_dataset = None
     val_path = Path(config["dataset"]).with_name("validation.jsonl")
     if val_path.exists():
         val_dataset = load_dataset(str(val_path))
+    plog.complete_step("5.2", "Load dataset", f"{len(train_dataset)} examples")
 
+    plog.start_step("5.3", "Load base model", f"Model: {config['base_model']}")
     model, tokenizer, lora_config = setup_model_and_tokenizer(config)
+    plog.complete_step("5.3", "Load base model")
 
     # Newer trl versions use SFTConfig instead of TrainingArguments.
     # SFTConfig extends TrainingArguments and adds max_seq_length, dataset_text_field, packing.
@@ -433,8 +455,10 @@ def train(config: dict):
     # Graceful stop support
     trainer_kwargs["callbacks"] = [GracefulStopCallback()]
 
+    plog.start_step("5.4", "Configure LoRA + Trainer")
     print(f"SFTTrainer params detected: {[k for k in trainer_kwargs.keys() if k not in ('args', 'callbacks')]}")
     trainer = SFTTrainer(**trainer_kwargs)
+    plog.complete_step("5.4", "Configure LoRA + Trainer")
 
     prompt_type = "ENHANCED (with node reference)" if ACTIVE_SYSTEM_PROMPT != BASIC_SYSTEM_PROMPT else "BASIC (no node reference)"
     print("\n" + "=" * 60)
@@ -456,14 +480,20 @@ def train(config: dict):
     import re as _re
     _ver_match = _re.search(r'v(\d+)', config["output_dir"])
     _version = f"v{_ver_match.group(1)}" if _ver_match else None
+    plog.start_step("5.5", "Pre-training backup")
     try:
         auto_backup(trigger="pre_train", version=_version)
     except Exception as e:
         logger.warning(f"Pre-training backup failed (non-fatal): {e}")
+    plog.complete_step("5.5", "Pre-training backup")
 
+    plog.start_step("5.6", "Training",
+                     f"{config['epochs']} epochs, {len(train_dataset)} examples")
     trainer.train()
+    plog.complete_step("5.6", "Training")
 
     # Save final model
+    plog.start_step("5.7", "Save model + config")
     final_path = os.path.join(config["output_dir"], "final")
     trainer.model.save_pretrained(final_path)
     tokenizer.save_pretrained(final_path)
@@ -482,12 +512,15 @@ def train(config: dict):
     with open(prompt_save_path, "w", encoding="utf-8") as f:
         f.write(ACTIVE_SYSTEM_PROMPT)
     print(f"System prompt saved to: {prompt_save_path}")
+    plog.complete_step("5.7", "Save model + config")
 
     # Post-training backup
+    plog.start_step("5.8", "Post-training backup")
     try:
         auto_backup(trigger="train_complete", version=_version)
     except Exception as e:
         logger.warning(f"Post-training backup failed (non-fatal): {e}")
+    plog.complete_step("5.8", "Post-training backup")
 
     return final_path
 
@@ -555,12 +588,15 @@ def main():
     args = parser.parse_args()
 
     # Select system prompt
+    plog.start_step("5.1", "Load system prompt")
     if args.basic_prompt:
         ACTIVE_SYSTEM_PROMPT = BASIC_SYSTEM_PROMPT
         print("Using BASIC system prompt (no node reference)")
     else:
         print("Loading enhanced system prompt with node reference...")
         ACTIVE_SYSTEM_PROMPT = load_enhanced_system_prompt()
+    plog.complete_step("5.1", "Load system prompt",
+                        f"{len(ACTIVE_SYSTEM_PROMPT):,} chars")
 
     config = {**DEFAULT_CONFIG}
     config.update({

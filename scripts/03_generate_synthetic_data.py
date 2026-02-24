@@ -12,9 +12,14 @@ This is your primary volume generator for Phase 3.
 
 import json
 import random
+import sys
 import argparse
 from pathlib import Path
 from itertools import product as iter_product
+
+sys.path.insert(0, str(Path(__file__).parent))
+from pipeline_logger import get_logger as _get_pipeline_logger
+plog = _get_pipeline_logger(step_prefix="3")
 
 
 # ============================================================
@@ -425,6 +430,7 @@ def main():
     parser.add_argument("--split", type=float, default=0.9, help="Train/validation split ratio")
     args = parser.parse_args()
 
+    plog.start_step("3.1", "Generate synthetic data", f"count={args.count}")
     examples = generate_dataset(args.count, args.seed)
 
     # Split into train/validation
@@ -446,6 +452,7 @@ def main():
     print("\nPattern distribution:")
     for pattern, count in sorted(pattern_counts.items(), key=lambda x: -x[1]):
         print(f"  {pattern}: {count} ({count/len(examples)*100:.1f}%)")
+    plog.complete_step("3.1", "Generate synthetic data", f"{len(examples)} examples")
 
 
 if __name__ == "__main__":

@@ -26,6 +26,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from stop_signal_utils import is_stop_requested, clear_signal
 from backup_utils import auto_backup
+from pipeline_logger import get_logger as _get_pipeline_logger
+plog = _get_pipeline_logger(step_prefix="E")
 
 # Must match TRAINING_SYSTEM_PROMPT in 04_train_blueprint_lora.py
 SYSTEM_PROMPT = """You are a Blueprint DSL generator for Unreal Engine 5.
@@ -212,6 +214,7 @@ def compare_outputs(expected_dsl, actual_dsl):
 def run_exam(lesson_path, model_path, base_model, output_dir):
     """Run all prompts from a lesson through the model."""
 
+    plog.start_step("E.1", "Load lesson", str(lesson_path))
     with open(lesson_path, encoding="utf-8") as f:
         lesson = json.load(f)
 
@@ -220,8 +223,11 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
     print(f"  {len(lesson['prompts'])} prompts")
     print(f"  Model: {model_path}")
     print(f"{'='*60}\n")
+    plog.complete_step("E.1", "Load lesson", f"{len(lesson['prompts'])} prompts")
 
+    plog.start_step("E.2", "Load model", str(model_path))
     model, tokenizer, detected_base = load_model(model_path, base_model)
+    plog.complete_step("E.2", "Load model")
 
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -234,6 +240,7 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
     total_score = 0
     valid_count = 0
 
+    plog.start_step("E.3", "Run prompts", f"{len(lesson['prompts'])} prompts")
     for i, prompt in enumerate(lesson["prompts"]):
         print(f"[{i+1}/{len(lesson['prompts'])}] {prompt['id']}: {prompt['instruction'][:60]}...")
 
@@ -281,12 +288,17 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
         with open(results_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(result, ensure_ascii=False) + "\n")
 
+        plog.progress("E.3", i + 1, len(lesson["prompts"]),
+                      f"{prompt['id']} {'OK' if validation['valid'] else 'FAIL'}")
+
         # Check for graceful stop between prompts
         if is_stop_requested():
             print(f"\n  GRACEFUL STOP REQUESTED after {i+1}/{len(lesson['prompts'])} prompts.")
             print(f"  Partial results saved to: {results_file}")
             clear_signal()
             break
+    plog.complete_step("E.3", "Run prompts",
+                        f"{valid_count}/{len(results)} valid")
 
     # Summary
     avg_score = total_score / max(len(results), 1)
@@ -317,6 +329,7 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
         s = summary["per_category"][cat]
         s["avg_score"] = round(s["avg_score"] / max(s["count"], 1) * 100, 1)
 
+    plog.start_step("E.4", "Save summary")
     with open(summary_file, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
 
@@ -328,8 +341,11 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
     print(f"  Results:          {results_file}")
     print(f"  Summary:          {summary_file}")
     print(f"{'='*60}\n")
+    plog.complete_step("E.4", "Save summary",
+                        f"Avg similarity: {summary['avg_similarity_score']}%")
 
     # Post-exam backup
+    plog.start_step("E.5", "Post-exam backup")
     import re as _re
     _ver_match = _re.search(r'v(\d+)', str(model_path))
     _version = f"v{_ver_match.group(1)}" if _ver_match else None
@@ -338,6 +354,7 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
         auto_backup(trigger="exam_complete", version=_version, lesson=_lesson_id)
     except Exception as e:
         print(f"[Backup] Post-exam backup failed (non-fatal): {e}")
+    plog.complete_step("E.5", "Post-exam backup")
 
     return summary
 

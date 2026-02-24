@@ -25,10 +25,15 @@ import argparse
 import json
 import os
 import re
+import sys
 import glob
 import webbrowser
 from datetime import datetime
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+from pipeline_logger import get_logger as _get_pipeline_logger
+plog = _get_pipeline_logger(step_prefix="9")
 
 
 def load_health_report(root='.'):
@@ -901,6 +906,7 @@ def main():
     parser.add_argument('--open', action='store_true', help='Open in browser after generating')
     args = parser.parse_args()
 
+    plog.start_step("9.1", "Update dashboard")
     print("BlueprintLLM Dashboard Generator")
     print("=" * 40)
 
@@ -967,6 +973,7 @@ def main():
         print("  Opened in browser!")
 
     print("\nDone!")
+    plog.complete_step("9.1", "Update dashboard", abs_path)
 
 
 if __name__ == '__main__':

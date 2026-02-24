@@ -83,12 +83,23 @@ class Logger:
         self.path = logs_dir / f"pipeline_{self.ts}.log"
         self.fh = open(self.path, "w", encoding="utf-8")
         self.errors = []
-        # Truncate the shared live log at pipeline start
+        # Truncate the shared live log — but only if no other run is active
         live_log = logs_dir / "pipeline_live.log"
+        live_state = logs_dir / "pipeline_live_state.json"
+        another_running = False
         try:
-            live_log.write_text("", encoding="utf-8")
-        except OSError:
+            if live_state.exists():
+                import json as _json
+                state = _json.loads(live_state.read_text(encoding="utf-8"))
+                if state.get("status") == "running" and state.get("run_id") != self.run_id:
+                    another_running = True
+        except (OSError, ValueError):
             pass
+        if not another_running:
+            try:
+                live_log.write_text("", encoding="utf-8")
+            except OSError:
+                pass
         # Set env so subprocesses pick up the run_id
         os.environ["PIPELINE_RUN_ID"] = self.run_id
         self.plog = PipelineLogger(step_prefix="", run_id=self.run_id)
@@ -117,7 +128,18 @@ class Logger:
         self.fh.flush()
 
     def close(self):
-        self.plog.write_live_state(status="idle")
+        # Only write idle if this run owns the live state
+        try:
+            import json as _json
+            live_state = self.path.parent / "pipeline_live_state.json"
+            if live_state.exists():
+                state = _json.loads(live_state.read_text(encoding="utf-8"))
+                if state.get("run_id", "") == self.run_id:
+                    self.plog.write_live_state(status="idle")
+            else:
+                self.plog.write_live_state(status="idle")
+        except (OSError, ValueError):
+            self.plog.write_live_state(status="idle")
         self.fh.close()
         return self.path
 

@@ -906,7 +906,7 @@ def main():
     parser.add_argument('--open', action='store_true', help='Open in browser after generating')
     args = parser.parse_args()
 
-    plog.start_step("9.1", "Update dashboard")
+    plog.start_step("9.1", "Collect metrics")
     print("BlueprintLLM Dashboard Generator")
     print("=" * 40)
 
@@ -933,8 +933,10 @@ def main():
     print("  Parsing lessons...")
     lessons = parse_lessons(args.lesson_dir)
     print(f"    {len(lessons)} lessons found")
+    plog.complete_step("9.1", "Collect metrics")
 
     # Build derived data
+    plog.start_step("9.2", "Generate charts")
     node_mastery = build_node_mastery_list(node_scores)
 
     # Error breakdown from most recent exam
@@ -954,12 +956,16 @@ def main():
         print(f"    Health status: {overall}, {count} alerts")
     else:
         print("    No health report found (run 19_training_health_monitor.py first)")
+    plog.complete_step("9.2", "Generate charts")
 
     # Generate HTML
+    plog.start_step("9.3", "Build HTML")
     print("  Generating dashboard...")
     html = generate_dashboard_html(training_data, node_mastery, lessons, exams, activity_log, error_breakdown, health_report)
+    plog.complete_step("9.3", "Build HTML")
 
     # Write output
+    plog.start_step("9.4", "Write dashboard")
     os.makedirs(os.path.dirname(args.output) or '.', exist_ok=True)
     with open(args.output, 'w', encoding='utf-8') as f:
         f.write(html)
@@ -971,9 +977,11 @@ def main():
     if args.open:
         webbrowser.open(f'file:///{abs_path.replace(os.sep, "/")}')
         print("  Opened in browser!")
+    plog.complete_step("9.4", "Write dashboard", abs_path)
 
+    plog.start_step("9.5", "Finalize")
     print("\nDone!")
-    plog.complete_step("9.1", "Update dashboard", abs_path)
+    plog.complete_step("9.5", "Finalize")
 
 
 if __name__ == '__main__':

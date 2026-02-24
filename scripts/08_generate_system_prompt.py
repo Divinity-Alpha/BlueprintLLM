@@ -36,7 +36,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from utils.blueprint_patterns import NODE_CATALOG, get_all_categories, get_nodes_by_category
 from pipeline_logger import get_logger as _get_pipeline_logger
-plog = _get_pipeline_logger(step_prefix="4")
+plog = _get_pipeline_logger(step_prefix="2")
 
 
 # ============================================================
@@ -171,7 +171,7 @@ def main():
     parser.add_argument("--compact", action="store_true", help="Generate compact version (fewer tokens)")
     args = parser.parse_args()
 
-    plog.start_step("4.1", "Generate system prompt")
+    plog.start_step("2.3", "Generate system prompt")
     prompt = build_full_prompt()
 
     if args.preview:
@@ -220,7 +220,7 @@ def main():
     print("NEXT STEPS:")
     print("  This prompt is automatically used by the updated training and inference scripts.")
     print("  If you add new nodes to blueprint_patterns.py, re-run this script to regenerate.")
-    plog.complete_step("4.1", "Generate system prompt",
+    plog.complete_step("2.3", "Generate system prompt",
                         f"{len(prompt):,} chars, {len(NODE_CATALOG)} nodes")
 
 

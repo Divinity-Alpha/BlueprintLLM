@@ -6,6 +6,17 @@ Designed to run unattended via Windows Task Scheduler.
 
 All interactive prompts are suppressed. Everything is logged.
 
+9-Step Hierarchy:
+    1  Data Foundation       (analyze, translate, synthetic, lessons, merge+dedup)
+    2  Pre-Flight Checks     (validate DSL, validate JSONL, system prompt, data hash)
+    3  Model Setup           (subprocess: 04_train steps 3.x)
+    4  Training              (subprocess: 04_train steps 4.x)
+    5  Post-Training         (verify, summary, health check, report, history, archive)
+    6  Exam                  (run exams against latest lessons)
+    7  Evaluation            (run tier-based test suite)
+    8  Lesson Integration    (convert lessons for next cycle)
+    9  Dashboard & Finalize  (update dashboard)
+
 Usage:
     python scripts/11_pipeline_orchestrator.py --full
     python scripts/11_pipeline_orchestrator.py --full --dry-run
@@ -23,6 +34,119 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent))
 from stop_signal_utils import is_stop_requested, clear_signal
 from pipeline_logger import PipelineLogger, format_duration
+
+# ---------------------------------------------------------------------------
+# Step plans for each pipeline mode — used by PipelineLogger for timeline/ETA
+# ---------------------------------------------------------------------------
+
+STEP_PLANS = {
+    "full": [
+        {"step": "1", "name": "Data Foundation", "parent": None},
+        {"step": "1.1", "name": "Analyze new exports", "parent": "1"},
+        {"step": "1.2", "name": "Auto-translate to DSL", "parent": "1"},
+        {"step": "1.3", "name": "Generate synthetic data", "parent": "1"},
+        {"step": "1.4", "name": "Convert lessons", "parent": "1"},
+        {"step": "1.5", "name": "Merge + Deduplicate", "parent": "1"},
+        {"step": "2", "name": "Pre-Flight Checks", "parent": None},
+        {"step": "2.1", "name": "Validate DSL files", "parent": "2"},
+        {"step": "2.2", "name": "Validate merged dataset", "parent": "2"},
+        {"step": "2.3", "name": "Generate system prompt", "parent": "2"},
+        {"step": "2.4", "name": "Compute data hash", "parent": "2"},
+        {"step": "3", "name": "Model Setup", "parent": None},
+        {"step": "3.1", "name": "Load system prompt", "parent": "3"},
+        {"step": "3.2", "name": "Load training dataset", "parent": "3"},
+        {"step": "3.3", "name": "Detect GPU + precision", "parent": "3"},
+        {"step": "3.4", "name": "Load base model + quantize", "parent": "3"},
+        {"step": "3.5", "name": "Attach LoRA adapter", "parent": "3"},
+        {"step": "3.6", "name": "Configure SFT Trainer", "parent": "3"},
+        {"step": "4", "name": "Training", "parent": None},
+        {"step": "4.1", "name": "Pre-training backup", "parent": "4"},
+        {"step": "4.2", "name": "Initialize training", "parent": "4"},
+        {"step": "4.3", "name": "Training loop", "parent": "4"},
+        {"step": "4.4", "name": "Save model weights", "parent": "4"},
+        {"step": "4.5", "name": "Save training config", "parent": "4"},
+        {"step": "4.6", "name": "Save system prompt", "parent": "4"},
+        {"step": "4.7", "name": "Post-training backup", "parent": "4"},
+        {"step": "5", "name": "Post-Training", "parent": None},
+        {"step": "5.1", "name": "Verify model output", "parent": "5"},
+        {"step": "5.2", "name": "Training summary", "parent": "5"},
+        {"step": "5.3", "name": "Run health checks", "parent": "5"},
+        {"step": "5.4", "name": "Generate health report", "parent": "5"},
+        {"step": "5.5", "name": "Update training history", "parent": "5"},
+        {"step": "5.6", "name": "Archive logs", "parent": "5"},
+        {"step": "6", "name": "Exam", "parent": None},
+        {"step": "6.1", "name": "Load lesson", "parent": "6"},
+        {"step": "6.2", "name": "Load model for exam", "parent": "6"},
+        {"step": "6.3", "name": "Run prompts", "parent": "6"},
+        {"step": "6.4", "name": "Validate responses", "parent": "6"},
+        {"step": "6.5", "name": "Compare & score", "parent": "6"},
+        {"step": "6.6", "name": "Save exam results", "parent": "6"},
+        {"step": "6.7", "name": "Post-exam backup", "parent": "6"},
+        {"step": "7", "name": "Evaluation", "parent": None},
+        {"step": "7.1", "name": "Load model", "parent": "7"},
+        {"step": "7.2", "name": "Run test suite", "parent": "7"},
+        {"step": "7.3", "name": "Score results", "parent": "7"},
+        {"step": "7.4", "name": "Generate report", "parent": "7"},
+        {"step": "7.5", "name": "Save report", "parent": "7"},
+        {"step": "8", "name": "Lesson Integration", "parent": None},
+        {"step": "8.1", "name": "Load lessons", "parent": "8"},
+        {"step": "8.2", "name": "Generate variations", "parent": "8"},
+        {"step": "8.3", "name": "Validate entries", "parent": "8"},
+        {"step": "8.4", "name": "Merge into dataset", "parent": "8"},
+        {"step": "8.5", "name": "Post-merge backup", "parent": "8"},
+        {"step": "9", "name": "Dashboard & Finalize", "parent": None},
+        {"step": "9.1", "name": "Collect metrics", "parent": "9"},
+        {"step": "9.2", "name": "Generate charts", "parent": "9"},
+        {"step": "9.3", "name": "Build HTML", "parent": "9"},
+        {"step": "9.4", "name": "Write dashboard", "parent": "9"},
+        {"step": "9.5", "name": "Finalize", "parent": "9"},
+    ],
+    "data-only": [
+        {"step": "1", "name": "Data Foundation", "parent": None},
+        {"step": "1.1", "name": "Analyze new exports", "parent": "1"},
+        {"step": "1.2", "name": "Auto-translate to DSL", "parent": "1"},
+        {"step": "1.3", "name": "Generate synthetic data", "parent": "1"},
+        {"step": "1.4", "name": "Convert lessons", "parent": "1"},
+        {"step": "1.5", "name": "Merge + Deduplicate", "parent": "1"},
+        {"step": "2", "name": "Pre-Flight Checks", "parent": None},
+        {"step": "2.1", "name": "Validate DSL files", "parent": "2"},
+        {"step": "2.2", "name": "Validate merged dataset", "parent": "2"},
+        {"step": "2.3", "name": "Generate system prompt", "parent": "2"},
+        {"step": "2.4", "name": "Compute data hash", "parent": "2"},
+    ],
+    "train-only": [
+        {"step": "3", "name": "Model Setup", "parent": None},
+        {"step": "3.1", "name": "Load system prompt", "parent": "3"},
+        {"step": "3.2", "name": "Load training dataset", "parent": "3"},
+        {"step": "3.3", "name": "Detect GPU + precision", "parent": "3"},
+        {"step": "3.4", "name": "Load base model + quantize", "parent": "3"},
+        {"step": "3.5", "name": "Attach LoRA adapter", "parent": "3"},
+        {"step": "3.6", "name": "Configure SFT Trainer", "parent": "3"},
+        {"step": "4", "name": "Training", "parent": None},
+        {"step": "4.1", "name": "Pre-training backup", "parent": "4"},
+        {"step": "4.2", "name": "Initialize training", "parent": "4"},
+        {"step": "4.3", "name": "Training loop", "parent": "4"},
+        {"step": "4.4", "name": "Save model weights", "parent": "4"},
+        {"step": "4.5", "name": "Save training config", "parent": "4"},
+        {"step": "4.6", "name": "Save system prompt", "parent": "4"},
+        {"step": "4.7", "name": "Post-training backup", "parent": "4"},
+        {"step": "5", "name": "Post-Training", "parent": None},
+        {"step": "5.1", "name": "Verify model output", "parent": "5"},
+        {"step": "5.2", "name": "Training summary", "parent": "5"},
+        {"step": "5.3", "name": "Run health checks", "parent": "5"},
+        {"step": "5.4", "name": "Generate health report", "parent": "5"},
+        {"step": "5.5", "name": "Update training history", "parent": "5"},
+        {"step": "5.6", "name": "Archive logs", "parent": "5"},
+    ],
+    "eval-only": [
+        {"step": "7", "name": "Evaluation", "parent": None},
+        {"step": "7.1", "name": "Load model", "parent": "7"},
+        {"step": "7.2", "name": "Run test suite", "parent": "7"},
+        {"step": "7.3", "name": "Score results", "parent": "7"},
+        {"step": "7.4", "name": "Generate report", "parent": "7"},
+        {"step": "7.5", "name": "Save report", "parent": "7"},
+    ],
+}
 
 
 class PipelineConfig:
@@ -166,7 +290,8 @@ def hash_file(path):
     return h.hexdigest()[:16]
 
 
-def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False, timeout=7200):
+def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False,
+               timeout=7200, extra_env=None):
     cmd = [str(cfg.venv_python), str(cfg.scripts / script)] + args
     log.log(f"Running: {desc}")
     log.log(f"  Cmd: {' '.join(cmd)}")
@@ -177,6 +302,8 @@ def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False, ti
         sub_env = {**os.environ, "PYTHONUNBUFFERED": "1"}
         if log.run_id:
             sub_env["PIPELINE_RUN_ID"] = log.run_id
+        if extra_env:
+            sub_env.update(extra_env)
         r = subprocess.run(cmd, cwd=str(cfg.root), capture_output=True, text=True,
                            timeout=timeout, env=sub_env)
         if r.stdout:
@@ -211,60 +338,6 @@ def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False, ti
 def get_latest_model(cfg):
     dirs = sorted(cfg.models_dir.glob("blueprint-lora-v*/final"), reverse=True)
     return dirs[0] if dirs else None
-
-
-def step_analyze(cfg, log, dry_run):
-    log.section("STEP 1: Analyze & Auto-Translate New Blueprint Exports")
-    log.start_step(1, "Analyze & Auto-Translate")
-    # Only pick up actual clipboard exports — skip .dsl.txt, .analysis.json, and other artifacts
-    new_files = []
-    for f in cfg.clipboard_inbox.glob("*.txt"):
-        if f.name.startswith("processed_"):
-            continue
-        if ".dsl" in f.name or ".analysis" in f.name:
-            continue  # Skip artifacts from previous analyzer runs
-        new_files.append(f)
-    if not new_files:
-        log.log("No new exports found. Skipping.")
-        log.complete_step(1, "Analyze & Auto-Translate", "No new exports")
-        return 0
-    log.log(f"Found {len(new_files)} new export(s)")
-    done = 0
-    for f in new_files:
-        # Step 1a: Analyze (raw structure dump)
-        ok = run_script(cfg, log, "01_analyze_blueprint_clipboard.py", [str(f)],
-                        f"Analyzing {f.name}", dry_run, allow_fail=True)
-        # Step 1b: Auto-translate to clean DSL + training entries
-        if ok:
-            run_script(cfg, log, "05_auto_translate_export.py",
-                       [str(f), "--training",
-                        "--dsl-dir", str(cfg.dsl_dir),
-                        "--jsonl", str(cfg.root / "datasets" / "auto_translated.jsonl")],
-                       f"Auto-translating {f.name}", dry_run, allow_fail=True)
-            done += 1
-            if not dry_run:
-                cfg.clipboard_processed.mkdir(parents=True, exist_ok=True)
-                shutil.move(str(f), str(cfg.clipboard_processed / f.name))
-    log.log(f"Analyzed and translated {done}/{len(new_files)}")
-    log.complete_step(1, "Analyze & Auto-Translate", f"{done}/{len(new_files)} files")
-    return done
-
-
-def step_validate(cfg, log, dry_run):
-    log.section("STEP 2: Validate DSL Files")
-    log.start_step(2, "Validate DSL Files")
-    dsl_files = list(cfg.dsl_dir.glob("*.dsl"))
-    if not dsl_files:
-        log.log("No DSL files. Skipping.")
-        log.complete_step(2, "Validate DSL Files", "No DSL files")
-        return True
-    ok = True
-    for f in dsl_files:
-        if not run_script(cfg, log, "06_validate_dsl.py", [str(f)],
-                          f"Validating {f.name}", dry_run, allow_fail=True):
-            ok = False
-    log.complete_step(2, "Validate DSL Files", f"{len(dsl_files)} files checked")
-    return ok
 
 
 def _dedup_entries(entries, struct_cap, log):
@@ -323,25 +396,64 @@ def _dedup_entries(entries, struct_cap, log):
     return final
 
 
-def step_merge(cfg, log, dry_run):
-    log.section("STEP 3: Build Training Dataset")
-    log.start_step(3, "Build Training Dataset")
+# ===========================================================================
+# STEP 1: Data Foundation
+# ===========================================================================
+
+def step_data_foundation(cfg, log, dry_run):
+    """Steps 1.x: Analyze, translate, synthetic, lessons, merge+dedup."""
+    log.section("STEP 1: Data Foundation")
+    log.start_step("1", "Data Foundation")
+
+    # 1.1 + 1.2: Analyze & Auto-Translate
+    new_files = []
+    for f in cfg.clipboard_inbox.glob("*.txt"):
+        if f.name.startswith("processed_"):
+            continue
+        if ".dsl" in f.name or ".analysis" in f.name:
+            continue
+        new_files.append(f)
+    if not new_files:
+        log.log("No new exports found.")
+    else:
+        log.log(f"Found {len(new_files)} new export(s)")
+        done = 0
+        for f in new_files:
+            ok = run_script(cfg, log, "01_analyze_blueprint_clipboard.py", [str(f)],
+                            f"Analyzing {f.name}", dry_run, allow_fail=True)
+            if ok:
+                run_script(cfg, log, "05_auto_translate_export.py",
+                           [str(f), "--training",
+                            "--dsl-dir", str(cfg.dsl_dir),
+                            "--jsonl", str(cfg.root / "datasets" / "auto_translated.jsonl")],
+                           f"Auto-translating {f.name}", dry_run, allow_fail=True)
+                done += 1
+                if not dry_run:
+                    cfg.clipboard_processed.mkdir(parents=True, exist_ok=True)
+                    shutil.move(str(f), str(cfg.clipboard_processed / f.name))
+        log.log(f"Analyzed and translated {done}/{len(new_files)}")
+
+    # 1.3: Generate synthetic data
     run_script(cfg, log, "03_generate_synthetic_data.py",
                ["--count", str(cfg.synthetic_count), "--output", str(cfg.synthetic_data), "--seed", "42"],
                f"Generating {cfg.synthetic_count} synthetic examples", dry_run)
-    # Generate lesson data if lessons exist
+
+    # 1.4: Convert lessons
     lesson_dir = cfg.root / "lessons"
     if lesson_dir.exists() and list(lesson_dir.glob("lesson_*.json")):
         run_script(cfg, log, "13_lesson_to_training.py",
                    ["--lesson-dir", str(lesson_dir), "--output", str(cfg.lesson_data), "--no-append"],
-                   "Converting lessons to training data", dry_run, allow_fail=True)
+                   "Converting lessons to training data", dry_run, allow_fail=True,
+                   extra_env={"PIPELINE_STEP_CONTEXT": "1"})
+
+    # 1.5: Merge + Deduplicate
     if not dry_run:
         entries = []
         if cfg.synthetic_data.exists():
             with open(cfg.synthetic_data) as f:
                 entries = [l.strip() for l in f if l.strip()]
             log.log(f"  {len(entries)} synthetic examples")
-        # Auto-translated entries (from 05_auto_translate_export.py)
+        # Auto-translated entries
         auto_path = cfg.root / "datasets" / "auto_translated.jsonl"
         ac = 0
         if auto_path.exists():
@@ -376,29 +488,66 @@ def step_merge(cfg, log, dry_run):
         sv = cfg.synthetic_data.with_name("validation.jsonl")
         if sv.exists() and sv.resolve() != cfg.val_data.resolve():
             shutil.copy2(str(sv), str(cfg.val_data))
-    run_script(cfg, log, "06_validate_dsl.py", [str(cfg.train_data)],
-               "Validating merged dataset", dry_run, allow_fail=True)
-    log.complete_step(3, "Build Training Dataset")
+
+    log.complete_step("1", "Data Foundation")
     return True
 
 
-def step_prompt(cfg, log, dry_run):
-    log.section("STEP 4: Generate System Prompt")
-    log.start_step(4, "Generate System Prompt")
-    result = run_script(cfg, log, "08_generate_system_prompt.py",
-                        ["--output", str(cfg.scripts / "system_prompt.txt")],
-                        "Generating system prompt", dry_run)
-    log.complete_step(4, "Generate System Prompt")
-    return result
+# ===========================================================================
+# STEP 2: Pre-Flight Checks
+# ===========================================================================
 
+def step_preflight(cfg, log, state, dry_run):
+    """Steps 2.x: Validate DSL, validate dataset, generate prompt, compute hash."""
+    log.section("STEP 2: Pre-Flight Checks")
+    log.start_step("2", "Pre-Flight Checks")
 
-def step_train(cfg, log, state, dry_run, force):
-    log.section("STEP 5: Train Model")
-    log.start_step(5, "Train Model")
+    # 2.1: Validate DSL files
+    dsl_files = list(cfg.dsl_dir.glob("*.dsl"))
+    if dsl_files:
+        for f in dsl_files:
+            run_script(cfg, log, "06_validate_dsl.py", [str(f)],
+                       f"Validating {f.name}", dry_run, allow_fail=True)
+
+    # 2.2: Validate merged dataset
+    if cfg.train_data.exists():
+        run_script(cfg, log, "06_validate_dsl.py", [str(cfg.train_data)],
+                   "Validating merged dataset", dry_run, allow_fail=True,
+                   extra_env={"PIPELINE_STEP_ID": "2.2"})
+
+    # 2.3: Generate system prompt
+    run_script(cfg, log, "08_generate_system_prompt.py",
+               ["--output", str(cfg.scripts / "system_prompt.txt")],
+               "Generating system prompt", dry_run)
+
+    # 2.4: Compute data hash
+    log.start_step("2.4", "Compute data hash")
     cur_hash = hash_file(cfg.train_data)
+    prev_hash = state.get("last_training_data_hash", "")
+    if cur_hash == prev_hash:
+        log.log(f"Data hash unchanged: {cur_hash}")
+    else:
+        log.log(f"Data hash changed: {prev_hash} -> {cur_hash}")
+    log.complete_step("2.4", "Compute data hash", f"hash={cur_hash}")
+
+    log.complete_step("2", "Pre-Flight Checks")
+    return cur_hash
+
+
+# ===========================================================================
+# STEPS 3+4: Training (subprocess handles 3.x and 4.x)
+# ===========================================================================
+
+def step_train(cfg, log, state, dry_run, force, data_hash=None):
+    """Steps 3.x + 4.x: Training subprocess (04_train_blueprint_lora.py)."""
+    log.section("STEPS 3-4: Model Setup & Training")
+    cur_hash = data_hash or hash_file(cfg.train_data)
     if cur_hash == state.get("last_training_data_hash", "") and not force:
         log.log("Training data unchanged. Skipping. (Use --force to override)")
-        log.complete_step(5, "Train Model", "Skipped (data unchanged)")
+        log.start_step("3", "Model Setup")
+        log.complete_step("3", "Model Setup", "Skipped (data unchanged)")
+        log.start_step("4", "Training")
+        log.complete_step("4", "Training", "Skipped (data unchanged)")
         m = get_latest_model(cfg)
         return str(m) if m else None
     ver = state.get("last_model_version", 0) + 1
@@ -413,18 +562,90 @@ def step_train(cfg, log, state, dry_run, force):
     if ok or dry_run:
         state["last_training_data_hash"] = cur_hash
         state["last_model_version"] = ver
-        log.complete_step(5, "Train Model", f"v{ver}")
         return str(model_dir / "final")
-    log.complete_step(5, "Train Model", "FAILED")
     return None
 
 
-def step_evaluate(cfg, log, model_path, state, dry_run):
-    log.section("STEP 6: Evaluate Model")
-    log.start_step(6, "Evaluate Model")
+# ===========================================================================
+# STEP 5: Post-Training
+# ===========================================================================
+
+def step_post_training(cfg, log, model_path, state, dry_run):
+    """Steps 5.x: Verify, summary, health check, history, archive."""
+    log.section("STEP 5: Post-Training")
+    log.start_step("5", "Post-Training")
+
+    # 5.1: Verify model output
+    log.start_step("5.1", "Verify model output")
+    if model_path:
+        model_final = Path(model_path)
+        if model_final.exists():
+            log.log(f"Model output verified at {model_final}")
+        else:
+            log.log(f"Model output not found at {model_final}", "WARN")
+    else:
+        log.log("No model path. Skipping verification.", "WARN")
+    log.complete_step("5.1", "Verify model output")
+
+    # 5.2: Training summary
+    if model_path:
+        parent = str(Path(model_path).parent) if model_path.endswith("final") else model_path
+        run_script(cfg, log, "10_training_dashboard.py", ["--summary", parent],
+                   "Training summary", dry_run, allow_fail=True)
+
+    # 5.3 + 5.4: Health check
+    ver = state.get("last_model_version", 0)
+    if ver >= 1:
+        run_script(cfg, log, "19_training_health_monitor.py",
+                   ["--version", f"v{ver}", "--project-root", str(cfg.root)],
+                   f"Health check v{ver}", dry_run, allow_fail=True)
+    else:
+        log.log("No model version to check. Skipping health monitor.")
+
+    log.complete_step("5", "Post-Training")
+
+
+# ===========================================================================
+# STEP 6: Exam
+# ===========================================================================
+
+def step_exam(cfg, log, model_path, dry_run):
+    """Steps 6.x: Auto-detect latest lessons and run exams."""
+    log.section("STEP 6: Exam")
+    log.start_step("6", "Exam")
+
+    if not model_path:
+        log.log("No model available. Skipping exams.", "WARN")
+        log.complete_step("6", "Exam", "Skipped (no model)")
+        return
+
+    lesson_dir = cfg.root / "lessons"
+    lesson_files = sorted(lesson_dir.glob("lesson_*.json")) if lesson_dir.exists() else []
+    if not lesson_files:
+        log.log("No lesson files found. Skipping exams.")
+        log.complete_step("6", "Exam", "No lessons")
+        return
+
+    log.log(f"Found {len(lesson_files)} lesson(s) to examine")
+    for lf in lesson_files:
+        run_script(cfg, log, "12_run_exam.py",
+                   ["--lesson", str(lf), "--model", model_path],
+                   f"Exam: {lf.name}", dry_run, allow_fail=True, timeout=14400)
+
+    log.complete_step("6", "Exam", f"{len(lesson_files)} lessons examined")
+
+
+# ===========================================================================
+# STEP 7: Evaluation (grading)
+# ===========================================================================
+
+def step_grading(cfg, log, model_path, state, dry_run):
+    """Steps 7.x: Run tier-based evaluation test suite."""
+    log.section("STEP 7: Evaluation")
+    log.start_step("7", "Evaluation")
     if not model_path:
         log.log("No model. Skipping.", "WARN")
-        log.complete_step(6, "Evaluate Model", "Skipped (no model)")
+        log.complete_step("7", "Evaluation", "Skipped (no model)")
         return None
     ver = state.get("last_model_version", 0)
     rpt = cfg.results_dir / f"eval_v{ver}_{datetime.now().strftime('%Y%m%d')}.json"
@@ -435,45 +656,51 @@ def step_evaluate(cfg, log, model_path, state, dry_run):
         with open(rpt) as f:
             report = json.load(f)
         s = report.get("summary", {})
-        log.complete_step(6, "Evaluate Model", f"{s.get('passed','?')}/{s.get('total','?')} passed")
+        log.complete_step("7", "Evaluation", f"{s.get('passed','?')}/{s.get('total','?')} passed")
         return report
-    log.complete_step(6, "Evaluate Model")
+    log.complete_step("7", "Evaluation")
     return None
 
 
-def step_summary(cfg, log, model_path, dry_run):
-    log.section("STEP 7: Training Summary")
-    log.start_step(7, "Training Summary")
-    if not model_path:
-        log.complete_step(7, "Training Summary", "Skipped (no model)")
+# ===========================================================================
+# STEP 8: Lesson Integration
+# ===========================================================================
+
+def step_lesson_integration(cfg, log, dry_run):
+    """Steps 8.x: Convert lessons for next training cycle (context=8)."""
+    log.section("STEP 8: Lesson Integration")
+    log.start_step("8", "Lesson Integration")
+
+    lesson_dir = cfg.root / "lessons"
+    if not lesson_dir.exists() or not list(lesson_dir.glob("lesson_*.json")):
+        log.log("No lessons found. Skipping.")
+        log.complete_step("8", "Lesson Integration", "No lessons")
         return
-    parent = str(Path(model_path).parent) if model_path.endswith("final") else model_path
-    run_script(cfg, log, "10_training_dashboard.py", ["--summary", parent],
-               "Training summary", dry_run, allow_fail=True)
-    log.complete_step(7, "Training Summary")
+
+    run_script(cfg, log, "13_lesson_to_training.py",
+               ["--lesson-dir", str(lesson_dir), "--output", str(cfg.lesson_data), "--no-append"],
+               "Integrating lessons for next cycle", dry_run, allow_fail=True,
+               extra_env={"PIPELINE_STEP_CONTEXT": "8"})
+
+    log.complete_step("8", "Lesson Integration")
 
 
-def step_health_monitor(cfg, log, state, dry_run):
-    log.section("STEP 8: Training Health Monitor")
-    log.start_step(8, "Training Health Monitor")
-    ver = state.get("last_model_version", 0)
-    if ver < 1:
-        log.log("No model version to check. Skipping.")
-        log.complete_step(8, "Training Health Monitor", "Skipped")
-        return
-    run_script(cfg, log, "19_training_health_monitor.py",
-               ["--version", f"v{ver}", "--project-root", str(cfg.root)],
-               f"Health check v{ver}", dry_run, allow_fail=True)
-    log.complete_step(8, "Training Health Monitor")
+# ===========================================================================
+# STEP 9: Dashboard & Finalize
+# ===========================================================================
 
-
-def step_dashboard(cfg, log, dry_run):
-    log.section("STEP 9: Update Dashboard")
-    log.start_step(9, "Update Dashboard")
+def step_dashboard_finalize(cfg, log, dry_run):
+    """Steps 9.x: Update dashboard."""
+    log.section("STEP 9: Dashboard & Finalize")
+    log.start_step("9", "Dashboard & Finalize")
     run_script(cfg, log, "14_update_dashboard.py", [],
                "Updating dashboard", dry_run, allow_fail=True)
-    log.complete_step(9, "Update Dashboard")
+    log.complete_step("9", "Dashboard & Finalize")
 
+
+# ===========================================================================
+# PIPELINE RUNNER
+# ===========================================================================
 
 def run_pipeline(mode, dry_run=False, force=False, root=None):
     cfg = PipelineConfig(root)
@@ -481,6 +708,9 @@ def run_pipeline(mode, dry_run=False, force=False, root=None):
     state = load_state(cfg)
     log = Logger(cfg.logs_dir)
     start = datetime.now()
+
+    # Register step plan for timeline and ETA tracking
+    log.plog.set_step_plan(STEP_PLANS.get(mode, []))
 
     log.section(f"BLUEPRINT LLM PIPELINE — {mode.upper()}")
     log.log(f"Root: {cfg.root}")
@@ -492,6 +722,7 @@ def run_pipeline(mode, dry_run=False, force=False, root=None):
 
     model_path = None
     eval_report = None
+    data_hash = None
     stopped = False
 
     def check_stop():
@@ -503,35 +734,40 @@ def run_pipeline(mode, dry_run=False, force=False, root=None):
         return False
 
     try:
+        # Steps 1-2: Data Foundation + Pre-Flight
         if mode in ("full", "data-only"):
-            step_analyze(cfg, log, dry_run)
+            step_data_foundation(cfg, log, dry_run)
             if check_stop(): stopped = True
             if not stopped:
-                step_validate(cfg, log, dry_run)
-            if not stopped and not check_stop():
-                step_merge(cfg, log, dry_run)
-            else:
-                stopped = True
-            if not stopped and not check_stop():
-                step_prompt(cfg, log, dry_run)
-            else:
-                stopped = True
+                data_hash = step_preflight(cfg, log, state, dry_run)
+            if check_stop(): stopped = True
+
+        # Steps 3-5: Training + Post-Training
         if not stopped and mode in ("full", "train-only"):
             if check_stop(): stopped = True
             if not stopped:
-                model_path = step_train(cfg, log, state, dry_run, force)
+                model_path = step_train(cfg, log, state, dry_run, force, data_hash)
             if not stopped and model_path and not check_stop():
-                eval_report = step_evaluate(cfg, log, model_path, state, dry_run)
-            if not stopped and model_path and not check_stop():
-                step_summary(cfg, log, model_path, dry_run)
-            if not stopped and not check_stop():
-                step_health_monitor(cfg, log, state, dry_run)
-            if not stopped and not check_stop():
-                step_dashboard(cfg, log, dry_run)
+                step_post_training(cfg, log, model_path, state, dry_run)
+            else:
+                stopped = stopped or not model_path
+
+        # Steps 6-9: Exam, Evaluation, Lesson Integration, Dashboard (full only)
+        if not stopped and mode == "full":
+            if not check_stop():
+                step_exam(cfg, log, model_path, dry_run)
+            if not check_stop():
+                eval_report = step_grading(cfg, log, model_path, state, dry_run)
+            if not check_stop():
+                step_lesson_integration(cfg, log, dry_run)
+            if not check_stop():
+                step_dashboard_finalize(cfg, log, dry_run)
+
+        # Eval-only mode
         if not stopped and mode == "eval-only":
             m = get_latest_model(cfg)
             if m:
-                eval_report = step_evaluate(cfg, log, str(m), state, dry_run)
+                eval_report = step_grading(cfg, log, str(m), state, dry_run)
             else:
                 log.log("No model found.", "ERROR")
     except Exception as e:

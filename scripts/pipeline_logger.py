@@ -9,6 +9,17 @@ Provides:
 - Live state file for dashboard consumption
 - Timing history for ETA calculation across runs
 
+Step numbering (9-step hierarchy):
+  1.x  Data Foundation      (analyze, translate, synthetic, lessons, merge+dedup)
+  2.x  Pre-Flight Checks    (validate DSL, validate JSONL, system prompt, data hash)
+  3.x  Model Setup          (system prompt, dataset, GPU detect, model load, LoRA, trainer)
+  4.x  Training             (backup, init, training loop, save weights/config/prompt, backup)
+  5.x  Post-Training        (verify model, summary, health check, report, history, archive)
+  6.x  Exam                 (load lesson, load model, run prompts, validate, score, save, backup)
+  7.x  Evaluation           (load model, run tests, score, report, save)
+  8.x  Lesson Integration   (context=8 for 13_lesson_to_training.py)
+  9.x  Dashboard & Finalize (update dashboard)
+
 Output destinations:
 - logs/pipeline_live.log  (append, shared by orchestrator + subprocesses)
 - logs/pipeline_live_state.json  (atomic replace, current step info)
@@ -109,7 +120,125 @@ class PipelineLogger:
         self._lock = Lock()
         self._current_step_id: str | None = None
         self._current_step_desc: str | None = None
+
+        # Enriched state tracking
+        self._completed_steps: list[dict] = []
+        self._latest_metrics: dict = {}
+        self._loss_history: list[dict] = []
+        self._cycle_start_time: float = time.time()
+        self._current_step_start_time: float | None = None
+        self._step_plan: list[dict] = []
+        self._upcoming_steps: list[dict] = []
+
         _LOGS_DIR.mkdir(parents=True, exist_ok=True)
+
+        # Inherit state from disk for cross-process continuity
+        self._inherit_state_from_disk()
+
+    # -- Cross-process state inheritance ------------------------------------
+
+    def _inherit_state_from_disk(self):
+        """Read existing live state and inherit accumulated data if run_id matches.
+
+        This is the key to cross-process continuity: when the orchestrator
+        spawns a subprocess (e.g. 04_train), the subprocess's PipelineLogger
+        inherits completed_steps, loss_history, etc. from the orchestrator's
+        state file.
+        """
+        try:
+            if _LIVE_STATE.exists():
+                with open(_LIVE_STATE, "r", encoding="utf-8") as f:
+                    state = json.load(f)
+                if state.get("run_id") == self.run_id:
+                    self._completed_steps = state.get("completed_steps", [])
+                    self._loss_history = state.get("loss_history", [])
+                    self._latest_metrics = state.get("latest_metrics", {})
+                    if state.get("cycle_start_time"):
+                        self._cycle_start_time = state["cycle_start_time"]
+                    self._step_plan = state.get("step_plan", [])
+                    self._upcoming_steps = state.get("upcoming_steps", [])
+        except (json.JSONDecodeError, OSError, KeyError):
+            pass
+
+    # -- Step plan ----------------------------------------------------------
+
+    def set_step_plan(self, plan: list[dict]):
+        """Register the full ordered step sequence for this pipeline run.
+
+        Args:
+            plan: list of {step, name} dicts describing all steps in order.
+        """
+        self._step_plan = plan
+        self._cycle_start_time = time.time()
+        # Build upcoming steps with ETA estimates
+        self._upcoming_steps = []
+        for item in plan:
+            eta = self._estimate_eta_seconds(item["step"])
+            self._upcoming_steps.append({
+                "step": item["step"],
+                "name": item["name"],
+                "eta_seconds": eta,
+            })
+        self.write_live_state(status="running")
+
+    # -- Metrics ------------------------------------------------------------
+
+    def update_metrics(self, metrics: dict):
+        """Merge new metrics into the latest metrics dict."""
+        self._latest_metrics.update(metrics)
+
+    def append_loss_history(self, step: int, loss: float):
+        """Append a loss data point for the mini loss chart.
+
+        Downsamples if >200 entries: thin first half, keep recent half intact.
+        """
+        self._loss_history.append({"step": step, "loss": round(loss, 6)})
+        if len(self._loss_history) > 200:
+            half = len(self._loss_history) // 2
+            # Keep every other point in first half, all points in second half
+            thinned = self._loss_history[:half:2] + self._loss_history[half:]
+            self._loss_history = thinned
+
+    # -- ETA helpers --------------------------------------------------------
+
+    def _estimate_eta_seconds(self, step_id: str) -> float | None:
+        """Return average duration for a step from timing history, or None."""
+        timings = self._timing_history.get(str(step_id), [])
+        if not timings:
+            return None
+        return round(sum(timings) / len(timings), 1)
+
+    def _calculate_remaining_eta(self, step_id: str,
+                                  progress_current: int | None = None,
+                                  progress_total: int | None = None) -> float | None:
+        """Estimate total remaining seconds (current step + upcoming steps)."""
+        remaining = 0.0
+        has_estimate = False
+
+        # Current step: extrapolate from elapsed + progress
+        if (self._current_step_start_time and progress_current and progress_total
+                and progress_current > 0):
+            elapsed = time.time() - self._current_step_start_time
+            fraction_done = progress_current / max(progress_total, 1)
+            if fraction_done > 0.01:
+                estimated_total = elapsed / fraction_done
+                remaining += max(0, estimated_total - elapsed)
+                has_estimate = True
+        elif self._current_step_start_time:
+            # No progress info — use historical average for remaining
+            eta = self._estimate_eta_seconds(str(step_id))
+            if eta is not None:
+                elapsed = time.time() - self._current_step_start_time
+                remaining += max(0, eta - elapsed)
+                has_estimate = True
+
+        # Sum upcoming step estimates
+        for upcoming in self._upcoming_steps:
+            if upcoming.get("eta_seconds") is not None:
+                remaining += upcoming["eta_seconds"]
+                has_estimate = True
+
+        return round(remaining, 1) if has_estimate else None
 
     # -- Core logging -------------------------------------------------------
 
@@ -137,6 +266,12 @@ class PipelineLogger:
         self._step_starts[step_id] = time.time()
         self._current_step_id = step_id
         self._current_step_desc = description
+        self._current_step_start_time = time.time()
+
+        # Remove from upcoming steps
+        self._upcoming_steps = [
+            s for s in self._upcoming_steps if s["step"] != step_id
+        ]
 
         eta = _get_eta(step_id, self._timing_history)
         eta_str = f" | ETA: {eta}" if eta else ""
@@ -172,14 +307,31 @@ class PipelineLogger:
         # Record timing for future ETA
         self._record_timing(step_id, elapsed)
 
+        # Add to completed steps
+        self._completed_steps.append({
+            "step": step_id,
+            "name": desc,
+            "duration": round(elapsed, 2),
+            "status": "complete",
+        })
+
         if step_id == self._current_step_id:
             self._current_step_id = None
             self._current_step_desc = None
+            self._current_step_start_time = None
+
+        # Write updated state so next step (or subprocess) sees it
+        self.write_live_state(status="running")
 
     # -- Progress -----------------------------------------------------------
 
-    def progress(self, step_id, current: int, total: int, detail: str = ""):
+    def progress(self, step_id, current: int, total: int, detail: str = "",
+                 metrics: dict | None = None):
         """Emit a progress update, rate-limited to every N seconds."""
+        # Always accept metrics even if rate-limited
+        if metrics:
+            self._latest_metrics.update(metrics)
+
         now = time.time()
         with self._lock:
             if now - self._last_progress_time < self._progress_interval:
@@ -205,18 +357,41 @@ class PipelineLogger:
                          progress_current: int | None = None,
                          progress_total: int | None = None):
         """Write current pipeline state to JSON for dashboard consumption."""
+        now = time.time()
+        elapsed = now - self._cycle_start_time
+
         state = {
             "status": status,
             "run_id": self.run_id,
-            "step_id": step_id,
-            "description": description,
+            "step_id": step_id or (self._current_step_id or ""),
+            "description": description or (self._current_step_desc or ""),
             "timestamp": datetime.now().isoformat(),
+            "cycle_start_time": self._cycle_start_time,
+            "elapsed_seconds": round(elapsed, 1),
+            "completed_steps": self._completed_steps,
+            "upcoming_steps": self._upcoming_steps,
+            "step_plan": self._step_plan,
+            "latest_metrics": self._latest_metrics,
+            "loss_history": self._loss_history,
         }
+
+        # Step timing
+        if self._current_step_start_time and status == "running":
+            state["step_start_time"] = self._current_step_start_time
+
+        # ETA
         if eta:
             state["eta"] = eta
         if progress_current is not None:
             state["progress_current"] = progress_current
             state["progress_total"] = progress_total
+
+        # Calculate remaining ETA
+        eta_remaining = self._calculate_remaining_eta(
+            state["step_id"], progress_current, progress_total
+        )
+        if eta_remaining is not None:
+            state["eta_remaining_seconds"] = eta_remaining
 
         try:
             tmp = _LIVE_STATE.with_suffix(".tmp")
@@ -255,10 +430,20 @@ class _NoOpLogger:
     def complete_step(self, step_id, description: str = "", details: str = ""):
         pass
 
-    def progress(self, step_id, current: int, total: int, detail: str = ""):
+    def progress(self, step_id, current: int, total: int, detail: str = "",
+                 metrics: dict | None = None):
         pass
 
     def write_live_state(self, *args, **kwargs):
+        pass
+
+    def set_step_plan(self, plan: list[dict]):
+        pass
+
+    def update_metrics(self, metrics: dict):
+        pass
+
+    def append_loss_history(self, step: int, loss: float):
         pass
 
 

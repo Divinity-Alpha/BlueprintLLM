@@ -16,6 +16,7 @@ Usage:
 
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -24,7 +25,11 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from backup_utils import auto_backup
 from pipeline_logger import get_logger as _get_pipeline_logger
-plog = _get_pipeline_logger(step_prefix="3")
+
+# Step context: "1" when called during Data Foundation (step 1.4),
+#               "8" when called during Lesson Integration (steps 8.x)
+_step_context = os.environ.get("PIPELINE_STEP_CONTEXT", "1")
+plog = _get_pipeline_logger(step_prefix=_step_context)
 
 
 def generate_variations(instruction: str, category: str) -> list[str]:
@@ -110,7 +115,9 @@ def main():
     parser.add_argument("--no-append", action="store_true", help="Overwrite instead of append")
     args = parser.parse_args()
 
-    plog.start_step("3.2", "Convert lessons to training data")
+    _step_id = "1.4" if _step_context == "1" else "8.1"
+    _step_name = "Convert lessons to training data"
+    plog.start_step(_step_id, _step_name)
     if args.lesson:
         lesson_to_training(args.lesson, args.output, append=not args.no_append)
     elif args.lesson_dir:
@@ -122,7 +129,7 @@ def main():
             lesson_to_training(str(lf), args.output, append=True)
     else:
         print("Specify --lesson or --lesson-dir")
-    plog.complete_step("3.2", "Convert lessons to training data")
+    plog.complete_step(_step_id, _step_name)
 
 
 if __name__ == "__main__":

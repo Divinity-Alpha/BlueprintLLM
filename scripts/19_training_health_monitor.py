@@ -29,7 +29,7 @@ from typing import List, Optional
 
 sys.path.insert(0, str(Path(__file__).parent))
 from pipeline_logger import get_logger as _get_pipeline_logger
-plog = _get_pipeline_logger(step_prefix="8")
+plog = _get_pipeline_logger(step_prefix="5")
 
 
 # ═══════════════════════════════════════════════════
@@ -1000,15 +1000,15 @@ def main():
                         help="Project root directory")
     args = parser.parse_args()
 
-    plog.start_step("8.1", "Training health check",
+    plog.start_step("5.3", "Run health checks",
                       args.version or "auto-detect")
     report = run_health_check(version=args.version, project_root=args.project_root)
     if not report:
-        plog.complete_step("8.1", "Training health check", "FAILED")
+        plog.complete_step("5.3", "Run health checks", "FAILED")
         sys.exit(1)
 
     overall = report.get("summary", {}).get("overall_health", "?")
-    plog.complete_step("8.1", "Training health check", f"Health: {overall}")
+    plog.complete_step("5.3", "Run health checks", f"Health: {overall}")
 
     # Exit with non-zero if critical alerts
     critical = report.get("summary", {}).get("by_level", {}).get("CRITICAL", 0)

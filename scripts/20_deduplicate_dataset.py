@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from pipeline_logger import get_logger as _get_pipeline_logger
-plog = _get_pipeline_logger(step_prefix="3")
+plog = _get_pipeline_logger(step_prefix="1")
 
 
 def structural_fingerprint(output: str) -> str:
@@ -141,9 +141,9 @@ def main():
         print(f"Dataset not found: {train_path}")
         return
 
-    plog.start_step("3.3", "Deduplicate dataset", str(train_path))
+    plog.start_step("1.5", "Deduplicate dataset", str(train_path))
     deduplicate(train_path, struct_cap=args.struct_cap, apply=args.apply)
-    plog.complete_step("3.3", "Deduplicate dataset")
+    plog.complete_step("1.5", "Deduplicate dataset")
 
 
 if __name__ == "__main__":

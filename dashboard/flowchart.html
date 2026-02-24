@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueprintLLM — Pipeline Flowchart</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0a0e17;
+  --bg-panel: #111827;
+  --bg-card: #1a2234;
+  --border: #2a3650;
+  --text-primary: #e8edf5;
+  --text-secondary: #8899b4;
+  --text-dim: #556680;
+  --blue: #3b82f6;
+  --cyan: #06b6d4;
+  --amber: #f59e0b;
+  --emerald: #10b981;
+  --violet: #8b5cf6;
+  --rose: #f43f5e;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg-deep); color: var(--text-primary);
+  font-family: 'Outfit', sans-serif; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; padding: 32px 24px;
+}
+h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.subtitle { font-size: 13px; color: var(--text-dim); margin-bottom: 32px;
+  font-family: 'JetBrains Mono', monospace; }
+.flowchart { max-width: 960px; width: 100%; }
+svg { width: 100%; height: auto; }
+.phase-label { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 13px; }
+.step-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+.step-name { font-family: 'Outfit', sans-serif; font-size: 11px; }
+.arrow { stroke: var(--border); stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+</style>
+</head>
+<body>
+<h1>BlueprintLLM Pipeline Flowchart</h1>
+<div class="subtitle">9-Step Hierarchical Pipeline</div>
+<div class="flowchart">
+<svg viewBox="0 0 920 520" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#556680"/>
+    </marker>
+  </defs>
+
+  <!-- Row 1: Data phases (blue) -->
+  <rect x="10" y="20" width="200" height="70" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="110" y="45" text-anchor="middle" fill="#3b82f6" class="phase-label">1. Data Foundation</text>
+  <text x="110" y="62" text-anchor="middle" fill="#8899b4" class="step-name">analyze, translate, synthetic</text>
+  <text x="110" y="76" text-anchor="middle" fill="#8899b4" class="step-name">lessons, merge+dedup</text>
+
+  <line x1="210" y1="55" x2="240" y2="55" class="arrow"/>
+
+  <rect x="240" y="20" width="200" height="70" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="340" y="45" text-anchor="middle" fill="#3b82f6" class="phase-label">2. Pre-Flight Checks</text>
+  <text x="340" y="62" text-anchor="middle" fill="#8899b4" class="step-name">validate DSL, validate JSONL</text>
+  <text x="340" y="76" text-anchor="middle" fill="#8899b4" class="step-name">system prompt, data hash</text>
+
+  <!-- Arrow down to training row -->
+  <line x1="340" y1="90" x2="340" y2="140" class="arrow"/>
+
+  <!-- Row 2: Training phases (amber) -->
+  <rect x="240" y="140" width="200" height="70" rx="10" fill="#3d2e0a" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="340" y="165" text-anchor="middle" fill="#f59e0b" class="phase-label">3. Model Setup</text>
+  <text x="340" y="182" text-anchor="middle" fill="#8899b4" class="step-name">prompt, dataset, GPU detect</text>
+  <text x="340" y="196" text-anchor="middle" fill="#8899b4" class="step-name">model load, LoRA, trainer</text>
+
+  <line x1="440" y1="175" x2="470" y2="175" class="arrow"/>
+
+  <rect x="470" y="140" width="200" height="70" rx="10" fill="#3d2e0a" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="570" y="165" text-anchor="middle" fill="#f59e0b" class="phase-label">4. Training</text>
+  <text x="570" y="182" text-anchor="middle" fill="#8899b4" class="step-name">backup, init, training loop</text>
+  <text x="570" y="196" text-anchor="middle" fill="#8899b4" class="step-name">save weights/config, backup</text>
+
+  <line x1="670" y1="175" x2="700" y2="175" class="arrow"/>
+
+  <rect x="700" y="140" width="200" height="70" rx="10" fill="#3d2e0a" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="800" y="165" text-anchor="middle" fill="#f59e0b" class="phase-label">5. Post-Training</text>
+  <text x="800" y="182" text-anchor="middle" fill="#8899b4" class="step-name">verify, summary, health</text>
+  <text x="800" y="196" text-anchor="middle" fill="#8899b4" class="step-name">report, history, archive</text>
+
+  <!-- Arrow down to eval row -->
+  <line x1="800" y1="210" x2="800" y2="260" class="arrow"/>
+
+  <!-- Row 3: Evaluation phases (green) -->
+  <rect x="700" y="260" width="200" height="70" rx="10" fill="#0a2e1e" stroke="#10b981" stroke-width="1.5"/>
+  <text x="800" y="285" text-anchor="middle" fill="#10b981" class="phase-label">6. Exam</text>
+  <text x="800" y="302" text-anchor="middle" fill="#8899b4" class="step-name">load lesson, load model</text>
+  <text x="800" y="316" text-anchor="middle" fill="#8899b4" class="step-name">run prompts, score, save</text>
+
+  <line x1="700" y1="295" x2="670" y2="295" class="arrow"/>
+
+  <rect x="470" y="260" width="200" height="70" rx="10" fill="#0a2e1e" stroke="#10b981" stroke-width="1.5"/>
+  <text x="570" y="285" text-anchor="middle" fill="#10b981" class="phase-label">7. Evaluation</text>
+  <text x="570" y="302" text-anchor="middle" fill="#8899b4" class="step-name">load model, run test suite</text>
+  <text x="570" y="316" text-anchor="middle" fill="#8899b4" class="step-name">score, report, save</text>
+
+  <!-- Arrow down to integration row -->
+  <line x1="570" y1="330" x2="570" y2="380" class="arrow"/>
+
+  <!-- Row 4: Integration phases (violet) -->
+  <rect x="470" y="380" width="200" height="70" rx="10" fill="#1e0a3d" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="570" y="405" text-anchor="middle" fill="#8b5cf6" class="phase-label">8. Lesson Integration</text>
+  <text x="570" y="422" text-anchor="middle" fill="#8899b4" class="step-name">load, generate variations</text>
+  <text x="570" y="436" text-anchor="middle" fill="#8899b4" class="step-name">validate, merge, backup</text>
+
+  <line x1="470" y1="415" x2="440" y2="415" class="arrow"/>
+
+  <rect x="240" y="380" width="200" height="70" rx="10" fill="#1e0a3d" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="340" y="405" text-anchor="middle" fill="#8b5cf6" class="phase-label">9. Dashboard & Finalize</text>
+  <text x="340" y="422" text-anchor="middle" fill="#8899b4" class="step-name">collect metrics, charts</text>
+  <text x="340" y="436" text-anchor="middle" fill="#8899b4" class="step-name">build HTML, write, finalize</text>
+
+  <!-- Legend -->
+  <rect x="10" y="420" width="12" height="12" rx="2" fill="#1e3a5f" stroke="#3b82f6"/>
+  <text x="28" y="431" fill="#8899b4" class="step-name">Data</text>
+  <rect x="60" y="420" width="12" height="12" rx="2" fill="#3d2e0a" stroke="#f59e0b"/>
+  <text x="78" y="431" fill="#8899b4" class="step-name">Training</text>
+  <rect x="130" y="420" width="12" height="12" rx="2" fill="#0a2e1e" stroke="#10b981"/>
+  <text x="148" y="431" fill="#8899b4" class="step-name">Evaluation</text>
+  <rect x="200" y="420" width="12" height="12" rx="2" fill="#1e0a3d" stroke="#8b5cf6"/>
+  <text x="218" y="431" fill="#8899b4" class="step-name">Integration</text>
+
+  <!-- Feedback arrow from 8 back to 1 -->
+  <path d="M 240 415 L 110 415 L 110 100 L 110 90" class="arrow" stroke-dasharray="6 3" stroke="#556680"/>
+  <text x="80" y="260" fill="#556680" class="step-name" transform="rotate(-90 80 260)">next cycle</text>
+</svg>
+</div>
+</body>
+</html>

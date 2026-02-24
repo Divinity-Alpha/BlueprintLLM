@@ -144,20 +144,19 @@ A unified `PipelineLogger` (`scripts/pipeline_logger.py`) provides step-numbered
 - Each script calls `get_logger(step_prefix="N")` which returns a real `PipelineLogger` when `PIPELINE_RUN_ID` is set, or a silent `_NoOpLogger` for standalone runs (zero extra output).
 - The orchestrator's `Logger` class wraps `PipelineLogger` while keeping its own per-run log file.
 
-### Step Numbering
+### Step Numbering (9-Step Hierarchy)
 
-| Orch Step | Script(s)       | Sub-step IDs                                              |
-|-----------|-----------------|-----------------------------------------------------------|
-| 1         | 01, 05          | 1.1 (analyze), 1.2 (translate)                            |
-| 2         | 06              | 2.1 (validate)                                            |
-| 3         | 03, 13, merge, 20 | 3.1 (synthetic), 3.2 (lessons), 3.3 (merge+dedup)      |
-| 4         | 08              | 4.1 (generate prompt)                                     |
-| 5         | 04              | 5.1–5.8 (prompt, dataset, model, lora, backup, train, save, backup) |
-| 6         | 09              | 6.1–6.4 (load model, run tests, report, save)             |
-| 7         | 10              | 7.1 (summary)                                             |
-| 8         | 19              | 8.1 (health check)                                        |
-| 9         | 14              | 9.1 (dashboard)                                           |
-| E         | 12 (standalone) | E.1–E.5 (lesson, model, exam, summary, backup)            |
+| Phase | Script(s)            | Sub-steps                                                         |
+|-------|----------------------|-------------------------------------------------------------------|
+| 1     | 01, 05, 03, 13, 20  | 1.1 analyze, 1.2 translate, 1.3 synthetic, 1.4 lessons, 1.5 merge+dedup |
+| 2     | 06, 08, orchestrator | 2.1 validate DSL, 2.2 validate JSONL, 2.3 system prompt, 2.4 data hash |
+| 3     | 04 (setup)           | 3.1 prompt, 3.2 dataset, 3.3 GPU, 3.4 model, 3.5 LoRA, 3.6 trainer |
+| 4     | 04 (training)        | 4.1 backup, 4.2 init, 4.3 training loop, 4.4–4.6 save, 4.7 backup |
+| 5     | 10, 19, orchestrator | 5.1 verify, 5.2 summary, 5.3 health, 5.4 report, 5.5 history, 5.6 archive |
+| 6     | 12                   | 6.1 lesson, 6.2 model, 6.3 prompts, 6.4 validate, 6.5 score, 6.6 save, 6.7 backup |
+| 7     | 09                   | 7.1 load model, 7.2 run tests, 7.3 score, 7.4 report, 7.5 save  |
+| 8     | 13 (context=8)       | 8.1–8.5 lesson integration for next cycle                        |
+| 9     | 14                   | 9.1 collect, 9.2 charts, 9.3 build HTML, 9.4 write, 9.5 finalize |
 
 ### Output Files
 
@@ -168,15 +167,15 @@ A unified `PipelineLogger` (`scripts/pipeline_logger.py`) provides step-numbered
 ### Output Format
 
 ```
-[14:30:06] [STEP 5.1] STARTING: Load system prompt
-[14:30:06] [STEP 5.1] COMPLETE: Load system prompt (0.8s)
+[14:30:06] [STEP 3.1] STARTING: Load system prompt
+[14:30:06] [STEP 3.1] COMPLETE: Load system prompt (0.8s)
            5,660 chars loaded
-[14:30:06] [STEP 5.3] STARTING: Load base model | ETA: 4.2m
-[14:34:22] [STEP 5.3] COMPLETE: Load base model (4m 15s)
-[14:34:22] [STEP 5.6] STARTING: Training | ETA: 52.3m
+[14:30:06] [STEP 3.4] STARTING: Load base model + quantize | ETA: 4.2m
+[14:34:22] [STEP 3.4] COMPLETE: Load base model + quantize (4m 15s)
+[14:34:22] [STEP 4.3] STARTING: Training loop | ETA: 52.3m
            3 epochs, 458 examples
-[14:35:10]   [5.6] 20/171 (12%) — loss=2.3412
-[14:36:05]   [5.6] 40/171 (23%) — loss=1.8921
+[14:35:10]   [4.3] 20/171 (12%) — loss=2.3412
+[14:36:05]   [4.3] 40/171 (23%) — loss=1.8921
 ```
 
 ### Key Design Decisions

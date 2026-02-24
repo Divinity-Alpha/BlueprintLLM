@@ -10,6 +10,7 @@ Usage:
 """
 
 import json
+import os
 import sys
 from pathlib import Path
 from dataclasses import dataclass
@@ -245,7 +246,8 @@ def main():
         print(f"Error: File not found: {path}")
         sys.exit(1)
 
-    plog.start_step("2.1", "Validate DSL", path.name)
+    step_id = os.environ.get("PIPELINE_STEP_ID", "2.1")
+    plog.start_step(step_id, "Validate DSL", path.name)
     if path.suffix == ".jsonl":
         print(f"Validating JSONL dataset: {path}")
         print("=" * 60)
@@ -288,7 +290,7 @@ def main():
         if result.is_valid and not result.warnings:
             print("\n[OK] Blueprint DSL is valid with no warnings!")
 
-    plog.complete_step("2.1", "Validate DSL")
+    plog.complete_step(step_id, "Validate DSL")
 
 
 if __name__ == "__main__":

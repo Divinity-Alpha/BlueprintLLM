@@ -59,7 +59,7 @@ from backup_utils import auto_backup
 from pipeline_logger import get_logger as _get_pipeline_logger
 
 logger = logging.getLogger(__name__)
-plog = _get_pipeline_logger(step_prefix="5")
+plog = _get_pipeline_logger(step_prefix="3")
 
 
 # ============================================================
@@ -85,11 +85,22 @@ class GracefulStopCallback(TrainerCallback):
         return control
 
     def on_log(self, args, state: TrainerState, control: TrainerControl, logs=None, **kwargs):
-        # Emit training progress
+        # Emit training progress with metrics
         if self._max_steps > 0:
             loss = (logs or {}).get("loss", "")
-            detail = f"loss={loss:.4f}" if isinstance(loss, float) else ""
-            plog.progress("5.6", state.global_step, self._max_steps, detail)
+            lr = (logs or {}).get("learning_rate", "")
+            metrics = {}
+            detail_parts = []
+            if isinstance(loss, float):
+                detail_parts.append(f"loss={loss:.4f}")
+                metrics["loss"] = loss
+                plog.append_loss_history(state.global_step, loss)
+            if isinstance(lr, float):
+                detail_parts.append(f"lr={lr:.2e}")
+                metrics["learning_rate"] = lr
+            detail = " ".join(detail_parts)
+            plog.progress("4.3", state.global_step, self._max_steps,
+                          detail, metrics=metrics if metrics else None)
 
         if is_stop_requested():
             print("\n" + "=" * 60)
@@ -353,17 +364,21 @@ def setup_model_and_tokenizer(config: dict):
 def train(config: dict):
     """Run the full training pipeline."""
 
-    plog.start_step("5.2", "Load dataset", f"From {config['dataset']}")
+    plog.start_step("3.2", "Load training dataset", f"From {config['dataset']}")
     train_dataset = load_dataset(config["dataset"])
     val_dataset = None
     val_path = Path(config["dataset"]).with_name("validation.jsonl")
     if val_path.exists():
         val_dataset = load_dataset(str(val_path))
-    plog.complete_step("5.2", "Load dataset", f"{len(train_dataset)} examples")
+    plog.complete_step("3.2", "Load training dataset", f"{len(train_dataset)} examples")
 
-    plog.start_step("5.3", "Load base model", f"Model: {config['base_model']}")
+    plog.start_step("3.3", "Detect GPU + configure precision")
+    gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "none"
+    plog.complete_step("3.3", "Detect GPU + configure precision", gpu_name)
+
+    plog.start_step("3.4", "Load base model + quantize", f"Model: {config['base_model']}")
     model, tokenizer, lora_config = setup_model_and_tokenizer(config)
-    plog.complete_step("5.3", "Load base model")
+    plog.complete_step("3.4", "Load base model + quantize")
 
     # Newer trl versions use SFTConfig instead of TrainingArguments.
     # SFTConfig extends TrainingArguments and adds max_seq_length, dataset_text_field, packing.
@@ -455,10 +470,13 @@ def train(config: dict):
     # Graceful stop support
     trainer_kwargs["callbacks"] = [GracefulStopCallback()]
 
-    plog.start_step("5.4", "Configure LoRA + Trainer")
+    plog.start_step("3.5", "Attach LoRA adapter")
+    plog.complete_step("3.5", "Attach LoRA adapter")
+
+    plog.start_step("3.6", "Configure SFT Trainer")
     print(f"SFTTrainer params detected: {[k for k in trainer_kwargs.keys() if k not in ('args', 'callbacks')]}")
     trainer = SFTTrainer(**trainer_kwargs)
-    plog.complete_step("5.4", "Configure LoRA + Trainer")
+    plog.complete_step("3.6", "Configure SFT Trainer")
 
     prompt_type = "ENHANCED (with node reference)" if ACTIVE_SYSTEM_PROMPT != BASIC_SYSTEM_PROMPT else "BASIC (no node reference)"
     print("\n" + "=" * 60)
@@ -480,47 +498,54 @@ def train(config: dict):
     import re as _re
     _ver_match = _re.search(r'v(\d+)', config["output_dir"])
     _version = f"v{_ver_match.group(1)}" if _ver_match else None
-    plog.start_step("5.5", "Pre-training backup")
+    plog.start_step("4.1", "Pre-training backup")
     try:
         auto_backup(trigger="pre_train", version=_version)
     except Exception as e:
         logger.warning(f"Pre-training backup failed (non-fatal): {e}")
-    plog.complete_step("5.5", "Pre-training backup")
+    plog.complete_step("4.1", "Pre-training backup")
 
-    plog.start_step("5.6", "Training",
+    plog.start_step("4.2", "Initialize training")
+    plog.complete_step("4.2", "Initialize training")
+
+    plog.start_step("4.3", "Training loop",
                      f"{config['epochs']} epochs, {len(train_dataset)} examples")
     trainer.train()
-    plog.complete_step("5.6", "Training")
+    plog.complete_step("4.3", "Training loop")
 
-    # Save final model
-    plog.start_step("5.7", "Save model + config")
+    # Save model weights
+    plog.start_step("4.4", "Save model weights")
     final_path = os.path.join(config["output_dir"], "final")
     trainer.model.save_pretrained(final_path)
     tokenizer.save_pretrained(final_path)
     print(f"\nModel saved to: {final_path}")
+    plog.complete_step("4.4", "Save model weights")
 
     # Save config for reproducibility
+    plog.start_step("4.5", "Save training config")
     config["system_prompt_type"] = prompt_type
     config["system_prompt_length"] = len(ACTIVE_SYSTEM_PROMPT)
     config_path = os.path.join(config["output_dir"], "training_config.json")
     with open(config_path, "w") as f:
         json.dump(config, f, indent=2)
     print(f"Config saved to: {config_path}")
+    plog.complete_step("4.5", "Save training config")
 
     # Save the system prompt alongside the model so inference uses the same one
+    plog.start_step("4.6", "Save system prompt")
     prompt_save_path = os.path.join(config["output_dir"], "system_prompt.txt")
     with open(prompt_save_path, "w", encoding="utf-8") as f:
         f.write(ACTIVE_SYSTEM_PROMPT)
     print(f"System prompt saved to: {prompt_save_path}")
-    plog.complete_step("5.7", "Save model + config")
+    plog.complete_step("4.6", "Save system prompt")
 
     # Post-training backup
-    plog.start_step("5.8", "Post-training backup")
+    plog.start_step("4.7", "Post-training backup")
     try:
         auto_backup(trigger="train_complete", version=_version)
     except Exception as e:
         logger.warning(f"Post-training backup failed (non-fatal): {e}")
-    plog.complete_step("5.8", "Post-training backup")
+    plog.complete_step("4.7", "Post-training backup")
 
     return final_path
 
@@ -588,14 +613,14 @@ def main():
     args = parser.parse_args()
 
     # Select system prompt
-    plog.start_step("5.1", "Load system prompt")
+    plog.start_step("3.1", "Load system prompt")
     if args.basic_prompt:
         ACTIVE_SYSTEM_PROMPT = BASIC_SYSTEM_PROMPT
         print("Using BASIC system prompt (no node reference)")
     else:
         print("Loading enhanced system prompt with node reference...")
         ACTIVE_SYSTEM_PROMPT = load_enhanced_system_prompt()
-    plog.complete_step("5.1", "Load system prompt",
+    plog.complete_step("3.1", "Load system prompt",
                         f"{len(ACTIVE_SYSTEM_PROMPT):,} chars")
 
     config = {**DEFAULT_CONFIG}

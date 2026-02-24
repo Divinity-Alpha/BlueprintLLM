@@ -91,6 +91,7 @@ Scripts are numbered `01`–`19` reflecting pipeline order. The orchestrator (`1
 
 - **`scripts/utils/dsl_parser.py`** — Parses and validates the Blueprint DSL. Converts between DSL text and Python dataclasses. All generated output must pass this parser.
 - **`scripts/utils/blueprint_patterns.py`** — Node type catalog (50+ types) with pin definitions. Used for synthetic data generation and validation.
+- **`scripts/pipeline_logger.py`** — Unified pipeline logging with step tracking, ETA prediction, and live state for dashboard consumption. See [Pipeline Logger](#pipeline-logger) section below.
 - **`scripts/11_pipeline_orchestrator.py`** — Master orchestrator. Manages state via `.pipeline_state.json`, detects data changes via hash, auto-increments model versions.
 - **`scripts/09_evaluate_model.py`** — Tier-based test suite (Tiers 1–4). Scores on structure/keywords/node-types/connections/parseability. Pass threshold: 70%.
 - **`scripts/19_training_health_monitor.py`** — Post-training health analysis across 6 dimensions (epoch efficiency, overfitting, learning rate, dataset quality, node mastery velocity, resource usage). Outputs `health_report.json` and `logs/training_history.json`.
@@ -128,6 +129,61 @@ JSONL with `instruction` and `output` fields:
 `logs/training_history.json` accumulates per-cycle metrics (loss, accuracy, node scores, dataset size) used by the health monitor to detect trends, plateaus, and regressions across training cycles.
 
 `health_report.json` at project root is the latest health check output with alerts, trends, and cycle data. Read by the dashboard generator to display the health panel.
+
+`logs/pipeline_live_state.json` is the current pipeline step/status, atomically updated by `PipelineLogger`. Shows `{"status": "idle"}` when no pipeline is running.
+
+`logs/step_timing_history.json` accumulates per-step durations (last 10 per step) used by `PipelineLogger` to predict ETAs for future runs.
+
+## Pipeline Logger
+
+A unified `PipelineLogger` (`scripts/pipeline_logger.py`) provides step-numbered logging, ETA prediction from historical timings, and a live state file for dashboard consumption. All pipeline scripts (01–20) use it.
+
+### How It Works
+
+- The **orchestrator** generates a `PIPELINE_RUN_ID` and passes it to subprocesses via environment variable.
+- Each script calls `get_logger(step_prefix="N")` which returns a real `PipelineLogger` when `PIPELINE_RUN_ID` is set, or a silent `_NoOpLogger` for standalone runs (zero extra output).
+- The orchestrator's `Logger` class wraps `PipelineLogger` while keeping its own per-run log file.
+
+### Step Numbering
+
+| Orch Step | Script(s)       | Sub-step IDs                                              |
+|-----------|-----------------|-----------------------------------------------------------|
+| 1         | 01, 05          | 1.1 (analyze), 1.2 (translate)                            |
+| 2         | 06              | 2.1 (validate)                                            |
+| 3         | 03, 13, merge, 20 | 3.1 (synthetic), 3.2 (lessons), 3.3 (merge+dedup)      |
+| 4         | 08              | 4.1 (generate prompt)                                     |
+| 5         | 04              | 5.1–5.8 (prompt, dataset, model, lora, backup, train, save, backup) |
+| 6         | 09              | 6.1–6.4 (load model, run tests, report, save)             |
+| 7         | 10              | 7.1 (summary)                                             |
+| 8         | 19              | 8.1 (health check)                                        |
+| 9         | 14              | 9.1 (dashboard)                                           |
+| E         | 12 (standalone) | E.1–E.5 (lesson, model, exam, summary, backup)            |
+
+### Output Files
+
+- **`logs/pipeline_live.log`** — Append-only log shared by orchestrator and subprocesses. Truncated at each pipeline start.
+- **`logs/pipeline_live_state.json`** — Atomically replaced JSON showing current step, status, and progress. Consumed by the dashboard.
+- **`logs/step_timing_history.json`** — Accumulated per-step timings (last 10 runs each) used for ETA prediction.
+
+### Output Format
+
+```
+[14:30:06] [STEP 5.1] STARTING: Load system prompt
+[14:30:06] [STEP 5.1] COMPLETE: Load system prompt (0.8s)
+           5,660 chars loaded
+[14:30:06] [STEP 5.3] STARTING: Load base model | ETA: 4.2m
+[14:34:22] [STEP 5.3] COMPLETE: Load base model (4m 15s)
+[14:34:22] [STEP 5.6] STARTING: Training | ETA: 52.3m
+           3 epochs, 458 examples
+[14:35:10]   [5.6] 20/171 (12%) — loss=2.3412
+[14:36:05]   [5.6] 40/171 (23%) — loss=1.8921
+```
+
+### Key Design Decisions
+
+- **Progress is rate-limited** to every 5 seconds to prevent log spam from training loops.
+- **`_NoOpLogger`** means scripts never need `if plog:` guards — standalone runs are completely silent.
+- **Timing history** keeps last 10 runs per step_id for ETA calculation.
 
 ## Backup System
 

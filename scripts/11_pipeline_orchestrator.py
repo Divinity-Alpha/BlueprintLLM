@@ -304,6 +304,23 @@ def step_summary(cfg, log, model_path, dry_run):
                "Training summary", dry_run, allow_fail=True)
 
 
+def step_health_monitor(cfg, log, state, dry_run):
+    log.section("STEP 8: Training Health Monitor")
+    ver = state.get("last_model_version", 0)
+    if ver < 1:
+        log.log("No model version to check. Skipping.")
+        return
+    run_script(cfg, log, "19_training_health_monitor.py",
+               ["--version", f"v{ver}", "--project-root", str(cfg.root)],
+               f"Health check v{ver}", dry_run, allow_fail=True)
+
+
+def step_dashboard(cfg, log, dry_run):
+    log.section("STEP 9: Update Dashboard")
+    run_script(cfg, log, "14_update_dashboard.py", [],
+               "Updating dashboard", dry_run, allow_fail=True)
+
+
 def run_pipeline(mode, dry_run=False, force=False, root=None):
     cfg = PipelineConfig(root)
     cfg.ensure_dirs()
@@ -353,6 +370,10 @@ def run_pipeline(mode, dry_run=False, force=False, root=None):
                 eval_report = step_evaluate(cfg, log, model_path, state, dry_run)
             if not stopped and model_path and not check_stop():
                 step_summary(cfg, log, model_path, dry_run)
+            if not stopped and not check_stop():
+                step_health_monitor(cfg, log, state, dry_run)
+            if not stopped and not check_stop():
+                step_dashboard(cfg, log, dry_run)
         if not stopped and mode == "eval-only":
             m = get_latest_model(cfg)
             if m:

@@ -36,6 +36,10 @@ python scripts/03_generate_synthetic_data.py --count 500 --output datasets/train
 python scripts/06_validate_dsl.py datasets/train.jsonl
 python scripts/07_inference.py --model models/blueprint-lora/final --prompt "Create a..."
 
+# Training health monitor
+python scripts/19_training_health_monitor.py                    # auto-detect latest version
+python scripts/19_training_health_monitor.py --version v2       # check specific version
+
 # Windows Task Scheduler wrapper
 .\run_pipeline.ps1 -Mode full
 
@@ -72,13 +76,16 @@ datasets/train.jsonl              merged training data (instruction → DSL outp
 models/blueprint-lora-vN/final    QLoRA adapter weights
         ↓ (09_evaluate_model / 12_run_exam)
 results/                          eval reports + exam summaries
+        ↓ (19_training_health_monitor)
+health_report.json                health alerts + trends
+logs/training_history.json        cycle-over-cycle metrics
         ↓ (Claude creates correction lessons)
 lessons/lesson_XX.json            feed back into next training cycle
 ```
 
 ### Script Numbering Convention
 
-Scripts are numbered `01`–`15` reflecting pipeline order. The orchestrator (`11_pipeline_orchestrator.py`) chains them together. Each script is self-contained with its own `argparse` CLI and can run independently.
+Scripts are numbered `01`–`19` reflecting pipeline order. The orchestrator (`11_pipeline_orchestrator.py`) chains them together. Each script is self-contained with its own `argparse` CLI and can run independently.
 
 ### Key Modules
 
@@ -86,6 +93,7 @@ Scripts are numbered `01`–`15` reflecting pipeline order. The orchestrator (`1
 - **`scripts/utils/blueprint_patterns.py`** — Node type catalog (50+ types) with pin definitions. Used for synthetic data generation and validation.
 - **`scripts/11_pipeline_orchestrator.py`** — Master orchestrator. Manages state via `.pipeline_state.json`, detects data changes via hash, auto-increments model versions.
 - **`scripts/09_evaluate_model.py`** — Tier-based test suite (Tiers 1–4). Scores on structure/keywords/node-types/connections/parseability. Pass threshold: 70%.
+- **`scripts/19_training_health_monitor.py`** — Post-training health analysis across 6 dimensions (epoch efficiency, overfitting, learning rate, dataset quality, node mastery velocity, resource usage). Outputs `health_report.json` and `logs/training_history.json`.
 
 ### Training Configuration
 
@@ -116,6 +124,10 @@ JSONL with `instruction` and `output` fields:
 ## State Tracking
 
 `.pipeline_state.json` at project root tracks run history, training data hashes, and the current model version number. The orchestrator uses this to skip redundant training when data hasn't changed.
+
+`logs/training_history.json` accumulates per-cycle metrics (loss, accuracy, node scores, dataset size) used by the health monitor to detect trends, plateaus, and regressions across training cycles.
+
+`health_report.json` at project root is the latest health check output with alerts, trends, and cycle data. Read by the dashboard generator to display the health panel.
 
 ## Backup System
 

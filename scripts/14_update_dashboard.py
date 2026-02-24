@@ -31,6 +31,18 @@ from datetime import datetime
 from pathlib import Path
 
 
+def load_health_report(root='.'):
+    """Load the health report JSON if it exists."""
+    path = os.path.join(root, 'health_report.json')
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, 'r') as f:
+            return json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
 def parse_training_log(log_path):
     """Parse training console output for loss/accuracy metrics."""
     if not log_path or not os.path.exists(log_path):
@@ -293,7 +305,7 @@ def build_activity_log(training_data, exams, lessons_on_disk):
     return logs
 
 
-def generate_dashboard_html(training_data, node_mastery, lessons, exams, activity_log, error_breakdown):
+def generate_dashboard_html(training_data, node_mastery, lessons, exams, activity_log, error_breakdown, health_report=None):
     """Generate the complete dashboard HTML with embedded data."""
     
     # Prepare JSON data for embedding
@@ -449,6 +461,37 @@ def generate_dashboard_html(training_data, node_mastery, lessons, exams, activit
     html = html.replace('ERRVAL_EXTRA', str(err_extra) if err_extra > 0 else '—')
     html = html.replace('ERRVAL_FORMAT', str(err_format) if err_format > 0 else '—')
 
+    # Health report data
+    if health_report:
+        summary = health_report.get('summary', {})
+        by_level = summary.get('by_level', {})
+        overall = summary.get('overall_health', 'unknown')
+        health_badge_class = {
+            'healthy': 'health-ok', 'suggestion': 'health-ok',
+            'warning': 'health-warn', 'critical': 'health-crit',
+        }.get(overall, 'health-ok')
+        html = html.replace('{{HEALTH_BADGE_CLASS}}', health_badge_class)
+        html = html.replace('{{HEALTH_OVERALL}}', overall.upper())
+        html = html.replace('{{HEALTH_TOTAL}}', str(summary.get('total_alerts', 0)))
+        html = html.replace('{{HEALTH_CRITICAL}}', str(by_level.get('CRITICAL', 0)))
+        html = html.replace('{{HEALTH_WARNING}}', str(by_level.get('WARNING', 0)))
+        html = html.replace('{{HEALTH_SUGGESTION}}', str(by_level.get('SUGGESTION', 0)))
+        html = html.replace('{{HEALTH_INFO}}', str(by_level.get('INFO', 0)))
+        html = html.replace('{{HEALTH_ALERTS_JSON}}', json.dumps(health_report.get('alerts', [])))
+        html = html.replace('{{HEALTH_SUMMARY_JSON}}', json.dumps(summary))
+        html = html.replace('{{HEALTH_DISPLAY}}', '')
+    else:
+        html = html.replace('{{HEALTH_BADGE_CLASS}}', 'health-ok')
+        html = html.replace('{{HEALTH_OVERALL}}', 'NO DATA')
+        html = html.replace('{{HEALTH_TOTAL}}', '0')
+        html = html.replace('{{HEALTH_CRITICAL}}', '0')
+        html = html.replace('{{HEALTH_WARNING}}', '0')
+        html = html.replace('{{HEALTH_SUGGESTION}}', '0')
+        html = html.replace('{{HEALTH_INFO}}', '0')
+        html = html.replace('{{HEALTH_ALERTS_JSON}}', '[]')
+        html = html.replace('{{HEALTH_SUMMARY_JSON}}', '{}')
+        html = html.replace('{{HEALTH_DISPLAY}}', ' style="opacity:0.5"')
+
     return html
 
 
@@ -590,6 +633,32 @@ svg text { font-family: 'JetBrains Mono', monospace; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
+.health-grid { display: grid; grid-template-columns: 200px 1fr; gap: 20px; margin-top: 28px; }
+.health-status { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px; background: var(--bg-deep); border-radius: 12px; }
+.health-badge { font-size: 15px; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 8px 18px; border-radius: 8px; text-align: center; }
+.health-badge.health-ok { background: var(--glow-emerald); color: var(--accent-emerald); border: 1px solid rgba(16,185,129,0.3); }
+.health-badge.health-warn { background: var(--glow-amber); color: var(--accent-amber); border: 1px solid rgba(245,158,11,0.3); }
+.health-badge.health-crit { background: var(--glow-rose); color: var(--accent-rose); border: 1px solid rgba(244,63,94,0.3); }
+.health-counts { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.health-count { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 8px; border-radius: 4px; }
+.health-count.crit { color: var(--accent-rose); background: rgba(244,63,94,0.08); }
+.health-count.warn { color: var(--accent-amber); background: rgba(245,158,11,0.08); }
+.health-count.sugg { color: var(--accent-blue); background: rgba(59,130,246,0.08); }
+.health-count.info { color: var(--accent-cyan); background: rgba(6,182,212,0.08); }
+.health-alert-list { max-height: 260px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; display: flex; flex-direction: column; gap: 6px; }
+.health-alert-item { padding: 10px 14px; background: var(--bg-deep); border-radius: 8px; border-left: 3px solid var(--border); }
+.health-alert-item.alert-CRITICAL { border-left-color: var(--accent-rose); }
+.health-alert-item.alert-WARNING { border-left-color: var(--accent-amber); }
+.health-alert-item.alert-SUGGESTION { border-left-color: var(--accent-blue); }
+.health-alert-item.alert-INFO { border-left-color: var(--accent-cyan); }
+.health-alert-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.health-alert-title .alert-tag { font-size: 10px; font-family: 'JetBrains Mono', monospace; padding: 1px 6px; border-radius: 3px; font-weight: 500; }
+.alert-tag.tag-CRITICAL { background: var(--glow-rose); color: var(--accent-rose); }
+.alert-tag.tag-WARNING { background: var(--glow-amber); color: var(--accent-amber); }
+.alert-tag.tag-SUGGESTION { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+.alert-tag.tag-INFO { background: rgba(6,182,212,0.15); color: var(--accent-cyan); }
+.health-alert-detail { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+@media (max-width: 900px) { .health-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -731,12 +800,32 @@ svg text { font-family: 'JetBrains Mono', monospace; }
       </div>
     </div>
   </div>
+  <div class="panel health-grid-panel" style="margin-top:28px"{{HEALTH_DISPLAY}}>
+    <div class="panel-header">
+      <div class="panel-title"><span class="icon">🩺</span> Training Health Monitor</div>
+      <div class="panel-badge">{{HEALTH_TOTAL}} alerts</div>
+    </div>
+    <div class="health-grid">
+      <div class="health-status">
+        <div class="health-badge {{HEALTH_BADGE_CLASS}}">{{HEALTH_OVERALL}}</div>
+        <div class="health-counts">
+          <div class="health-count crit"><span>Critical</span><span>{{HEALTH_CRITICAL}}</span></div>
+          <div class="health-count warn"><span>Warning</span><span>{{HEALTH_WARNING}}</span></div>
+          <div class="health-count sugg"><span>Suggestion</span><span>{{HEALTH_SUGGESTION}}</span></div>
+          <div class="health-count info"><span>Info</span><span>{{HEALTH_INFO}}</span></div>
+        </div>
+      </div>
+      <div class="health-alert-list" id="healthAlerts"></div>
+    </div>
+  </div>
 </div>
 <script>
 const LOSS_HISTORY = {{LOSS_HISTORY_JSON}};
 const EVAL_POINTS = {{EVAL_POINTS_JSON}};
 const NODE_MASTERY = {{NODE_MASTERY_JSON}};
 const LESSONS = {{LESSONS_JSON}};
+const HEALTH_ALERTS = {{HEALTH_ALERTS_JSON}};
+const HEALTH_SUMMARY = {{HEALTH_SUMMARY_JSON}};
 
 function renderChart() {
   if (!LOSS_HISTORY.length) return;
@@ -778,7 +867,18 @@ function renderTimeline() {
   }).join('');
 }
 
-renderChart(); renderNodes(); renderTimeline();
+function renderHealthAlerts() {
+  const c = document.getElementById('healthAlerts');
+  if (!c || !HEALTH_ALERTS.length) { if(c) c.innerHTML='<div style="color:var(--text-dim);font-size:13px;padding:20px;">No health data yet. Run the health monitor after training.</div>'; return; }
+  const filtered = HEALTH_ALERTS.filter(a => a.level !== 'INFO');
+  const infoAlerts = HEALTH_ALERTS.filter(a => a.level === 'INFO');
+  const all = [...filtered, ...infoAlerts];
+  c.innerHTML = all.map(a => {
+    return `<div class="health-alert-item alert-${a.level}"><div class="health-alert-title"><span class="alert-tag tag-${a.level}">${a.level}</span>${a.title}</div><div class="health-alert-detail">${a.detail}</div></div>`;
+  }).join('');
+}
+
+renderChart(); renderNodes(); renderTimeline(); renderHealthAlerts();
 
 // Fix error bar percentages
 const errMax = {{ERR_MAX}};
@@ -839,9 +939,19 @@ def main():
 
     activity_log = build_activity_log(training_data, exams, lessons)
 
+    # Load health report
+    print("  Loading health report...")
+    health_report = load_health_report()
+    if health_report:
+        overall = health_report.get('summary', {}).get('overall_health', '?')
+        count = health_report.get('summary', {}).get('total_alerts', 0)
+        print(f"    Health status: {overall}, {count} alerts")
+    else:
+        print("    No health report found (run 19_training_health_monitor.py first)")
+
     # Generate HTML
     print("  Generating dashboard...")
-    html = generate_dashboard_html(training_data, node_mastery, lessons, exams, activity_log, error_breakdown)
+    html = generate_dashboard_html(training_data, node_mastery, lessons, exams, activity_log, error_breakdown, health_report)
 
     # Write output
     os.makedirs(os.path.dirname(args.output) or '.', exist_ok=True)

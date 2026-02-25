@@ -435,9 +435,10 @@ class PipelineLogger:
             tmp = _LIVE_STATE.with_suffix(".tmp")
             with open(tmp, "w", encoding="utf-8") as f:
                 json.dump(state, f, indent=2)
-            if _LIVE_STATE.exists():
-                _LIVE_STATE.unlink()
-            tmp.rename(_LIVE_STATE)
+            # os.replace is atomic and works even if the target is open
+            # for reading on Windows (unlike unlink+rename which fails
+            # when SubprocessMonitor holds a read lock).
+            os.replace(tmp, _LIVE_STATE)
         except OSError:
             pass
 

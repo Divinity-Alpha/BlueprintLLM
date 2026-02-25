@@ -85,6 +85,13 @@ class GracefulStopCallback(TrainerCallback):
         self._max_steps = state.max_steps
         return control
 
+    def on_step_end(self, args, state: TrainerState, control: TrainerControl, **kwargs):
+        # Heartbeat: update live state so SubprocessMonitor doesn't kill us.
+        # plog.progress is rate-limited to every 5s, so this is cheap.
+        if self._max_steps > 0:
+            plog.progress("4.3", state.global_step, self._max_steps)
+        return control
+
     def on_log(self, args, state: TrainerState, control: TrainerControl, logs=None, **kwargs):
         # Emit training progress with metrics
         if self._max_steps > 0:

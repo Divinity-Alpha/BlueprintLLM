@@ -21,6 +21,9 @@ python scripts/11_pipeline_orchestrator.py --data-only
 python scripts/11_pipeline_orchestrator.py --train-only --force
 python scripts/11_pipeline_orchestrator.py --eval-only
 
+# Resume after failure (skips already-completed steps)
+python scripts/11_pipeline_orchestrator.py --full --resume
+
 # Evaluate a specific model
 python scripts/09_evaluate_model.py --model models/blueprint-lora-v1/final
 python scripts/09_evaluate_model.py --model models/blueprint-lora-v1/final --quick   # smoke test
@@ -91,8 +94,9 @@ Scripts are numbered `01`–`19` reflecting pipeline order. The orchestrator (`1
 
 - **`scripts/utils/dsl_parser.py`** — Parses and validates the Blueprint DSL. Converts between DSL text and Python dataclasses. All generated output must pass this parser.
 - **`scripts/utils/blueprint_patterns.py`** — Node type catalog (50+ types) with pin definitions. Used for synthetic data generation and validation.
-- **`scripts/pipeline_logger.py`** — Unified pipeline logging with step tracking, ETA prediction, and live state for dashboard consumption. See [Pipeline Logger](#pipeline-logger) section below.
-- **`scripts/11_pipeline_orchestrator.py`** — Master orchestrator. Manages state via `.pipeline_state.json`, detects data changes via hash, auto-increments model versions.
+- **`scripts/pipeline_logger.py`** — Unified pipeline logging with step tracking, ETA prediction, error/retry tracking, and live state for dashboard consumption. See [Pipeline Logger](#pipeline-logger) section below.
+- **`scripts/error_handler.py`** — Error classification, retry logic, subprocess stall detection, per-prompt timeouts, CUDA OOM recovery, and resume state management. See [Error Handling](#error-handling) section below.
+- **`scripts/11_pipeline_orchestrator.py`** — Master orchestrator. Manages state via `.pipeline_state.json`, detects data changes via hash, auto-increments model versions. Retries failed steps based on error category.
 - **`scripts/09_evaluate_model.py`** — Tier-based test suite (Tiers 1–4). Scores on structure/keywords/node-types/connections/parseability. Pass threshold: 70%.
 - **`scripts/19_training_health_monitor.py`** — Post-training health analysis across 6 dimensions (epoch efficiency, overfitting, learning rate, dataset quality, node mastery velocity, resource usage). Outputs `health_report.json` and `logs/training_history.json`.
 
@@ -133,6 +137,8 @@ JSONL with `instruction` and `output` fields:
 `logs/pipeline_live_state.json` is the current pipeline step/status, atomically updated by `PipelineLogger`. Shows `{"status": "idle"}` when no pipeline is running.
 
 `logs/step_timing_history.json` accumulates per-step durations (last 10 per step) used by `PipelineLogger` to predict ETAs for future runs.
+
+`logs/pipeline_resume_state.json` is written when the pipeline fails. Contains which steps completed successfully and what error occurred. Used by `--resume` to skip completed steps on the next run. Automatically deleted on successful completion.
 
 ## Pipeline Logger
 
@@ -183,6 +189,86 @@ A unified `PipelineLogger` (`scripts/pipeline_logger.py`) provides step-numbered
 - **Progress is rate-limited** to every 5 seconds to prevent log spam from training loops.
 - **`_NoOpLogger`** means scripts never need `if plog:` guards — standalone runs are completely silent.
 - **Timing history** keeps last 10 runs per step_id for ETA calculation.
+
+## Error Handling
+
+The pipeline has robust error handling via `scripts/error_handler.py`, integrated into the orchestrator and subprocess scripts.
+
+### Error Classification
+
+Every subprocess failure is classified into one of 7 categories by inspecting stderr and exception types:
+
+| Category | Pattern Examples | Retryable |
+|----------|-----------------|-----------|
+| `TIMEOUT` | subprocess timeout, stall detection | Yes |
+| `CUDA_OOM` | "CUDA out of memory", `OutOfMemoryError` | Yes |
+| `DISK_FULL` | "no space left on device" | **No** (stops immediately) |
+| `NETWORK` | `ConnectionError`, `SSLError`, `URLError` | Yes |
+| `CORRUPT_CHECKPOINT` | "corrupted", safetensors errors | Yes |
+| `ENCODING` | `UnicodeEncodeError`, charmap codec | Yes |
+| `UNKNOWN` | anything else | Yes |
+
+### Retry Logic
+
+Each pipeline step has a category that determines its retry policy:
+
+| Step Category | Steps | Max Retries | Backoff | Timeout |
+|---------------|-------|-------------|---------|---------|
+| `data` | 1.x (analyze, translate, synthetic, lessons) | 2 | 10s, 30s | 10m |
+| `validate` | 2.x (DSL validation) | 1 | 5s | 5m |
+| `training` | 3.x–4.x (model setup, training) | 2 | 60s, 120s | 4h |
+| `eval` | 7.x (evaluation) | 1 | 30s | 4h |
+| `exam` | 6.x (exam) | 1 | 30s | 4h |
+| `utility` | 5.x, 8.x, 9.x (post-training, dashboard) | 1 | 10s | 10m |
+
+The `run_script()` function in the orchestrator handles the retry loop: classify error → check if retryable → wait backoff → retry or fail.
+
+### Subprocess Stall Detection
+
+For long-running steps (training, eval, exam), a `SubprocessMonitor` daemon thread watches `pipeline_live_state.json`:
+- **Warning** at 5 minutes without a state update
+- **Kill** at 10 minutes — terminates the subprocess and marks it as stalled
+
+This catches `model.generate()` hangs that would otherwise block the pipeline indefinitely.
+
+### Per-Prompt Timeouts
+
+Both `12_run_exam.py` and `09_evaluate_model.py` wrap `model.generate()` in `per_prompt_timeout(timeout_seconds=300)`. If a single generation takes longer than 5 minutes:
+- The prompt is skipped (not the entire script)
+- Exam: result marked as `{"status": "timeout_skipped"}`, `actual_dsl = "[TIMEOUT]"`
+- Eval: `TestResult` with `score=0`, `errors=["Generation timed out"]`
+
+**Windows limitation**: Python can't kill threads stuck in C extensions. The thread lingers but the script continues. The subprocess-level timeout is the ultimate safety net.
+
+### CUDA OOM Recovery
+
+`cuda_oom_retry()` wraps training with automatic config reduction:
+1. Catch `torch.cuda.OutOfMemoryError`
+2. Clear CUDA cache
+3. Reduce `max_seq_length` by half (min 512), or reduce `lora_r` by half (min 16)
+4. Retry up to 2 times
+
+### Pipeline Resume
+
+When the pipeline fails, it saves `logs/pipeline_resume_state.json` containing:
+- Which step functions completed successfully
+- What step failed and why
+- A snapshot of pipeline state (data hash, model version)
+
+To resume from a failure:
+```bash
+python scripts/11_pipeline_orchestrator.py --full --resume
+```
+
+This skips completed steps and picks up where it left off. On successful completion, the resume state file is automatically deleted.
+
+### Dashboard Error Display
+
+The live dashboard (`dashboard/live.html`) shows error state:
+- **Status pill**: `retrying` (amber pulse) or `error` (red)
+- **Error panel**: collapsible panel below the progress bar showing last 10 errors with color-coded category tags
+- **Retry badge**: shows current retry attempt (e.g., "Retry 2/3")
+- State fields in `pipeline_live_state.json`: `error_info`, `retry_info`, `error_history`
 
 ## Backup System
 

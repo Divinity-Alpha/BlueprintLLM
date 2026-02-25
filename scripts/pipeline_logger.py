@@ -130,6 +130,11 @@ class PipelineLogger:
         self._step_plan: list[dict] = []
         self._upcoming_steps: list[dict] = []
 
+        # Error/retry tracking
+        self._error_history: list[dict] = []  # last 10 errors
+        self._latest_error: dict | None = None
+        self._latest_retry: dict | None = None
+
         _LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
         # Inherit state from disk for cross-process continuity
@@ -157,6 +162,9 @@ class PipelineLogger:
                         self._cycle_start_time = state["cycle_start_time"]
                     self._step_plan = state.get("step_plan", [])
                     self._upcoming_steps = state.get("upcoming_steps", [])
+                    self._error_history = state.get("error_history", [])
+                    self._latest_error = state.get("error_info")
+                    self._latest_retry = state.get("retry_info")
         except (json.JSONDecodeError, OSError, KeyError):
             pass
 
@@ -186,6 +194,33 @@ class PipelineLogger:
     def update_metrics(self, metrics: dict):
         """Merge new metrics into the latest metrics dict."""
         self._latest_metrics.update(metrics)
+
+    # -- Error/retry tracking -------------------------------------------------
+
+    def record_error(self, step_id: str, category: str, message: str):
+        """Record an error for dashboard display."""
+        error = {
+            "step_id": step_id,
+            "category": category,
+            "message": message[:500],
+            "timestamp": datetime.now().isoformat(),
+        }
+        self._latest_error = error
+        self._error_history.append(error)
+        # Keep last 10
+        if len(self._error_history) > 10:
+            self._error_history = self._error_history[-10:]
+        self.write_live_state(status="error")
+
+    def record_retry(self, step_id: str, attempt: int, max_retries: int):
+        """Record a retry attempt for dashboard display."""
+        self._latest_retry = {
+            "step_id": step_id,
+            "attempt": attempt,
+            "max_retries": max_retries,
+            "timestamp": datetime.now().isoformat(),
+        }
+        self.write_live_state(status="retrying")
 
     def append_loss_history(self, step: int, loss: float):
         """Append a loss data point for the mini loss chart.
@@ -373,6 +408,9 @@ class PipelineLogger:
             "step_plan": self._step_plan,
             "latest_metrics": self._latest_metrics,
             "loss_history": self._loss_history,
+            "error_info": self._latest_error,
+            "retry_info": self._latest_retry,
+            "error_history": self._error_history[-10:],
         }
 
         # Step timing
@@ -444,6 +482,12 @@ class _NoOpLogger:
         pass
 
     def append_loss_history(self, step: int, loss: float):
+        pass
+
+    def record_error(self, step_id: str, category: str, message: str):
+        pass
+
+    def record_retry(self, step_id: str, attempt: int, max_retries: int):
         pass
 
 

@@ -36,7 +36,11 @@ from datetime import datetime
 
 sys.path.insert(0, str(Path(__file__).parent))
 from pipeline_logger import get_logger as _get_pipeline_logger
+from error_handler import per_prompt_timeout
 plog = _get_pipeline_logger(step_prefix="7")
+
+# Per-prompt generation timeout (seconds)
+GENERATE_TIMEOUT = 300
 
 
 # ============================================================
@@ -417,15 +421,35 @@ def run_evaluation(model, tokenizer, system_prompt: str, test_ids: list = None) 
     for i, test in enumerate(tests):
         print(f"  [{i+1}/{len(tests)}] {test['id']} (Tier {test['tier']}): {test['prompt'][:50]}...", end=" ", flush=True)
 
-        output, gen_time = generate(model, tokenizer, system_prompt, test["prompt"])
-        result = score_output(output, test)
-        result.generation_time = round(gen_time, 2)
+        # Wrap generate() in timeout to avoid hanging on bad prompts
+        gen_result, timed_out = per_prompt_timeout(
+            lambda t=test: generate(model, tokenizer, system_prompt, t["prompt"]),
+            timeout_seconds=GENERATE_TIMEOUT,
+        )
 
-        status = "PASS" if result.passed else "FAIL"
-        print(f"{status} ({result.score:.0%}, {gen_time:.1f}s)")
+        if timed_out:
+            result = TestResult(
+                test_id=test["id"],
+                tier=test["tier"],
+                prompt=test["prompt"],
+                passed=False,
+                score=0.0,
+                output="[TIMEOUT]",
+                generation_time=GENERATE_TIMEOUT,
+                checks={},
+                errors=[f"Generation timed out after {GENERATE_TIMEOUT}s"],
+            )
+            print(f"TIMEOUT ({GENERATE_TIMEOUT}s)")
+        else:
+            output, gen_time = gen_result
+            result = score_output(output, test)
+            result.generation_time = round(gen_time, 2)
+            status = "PASS" if result.passed else "FAIL"
+            print(f"{status} ({result.score:.0%}, {gen_time:.1f}s)")
 
         results.append(result)
-        plog.progress("7.2", i + 1, len(tests), f"{test['id']} {status}")
+        detail = f"{test['id']} {'TIMEOUT' if timed_out else ('PASS' if result.passed else 'FAIL')}"
+        plog.progress("7.2", i + 1, len(tests), detail)
 
     return results
 

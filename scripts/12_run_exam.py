@@ -27,7 +27,11 @@ sys.path.insert(0, str(Path(__file__).parent))
 from stop_signal_utils import is_stop_requested, clear_signal
 from backup_utils import auto_backup
 from pipeline_logger import get_logger as _get_pipeline_logger
+from error_handler import per_prompt_timeout
 plog = _get_pipeline_logger(step_prefix="6")
+
+# Per-prompt generation timeout (seconds)
+GENERATE_TIMEOUT = 300
 
 # Must match TRAINING_SYSTEM_PROMPT in 04_train_blueprint_lora.py
 SYSTEM_PROMPT = """You are a Blueprint DSL generator for Unreal Engine 5.
@@ -240,13 +244,28 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
     total_score = 0
     valid_count = 0
 
+    timeout_count = 0
     plog.start_step("6.3", "Run prompts", f"{len(lesson['prompts'])} prompts")
     for i, prompt in enumerate(lesson["prompts"]):
         print(f"[{i+1}/{len(lesson['prompts'])}] {prompt['id']}: {prompt['instruction'][:60]}...")
 
         start = time.time()
-        cleaned_dsl, raw_output = generate(model, tokenizer, prompt["instruction"])
-        elapsed = time.time() - start
+
+        # Wrap generate() in per-prompt timeout to avoid hanging
+        gen_result, timed_out = per_prompt_timeout(
+            lambda p=prompt: generate(model, tokenizer, p["instruction"]),
+            timeout_seconds=GENERATE_TIMEOUT,
+        )
+
+        if timed_out:
+            elapsed = time.time() - start
+            cleaned_dsl = "[TIMEOUT]"
+            raw_output = f"[Generation timed out after {GENERATE_TIMEOUT}s]"
+            timeout_count += 1
+            print(f"  [TIMEOUT] Prompt timed out after {GENERATE_TIMEOUT}s — skipping")
+        else:
+            cleaned_dsl, raw_output = gen_result
+            elapsed = time.time() - start
 
         # Validate
         validation = validate_dsl(cleaned_dsl)
@@ -254,18 +273,21 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
         # Compare to expected
         comparison = compare_outputs(prompt["expected_dsl"], cleaned_dsl)
 
-        status = "[OK]" if validation["valid"] else "[X]"
-        print(f"  {status} Score: {comparison['score']:.0%} | "
-              f"Nodes: {validation['nodes']} | "
-              f"Connections: {validation['connections']} | "
-              f"{elapsed:.1f}s")
+        if timed_out:
+            print(f"  [TIMEOUT] Score: 0% | {elapsed:.1f}s")
+        else:
+            status = "[OK]" if validation["valid"] else "[X]"
+            print(f"  {status} Score: {comparison['score']:.0%} | "
+                  f"Nodes: {validation['nodes']} | "
+                  f"Connections: {validation['connections']} | "
+                  f"{elapsed:.1f}s")
 
-        if not validation["valid"]:
-            # Show first error line
-            err = validation["error"]
-            if err:
-                first_line = err.split('\n')[0][:80]
-                print(f"  Error: {first_line}")
+            if not validation["valid"]:
+                # Show first error line
+                err = validation["error"]
+                if err:
+                    first_line = err.split('\n')[0][:80]
+                    print(f"  Error: {first_line}")
 
         result = {
             "prompt_id": prompt["id"],
@@ -277,19 +299,21 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
             "validation": validation,
             "comparison": comparison,
             "time_seconds": round(elapsed, 1),
+            "status": "timeout_skipped" if timed_out else "completed",
         }
         results.append(result)
 
-        if validation["valid"]:
+        if validation["valid"] and not timed_out:
             valid_count += 1
-        total_score += comparison["score"]
+        if not timed_out:
+            total_score += comparison["score"]
 
         # Write incrementally
         with open(results_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(result, ensure_ascii=False) + "\n")
 
-        plog.progress("6.3", i + 1, len(lesson["prompts"]),
-                      f"{prompt['id']} {'OK' if validation['valid'] else 'FAIL'}")
+        detail = f"{prompt['id']} {'TIMEOUT' if timed_out else ('OK' if validation['valid'] else 'FAIL')}"
+        plog.progress("6.3", i + 1, len(lesson["prompts"]), detail)
 
         # Check for graceful stop between prompts
         if is_stop_requested():
@@ -297,8 +321,9 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
             print(f"  Partial results saved to: {results_file}")
             clear_signal()
             break
+    timeout_msg = f", {timeout_count} timed out" if timeout_count else ""
     plog.complete_step("6.3", "Run prompts",
-                        f"{valid_count}/{len(results)} valid")
+                        f"{valid_count}/{len(results)} valid{timeout_msg}")
 
     # Summary
     avg_score = total_score / max(len(results), 1)

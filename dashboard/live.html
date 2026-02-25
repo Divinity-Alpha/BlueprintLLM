@@ -70,12 +70,16 @@ body::after {
 .status-pill.running { background: var(--glow-blue); color: var(--accent-blue); border: 1px solid rgba(59,130,246,0.25); }
 .status-pill.idle { background: var(--glow-emerald); color: var(--accent-emerald); border: 1px solid rgba(16,185,129,0.2); }
 .status-pill.disconnected { background: var(--glow-rose); color: var(--accent-rose); border: 1px solid rgba(244,63,94,0.2); }
+.status-pill.retrying { background: var(--glow-amber); color: var(--accent-amber); border: 1px solid rgba(245,158,11,0.25); }
+.status-pill.error { background: var(--glow-rose); color: var(--accent-rose); border: 1px solid rgba(244,63,94,0.25); }
 .status-dot {
   width: 8px; height: 8px; border-radius: 50%;
 }
 .running .status-dot { background: var(--accent-blue); animation: pulse 2s ease-in-out infinite; }
 .idle .status-dot { background: var(--accent-emerald); }
 .disconnected .status-dot { background: var(--accent-rose); }
+.retrying .status-dot { background: var(--accent-amber); animation: pulse 1.5s ease-in-out infinite; }
+.error .status-dot { background: var(--accent-rose); animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.85); } }
 .run-badge {
   padding: 5px 10px; border-radius: 8px; background: var(--bg-card);
@@ -198,6 +202,53 @@ svg text { font-family: 'JetBrains Mono', monospace; }
 .chart-grid line { stroke: var(--border); stroke-dasharray: 4 4; stroke-width: 0.5; }
 .chart-line { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
+/* Error panel */
+.error-panel {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 0; margin-bottom: 20px; overflow: hidden;
+}
+.error-panel.has-errors { border-color: rgba(244, 63, 94, 0.3); }
+.error-panel-header {
+  display: flex; align-items: center; gap: 10px; padding: 14px 20px;
+  cursor: pointer; user-select: none;
+}
+.error-panel-header:hover { background: var(--bg-card-hover); }
+.error-icon { font-size: 16px; }
+.error-panel-title { font-size: 14px; font-weight: 600; flex: 1; }
+.error-count-badge {
+  font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--glow-rose); color: var(--accent-rose);
+  font-weight: 600;
+}
+.retry-badge {
+  font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--glow-amber); color: var(--accent-amber);
+  font-weight: 600;
+}
+.error-chevron {
+  font-size: 12px; color: var(--text-dim); transition: transform 0.2s;
+}
+.error-panel.expanded .error-chevron { transform: rotate(90deg); }
+.error-list { padding: 0 20px 14px; display: none; }
+.error-panel.expanded .error-list { display: block; }
+.error-entry {
+  display: flex; align-items: flex-start; gap: 10px; padding: 8px 0;
+  border-bottom: 1px solid var(--border); font-size: 12px;
+}
+.error-entry:last-child { border-bottom: none; }
+.error-cat-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  padding: 2px 6px; border-radius: 4px; white-space: nowrap;
+  background: var(--bg-deep); color: var(--accent-rose); border: 1px solid rgba(244,63,94,0.2);
+}
+.error-cat-tag.timeout { color: var(--accent-amber); border-color: rgba(245,158,11,0.2); }
+.error-cat-tag.cuda_oom { color: var(--accent-violet); border-color: rgba(139,92,246,0.2); }
+.error-cat-tag.network { color: var(--accent-cyan); border-color: rgba(6,182,212,0.2); }
+.error-msg { color: var(--text-secondary); flex: 1; word-break: break-word; }
+.error-step { color: var(--text-dim); white-space: nowrap; }
+
 /* Idle overlay */
 .idle-overlay {
   position: fixed; inset: 0; z-index: 10;
@@ -270,6 +321,18 @@ svg text { font-family: 'JetBrains Mono', monospace; }
     <div class="progress-track">
       <div id="progressFill" class="progress-fill striped" style="width:0%"></div>
     </div>
+  </div>
+
+  <!-- Error panel -->
+  <div id="errorPanel" class="error-panel hidden">
+    <div class="error-panel-header" onclick="toggleErrorPanel()">
+      <span class="error-icon">&#9888;</span>
+      <span class="error-panel-title">Errors &amp; Retries</span>
+      <span id="retryBadge" class="retry-badge hidden"></span>
+      <span id="errorCountBadge" class="error-count-badge hidden">0</span>
+      <span class="error-chevron">&#9654;</span>
+    </div>
+    <div class="error-list" id="errorList"></div>
   </div>
 
   <!-- Main grid -->
@@ -377,8 +440,25 @@ function renderHeader(state) {
   }
 
   const status = state.status || 'idle';
-  pill.className = 'status-pill ' + (status === 'running' ? 'running' : 'idle');
-  label.textContent = status;
+  let pillClass = 'idle';
+  let labelText = status;
+
+  if (status === 'running') {
+    pillClass = 'running';
+  } else if (status === 'retrying') {
+    pillClass = 'retrying';
+    const ri = state.retry_info;
+    if (ri) {
+      labelText = 'retry ' + ri.attempt + '/' + ri.max_retries;
+    }
+  } else if (status === 'error') {
+    pillClass = 'error';
+  } else {
+    pillClass = 'idle';
+  }
+
+  pill.className = 'status-pill ' + pillClass;
+  label.textContent = labelText;
   badge.textContent = state.run_id ? 'run ' + state.run_id : '—';
 }
 
@@ -388,7 +468,8 @@ function renderClocks(state) {
   const elapsed = document.getElementById('clockElapsed');
   const eta = document.getElementById('clockEta');
 
-  if (!state || state.status !== 'running') {
+  const isActive = state && (state.status === 'running' || state.status === 'retrying' || state.status === 'error');
+  if (!isActive) {
     // Show final values if we have them
     if (state && state.cycle_start_time) {
       started.textContent = fmtTime(state.cycle_start_time);
@@ -434,7 +515,8 @@ function renderCurrentStep(state) {
   const pct = document.getElementById('stepPct');
   const fill = document.getElementById('progressFill');
 
-  if (!state || state.status !== 'running' || !state.step_id) {
+  const isActive = state && (state.status === 'running' || state.status === 'retrying' || state.status === 'error');
+  if (!isActive || !state.step_id) {
     id.textContent = '—';
     desc.textContent = 'Waiting for pipeline...';
     pct.textContent = '';
@@ -678,13 +760,71 @@ function renderLossChart(history) {
   area.setAttribute('d', d + ' L' + lastX.toFixed(1) + ',' + bottom + ' L' + firstX.toFixed(1) + ',' + bottom + ' Z');
 }
 
+// ─── Error Panel ─────────────────────────────────────────────────────────
+function toggleErrorPanel() {
+  const panel = document.getElementById('errorPanel');
+  panel.classList.toggle('expanded');
+}
+
+function renderErrorPanel(state) {
+  const panel = document.getElementById('errorPanel');
+  const list = document.getElementById('errorList');
+  const countBadge = document.getElementById('errorCountBadge');
+  const retryBadge = document.getElementById('retryBadge');
+
+  if (!state) { panel.classList.add('hidden'); return; }
+
+  const errors = state.error_history || [];
+  const retryInfo = state.retry_info;
+  const hasContent = errors.length > 0 || retryInfo;
+
+  if (!hasContent) {
+    panel.classList.add('hidden');
+    return;
+  }
+
+  panel.classList.remove('hidden');
+  panel.classList.toggle('has-errors', errors.length > 0);
+
+  // Error count badge
+  if (errors.length > 0) {
+    countBadge.classList.remove('hidden');
+    countBadge.textContent = errors.length;
+  } else {
+    countBadge.classList.add('hidden');
+  }
+
+  // Retry badge
+  if (retryInfo) {
+    retryBadge.classList.remove('hidden');
+    retryBadge.textContent = 'Retry ' + retryInfo.attempt + '/' + retryInfo.max_retries;
+  } else {
+    retryBadge.classList.add('hidden');
+  }
+
+  // Error list
+  let html = '';
+  errors.slice().reverse().forEach(function(err) {
+    const catClass = (err.category === 'timeout') ? ' timeout'
+      : (err.category === 'cuda_oom') ? ' cuda_oom'
+      : (err.category === 'network') ? ' network' : '';
+    html += '<div class="error-entry">' +
+      '<span class="error-cat-tag' + catClass + '">' + esc(err.category || 'unknown') + '</span>' +
+      '<span class="error-msg">' + esc(err.message || '') + '</span>' +
+      '<span class="error-step">' + esc(err.step_id || '') + '</span>' +
+    '</div>';
+  });
+  list.innerHTML = html;
+}
+
 // ─── Idle Overlay ────────────────────────────────────────────────────────
 function renderIdleOverlay(state) {
   const overlay = document.getElementById('idleOverlay');
   const sub = document.getElementById('idleSub');
   const stepsDiv = document.getElementById('idleSteps');
 
-  if (!state || state.status === 'running') {
+  const isActive = state && (state.status === 'running' || state.status === 'retrying' || state.status === 'error');
+  if (!state || isActive) {
     overlay.classList.add('hidden');
     return;
   }
@@ -719,6 +859,7 @@ function render(state) {
   renderHeader(state);
   renderClocks(state);
   renderCurrentStep(state);
+  renderErrorPanel(state);
   renderTimeline(state);
   renderTrainingMetrics(state);
   renderIdleOverlay(state);

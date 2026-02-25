@@ -27,13 +27,18 @@ Usage:
 Exit codes: 0=Success, 1=Failure, 2=Skipped (no new data)
 """
 
-import os, sys, json, re, shutil, subprocess, hashlib, argparse, uuid
+import os, sys, json, re, shutil, subprocess, hashlib, argparse, uuid, time
 from pathlib import Path
 from datetime import datetime
 
 sys.path.insert(0, str(Path(__file__).parent))
 from stop_signal_utils import is_stop_requested, clear_signal
 from pipeline_logger import PipelineLogger, format_duration
+from error_handler import (
+    classify_error, is_retryable, ErrorCategory,
+    RetryConfig, STEP_RETRY_CONFIGS,
+    SubprocessMonitor, save_resume_state, load_resume_state, clear_resume_state,
+)
 
 # ---------------------------------------------------------------------------
 # Step plans for each pipeline mode — used by PipelineLogger for timeline/ETA
@@ -173,6 +178,10 @@ class PipelineConfig:
         self.lora_r = 64
         self.learning_rate = 2e-4
         self.synthetic_count = 500
+        # Error handling
+        self.retry_config = STEP_RETRY_CONFIGS
+        self.stall_warn_seconds = 300
+        self.stall_kill_seconds = 600
 
     def _detect_best_model(self):
         """Pick the best model based on available GPU VRAM."""
@@ -207,6 +216,9 @@ class Logger:
         self.path = logs_dir / f"pipeline_{self.ts}.log"
         self.fh = open(self.path, "w", encoding="utf-8")
         self.errors = []
+        self.retry_counts = {}          # {desc: attempt_number}
+        self.completed_step_names = []  # for resume state
+        self.error_details = []         # [{step, category, message, timestamp, attempt}]
         # Truncate the shared live log — but only if no other run is active
         live_log = logs_dir / "pipeline_live.log"
         live_state = logs_dir / "pipeline_live_state.json"
@@ -291,48 +303,164 @@ def hash_file(path):
 
 
 def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False,
-               timeout=7200, extra_env=None):
+               timeout=7200, extra_env=None, step_category="utility"):
+    """Run a subprocess with retry logic, error classification, and stall detection.
+
+    Args:
+        step_category: one of "data", "validate", "training", "eval", "exam", "utility"
+    """
     cmd = [str(cfg.venv_python), str(cfg.scripts / script)] + args
     log.log(f"Running: {desc}")
     log.log(f"  Cmd: {' '.join(cmd)}")
     if dry_run:
         log.log("  [DRY RUN] Skipped")
         return True
-    try:
-        sub_env = {**os.environ, "PYTHONUNBUFFERED": "1"}
-        if log.run_id:
-            sub_env["PIPELINE_RUN_ID"] = log.run_id
-        if extra_env:
-            sub_env.update(extra_env)
-        r = subprocess.run(cmd, cwd=str(cfg.root), capture_output=True, text=True,
-                           timeout=timeout, env=sub_env)
-        if r.stdout:
-            for line in r.stdout.strip().splitlines():
-                log.log(f"  | {line}")
-        if r.returncode != 0:
-            log.log(f"  FAILED (exit {r.returncode})", "ERROR")
-            if r.stderr:
-                # Filter out progress bar lines (contain \r or |###) to find real errors
-                stderr_lines = r.stderr.strip().splitlines()
-                real_errors = [l for l in stderr_lines
-                               if not any(x in l for x in ["|", "it/s]", "Fetching", "Loading weights:", "Downloading"])]
-                # Show real errors first (up to 50 lines)
-                for line in real_errors[:50]:
-                    log.log(f"  ERR| {line}", "ERROR")
-                # If no real errors found, show last 30 raw lines
-                if not real_errors:
-                    log.log("  (Only progress bars in stderr, showing last 30 lines:)", "ERROR")
-                    for line in stderr_lines[-30:]:
+
+    retry_cfg = cfg.retry_config.get(step_category, RetryConfig())
+    effective_timeout = timeout or retry_cfg.timeout
+    use_monitor = step_category in ("training", "eval", "exam")
+
+    for attempt in range(retry_cfg.max_retries + 1):
+        if attempt > 0:
+            backoff = retry_cfg.get_backoff(attempt - 1)
+            log.log(f"  [RETRY {attempt}/{retry_cfg.max_retries}] Waiting {backoff}s before retry...")
+            log.retry_counts[desc] = attempt
+            log.plog.record_retry(
+                log.plog._current_step_id or "", attempt, retry_cfg.max_retries)
+            time.sleep(backoff)
+
+        try:
+            sub_env = {**os.environ, "PYTHONUNBUFFERED": "1"}
+            if log.run_id:
+                sub_env["PIPELINE_RUN_ID"] = log.run_id
+            if extra_env:
+                sub_env.update(extra_env)
+
+            if use_monitor:
+                # Use Popen + SubprocessMonitor for long-running steps
+                proc = subprocess.Popen(
+                    cmd, cwd=str(cfg.root), stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE, text=True, env=sub_env)
+                state_file = cfg.logs_dir / "pipeline_live_state.json"
+                monitor = SubprocessMonitor(
+                    proc, state_file,
+                    warn_seconds=cfg.stall_warn_seconds,
+                    kill_seconds=cfg.stall_kill_seconds,
+                    log_func=lambda msg: log.log(msg, "WARN"),
+                )
+                monitor.start()
+                try:
+                    stdout, stderr = proc.communicate(timeout=effective_timeout)
+                except subprocess.TimeoutExpired:
+                    proc.terminate()
+                    stdout, stderr = proc.communicate(timeout=30)
+                    monitor.stop()
+                    monitor.join(timeout=5)
+                    category = ErrorCategory.TIMEOUT
+                    msg = f"TIMED OUT ({effective_timeout / 3600:.1f}h limit)"
+                    log.log(f"  {msg}", "ERROR")
+                    log.plog.record_error(
+                        log.plog._current_step_id or "", category.value, msg)
+                    _record_error_detail(log, desc, category, msg, attempt)
+                    if not is_retryable(category) or attempt >= retry_cfg.max_retries:
+                        return allow_fail
+                    continue
+                finally:
+                    monitor.stop()
+                    monitor.join(timeout=5)
+
+                if monitor.was_stalled:
+                    category = ErrorCategory.TIMEOUT
+                    msg = "Subprocess stalled and was terminated"
+                    log.log(f"  {msg}", "ERROR")
+                    log.plog.record_error(
+                        log.plog._current_step_id or "", category.value, msg)
+                    _record_error_detail(log, desc, category, msg, attempt)
+                    if attempt >= retry_cfg.max_retries:
+                        return allow_fail
+                    continue
+
+                r_returncode = proc.returncode
+                r_stdout = stdout or ""
+                r_stderr = stderr or ""
+            else:
+                r = subprocess.run(cmd, cwd=str(cfg.root), capture_output=True,
+                                   text=True, timeout=effective_timeout, env=sub_env)
+                r_returncode = r.returncode
+                r_stdout = r.stdout or ""
+                r_stderr = r.stderr or ""
+
+            if r_stdout:
+                for line in r_stdout.strip().splitlines():
+                    log.log(f"  | {line}")
+
+            if r_returncode != 0:
+                # Classify the error
+                category = classify_error(r_returncode, r_stderr)
+                log.log(f"  FAILED (exit {r_returncode}, category={category.value})", "ERROR")
+
+                # Show stderr
+                if r_stderr:
+                    stderr_lines = r_stderr.strip().splitlines()
+                    real_errors = [l for l in stderr_lines
+                                   if not any(x in l for x in ["|", "it/s]", "Fetching",
+                                              "Loading weights:", "Downloading"])]
+                    for line in (real_errors or stderr_lines[-30:])[:50]:
                         log.log(f"  ERR| {line}", "ERROR")
-            return allow_fail
-        return True
-    except subprocess.TimeoutExpired:
-        hours = timeout / 3600
-        log.log(f"  TIMED OUT ({hours:.0f}h limit)", "ERROR")
-        return False
-    except Exception as e:
-        log.log(f"  EXCEPTION: {e}", "ERROR")
-        return False
+
+                msg = f"exit {r_returncode}: {category.value}"
+                log.plog.record_error(
+                    log.plog._current_step_id or "", category.value, msg)
+                _record_error_detail(log, desc, category, msg, attempt)
+
+                # Check if retryable
+                if is_retryable(category) and attempt < retry_cfg.max_retries:
+                    log.log(f"  Error is retryable ({category.value}). Will retry.")
+                    continue
+                elif not is_retryable(category):
+                    log.log(f"  Error is NOT retryable ({category.value}). Stopping.")
+                    return False
+
+                return allow_fail
+
+            # Success
+            if attempt > 0:
+                log.log(f"  Succeeded on retry {attempt}")
+            return True
+
+        except subprocess.TimeoutExpired:
+            category = ErrorCategory.TIMEOUT
+            msg = f"TIMED OUT ({effective_timeout / 3600:.1f}h limit)"
+            log.log(f"  {msg}", "ERROR")
+            log.plog.record_error(
+                log.plog._current_step_id or "", category.value, msg)
+            _record_error_detail(log, desc, category, msg, attempt)
+            if attempt >= retry_cfg.max_retries:
+                return False
+            continue
+        except Exception as e:
+            category = classify_error(1, "", e)
+            msg = f"EXCEPTION: {e}"
+            log.log(f"  {msg}", "ERROR")
+            log.plog.record_error(
+                log.plog._current_step_id or "", category.value, msg)
+            _record_error_detail(log, desc, category, msg, attempt)
+            if is_retryable(category) and attempt < retry_cfg.max_retries:
+                continue
+            return False
+
+    return False
+
+
+def _record_error_detail(log, desc, category, message, attempt):
+    """Append to log.error_details for resume state tracking."""
+    log.error_details.append({
+        "step": desc,
+        "category": category.value,
+        "message": message[:500],
+        "timestamp": datetime.now().isoformat(),
+        "attempt": attempt,
+    })
 
 
 def get_latest_model(cfg):
@@ -420,13 +548,15 @@ def step_data_foundation(cfg, log, dry_run):
         done = 0
         for f in new_files:
             ok = run_script(cfg, log, "01_analyze_blueprint_clipboard.py", [str(f)],
-                            f"Analyzing {f.name}", dry_run, allow_fail=True)
+                            f"Analyzing {f.name}", dry_run, allow_fail=True,
+                            step_category="data")
             if ok:
                 run_script(cfg, log, "05_auto_translate_export.py",
                            [str(f), "--training",
                             "--dsl-dir", str(cfg.dsl_dir),
                             "--jsonl", str(cfg.root / "datasets" / "auto_translated.jsonl")],
-                           f"Auto-translating {f.name}", dry_run, allow_fail=True)
+                           f"Auto-translating {f.name}", dry_run, allow_fail=True,
+                           step_category="data")
                 done += 1
                 if not dry_run:
                     cfg.clipboard_processed.mkdir(parents=True, exist_ok=True)
@@ -436,7 +566,8 @@ def step_data_foundation(cfg, log, dry_run):
     # 1.3: Generate synthetic data
     run_script(cfg, log, "03_generate_synthetic_data.py",
                ["--count", str(cfg.synthetic_count), "--output", str(cfg.synthetic_data), "--seed", "42"],
-               f"Generating {cfg.synthetic_count} synthetic examples", dry_run)
+               f"Generating {cfg.synthetic_count} synthetic examples", dry_run,
+               step_category="data")
 
     # 1.4: Convert lessons
     lesson_dir = cfg.root / "lessons"
@@ -444,7 +575,7 @@ def step_data_foundation(cfg, log, dry_run):
         run_script(cfg, log, "13_lesson_to_training.py",
                    ["--lesson-dir", str(lesson_dir), "--output", str(cfg.lesson_data), "--no-append"],
                    "Converting lessons to training data", dry_run, allow_fail=True,
-                   extra_env={"PIPELINE_STEP_CONTEXT": "1"})
+                   extra_env={"PIPELINE_STEP_CONTEXT": "1"}, step_category="data")
 
     # 1.5: Merge + Deduplicate
     if not dry_run:
@@ -507,18 +638,19 @@ def step_preflight(cfg, log, state, dry_run):
     if dsl_files:
         for f in dsl_files:
             run_script(cfg, log, "06_validate_dsl.py", [str(f)],
-                       f"Validating {f.name}", dry_run, allow_fail=True)
+                       f"Validating {f.name}", dry_run, allow_fail=True,
+                       step_category="validate")
 
     # 2.2: Validate merged dataset
     if cfg.train_data.exists():
         run_script(cfg, log, "06_validate_dsl.py", [str(cfg.train_data)],
                    "Validating merged dataset", dry_run, allow_fail=True,
-                   extra_env={"PIPELINE_STEP_ID": "2.2"})
+                   extra_env={"PIPELINE_STEP_ID": "2.2"}, step_category="validate")
 
     # 2.3: Generate system prompt
     run_script(cfg, log, "08_generate_system_prompt.py",
                ["--output", str(cfg.scripts / "system_prompt.txt")],
-               "Generating system prompt", dry_run)
+               "Generating system prompt", dry_run, step_category="utility")
 
     # 2.4: Compute data hash
     log.start_step("2.4", "Compute data hash")
@@ -558,7 +690,7 @@ def step_train(cfg, log, state, dry_run, force, data_hash=None):
         "--output", str(model_dir), "--epochs", str(cfg.epochs),
         "--batch_size", str(cfg.batch_size), "--lr", str(cfg.learning_rate),
         "--lora_r", str(cfg.lora_r)
-    ], f"Fine-tuning v{ver}", dry_run, timeout=14400)
+    ], f"Fine-tuning v{ver}", dry_run, timeout=14400, step_category="training")
     if ok or dry_run:
         state["last_training_data_hash"] = cur_hash
         state["last_model_version"] = ver
@@ -591,14 +723,16 @@ def step_post_training(cfg, log, model_path, state, dry_run):
     if model_path:
         parent = str(Path(model_path).parent) if model_path.endswith("final") else model_path
         run_script(cfg, log, "10_training_dashboard.py", ["--summary", parent],
-                   "Training summary", dry_run, allow_fail=True)
+                   "Training summary", dry_run, allow_fail=True,
+                   step_category="utility")
 
     # 5.3 + 5.4: Health check
     ver = state.get("last_model_version", 0)
     if ver >= 1:
         run_script(cfg, log, "19_training_health_monitor.py",
                    ["--version", f"v{ver}", "--project-root", str(cfg.root)],
-                   f"Health check v{ver}", dry_run, allow_fail=True)
+                   f"Health check v{ver}", dry_run, allow_fail=True,
+                   step_category="utility")
     else:
         log.log("No model version to check. Skipping health monitor.")
 
@@ -630,7 +764,8 @@ def step_exam(cfg, log, model_path, dry_run):
     for lf in lesson_files:
         run_script(cfg, log, "12_run_exam.py",
                    ["--lesson", str(lf), "--model", model_path],
-                   f"Exam: {lf.name}", dry_run, allow_fail=True, timeout=14400)
+                   f"Exam: {lf.name}", dry_run, allow_fail=True, timeout=14400,
+                   step_category="exam")
 
     log.complete_step("6", "Exam", f"{len(lesson_files)} lessons examined")
 
@@ -651,7 +786,8 @@ def step_grading(cfg, log, model_path, state, dry_run):
     rpt = cfg.results_dir / f"eval_v{ver}_{datetime.now().strftime('%Y%m%d')}.json"
     run_script(cfg, log, "09_evaluate_model.py",
                ["--model", model_path, "--report", str(rpt)],
-               f"Evaluating {model_path}", dry_run, timeout=14400)
+               f"Evaluating {model_path}", dry_run, timeout=14400,
+               step_category="eval")
     if rpt.exists():
         with open(rpt) as f:
             report = json.load(f)
@@ -680,7 +816,7 @@ def step_lesson_integration(cfg, log, dry_run):
     run_script(cfg, log, "13_lesson_to_training.py",
                ["--lesson-dir", str(lesson_dir), "--output", str(cfg.lesson_data), "--no-append"],
                "Integrating lessons for next cycle", dry_run, allow_fail=True,
-               extra_env={"PIPELINE_STEP_CONTEXT": "8"})
+               extra_env={"PIPELINE_STEP_CONTEXT": "8"}, step_category="data")
 
     log.complete_step("8", "Lesson Integration")
 
@@ -694,7 +830,7 @@ def step_dashboard_finalize(cfg, log, dry_run):
     log.section("STEP 9: Dashboard & Finalize")
     log.start_step("9", "Dashboard & Finalize")
     run_script(cfg, log, "14_update_dashboard.py", [],
-               "Updating dashboard", dry_run, allow_fail=True)
+               "Updating dashboard", dry_run, allow_fail=True, step_category="utility")
     log.complete_step("9", "Dashboard & Finalize")
 
 
@@ -702,12 +838,30 @@ def step_dashboard_finalize(cfg, log, dry_run):
 # PIPELINE RUNNER
 # ===========================================================================
 
-def run_pipeline(mode, dry_run=False, force=False, root=None):
+def run_pipeline(mode, dry_run=False, force=False, root=None, resume=False):
     cfg = PipelineConfig(root)
     cfg.ensure_dirs()
     state = load_state(cfg)
     log = Logger(cfg.logs_dir)
     start = datetime.now()
+
+    # Resume support: check for saved resume state
+    resume_state = None
+    skip_steps = set()
+    if resume:
+        resume_state = load_resume_state()
+        if resume_state:
+            skip_steps = set(resume_state.get("completed_steps", []))
+            log.log(f"RESUMING from previous run. Skipping {len(skip_steps)} completed steps.")
+            log.log(f"  Failed step was: {resume_state.get('failed_step', '?')}")
+            # Restore state snapshot if available
+            snapshot = resume_state.get("state_snapshot")
+            if snapshot:
+                for key in ("last_training_data_hash", "last_model_version"):
+                    if key in snapshot:
+                        state[key] = snapshot[key]
+        else:
+            log.log("--resume specified but no resume state found. Starting fresh.")
 
     # Register step plan for timeline and ETA tracking
     log.plog.set_step_plan(STEP_PLANS.get(mode, []))
@@ -719,11 +873,14 @@ def run_pipeline(mode, dry_run=False, force=False, root=None):
     log.log(f"Model: v{state.get('last_model_version', 0)}")
     if dry_run:
         log.log("*** DRY RUN ***")
+    if resume and skip_steps:
+        log.log(f"Resume: skipping {sorted(skip_steps)}")
 
     model_path = None
     eval_report = None
     data_hash = None
     stopped = False
+    failed_step_name = None
 
     def check_stop():
         """Return True if a graceful stop was requested between stages."""
@@ -733,35 +890,80 @@ def run_pipeline(mode, dry_run=False, force=False, root=None):
             return True
         return False
 
+    def should_skip(step_name):
+        """Return True if this step was already completed in a prior run."""
+        return step_name in skip_steps
+
+    def mark_completed(step_name):
+        """Record step as completed for resume state."""
+        log.completed_step_names.append(step_name)
+
     try:
         # Steps 1-2: Data Foundation + Pre-Flight
         if mode in ("full", "data-only"):
-            step_data_foundation(cfg, log, dry_run)
+            if not should_skip("step_data_foundation"):
+                step_data_foundation(cfg, log, dry_run)
+                mark_completed("step_data_foundation")
+            else:
+                log.log("Skipping step_data_foundation (already completed)")
             if check_stop(): stopped = True
             if not stopped:
-                data_hash = step_preflight(cfg, log, state, dry_run)
+                if not should_skip("step_preflight"):
+                    data_hash = step_preflight(cfg, log, state, dry_run)
+                    mark_completed("step_preflight")
+                else:
+                    log.log("Skipping step_preflight (already completed)")
+                    data_hash = hash_file(cfg.train_data)
             if check_stop(): stopped = True
 
         # Steps 3-5: Training + Post-Training
         if not stopped and mode in ("full", "train-only"):
             if check_stop(): stopped = True
             if not stopped:
-                model_path = step_train(cfg, log, state, dry_run, force, data_hash)
+                if not should_skip("step_train"):
+                    model_path = step_train(cfg, log, state, dry_run, force, data_hash)
+                    if model_path:
+                        mark_completed("step_train")
+                    else:
+                        failed_step_name = "step_train"
+                else:
+                    log.log("Skipping step_train (already completed)")
+                    model_path = str(get_latest_model(cfg)) if get_latest_model(cfg) else None
             if not stopped and model_path and not check_stop():
-                step_post_training(cfg, log, model_path, state, dry_run)
+                if not should_skip("step_post_training"):
+                    step_post_training(cfg, log, model_path, state, dry_run)
+                    mark_completed("step_post_training")
+                else:
+                    log.log("Skipping step_post_training (already completed)")
             else:
                 stopped = stopped or not model_path
 
         # Steps 6-9: Exam, Evaluation, Lesson Integration, Dashboard (full only)
         if not stopped and mode == "full":
             if not check_stop():
-                step_exam(cfg, log, model_path, dry_run)
+                if not should_skip("step_exam"):
+                    step_exam(cfg, log, model_path, dry_run)
+                    mark_completed("step_exam")
+                else:
+                    log.log("Skipping step_exam (already completed)")
             if not check_stop():
-                eval_report = step_grading(cfg, log, model_path, state, dry_run)
+                if not should_skip("step_grading"):
+                    eval_report = step_grading(cfg, log, model_path, state, dry_run)
+                    mark_completed("step_grading")
+                else:
+                    log.log("Skipping step_grading (already completed)")
             if not check_stop():
-                step_lesson_integration(cfg, log, dry_run)
+                if not should_skip("step_lesson_integration"):
+                    step_lesson_integration(cfg, log, dry_run)
+                    mark_completed("step_lesson_integration")
+                else:
+                    log.log("Skipping step_lesson_integration (already completed)")
             if not check_stop():
-                step_dashboard_finalize(cfg, log, dry_run)
+                if not should_skip("step_dashboard_finalize"):
+                    step_dashboard_finalize(cfg, log, dry_run)
+                    mark_completed("step_dashboard_finalize")
+                else:
+                    log.log("Skipping step_dashboard_finalize (already completed)")
 
         # Eval-only mode
         if not stopped and mode == "eval-only":
@@ -774,12 +976,34 @@ def run_pipeline(mode, dry_run=False, force=False, root=None):
         log.log(f"Pipeline exception: {e}", "ERROR")
         import traceback
         log.log(traceback.format_exc(), "ERROR")
+        failed_step_name = failed_step_name or "unknown"
+
+    # Save resume state on failure so --resume can pick up
+    if log.errors and not dry_run:
+        save_resume_state(
+            completed_steps=log.completed_step_names,
+            failed_step=failed_step_name or "unknown",
+            error_info={
+                "errors": log.error_details[-5:] if log.error_details else [],
+                "message": log.errors[-1] if log.errors else "",
+            },
+            state_snapshot={
+                "last_training_data_hash": state.get("last_training_data_hash"),
+                "last_model_version": state.get("last_model_version", 0),
+            },
+        )
+        log.log(f"Resume state saved. Re-run with --resume to continue.")
+    elif not log.errors:
+        # Pipeline succeeded — clear any old resume state
+        clear_resume_state()
 
     elapsed = (datetime.now() - start).total_seconds()
     log.section("PIPELINE STOPPED EARLY" if stopped else "PIPELINE COMPLETE")
     log.log(f"Time: {int(elapsed//60)}m {int(elapsed%60)}s")
     log.log(f"Version: v{state.get('last_model_version', '?')}")
     log.log(f"Errors: {len(log.errors)}")
+    if log.error_details:
+        log.log(f"Error categories: {', '.join(set(e['category'] for e in log.error_details))}")
     if eval_report:
         s = eval_report.get("summary", {})
         log.log(f"Eval: {s.get('passed','?')}/{s.get('total','?')} ({s.get('avg_score',0)*100:.0f}%)")
@@ -809,10 +1033,12 @@ def main():
     m.add_argument("--eval-only", action="store_true")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--force", action="store_true")
+    p.add_argument("--resume", action="store_true",
+                   help="Resume from last failure (skip already-completed steps)")
     p.add_argument("--project-root", type=str)
     a = p.parse_args()
     mode = "full" if a.full else "data-only" if a.data_only else "train-only" if a.train_only else "eval-only"
-    run_pipeline(mode, a.dry_run, a.force, a.project_root)
+    run_pipeline(mode, a.dry_run, a.force, a.project_root, a.resume)
 
 
 if __name__ == "__main__":

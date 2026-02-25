@@ -182,6 +182,9 @@ class PipelineConfig:
         self.retry_config = STEP_RETRY_CONFIGS
         self.stall_warn_seconds = 300
         self.stall_kill_seconds = 600
+        # Training has legitimate long pauses (eval checkpoints, saves,
+        # gradient accumulation, CUDA sync) so use a much higher threshold.
+        self.stall_kill_seconds_training = 1800
 
     def _detect_best_model(self):
         """Pick the best model based on available GPU VRAM."""
@@ -342,10 +345,15 @@ def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False,
                     cmd, cwd=str(cfg.root), stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE, text=True, env=sub_env)
                 state_file = cfg.logs_dir / "pipeline_live_state.json"
+                # Training gets a much higher stall threshold because of
+                # legitimate long pauses (eval checkpoints, saves, CUDA sync).
+                kill_secs = (cfg.stall_kill_seconds_training
+                             if step_category == "training"
+                             else cfg.stall_kill_seconds)
                 monitor = SubprocessMonitor(
                     proc, state_file,
                     warn_seconds=cfg.stall_warn_seconds,
-                    kill_seconds=cfg.stall_kill_seconds,
+                    kill_seconds=kill_secs,
                     log_func=lambda msg: log.log(msg, "WARN"),
                 )
                 monitor.start()

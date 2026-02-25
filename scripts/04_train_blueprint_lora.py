@@ -57,7 +57,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from stop_signal_utils import is_stop_requested, clear_signal
 from backup_utils import auto_backup
 from pipeline_logger import get_logger as _get_pipeline_logger
-from error_handler import cuda_oom_retry
+from error_handler import cuda_oom_retry, write_heartbeat
 
 logger = logging.getLogger(__name__)
 plog = _get_pipeline_logger(step_prefix="3")
@@ -90,10 +90,22 @@ class GracefulStopCallback(TrainerCallback):
         # plog.progress is rate-limited to every 5s, so this is cheap.
         if self._max_steps > 0:
             plog.progress("4.3", state.global_step, self._max_steps)
+        write_heartbeat()
+        return control
+
+    def on_evaluate(self, args, state: TrainerState, control: TrainerControl, **kwargs):
+        # Eval checkpoints can take 5-10 min — heartbeat so stall detector stays calm.
+        write_heartbeat()
+        return control
+
+    def on_save(self, args, state: TrainerState, control: TrainerControl, **kwargs):
+        # Checkpoint saves can take minutes — heartbeat.
+        write_heartbeat()
         return control
 
     def on_log(self, args, state: TrainerState, control: TrainerControl, logs=None, **kwargs):
         # Emit training progress with metrics
+        write_heartbeat()
         if self._max_steps > 0:
             loss = (logs or {}).get("loss", "")
             lr = (logs or {}).get("learning_rate", "")

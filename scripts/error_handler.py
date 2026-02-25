@@ -133,6 +133,40 @@ STEP_RETRY_CONFIGS = {
 
 
 # ---------------------------------------------------------------------------
+# Heartbeat File (lightweight alternative to JSON state for liveness)
+# ---------------------------------------------------------------------------
+
+_HEARTBEAT_FILE = Path(os.environ.get(
+    "BLUEPRINT_LLM_ROOT", r"C:\BlueprintLLM"
+)) / "logs" / "pipeline_heartbeat"
+
+
+def write_heartbeat():
+    """Touch the heartbeat file to signal the subprocess is alive.
+
+    This is a lightweight alternative to updating pipeline_live_state.json.
+    SubprocessMonitor checks both — whichever was updated more recently wins.
+    Cannot fail due to file locking (just overwrites a tiny file).
+    """
+    try:
+        _HEARTBEAT_FILE.parent.mkdir(parents=True, exist_ok=True)
+        _HEARTBEAT_FILE.write_text(str(time.time()), encoding="utf-8")
+    except OSError:
+        pass
+
+
+def _get_heartbeat_age() -> float | None:
+    """Return seconds since the heartbeat file was last written."""
+    try:
+        if _HEARTBEAT_FILE.exists():
+            ts = float(_HEARTBEAT_FILE.read_text(encoding="utf-8").strip())
+            return time.time() - ts
+    except (OSError, ValueError):
+        pass
+    return None
+
+
+# ---------------------------------------------------------------------------
 # Subprocess Stall Detection
 # ---------------------------------------------------------------------------
 
@@ -141,6 +175,10 @@ class SubprocessMonitor(threading.Thread):
 
     If the timestamp hasn't been updated within warn_seconds, logs a warning.
     If it exceeds kill_seconds, terminates the subprocess.
+
+    Also checks the heartbeat file as a secondary liveness signal — if either
+    the state JSON or heartbeat file was updated recently, the subprocess is
+    considered alive.
     """
 
     def __init__(self, process, state_file: Path,
@@ -160,17 +198,30 @@ class SubprocessMonitor(threading.Thread):
         self._stop_event.set()
 
     def _get_state_age(self) -> float | None:
-        """Return seconds since last state file update, or None if unavailable."""
+        """Return seconds since last state file update, or None if unavailable.
+
+        Checks both the JSON state timestamp and the heartbeat file, returning
+        the minimum (most recent signal).
+        """
+        ages = []
+
+        # Check JSON state timestamp
         try:
             if self.state_file.exists():
                 data = json.loads(self.state_file.read_text(encoding="utf-8"))
                 ts_str = data.get("timestamp")
                 if ts_str:
                     ts = datetime.fromisoformat(ts_str)
-                    return (datetime.now() - ts).total_seconds()
+                    ages.append((datetime.now() - ts).total_seconds())
         except (json.JSONDecodeError, OSError, ValueError):
             pass
-        return None
+
+        # Check heartbeat file
+        hb_age = _get_heartbeat_age()
+        if hb_age is not None:
+            ages.append(hb_age)
+
+        return min(ages) if ages else None
 
     def run(self):
         warned = False

@@ -225,9 +225,13 @@ The `run_script()` function in the orchestrator handles the retry loop: classify
 
 ### Subprocess Stall Detection
 
-For long-running steps (training, eval, exam), a `SubprocessMonitor` daemon thread watches `pipeline_live_state.json`:
-- **Warning** at 5 minutes without a state update
-- **Kill** at 10 minutes — terminates the subprocess and marks it as stalled
+For long-running steps (training, eval, exam), a `SubprocessMonitor` daemon thread watches both `pipeline_live_state.json` and `logs/pipeline_heartbeat` for liveness:
+- **Warning** at 5 minutes without any update
+- **Kill** at 10 minutes for eval/exam, **30 minutes for training** — terminates the subprocess and marks it as stalled
+
+Training uses a higher threshold (1800s vs 600s) because it has legitimate long pauses during eval checkpoints, checkpoint saves, gradient accumulation, and CUDA synchronization.
+
+The training script (`04_train_blueprint_lora.py`) writes heartbeats via `write_heartbeat()` on every training step, logging step, evaluation, and checkpoint save. The heartbeat file is a lightweight fallback that avoids JSON file-locking issues on Windows.
 
 This catches `model.generate()` hangs that would otherwise block the pipeline indefinitely.
 

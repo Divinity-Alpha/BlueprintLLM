@@ -242,11 +242,11 @@ Both `12_run_exam.py` and `09_evaluate_model.py` wrap `model.generate()` in `per
 
 ### CUDA OOM Recovery
 
-`cuda_oom_retry()` wraps training with automatic config reduction:
+`cuda_oom_retry()` wraps `trainer.train()` in `04_train_blueprint_lora.py` with automatic config reduction:
 1. Catch `torch.cuda.OutOfMemoryError`
-2. Clear CUDA cache
+2. Clear CUDA cache, delete old model
 3. Reduce `max_seq_length` by half (min 512), or reduce `lora_r` by half (min 16)
-4. Retry up to 2 times
+4. Rebuild model + trainer with reduced config, retry up to 2 times
 
 ### Pipeline Resume
 

@@ -57,6 +57,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from stop_signal_utils import is_stop_requested, clear_signal
 from backup_utils import auto_backup
 from pipeline_logger import get_logger as _get_pipeline_logger
+from error_handler import cuda_oom_retry
 
 logger = logging.getLogger(__name__)
 plog = _get_pipeline_logger(step_prefix="3")
@@ -510,7 +511,49 @@ def train(config: dict):
 
     plog.start_step("4.3", "Training loop",
                      f"{config['epochs']} epochs, {len(train_dataset)} examples")
-    trainer.train()
+
+    _oom_attempt = [0]
+
+    def _do_train(cfg):
+        """Run trainer.train(), rebuilding model+trainer on OOM with reduced config."""
+        nonlocal model, tokenizer, trainer, training_args
+        _oom_attempt[0] += 1
+
+        # On retry (attempt > 1), cuda_oom_retry already reduced config — rebuild
+        if _oom_attempt[0] > 1:
+            print(f"\n  Rebuilding model+trainer with reduced config:")
+            print(f"    max_seq_length={cfg['max_seq_length']}, lora_r={cfg['lora_r']}")
+
+            # Delete old model to free GPU memory
+            del trainer, model
+            torch.cuda.empty_cache()
+
+            plog.start_step("3.4", "Reload model (OOM recovery)", f"lora_r={cfg['lora_r']}")
+            model, tokenizer, _ = setup_model_and_tokenizer(cfg)
+            plog.complete_step("3.4", "Reload model (OOM recovery)")
+
+            # Update max_seq_length in training args
+            if hasattr(training_args, 'max_seq_length'):
+                training_args.max_seq_length = cfg['max_seq_length']
+
+            # Rebuild trainer
+            _tk = {k: v for k, v in trainer_kwargs.items() if k != 'model'}
+            _tk['model'] = model
+            if 'processing_class' in _tk:
+                _tk['processing_class'] = tokenizer
+            elif 'tokenizer' in _tk:
+                _tk['tokenizer'] = tokenizer
+            trainer = SFTTrainer(**_tk)
+
+        trainer.train()
+        return trainer
+
+    try:
+        trainer = cuda_oom_retry(_do_train, config, max_retries=2, log_func=print)
+    except torch.cuda.OutOfMemoryError:
+        plog.complete_step("4.3", "Training loop", "FAILED: CUDA OOM after retries")
+        raise
+
     plog.complete_step("4.3", "Training loop")
 
     # Save model weights

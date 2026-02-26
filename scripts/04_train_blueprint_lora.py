@@ -175,6 +175,52 @@ DEFAULT_CONFIG = {
 }
 
 
+def _apply_pipeline_config(config: dict) -> dict:
+    """Override DEFAULT_CONFIG with values from pipeline_config.json if present."""
+    cfg_path = Path(__file__).resolve().parent.parent / "pipeline_config.json"
+    if not cfg_path.exists():
+        return config
+    try:
+        with open(cfg_path, "r", encoding="utf-8") as f:
+            pcfg = json.load(f)
+
+        # GPU pinning — must happen before any torch.cuda calls
+        cuda_dev = pcfg.get("hardware", {}).get("cuda_visible_devices")
+        if cuda_dev is not None and "CUDA_VISIBLE_DEVICES" not in os.environ:
+            os.environ["CUDA_VISIBLE_DEVICES"] = str(cuda_dev)
+
+        # Model overrides
+        model_cfg = pcfg.get("model", {})
+        if model_cfg.get("base_model"):
+            config["base_model"] = model_cfg["base_model"]
+        if model_cfg.get("max_seq_length"):
+            config["max_seq_length"] = model_cfg["max_seq_length"]
+
+        # LoRA overrides
+        lora_cfg = pcfg.get("lora", {})
+        for key in ("lora_r", "lora_alpha", "lora_dropout"):
+            if key in lora_cfg:
+                config[key] = lora_cfg[key]
+
+        # Training overrides
+        train_cfg = pcfg.get("training", {})
+        for key in ("epochs", "batch_size", "gradient_accumulation_steps",
+                     "learning_rate", "warmup_steps", "weight_decay",
+                     "max_grad_norm", "logging_steps", "save_steps", "eval_steps"):
+            if key in train_cfg:
+                config[key] = train_cfg[key]
+
+        print(f"  Applied pipeline_config.json overrides ({cfg_path})")
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"  WARNING: Failed to load pipeline_config.json: {e}")
+    return config
+
+
+# Apply pipeline_config.json overrides to defaults at import time
+# (before argparse defaults are set, so CLI can still override)
+DEFAULT_CONFIG = _apply_pipeline_config(DEFAULT_CONFIG)
+
+
 # ============================================================
 # SYSTEM PROMPT — TWO VERSIONS
 # ============================================================
@@ -769,8 +815,13 @@ def main():
             print(f"  Max sequence length: {config['max_seq_length']}")
         config["gradient_checkpointing"] = True
         print(f"  Gradient checkpointing: enabled")
+    elif vram >= 48:
+        # High-VRAM GPU (e.g., RTX PRO 6000 96GB, A100 80GB)
+        # Can handle 70B with QLoRA 4-bit (~35-40 GB)
+        print(f"NOTE: {vram:.0f} GB VRAM detected. Full 70B config supported.")
+        # batch_size=2 fits comfortably; keep LoRA rank 64, seq len 4096
     elif vram >= 16:
-        # Plenty of VRAM — can use larger model and full settings
+        # Plenty of VRAM for 8B — can use full settings
         print(f"NOTE: {vram:.0f} GB VRAM detected. Using full config.")
         # Keep defaults (8B model, LoRA rank 64, seq len 4096)
 

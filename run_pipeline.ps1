@@ -31,6 +31,9 @@ $VenvPython  = "$ProjectRoot\venv\Scripts\python.exe"
 $Script      = "$ProjectRoot\scripts\11_pipeline_orchestrator.py"
 $LogDir      = "$ProjectRoot\logs"
 
+# --- GPU pinning: use only GPU 0 (training GPU) ---
+$env:CUDA_VISIBLE_DEVICES = "0"
+
 # --- Ensure log directory exists ---
 if (-not (Test-Path $LogDir)) {
     New-Item -ItemType Directory -Path $LogDir -Force | Out-Null

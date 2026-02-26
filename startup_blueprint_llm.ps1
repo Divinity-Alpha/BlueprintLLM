@@ -22,6 +22,9 @@ $ProjectRoot = "C:\BlueprintLLM"
 $VenvPython  = "$ProjectRoot\venv\Scripts\python.exe"
 $LogFile     = "$ProjectRoot\logs\startup_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
 
+# GPU pinning: use only GPU 0 (training GPU)
+$env:CUDA_VISIBLE_DEVICES = "0"
+
 function Log($msg) {
     $line = "[$(Get-Date -Format 'HH:mm:ss')] $msg"
     Write-Host $line

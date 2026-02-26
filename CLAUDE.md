@@ -100,6 +100,37 @@ Scripts are numbered `01`–`19` reflecting pipeline order. The orchestrator (`1
 - **`scripts/09_evaluate_model.py`** — Tier-based test suite (Tiers 1–4). Scores on structure/keywords/node-types/connections/parseability. Pass threshold: 70%.
 - **`scripts/19_training_health_monitor.py`** — Post-training health analysis across 6 dimensions (epoch efficiency, overfitting, learning rate, dataset quality, node mastery velocity, resource usage). Outputs `health_report.json` and `logs/training_history.json`.
 
+### Hardware Configuration (`pipeline_config.json`)
+
+The `pipeline_config.json` file at project root configures hardware-specific settings. Both the orchestrator (`PipelineConfig`) and training script (`04_train_blueprint_lora.py`) load it automatically. CLI arguments still override these values.
+
+```json
+{
+    "hardware": {
+        "cuda_visible_devices": "0",
+        "gpu_name": "NVIDIA RTX PRO 6000 Blackwell 96GB",
+        "gpu_vram_gb": 96
+    },
+    "model": {
+        "base_model": "meta-llama/Meta-Llama-3.1-70B",
+        "max_seq_length": 4096
+    },
+    "lora": { "lora_r": 64, "lora_alpha": 128 },
+    "training": {
+        "learning_rate": 5e-5,
+        "batch_size": 2,
+        "gradient_accumulation_steps": 4
+    },
+    "stall_detection": {
+        "stall_kill_seconds_training": 1800
+    }
+}
+```
+
+**GPU pinning**: `CUDA_VISIBLE_DEVICES` is set in `pipeline_config.json`, the orchestrator's subprocess env, `run_pipeline.ps1`, and `startup_blueprint_llm.ps1`. This ensures GPU 0 (training GPU) is used consistently, keeping GPU 1 (display) free.
+
+**Model auto-detection**: If `base_model` is not set in `pipeline_config.json`, the orchestrator detects VRAM and picks: 70B (>=48 GB), 8B (>=12 GB), or 3B (fallback).
+
 ### Training Configuration
 
 Stored per model version at `models/blueprint-lora-vN/training_config.json`. Key settings: QLoRA with 4-bit NF4 quantization, LoRA targeting all attention + MLP projections, gradient checkpointing enabled. The system prompt embeds a full node vocabulary reference (~5660 chars) so the model can use it as a "cheat sheet" rather than memorizing all node types.

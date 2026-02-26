@@ -1,0 +1,36 @@
+{
+    "hardware": {
+        "cuda_visible_devices": "0",
+        "gpu_name": "NVIDIA RTX PRO 6000 Blackwell 96GB",
+        "gpu_vram_gb": 96
+    },
+    "model": {
+        "base_model": "meta-llama/Meta-Llama-3.1-70B",
+        "max_seq_length": 4096
+    },
+    "lora": {
+        "lora_r": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.05
+    },
+    "training": {
+        "epochs": 3,
+        "batch_size": 2,
+        "gradient_accumulation_steps": 4,
+        "learning_rate": 5e-5,
+        "warmup_steps": 10,
+        "weight_decay": 0.01,
+        "max_grad_norm": 0.3,
+        "logging_steps": 10,
+        "save_steps": 100,
+        "eval_steps": 100
+    },
+    "stall_detection": {
+        "stall_warn_seconds": 300,
+        "stall_kill_seconds": 600,
+        "stall_kill_seconds_training": 1800
+    },
+    "synthetic": {
+        "synthetic_count": 500
+    }
+}

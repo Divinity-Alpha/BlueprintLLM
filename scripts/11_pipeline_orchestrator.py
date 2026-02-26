@@ -172,19 +172,60 @@ class PipelineConfig:
         self.results_dir = self.root / "results"
         self.logs_dir = self.root / "logs"
         self.state_file = self.root / ".pipeline_state.json"
-        self.base_model = self._detect_best_model()
-        self.epochs = 3
-        self.batch_size = 1
-        self.lora_r = 64
-        self.learning_rate = 2e-4
-        self.synthetic_count = 500
-        # Error handling
+
+        # Load pipeline_config.json overrides (hardware, model, training params)
+        pcfg = self._load_pipeline_config()
+
+        # GPU pinning — set before any torch imports in subprocesses
+        self.cuda_visible_devices = pcfg.get("hardware", {}).get("cuda_visible_devices", None)
+        if self.cuda_visible_devices is not None:
+            os.environ["CUDA_VISIBLE_DEVICES"] = str(self.cuda_visible_devices)
+
+        # Model — prefer pipeline_config, then auto-detect from VRAM
+        model_cfg = pcfg.get("model", {})
+        self.base_model = model_cfg.get("base_model") or self._detect_best_model()
+
+        # Training params — pipeline_config overrides defaults
+        train_cfg = pcfg.get("training", {})
+        lora_cfg = pcfg.get("lora", {})
+        self.epochs = train_cfg.get("epochs", 3)
+        self.batch_size = train_cfg.get("batch_size", 1)
+        self.lora_r = lora_cfg.get("lora_r", 64)
+        self.learning_rate = train_cfg.get("learning_rate", 2e-4)
+        self.synthetic_count = pcfg.get("synthetic", {}).get("synthetic_count", 500)
+
+        # Error handling / stall detection
+        stall_cfg = pcfg.get("stall_detection", {})
         self.retry_config = STEP_RETRY_CONFIGS
-        self.stall_warn_seconds = 300
-        self.stall_kill_seconds = 600
+        self.stall_warn_seconds = stall_cfg.get("stall_warn_seconds", 300)
+        self.stall_kill_seconds = stall_cfg.get("stall_kill_seconds", 600)
         # Training has legitimate long pauses (eval checkpoints, saves,
         # gradient accumulation, CUDA sync) so use a much higher threshold.
-        self.stall_kill_seconds_training = 1800
+        self.stall_kill_seconds_training = stall_cfg.get("stall_kill_seconds_training", 1800)
+
+    def _load_pipeline_config(self):
+        """Load pipeline_config.json from project root if it exists."""
+        cfg_path = self.root / "pipeline_config.json"
+        if cfg_path.exists():
+            try:
+                with open(cfg_path, "r", encoding="utf-8") as f:
+                    cfg = json.load(f)
+                print(f"Loaded pipeline_config.json ({cfg_path})")
+                hw = cfg.get("hardware", {})
+                model = cfg.get("model", {})
+                if hw.get("gpu_name"):
+                    print(f"  GPU: {hw['gpu_name']} ({hw.get('gpu_vram_gb', '?')} GB)")
+                if hw.get("cuda_visible_devices") is not None:
+                    print(f"  CUDA_VISIBLE_DEVICES={hw['cuda_visible_devices']}")
+                if model.get("base_model"):
+                    print(f"  Base model: {model['base_model']}")
+                lr = cfg.get("training", {}).get("learning_rate")
+                if lr is not None:
+                    print(f"  Learning rate: {lr}")
+                return cfg
+            except (json.JSONDecodeError, OSError) as e:
+                print(f"WARNING: Failed to load pipeline_config.json: {e}")
+        return {}
 
     def _detect_best_model(self):
         """Pick the best model based on available GPU VRAM."""
@@ -193,7 +234,10 @@ class PipelineConfig:
             if torch.cuda.is_available():
                 vram = torch.cuda.get_device_properties(0).total_memory / 1024**3
                 gpu = torch.cuda.get_device_name(0)
-                if vram >= 12:
+                if vram >= 48:
+                    print(f"GPU: {gpu} ({vram:.0f} GB) -> Using 70B model")
+                    return "meta-llama/Meta-Llama-3.1-70B"
+                elif vram >= 12:
                     print(f"GPU: {gpu} ({vram:.0f} GB) -> Using 8B model")
                     return "meta-llama/Meta-Llama-3.1-8B"
                 else:
@@ -336,6 +380,9 @@ def run_script(cfg, log, script, args, desc, dry_run=False, allow_fail=False,
             sub_env = {**os.environ, "PYTHONUNBUFFERED": "1"}
             if log.run_id:
                 sub_env["PIPELINE_RUN_ID"] = log.run_id
+            # Propagate GPU pinning to subprocesses
+            if cfg.cuda_visible_devices is not None:
+                sub_env["CUDA_VISIBLE_DEVICES"] = str(cfg.cuda_visible_devices)
             if extra_env:
                 sub_env.update(extra_env)
 

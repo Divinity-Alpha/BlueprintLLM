@@ -1,0 +1,18 @@
+Grade these v3 results:
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_01_20260227_104719.jsonl
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_01_20260227_104719_summary.json
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_02_20260227_110207.jsonl
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_02_20260227_110207_summary.json
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_03_20260227_111856.jsonl
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_03_20260227_111856_summary.json
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_04_20260227_114201.jsonl
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_04_20260227_114201_summary.json
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_05_20260227_120059.jsonl
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_05_20260227_120059_summary.json
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_06_20260227_122054.jsonl
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_06_20260227_122054_summary.json
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_07_20260227_124315.jsonl
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_07_20260227_124315_summary.json
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_08_20260227_130305.jsonl
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/exams/exam_lesson_08_20260227_130305_summary.json
+https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main/results/eval_v3_20260227.json

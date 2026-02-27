@@ -37,7 +37,16 @@ import argparse
 import logging
 from pathlib import Path
 
+# --- CUDA JIT cache: persist compiled kernels across runs ---
+_cache_dir = str(Path(__file__).resolve().parent.parent / ".cuda_cache")
+os.makedirs(_cache_dir, exist_ok=True)
+os.environ.setdefault("CUDA_CACHE_PATH", _cache_dir)
+os.environ.setdefault("CUDA_CACHE_MAXSIZE", "4294967296")  # 4 GB
+
 import torch
+
+# --- cuDNN autotuning: cache optimal algorithms within each run ---
+torch.backends.cudnn.benchmark = True
 from datasets import Dataset
 from transformers import (
     AutoModelForCausalLM,
@@ -83,6 +92,13 @@ class GracefulStopCallback(TrainerCallback):
 
     def on_train_begin(self, args, state: TrainerState, control: TrainerControl, **kwargs):
         self._max_steps = state.max_steps
+        write_heartbeat()
+        return control
+
+    def on_step_begin(self, args, state: TrainerState, control: TrainerControl, **kwargs):
+        # Heartbeat at step START — critical for 70B models where a single step
+        # can take 30+ minutes with gradient checkpointing.
+        write_heartbeat()
         return control
 
     def on_step_end(self, args, state: TrainerState, control: TrainerControl, **kwargs):
@@ -163,6 +179,7 @@ DEFAULT_CONFIG = {
 
     # Quantization
     "use_4bit": True,
+    "use_8bit": False,
     "bnb_4bit_compute_dtype": "float16",
     "bnb_4bit_quant_type": "nf4",
     "use_double_quant": True,
@@ -210,6 +227,15 @@ def _apply_pipeline_config(config: dict) -> dict:
             if key in train_cfg:
                 config[key] = train_cfg[key]
 
+        # Quantization overrides
+        quant_cfg = pcfg.get("quantization", {})
+        if quant_cfg.get("use_8bit"):
+            config["use_8bit"] = True
+            config["use_4bit"] = False
+        elif "use_4bit" in quant_cfg:
+            config["use_4bit"] = quant_cfg["use_4bit"]
+            config["use_8bit"] = False
+
         print(f"  Applied pipeline_config.json overrides ({cfg_path})")
     except (json.JSONDecodeError, OSError) as e:
         print(f"  WARNING: Failed to load pipeline_config.json: {e}")
@@ -242,65 +268,39 @@ Generate only the DSL code, no explanations."""
 
 
 def load_enhanced_system_prompt() -> str:
+    """Load the system prompt for training.
+
+    Priority order:
+      1. datasets/system_prompt_v3.txt  (lean prompt, no node reference)
+      2. scripts/system_prompt.txt      (legacy enhanced prompt with node ref)
+      3. BASIC_SYSTEM_PROMPT            (hardcoded fallback)
+
+    v3 prompt rationale: The full node reference (~5,660 chars) was repeated
+    in every training example, causing the model to regurgitate format rules
+    and node definitions instead of generating DSL. The lean v3 prompt is
+    ~477 chars — node types and pin names are learned from the training
+    examples themselves.
     """
-    Load the enhanced system prompt with the full node reference.
-    Falls back to generating it on the fly from the node catalog.
-    """
-    # Check for pre-generated prompt file
-    prompt_path = Path(__file__).parent / "system_prompt.txt"
-    if prompt_path.exists():
-        prompt = prompt_path.read_text(encoding="utf-8").strip()
-        print(f"  Loaded enhanced system prompt from {prompt_path}")
+    project_root = Path(__file__).resolve().parent.parent
+
+    # v3 lean prompt (preferred)
+    v3_path = project_root / "datasets" / "system_prompt_v3.txt"
+    if v3_path.exists():
+        prompt = v3_path.read_text(encoding="utf-8").strip()
+        print(f"  Loaded v3 system prompt from {v3_path}")
         print(f"  ({len(prompt):,} chars, ~{len(prompt)//4:,} tokens)")
         return prompt
 
-    # Generate directly from the patterns module
-    try:
-        from utils.blueprint_patterns import NODE_CATALOG, get_all_categories, get_nodes_by_category
-
-        lines = [BASIC_SYSTEM_PROMPT, "", "## NODE REFERENCE",
-                 "Valid node types with their pins. Use ONLY these exact names.", ""]
-
-        for category in get_all_categories():
-            nodes = get_nodes_by_category(category)
-            lines.append(f"### {category}")
-            for node in nodes:
-                in_pins = [f"{p.name}:{p.pin_type}" for p in node.pins if p.direction == "input"]
-                out_pins = [f"{p.name}:{p.pin_type}" for p in node.pins if p.direction == "output"]
-                lines.append(f"**{node.type_name}** — {node.description}")
-                if in_pins:
-                    lines.append(f"  IN: {', '.join(in_pins)}")
-                if out_pins:
-                    lines.append(f"  OUT: {', '.join(out_pins)}")
-                lines.append("")
-
-        lines.extend([
-            "## CONNECTION RULES",
-            "- exec pins connect ONLY to exec pins (EXEC lines)",
-            "- Data pins connect ONLY to matching types (DATA lines)",
-            "- Bool->Bool, Float->Float, Int->Float (implicit cast), Actor->Object (upcast OK)",
-            "",
-            "## DATA TYPES",
-            "Bool, Int, Float, String, Vector, Rotator, Transform, Actor, Object, Class, Array",
-            "",
-            "## PARENT CLASSES",
-            "Actor, Pawn, Character, PlayerController, GameModeBase, ActorComponent, UserWidget",
-            "",
-            "Generate ONLY the DSL code, no explanations.",
-        ])
-
-        prompt = "\n".join(lines)
-        print(f"  Built enhanced prompt from node catalog ({len(NODE_CATALOG)} nodes)")
+    # Legacy enhanced prompt (with node reference)
+    legacy_path = Path(__file__).parent / "system_prompt.txt"
+    if legacy_path.exists():
+        prompt = legacy_path.read_text(encoding="utf-8").strip()
+        print(f"  Loaded legacy system prompt from {legacy_path}")
         print(f"  ({len(prompt):,} chars, ~{len(prompt)//4:,} tokens)")
-
-        # Save for next time
-        prompt_path.write_text(prompt, encoding="utf-8")
-        print(f"  Saved to {prompt_path} for future runs")
         return prompt
 
-    except ImportError:
-        print("  WARNING: Could not load node catalog. Using basic prompt.")
-        return BASIC_SYSTEM_PROMPT
+    print("  WARNING: No system prompt file found. Using basic fallback.")
+    return BASIC_SYSTEM_PROMPT
 
 
 # Global — set once based on command-line flag
@@ -377,7 +377,10 @@ def setup_model_and_tokenizer(config: dict):
 
     # Quantization config
     bnb_config = None
-    if config["use_4bit"]:
+    if config.get("use_8bit"):
+        bnb_config = BitsAndBytesConfig(load_in_8bit=True)
+        print("Using 8-bit quantization (QLoRA)")
+    elif config["use_4bit"]:
         compute_dtype = getattr(torch, config["bnb_4bit_compute_dtype"])
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
@@ -388,16 +391,19 @@ def setup_model_and_tokenizer(config: dict):
         print("Using 4-bit quantization (QLoRA)")
 
     # Load model
+    # low_cpu_mem_usage=True is critical for 70B on 32GB system RAM —
+    # prevents full-precision CPU scaffold allocation during loading.
     model = AutoModelForCausalLM.from_pretrained(
         config["base_model"],
         quantization_config=bnb_config,
-        device_map="auto",
+        device_map={"": 0},
         trust_remote_code=True,
+        low_cpu_mem_usage=True,
     )
     model.config.use_cache = False
 
     # Prepare for k-bit training
-    if config["use_4bit"]:
+    if config.get("use_8bit") or config["use_4bit"]:
         model = prepare_model_for_kbit_training(model)
 
     # LoRA config
@@ -610,6 +616,10 @@ def train(config: dict):
                 _tk['tokenizer'] = tokenizer
             trainer = SFTTrainer(**_tk)
 
+        # Write heartbeat before training starts — the first step of a 70B model
+        # can take 30+ minutes, and without a heartbeat the stall detector would
+        # kill the process before any trainer callback has a chance to fire.
+        write_heartbeat()
         trainer.train()
         return trainer
 
@@ -669,8 +679,21 @@ def quick_test(model_path: str, base_model: str):
     print("\n--- Quick inference test ---")
 
     tokenizer = AutoTokenizer.from_pretrained(base_model)
+    # Use 8-bit for 70B models (bitsandbytes 4-bit has Blackwell compatibility issues)
+    is_large_model = "70b" in base_model.lower()
+    if is_large_model:
+        bnb_config = BitsAndBytesConfig(load_in_8bit=True)
+    else:
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_compute_dtype=torch.float16,
+            bnb_4bit_quant_type="nf4",
+        )
     model = AutoModelForCausalLM.from_pretrained(
-        base_model, device_map="auto", torch_dtype=torch.float16,
+        base_model,
+        quantization_config=bnb_config,
+        device_map={"": 0},
+        low_cpu_mem_usage=True,
     )
     model = PeftModel.from_pretrained(model, model_path)
 

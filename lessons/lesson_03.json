@@ -1,0 +1,128 @@
+{
+  "lesson_id": "lesson_03",
+  "lesson_name": "Timers and Delayed Actions",
+  "description": "20 prompts covering timer-based patterns: SetTimerByFunctionName, ClearTimer, RetriggerableDelay, chained delays, timer+branch combos. Zero coverage in lessons 01-02.",
+  "created": "2026-02-26",
+  "prompts": [
+    {
+      "id": "L03_01",
+      "category": "timer_basic",
+      "instruction": "Create a Blueprint that on BeginPlay sets a timer called SpawnTimer that calls a custom event SpawnEnemy every 5 seconds.",
+      "expected_dsl": "BLUEPRINT: BP_SpawnTimer\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"SpawnEnemy\", Time=5.0, Looping=true]\nNODE n3: Event_Custom [EventName=SpawnEnemy]\nNODE n4: PrintString [InString=\"Enemy Spawned\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute"
+    },
+    {
+      "id": "L03_02",
+      "category": "timer_clear",
+      "instruction": "Create a Blueprint that starts a looping timer on BeginPlay and clears it when the player presses the Stop input action.",
+      "expected_dsl": "BLUEPRINT: BP_StoppableTimer\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"DoWork\", Time=2.0, Looping=true]\nNODE n3: Event_InputAction [ActionName=\"Stop\"]\nNODE n4: ClearTimerByFunctionName [FunctionName=\"DoWork\"]\nNODE n5: Event_Custom [EventName=DoWork]\nNODE n6: PrintString [InString=\"Working\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Pressed -> n4.Execute\nEXEC n5.Then -> n6.Execute"
+    },
+    {
+      "id": "L03_03",
+      "category": "timer_oneshot",
+      "instruction": "Create a Blueprint that on BeginPlay sets a one-shot timer for 10 seconds. When the timer fires, destroy the actor.",
+      "expected_dsl": "BLUEPRINT: BP_SelfDestruct\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"SelfDestruct\", Time=10.0, Looping=false]\nNODE n3: Event_Custom [EventName=SelfDestruct]\nNODE n4: DestroyActor\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute"
+    },
+    {
+      "id": "L03_04",
+      "category": "retriggerable_delay",
+      "instruction": "Create a Blueprint that on overlap starts a retriggerable delay of 3 seconds. When the delay completes, print Timeout. Each new overlap resets the timer.",
+      "expected_dsl": "BLUEPRINT: BP_RetriggerExample\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: RetriggerableDelay [Duration=3.0]\nNODE n3: PrintString [InString=\"Timeout\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute"
+    },
+    {
+      "id": "L03_05",
+      "category": "timer_with_branch",
+      "instruction": "Create a Blueprint with a boolean variable IsActive. On BeginPlay, check IsActive. If true, set a looping timer every 2 seconds. If false, print Disabled.",
+      "expected_dsl": "BLUEPRINT: BP_ConditionalTimer\nPARENT: Actor\nVAR IsActive: Bool = true\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=IsActive]\nNODE n3: Branch\nNODE n4: SetTimerByFunctionName [FunctionName=\"Pulse\", Time=2.0, Looping=true]\nNODE n5: PrintString [InString=\"Disabled\"]\nNODE n6: Event_Custom [EventName=Pulse]\nNODE n7: PrintString [InString=\"Pulse\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n4.Execute\nEXEC n3.False -> n5.Execute\nEXEC n6.Then -> n7.Execute"
+    },
+    {
+      "id": "L03_06",
+      "category": "delay_sequence",
+      "instruction": "Create a Blueprint that on BeginPlay prints Phase 1, waits 2 seconds, prints Phase 2, waits 3 seconds, prints Phase 3, waits 1 second, then destroys itself.",
+      "expected_dsl": "BLUEPRINT: BP_PhasedSequence\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: PrintString [InString=\"Phase 1\"]\nNODE n3: Delay [Duration=2.0]\nNODE n4: PrintString [InString=\"Phase 2\"]\nNODE n5: Delay [Duration=3.0]\nNODE n6: PrintString [InString=\"Phase 3\"]\nNODE n7: Delay [Duration=1.0]\nNODE n8: DestroyActor\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nEXEC n3.Completed -> n4.Execute\nEXEC n4.Then -> n5.Execute\nEXEC n5.Completed -> n6.Execute\nEXEC n6.Then -> n7.Execute\nEXEC n7.Completed -> n8.Execute"
+    },
+    {
+      "id": "L03_07",
+      "category": "timer_counter",
+      "instruction": "Create a Blueprint with an integer variable Count starting at 0. Set a looping timer every 1 second. Each time the timer fires, increment Count by 1 and print the count. When Count reaches 5, clear the timer.",
+      "expected_dsl": "BLUEPRINT: BP_CountdownTimer\nPARENT: Actor\nVAR Count: Int = 0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"Tick\", Time=1.0, Looping=true]\nNODE n3: Event_Custom [EventName=Tick]\nNODE n4: VariableGet [VarName=Count]\nNODE n5: AddInt [B=1]\nNODE n6: VariableSet [VarName=Count]\nNODE n7: PrintString\nNODE n8: GreaterThan [B=4]\nNODE n9: Branch\nNODE n10: ClearTimerByFunctionName [FunctionName=\"Tick\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n6.Execute\nDATA n4.Value -> n5.A [Int]\nDATA n5.ReturnValue -> n6.Value [Int]\nEXEC n6.Then -> n7.Execute\nDATA n6.Value -> n7.InString [String]\nEXEC n7.Then -> n9.Execute\nDATA n6.Value -> n8.A [Int]\nDATA n8.ReturnValue -> n9.Condition [Bool]\nEXEC n9.True -> n10.Execute"
+    },
+    {
+      "id": "L03_08",
+      "category": "delay_with_visibility",
+      "instruction": "Create a Blueprint that on BeginPlay hides the actor, waits 5 seconds, then makes it visible.",
+      "expected_dsl": "BLUEPRINT: BP_DelayedAppear\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetActorHiddenInGame [NewHidden=true]\nNODE n3: Delay [Duration=5.0]\nNODE n4: SetActorHiddenInGame [NewHidden=false]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nEXEC n3.Completed -> n4.Execute"
+    },
+    {
+      "id": "L03_09",
+      "category": "timer_toggle",
+      "instruction": "Create a Blueprint where pressing Interact toggles a timer on and off. Use a boolean variable TimerRunning to track state.",
+      "expected_dsl": "BLUEPRINT: BP_ToggleTimer\nPARENT: Actor\nVAR TimerRunning: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Interact\"]\nNODE n2: VariableGet [VarName=TimerRunning]\nNODE n3: Branch\nNODE n4: ClearTimerByFunctionName [FunctionName=\"DoTick\"]\nNODE n5: VariableSet [VarName=TimerRunning]\nNODE n6: SetTimerByFunctionName [FunctionName=\"DoTick\", Time=1.0, Looping=true]\nNODE n7: VariableSet [VarName=TimerRunning]\nNODE n8: Event_Custom [EventName=DoTick]\nNODE n9: PrintString [InString=\"Tick\"]\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n4.Execute\nEXEC n4.Then -> n5.Execute\nDATA false -> n5.Value [Bool]\nEXEC n3.False -> n6.Execute\nEXEC n6.Then -> n7.Execute\nDATA true -> n7.Value [Bool]\nEXEC n8.Then -> n9.Execute"
+    },
+    {
+      "id": "L03_10",
+      "category": "delay_overlap",
+      "instruction": "Create a Blueprint that when overlapped, prints Entered, waits 2 seconds, then prints Welcome. Use a DoOnce so this only happens the first time.",
+      "expected_dsl": "BLUEPRINT: BP_DelayedWelcome\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: DoOnce\nNODE n3: PrintString [InString=\"Entered\"]\nNODE n4: Delay [Duration=2.0]\nNODE n5: PrintString [InString=\"Welcome\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n4.Completed -> n5.Execute"
+    },
+    {
+      "id": "L03_11",
+      "category": "timer_spawner",
+      "instruction": "Create a Blueprint that on BeginPlay sets a looping timer every 3 seconds. Each time the timer fires, spawn an actor of class BP_Coin at the actor's location.",
+      "expected_dsl": "BLUEPRINT: BP_CoinSpawner\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"SpawnCoin\", Time=3.0, Looping=true]\nNODE n3: Event_Custom [EventName=SpawnCoin]\nNODE n4: GetActorLocation\nNODE n5: SpawnActorFromClass [ActorClass=BP_Coin]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n5.Execute\nDATA n4.ReturnValue -> n5.SpawnTransform [Transform]"
+    },
+    {
+      "id": "L03_12",
+      "category": "delay_chain_branch",
+      "instruction": "Create a Blueprint that on BeginPlay checks a boolean IsFast. If true, wait 1 second then print Done. If false, wait 5 seconds then print Done.",
+      "expected_dsl": "BLUEPRINT: BP_ConditionalDelay\nPARENT: Actor\nVAR IsFast: Bool = true\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=IsFast]\nNODE n3: Branch\nNODE n4: Delay [Duration=1.0]\nNODE n5: Delay [Duration=5.0]\nNODE n6: PrintString [InString=\"Done\"]\nNODE n7: PrintString [InString=\"Done\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n4.Execute\nEXEC n3.False -> n5.Execute\nEXEC n4.Completed -> n6.Execute\nEXEC n5.Completed -> n7.Execute"
+    },
+    {
+      "id": "L03_13",
+      "category": "timer_health_regen",
+      "instruction": "Create a Blueprint with a float variable Health at 50.0. On BeginPlay start a looping timer every 2 seconds. Each tick add 5 to Health and print the value. When Health reaches 100 or more, clear the timer and print Full Health.",
+      "expected_dsl": "BLUEPRINT: BP_HealthRegen\nPARENT: Actor\nVAR Health: Float = 50.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"Regen\", Time=2.0, Looping=true]\nNODE n3: Event_Custom [EventName=Regen]\nNODE n4: VariableGet [VarName=Health]\nNODE n5: AddFloat [B=5.0]\nNODE n6: VariableSet [VarName=Health]\nNODE n7: PrintString\nNODE n8: GreaterThan [B=99.9]\nNODE n9: Branch\nNODE n10: ClearTimerByFunctionName [FunctionName=\"Regen\"]\nNODE n11: PrintString [InString=\"Full Health\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n6.Execute\nDATA n4.Value -> n5.A [Float]\nDATA n5.ReturnValue -> n6.Value [Float]\nEXEC n6.Then -> n7.Execute\nDATA n6.Value -> n7.InString [String]\nEXEC n7.Then -> n9.Execute\nDATA n6.Value -> n8.A [Float]\nDATA n8.ReturnValue -> n9.Condition [Bool]\nEXEC n9.True -> n10.Execute\nEXEC n10.Then -> n11.Execute"
+    },
+    {
+      "id": "L03_14",
+      "category": "retriggerable_interaction",
+      "instruction": "Create a Blueprint that when the player presses Interact, prints Action then starts a retriggerable delay of 2 seconds. When the delay completes print Idle. Each press resets the delay.",
+      "expected_dsl": "BLUEPRINT: BP_IdleDetector\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Interact\"]\nNODE n2: PrintString [InString=\"Action\"]\nNODE n3: RetriggerableDelay [Duration=2.0]\nNODE n4: PrintString [InString=\"Idle\"]\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.Then -> n3.Execute\nEXEC n3.Completed -> n4.Execute"
+    },
+    {
+      "id": "L03_15",
+      "category": "timer_with_sound",
+      "instruction": "Create a Blueprint that on BeginPlay starts a looping timer every 4 seconds. Each time the timer fires, play a sound at the actor's location.",
+      "expected_dsl": "BLUEPRINT: BP_RepeatingSound\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"PlayBeep\", Time=4.0, Looping=true]\nNODE n3: Event_Custom [EventName=PlayBeep]\nNODE n4: GetActorLocation\nNODE n5: PlaySoundAtLocation [Sound=BeepSound]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n5.Execute\nDATA n4.ReturnValue -> n5.Location [Vector]"
+    },
+    {
+      "id": "L03_16",
+      "category": "delay_destroy_sequence",
+      "instruction": "Create a Blueprint that on BeginPlay uses a Sequence node. The first output prints Spawned. The second output waits 10 seconds then calls DestroyActor.",
+      "expected_dsl": "BLUEPRINT: BP_TimedLife\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Sequence\nNODE n3: PrintString [InString=\"Spawned\"]\nNODE n4: Delay [Duration=10.0]\nNODE n5: DestroyActor\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then_0 -> n3.Execute\nEXEC n2.Then_1 -> n4.Execute\nEXEC n4.Completed -> n5.Execute"
+    },
+    {
+      "id": "L03_17",
+      "category": "timer_with_gate",
+      "instruction": "Create a Blueprint with a Gate node. On BeginPlay, open the gate and start a looping timer. The timer enters the gate. The gate exit prints Pulse. Pressing Stop closes the gate.",
+      "expected_dsl": "BLUEPRINT: BP_GatedTimer\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Gate\nNODE n3: SetTimerByFunctionName [FunctionName=\"TimerTick\", Time=1.0, Looping=true]\nNODE n4: Event_Custom [EventName=TimerTick]\nNODE n5: PrintString [InString=\"Pulse\"]\nNODE n6: Event_InputAction [ActionName=\"Stop\"]\nEXEC n1.Then -> n2.Open\nEXEC n1.Then -> n3.Execute\nEXEC n4.Then -> n2.Enter\nEXEC n2.Exit -> n5.Execute\nEXEC n6.Pressed -> n2.Close"
+    },
+    {
+      "id": "L03_18",
+      "category": "delay_flipflop",
+      "instruction": "Create a Blueprint where pressing Interact uses a FlipFlop. On the A output, wait 1 second then print On. On the B output, wait 1 second then print Off.",
+      "expected_dsl": "BLUEPRINT: BP_DelayedToggle\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Interact\"]\nNODE n2: FlipFlop\nNODE n3: Delay [Duration=1.0]\nNODE n4: PrintString [InString=\"On\"]\nNODE n5: Delay [Duration=1.0]\nNODE n6: PrintString [InString=\"Off\"]\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.A -> n3.Execute\nEXEC n3.Completed -> n4.Execute\nEXEC n2.B -> n5.Execute\nEXEC n5.Completed -> n6.Execute"
+    },
+    {
+      "id": "L03_19",
+      "category": "timer_overlap_clear",
+      "instruction": "Create a Blueprint that starts a 5-second self-destruct timer on BeginPlay. If the player overlaps the actor before the timer fires, clear the timer and print Saved.",
+      "expected_dsl": "BLUEPRINT: BP_DefuseBomb\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"Explode\", Time=5.0, Looping=false]\nNODE n3: Event_Custom [EventName=Explode]\nNODE n4: DestroyActor\nNODE n5: Event_ActorBeginOverlap\nNODE n6: ClearTimerByFunctionName [FunctionName=\"Explode\"]\nNODE n7: PrintString [InString=\"Saved\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n5.Then -> n6.Execute\nEXEC n6.Then -> n7.Execute"
+    },
+    {
+      "id": "L03_20",
+      "category": "delay_multi_event",
+      "instruction": "Create a Blueprint that on BeginPlay prints Initializing and waits 3 seconds then prints Ready. On Tick prints Running. On EndPlay prints Shutting Down.",
+      "expected_dsl": "BLUEPRINT: BP_LifecycleDelayed\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: PrintString [InString=\"Initializing\"]\nNODE n3: Delay [Duration=3.0]\nNODE n4: PrintString [InString=\"Ready\"]\nNODE n5: Event_Tick\nNODE n6: PrintString [InString=\"Running\"]\nNODE n7: Event_EndPlay\nNODE n8: PrintString [InString=\"Shutting Down\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nEXEC n3.Completed -> n4.Execute\nEXEC n5.Then -> n6.Execute\nEXEC n7.Then -> n8.Execute"
+    }
+  ]
+}

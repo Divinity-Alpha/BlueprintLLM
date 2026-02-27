@@ -34,6 +34,12 @@ $LogDir      = "$ProjectRoot\logs"
 # --- GPU pinning: use only GPU 0 (training GPU) ---
 $env:CUDA_VISIBLE_DEVICES = "0"
 
+# --- CUDA JIT cache: persist compiled kernels across runs ---
+$cudaCache = "$ProjectRoot\.cuda_cache"
+if (-not (Test-Path $cudaCache)) { New-Item -ItemType Directory -Path $cudaCache -Force | Out-Null }
+$env:CUDA_CACHE_PATH = $cudaCache
+$env:CUDA_CACHE_MAXSIZE = "4294967296"
+
 # --- Ensure log directory exists ---
 if (-not (Test-Path $LogDir)) {
     New-Item -ItemType Directory -Path $LogDir -Force | Out-Null

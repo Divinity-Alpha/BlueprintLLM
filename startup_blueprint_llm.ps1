@@ -25,6 +25,12 @@ $LogFile     = "$ProjectRoot\logs\startup_$(Get-Date -Format 'yyyyMMdd_HHmmss').
 # GPU pinning: use only GPU 0 (training GPU)
 $env:CUDA_VISIBLE_DEVICES = "0"
 
+# CUDA JIT cache: persist compiled kernels across runs
+$cudaCache = "$ProjectRoot\.cuda_cache"
+if (-not (Test-Path $cudaCache)) { New-Item -ItemType Directory -Path $cudaCache -Force | Out-Null }
+$env:CUDA_CACHE_PATH = $cudaCache
+$env:CUDA_CACHE_MAXSIZE = "4294967296"
+
 function Log($msg) {
     $line = "[$(Get-Date -Format 'HH:mm:ss')] $msg"
     Write-Host $line
@@ -219,6 +225,23 @@ if ($allGood) {
 } else {
     Log "  SOME CHECKS FAILED - Review [FAIL] items above"
     Log "============================================"
+}
+
+# --- Auto-start dashboard server ---
+if ($allGood) {
+    $pidFile = "$ProjectRoot\logs\dashboard_server.pid"
+    $dashRunning = $false
+    if (Test-Path $pidFile) {
+        $dashPid = [int](Get-Content $pidFile -Raw).Trim()
+        $proc = Get-Process -Id $dashPid -ErrorAction SilentlyContinue
+        if ($proc) { $dashRunning = $true }
+    }
+    if (-not $dashRunning) {
+        & $VenvPython "$ProjectRoot\serve_dashboard.py" --background
+        Log "[OK] Dashboard server started on http://localhost:8080"
+    } else {
+        Log "[OK] Dashboard server already running (PID $dashPid)"
+    }
 }
 
 # --- Auto-process pending exports ---

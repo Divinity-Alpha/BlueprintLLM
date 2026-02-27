@@ -1,7 +1,7 @@
 {
-  "last_run": "2026-02-22T14:00:02.837522",
-  "last_training_data_hash": "4cc7d21000d801d5",
-  "last_model_version": 1,
+  "last_run": "2026-02-27T08:41:10.828611",
+  "last_training_data_hash": "df7a69444ad7ab07",
+  "last_model_version": 3,
   "runs": [
     {
       "timestamp": "2026-02-21T07:11:04.682951",
@@ -292,6 +292,30 @@
       "version": 1,
       "errors": 0,
       "eval": null
+    },
+    {
+      "timestamp": "2026-02-27T00:00:51.899636",
+      "duration": 29991,
+      "version": 2,
+      "errors": 31,
+      "eval": {
+        "total": 11,
+        "passed": 9,
+        "avg_score": 0.775,
+        "avg_time": 221.05
+      }
+    },
+    {
+      "timestamp": "2026-02-27T08:41:10.828611",
+      "duration": 17660,
+      "version": 3,
+      "errors": 29,
+      "eval": {
+        "total": 11,
+        "passed": 10,
+        "avg_score": 0.879,
+        "avg_time": 68.33
+      }
     }
   ]
 }

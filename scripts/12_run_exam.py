@@ -33,8 +33,9 @@ plog = _get_pipeline_logger(step_prefix="6")
 # Per-prompt generation timeout (seconds)
 GENERATE_TIMEOUT = 300
 
-# Must match TRAINING_SYSTEM_PROMPT in 04_train_blueprint_lora.py
-SYSTEM_PROMPT = """You are a Blueprint DSL generator for Unreal Engine 5.
+# Fallback system prompt — only used when model directory has no system_prompt.txt.
+# Prefer loading the saved prompt from the model so exam matches training.
+DEFAULT_SYSTEM_PROMPT = """You are a Blueprint DSL generator for Unreal Engine 5.
 Given a description, output ONLY valid Blueprint DSL code.
 Use this exact format:
 
@@ -47,16 +48,26 @@ DATA n1.Pin -> n2.Pin [Type]
 
 Output ONLY the DSL. No explanations."""
 
+# Global — set during load_model() from the model's saved prompt
+SYSTEM_PROMPT = DEFAULT_SYSTEM_PROMPT
+
 
 def load_model(model_path, base_model=None):
-    """Load the fine-tuned model."""
+    """Load the fine-tuned model and its system prompt.
+
+    Loads system_prompt.txt from the model directory so the exam uses
+    the same prompt the model was trained with.
+    """
+    global SYSTEM_PROMPT
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
     from peft import PeftModel
 
+    model_dir = Path(model_path)
+
     # Auto-detect base model
     if base_model is None:
-        adapter_config = Path(model_path) / "adapter_config.json"
+        adapter_config = model_dir / "adapter_config.json"
         if adapter_config.exists():
             with open(adapter_config) as f:
                 ac = json.load(f)
@@ -64,27 +75,42 @@ def load_model(model_path, base_model=None):
         else:
             base_model = "meta-llama/Llama-3.2-3B"
 
+    # Load system prompt from model directory (matches training)
+    prompt_path = model_dir / "system_prompt.txt"
+    if not prompt_path.exists():
+        prompt_path = model_dir.parent / "system_prompt.txt"
+    if prompt_path.exists():
+        SYSTEM_PROMPT = prompt_path.read_text(encoding="utf-8").strip()
+        print(f"Loaded system prompt from {prompt_path} ({len(SYSTEM_PROMPT):,} chars)")
+    else:
+        SYSTEM_PROMPT = DEFAULT_SYSTEM_PROMPT
+        print(f"WARNING: No system_prompt.txt in {model_dir}, using default prompt")
+
     print(f"Loading base model: {base_model}")
     tokenizer = AutoTokenizer.from_pretrained(base_model)
 
     try:
         from transformers import BitsAndBytesConfig
-        bnb_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_compute_dtype=torch.float16,
-            bnb_4bit_quant_type="nf4",
-        )
+        if "70b" in base_model.lower():
+            bnb_config = BitsAndBytesConfig(load_in_8bit=True)
+        else:
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_quant_type="nf4",
+            )
         model = AutoModelForCausalLM.from_pretrained(
             base_model,
             quantization_config=bnb_config,
             device_map={"": 0},
-            torch_dtype=torch.float16,
+            low_cpu_mem_usage=True,
         )
     except Exception:
         model = AutoModelForCausalLM.from_pretrained(
             base_model,
             device_map={"": 0},
             torch_dtype=torch.float16,
+            low_cpu_mem_usage=True,
         )
 
     print(f"Loading LoRA adapter: {model_path}")

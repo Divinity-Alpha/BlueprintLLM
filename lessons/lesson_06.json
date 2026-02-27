@@ -1,0 +1,128 @@
+{
+  "lesson_id": "lesson_06",
+  "lesson_name": "While Loops, For Loops, and Iteration",
+  "description": "20 prompts covering WhileLoop, ForLoop, nested iteration, loop+branch, loop+variable patterns. Zero coverage in previous lessons.",
+  "created": "2026-02-27",
+  "prompts": [
+    {
+      "id": "L06_01",
+      "category": "forloop_basic",
+      "instruction": "Create a Blueprint that on BeginPlay runs a ForLoop from 0 to 9 and prints the index each iteration.",
+      "expected_dsl": "BLUEPRINT: BP_ForLoopPrint\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=0, LastIndex=9]\nNODE n3: PrintString\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n3.Execute\nDATA n2.Index -> n3.InString [String]"
+    },
+    {
+      "id": "L06_02",
+      "category": "forloop_spawn",
+      "instruction": "Create a Blueprint that on BeginPlay uses a ForLoop 0 to 4 to spawn 5 actors in a row, each 200 units apart on the X axis.",
+      "expected_dsl": "BLUEPRINT: BP_RowSpawner\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=0, LastIndex=4]\nNODE n3: MultiplyFloat [B=200.0]\nNODE n4: MakeVector [Y=0, Z=0]\nNODE n5: SpawnActorFromClass [ActorClass=BP_Item]\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n5.Execute\nDATA n2.Index -> n3.A [Float]\nDATA n3.ReturnValue -> n4.X [Float]\nDATA n4.ReturnValue -> n5.SpawnTransform [Transform]"
+    },
+    {
+      "id": "L06_03",
+      "category": "forloop_sum",
+      "instruction": "Create a Blueprint with integer Total at 0. On BeginPlay use ForLoop 1 to 10 to sum all numbers. After completion print the total.",
+      "expected_dsl": "BLUEPRINT: BP_SumLoop\nPARENT: Actor\nVAR Total: Int = 0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=1, LastIndex=10]\nNODE n3: VariableGet [VarName=Total]\nNODE n4: AddInt\nNODE n5: VariableSet [VarName=Total]\nNODE n6: VariableGet [VarName=Total]\nNODE n7: PrintString\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n5.Execute\nDATA n3.Value -> n4.A [Int]\nDATA n2.Index -> n4.B [Int]\nDATA n4.ReturnValue -> n5.Value [Int]\nEXEC n2.Completed -> n7.Execute\nDATA n6.Value -> n7.InString [String]"
+    },
+    {
+      "id": "L06_04",
+      "category": "whileloop_basic",
+      "instruction": "Create a Blueprint with integer Count at 0. On BeginPlay use a WhileLoop while Count less than 5 to increment and print Count.",
+      "expected_dsl": "BLUEPRINT: BP_WhileCount\nPARENT: Actor\nVAR Count: Int = 0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: WhileLoop\nNODE n3: VariableGet [VarName=Count]\nNODE n4: LessThan [B=5]\nNODE n5: VariableGet [VarName=Count]\nNODE n6: AddInt [B=1]\nNODE n7: VariableSet [VarName=Count]\nNODE n8: PrintString\nEXEC n1.Then -> n2.Execute\nDATA n3.Value -> n4.A [Int]\nDATA n4.ReturnValue -> n2.Condition [Bool]\nEXEC n2.LoopBody -> n7.Execute\nDATA n5.Value -> n6.A [Int]\nDATA n6.ReturnValue -> n7.Value [Int]\nEXEC n7.Then -> n8.Execute\nDATA n7.Value -> n8.InString [String]"
+    },
+    {
+      "id": "L06_05",
+      "category": "forloop_even",
+      "instruction": "Create a Blueprint that loops 0 to 19. For each index check if even using modulo. If even print the index.",
+      "expected_dsl": "BLUEPRINT: BP_EvenPrinter\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=0, LastIndex=19]\nNODE n3: Modulo [B=2]\nNODE n4: EqualEqual [B=0]\nNODE n5: Branch\nNODE n6: PrintString\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n5.Execute\nDATA n2.Index -> n3.A [Int]\nDATA n3.ReturnValue -> n4.A [Int]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nDATA n2.Index -> n6.InString [String]"
+    },
+    {
+      "id": "L06_06",
+      "category": "foreach_destroy",
+      "instruction": "Create a Blueprint with actor array Targets. On pressing Fire, ForEachLoop destroys all targets then prints All Destroyed.",
+      "expected_dsl": "BLUEPRINT: BP_DestroyAll\nPARENT: Actor\nVAR Targets: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Fire\"]\nNODE n2: VariableGet [VarName=Targets]\nNODE n3: ForEachLoop\nNODE n4: DestroyActor\nNODE n5: PrintString [InString=\"All Destroyed\"]\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n4.Execute\nDATA n3.ArrayElement -> n4.Target [Actor]\nEXEC n3.Completed -> n5.Execute"
+    },
+    {
+      "id": "L06_07",
+      "category": "forloop_grid",
+      "instruction": "Create a Blueprint that on BeginPlay uses two nested ForLoops 0 to 2 to spawn actors in a 3x3 grid with 100 unit spacing.",
+      "expected_dsl": "BLUEPRINT: BP_GridSpawner\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=0, LastIndex=2]\nNODE n3: ForLoop [FirstIndex=0, LastIndex=2]\nNODE n4: MultiplyFloat [B=100.0]\nNODE n5: MultiplyFloat [B=100.0]\nNODE n6: MakeVector [Z=0]\nNODE n7: SpawnActorFromClass [ActorClass=BP_Tile]\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n3.Execute\nEXEC n3.LoopBody -> n7.Execute\nDATA n2.Index -> n4.A [Float]\nDATA n3.Index -> n5.A [Float]\nDATA n4.ReturnValue -> n6.X [Float]\nDATA n5.ReturnValue -> n6.Y [Float]\nDATA n6.ReturnValue -> n7.SpawnTransform [Transform]"
+    },
+    {
+      "id": "L06_08",
+      "category": "forloop_delay_after",
+      "instruction": "Create a Blueprint that on BeginPlay runs ForLoop 1 to 3 printing each index. After the loop waits 2 seconds then prints Done.",
+      "expected_dsl": "BLUEPRINT: BP_LoopThenWait\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=1, LastIndex=3]\nNODE n3: PrintString\nNODE n4: Delay [Duration=2.0]\nNODE n5: PrintString [InString=\"Done\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n3.Execute\nDATA n2.Index -> n3.InString [String]\nEXEC n2.Completed -> n4.Execute\nEXEC n4.Completed -> n5.Execute"
+    },
+    {
+      "id": "L06_09",
+      "category": "foreach_filter",
+      "instruction": "Create a Blueprint with actor array AllActors. On BeginPlay loop through all. For each check distance less than 500 and print name of nearby ones.",
+      "expected_dsl": "BLUEPRINT: BP_NearbyFilter\nPARENT: Actor\nVAR AllActors: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=AllActors]\nNODE n3: ForEachLoop\nNODE n4: GetDistanceTo\nNODE n5: LessThan [B=500.0]\nNODE n6: Branch\nNODE n7: GetDisplayName\nNODE n8: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n6.Execute\nDATA n3.ArrayElement -> n4.OtherActor [Actor]\nDATA n4.ReturnValue -> n5.A [Float]\nDATA n5.ReturnValue -> n6.Condition [Bool]\nEXEC n6.True -> n8.Execute\nDATA n3.ArrayElement -> n7.Target [Actor]\nDATA n7.ReturnValue -> n8.InString [String]"
+    },
+    {
+      "id": "L06_10",
+      "category": "forloop_countdown",
+      "instruction": "Create a Blueprint that on BeginPlay uses ForLoop from 10 down to 1 printing each number. After loop prints Liftoff.",
+      "expected_dsl": "BLUEPRINT: BP_Countdown\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=10, LastIndex=1]\nNODE n3: PrintString\nNODE n4: PrintString [InString=\"Liftoff\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n3.Execute\nDATA n2.Index -> n3.InString [String]\nEXEC n2.Completed -> n4.Execute"
+    },
+    {
+      "id": "L06_11",
+      "category": "foreach_toggle_vis",
+      "instruction": "Create a Blueprint with actor array Lights. On pressing Toggle loop through all and call ToggleVisibility on each.",
+      "expected_dsl": "BLUEPRINT: BP_ToggleLights\nPARENT: Actor\nVAR Lights: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Toggle\"]\nNODE n2: VariableGet [VarName=Lights]\nNODE n3: ForEachLoop\nNODE n4: ToggleVisibility\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n4.Execute\nDATA n3.ArrayElement -> n4.Target [Actor]"
+    },
+    {
+      "id": "L06_12",
+      "category": "whileloop_halving",
+      "instruction": "Create a Blueprint with float Value at 1000. Use WhileLoop to keep halving Value while greater than 1. Print the final value.",
+      "expected_dsl": "BLUEPRINT: BP_HalveLoop\nPARENT: Actor\nVAR Value: Float = 1000.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: WhileLoop\nNODE n3: VariableGet [VarName=Value]\nNODE n4: GreaterThan [B=1.0]\nNODE n5: VariableGet [VarName=Value]\nNODE n6: DivideFloat [B=2.0]\nNODE n7: VariableSet [VarName=Value]\nNODE n8: VariableGet [VarName=Value]\nNODE n9: PrintString\nEXEC n1.Then -> n2.Execute\nDATA n3.Value -> n4.A [Float]\nDATA n4.ReturnValue -> n2.Condition [Bool]\nEXEC n2.LoopBody -> n7.Execute\nDATA n5.Value -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Value [Float]\nEXEC n2.Completed -> n9.Execute\nDATA n8.Value -> n9.InString [String]"
+    },
+    {
+      "id": "L06_13",
+      "category": "forloop_random_spawn",
+      "instruction": "Create a Blueprint that on BeginPlay loops 10 times. Each iteration generates random X and Y within 1000 units and spawns an actor there.",
+      "expected_dsl": "BLUEPRINT: BP_RandomSpawner\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=0, LastIndex=9]\nNODE n3: RandomFloat [Min=-1000, Max=1000]\nNODE n4: RandomFloat [Min=-1000, Max=1000]\nNODE n5: MakeVector [Z=0]\nNODE n6: SpawnActorFromClass [ActorClass=BP_Item]\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n6.Execute\nDATA n3.ReturnValue -> n5.X [Float]\nDATA n4.ReturnValue -> n5.Y [Float]\nDATA n5.ReturnValue -> n6.SpawnTransform [Transform]"
+    },
+    {
+      "id": "L06_14",
+      "category": "foreach_max",
+      "instruction": "Create a Blueprint with float array Values and float MaxVal at 0. Loop through Values tracking maximum. After loop print max.",
+      "expected_dsl": "BLUEPRINT: BP_FindMax\nPARENT: Actor\nVAR Values: Array<Float>\nVAR MaxVal: Float = 0.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Values]\nNODE n3: ForEachLoop\nNODE n4: VariableGet [VarName=MaxVal]\nNODE n5: Max\nNODE n6: VariableSet [VarName=MaxVal]\nNODE n7: VariableGet [VarName=MaxVal]\nNODE n8: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n6.Execute\nDATA n3.ArrayElement -> n5.A [Float]\nDATA n4.Value -> n5.B [Float]\nDATA n5.ReturnValue -> n6.Value [Float]\nEXEC n3.Completed -> n8.Execute\nDATA n7.Value -> n8.InString [String]"
+    },
+    {
+      "id": "L06_15",
+      "category": "whileloop_damage",
+      "instruction": "Create a Blueprint with float Health at 100. Use WhileLoop while Health > 0. Each iteration subtract random 1-20 and print Health.",
+      "expected_dsl": "BLUEPRINT: BP_DamageLoop\nPARENT: Actor\nVAR Health: Float = 100.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: WhileLoop\nNODE n3: VariableGet [VarName=Health]\nNODE n4: GreaterThan [B=0.0]\nNODE n5: VariableGet [VarName=Health]\nNODE n6: RandomFloat [Min=1, Max=20]\nNODE n7: SubtractFloat\nNODE n8: VariableSet [VarName=Health]\nNODE n9: PrintString\nEXEC n1.Then -> n2.Execute\nDATA n3.Value -> n4.A [Float]\nDATA n4.ReturnValue -> n2.Condition [Bool]\nEXEC n2.LoopBody -> n8.Execute\nDATA n5.Value -> n7.A [Float]\nDATA n6.ReturnValue -> n7.B [Float]\nDATA n7.ReturnValue -> n8.Value [Float]\nEXEC n8.Then -> n9.Execute\nDATA n8.Value -> n9.InString [String]"
+    },
+    {
+      "id": "L06_16",
+      "category": "foreach_closest",
+      "instruction": "Create a Blueprint with actor array Targets. Loop through finding the closest one. Print the closest actor name.",
+      "expected_dsl": "BLUEPRINT: BP_FindClosest\nPARENT: Actor\nVAR Targets: Array<Actor>\nVAR ClosestDist: Float = 999999.0\nVAR ClosestActor: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Targets]\nNODE n3: ForEachLoop\nNODE n4: GetDistanceTo\nNODE n5: VariableGet [VarName=ClosestDist]\nNODE n6: LessThan\nNODE n7: Branch\nNODE n8: VariableSet [VarName=ClosestDist]\nNODE n9: VariableSet [VarName=ClosestActor]\nNODE n10: VariableGet [VarName=ClosestActor]\nNODE n11: GetDisplayName\nNODE n12: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n7.Execute\nDATA n3.ArrayElement -> n4.OtherActor [Actor]\nDATA n4.ReturnValue -> n6.A [Float]\nDATA n5.Value -> n6.B [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute\nDATA n4.ReturnValue -> n8.Value [Float]\nEXEC n8.Then -> n9.Execute\nDATA n3.ArrayElement -> n9.Value [Actor]\nEXEC n3.Completed -> n12.Execute\nDATA n10.Value -> n11.Target [Actor]\nDATA n11.ReturnValue -> n12.InString [String]"
+    },
+    {
+      "id": "L06_17",
+      "category": "forloop_sequence",
+      "instruction": "Create a Blueprint that on BeginPlay uses Sequence. First output runs ForLoop 0-4 printing each. Second output prints Loop Done.",
+      "expected_dsl": "BLUEPRINT: BP_SequenceLoop\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Sequence\nNODE n3: ForLoop [FirstIndex=0, LastIndex=4]\nNODE n4: PrintString\nNODE n5: PrintString [InString=\"Loop Done\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then_0 -> n3.Execute\nEXEC n3.LoopBody -> n4.Execute\nDATA n3.Index -> n4.InString [String]\nEXEC n2.Then_1 -> n5.Execute"
+    },
+    {
+      "id": "L06_18",
+      "category": "foreach_doonce",
+      "instruction": "Create a Blueprint with string array Messages. On overlap use DoOnce then ForEachLoop to print all messages once.",
+      "expected_dsl": "BLUEPRINT: BP_OneTimeMessages\nPARENT: Actor\nVAR Messages: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: DoOnce\nNODE n3: VariableGet [VarName=Messages]\nNODE n4: ForEachLoop\nNODE n5: PrintString\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n4.Execute\nDATA n3.Value -> n4.Array [Array]\nEXEC n4.LoopBody -> n5.Execute\nDATA n4.ArrayElement -> n5.InString [String]"
+    },
+    {
+      "id": "L06_19",
+      "category": "forloop_health_bars",
+      "instruction": "Create a Blueprint with actor array Enemies. On BeginPlay loop through enemies and print each one's display name.",
+      "expected_dsl": "BLUEPRINT: BP_ListEnemies\nPARENT: Actor\nVAR Enemies: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Enemies]\nNODE n3: ForEachLoop\nNODE n4: GetDisplayName\nNODE n5: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n5.Execute\nDATA n3.ArrayElement -> n4.Target [Actor]\nDATA n4.ReturnValue -> n5.InString [String]"
+    },
+    {
+      "id": "L06_20",
+      "category": "forloop_complete",
+      "instruction": "Create a Blueprint that on BeginPlay runs ForLoop 0 to 9. Prints the index. After completion prints Total: 10 and destroys self.",
+      "expected_dsl": "BLUEPRINT: BP_CountAndDestroy\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=0, LastIndex=9]\nNODE n3: PrintString\nNODE n4: PrintString [InString=\"Total: 10\"]\nNODE n5: DestroyActor\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n3.Execute\nDATA n2.Index -> n3.InString [String]\nEXEC n2.Completed -> n4.Execute\nEXEC n4.Then -> n5.Execute"
+    }
+  ]
+}

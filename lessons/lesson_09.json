@@ -1,0 +1,128 @@
+{
+  "lesson_id": "lesson_09",
+  "lesson_name": "Nested Branches and Switch Patterns",
+  "description": "20 prompts covering nested if/else, deep decision trees, Switch on Int/String/Enum, multi-condition logic, combined branch patterns.",
+  "created": "2026-02-27",
+  "prompts": [
+    {
+      "id": "L09_01",
+      "category": "nested_branch_basic",
+      "instruction": "Create a Blueprint with bool IsAlive and bool HasWeapon. On BeginPlay check IsAlive. If true, check HasWeapon. If has weapon print Armed. If no weapon print Unarmed. If not alive print Dead.",
+      "expected_dsl": "BLUEPRINT: BP_NestedCheck\nPARENT: Actor\nVAR IsAlive: Bool = true\nVAR HasWeapon: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=IsAlive]\nNODE n3: Branch\nNODE n4: VariableGet [VarName=HasWeapon]\nNODE n5: Branch\nNODE n6: PrintString [InString=\"Armed\"]\nNODE n7: PrintString [InString=\"Unarmed\"]\nNODE n8: PrintString [InString=\"Dead\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n5.Execute\nDATA n4.Value -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n7.Execute\nEXEC n3.False -> n8.Execute"
+    },
+    {
+      "id": "L09_02",
+      "category": "nested_branch_three",
+      "instruction": "Create a Blueprint with float Health. On BeginPlay if Health > 75 print Healthy. Else if Health > 25 print Wounded. Else print Critical.",
+      "expected_dsl": "BLUEPRINT: BP_HealthStatus\nPARENT: Actor\nVAR Health: Float = 50.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Health]\nNODE n3: GreaterThan [B=75.0]\nNODE n4: Branch\nNODE n5: PrintString [InString=\"Healthy\"]\nNODE n6: GreaterThan [B=25.0]\nNODE n7: Branch\nNODE n8: PrintString [InString=\"Wounded\"]\nNODE n9: PrintString [InString=\"Critical\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.A [Float]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nEXEC n4.False -> n7.Execute\nDATA n2.Value -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute\nEXEC n7.False -> n9.Execute"
+    },
+    {
+      "id": "L09_03",
+      "category": "switch_int",
+      "instruction": "Create a Blueprint with integer Level. On BeginPlay use Switch on Int. Case 1 prints Easy. Case 2 prints Medium. Case 3 prints Hard. Default prints Unknown.",
+      "expected_dsl": "BLUEPRINT: BP_DifficultySwitch\nPARENT: Actor\nVAR Level: Int = 1\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Level]\nNODE n3: SwitchOnInt\nNODE n4: PrintString [InString=\"Easy\"]\nNODE n5: PrintString [InString=\"Medium\"]\nNODE n6: PrintString [InString=\"Hard\"]\nNODE n7: PrintString [InString=\"Unknown\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Selection [Int]\nEXEC n3.Case_1 -> n4.Execute\nEXEC n3.Case_2 -> n5.Execute\nEXEC n3.Case_3 -> n6.Execute\nEXEC n3.Default -> n7.Execute"
+    },
+    {
+      "id": "L09_04",
+      "category": "switch_string",
+      "instruction": "Create a Blueprint with string Command. On BeginPlay use Switch on String. If Attack print Attacking. If Defend print Defending. If Heal print Healing. Default print Idle.",
+      "expected_dsl": "BLUEPRINT: BP_CommandSwitch\nPARENT: Actor\nVAR Command: String = \"Attack\"\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Command]\nNODE n3: SwitchOnString\nNODE n4: PrintString [InString=\"Attacking\"]\nNODE n5: PrintString [InString=\"Defending\"]\nNODE n6: PrintString [InString=\"Healing\"]\nNODE n7: PrintString [InString=\"Idle\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Selection [String]\nEXEC n3.Case_Attack -> n4.Execute\nEXEC n3.Case_Defend -> n5.Execute\nEXEC n3.Case_Heal -> n6.Execute\nEXEC n3.Default -> n7.Execute"
+    },
+    {
+      "id": "L09_05",
+      "category": "branch_and_or",
+      "instruction": "Create a Blueprint with bool HasKey and bool DoorUnlocked. On overlap, if HasKey AND DoorUnlocked print Enter. Else print Blocked.",
+      "expected_dsl": "BLUEPRINT: BP_DoorCheck\nPARENT: Actor\nVAR HasKey: Bool = true\nVAR DoorUnlocked: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: VariableGet [VarName=HasKey]\nNODE n3: VariableGet [VarName=DoorUnlocked]\nNODE n4: BooleanAND\nNODE n5: Branch\nNODE n6: PrintString [InString=\"Enter\"]\nNODE n7: PrintString [InString=\"Blocked\"]\nEXEC n1.Then -> n5.Execute\nDATA n2.Value -> n4.A [Bool]\nDATA n3.Value -> n4.B [Bool]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n7.Execute"
+    },
+    {
+      "id": "L09_06",
+      "category": "branch_not",
+      "instruction": "Create a Blueprint with bool IsInvisible. On Tick, if NOT IsInvisible, print Visible.",
+      "expected_dsl": "BLUEPRINT: BP_VisCheck\nPARENT: Actor\nVAR IsInvisible: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: VariableGet [VarName=IsInvisible]\nNODE n3: NOT\nNODE n4: Branch\nNODE n5: PrintString [InString=\"Visible\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.Input [Bool]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute"
+    },
+    {
+      "id": "L09_07",
+      "category": "nested_overlap_cast",
+      "instruction": "Create a Blueprint that on overlap casts to Character. If cast succeeds check distance less than 200. If close print Too Close. If far print In Range. If cast fails print Not Player.",
+      "expected_dsl": "BLUEPRINT: BP_RangeCheck\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: GetDistanceTo\nNODE n4: LessThan [B=200.0]\nNODE n5: Branch\nNODE n6: PrintString [InString=\"Too Close\"]\nNODE n7: PrintString [InString=\"In Range\"]\nNODE n8: PrintString [InString=\"Not Player\"]\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n5.Execute\nDATA n2.AsCharacter -> n3.OtherActor [Actor]\nDATA n3.ReturnValue -> n4.A [Float]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n7.Execute\nEXEC n2.CastFailed -> n8.Execute"
+    },
+    {
+      "id": "L09_08",
+      "category": "branch_compare_vars",
+      "instruction": "Create a Blueprint with float PlayerHealth and float EnemyHealth. On BeginPlay if PlayerHealth greater than EnemyHealth print Advantage. Else print Disadvantage.",
+      "expected_dsl": "BLUEPRINT: BP_HealthCompare\nPARENT: Actor\nVAR PlayerHealth: Float = 80.0\nVAR EnemyHealth: Float = 60.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=PlayerHealth]\nNODE n3: VariableGet [VarName=EnemyHealth]\nNODE n4: GreaterThan\nNODE n5: Branch\nNODE n6: PrintString [InString=\"Advantage\"]\nNODE n7: PrintString [InString=\"Disadvantage\"]\nEXEC n1.Then -> n5.Execute\nDATA n2.Value -> n4.A [Float]\nDATA n3.Value -> n4.B [Float]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n7.Execute"
+    },
+    {
+      "id": "L09_09",
+      "category": "switch_int_action",
+      "instruction": "Create a Blueprint with integer WeaponSlot. On pressing Fire, switch on WeaponSlot. Case 1 prints Sword. Case 2 prints Bow. Case 3 prints Staff.",
+      "expected_dsl": "BLUEPRINT: BP_WeaponSelect\nPARENT: Actor\nVAR WeaponSlot: Int = 1\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Fire\"]\nNODE n2: VariableGet [VarName=WeaponSlot]\nNODE n3: SwitchOnInt\nNODE n4: PrintString [InString=\"Sword\"]\nNODE n5: PrintString [InString=\"Bow\"]\nNODE n6: PrintString [InString=\"Staff\"]\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Selection [Int]\nEXEC n3.Case_1 -> n4.Execute\nEXEC n3.Case_2 -> n5.Execute\nEXEC n3.Case_3 -> n6.Execute"
+    },
+    {
+      "id": "L09_10",
+      "category": "nested_timer_branch",
+      "instruction": "Create a Blueprint with float Health at 100. Start a looping timer every 2 seconds. Each tick subtract 10. If Health > 50 print OK. Else if Health > 0 print Warning. Else clear timer and print Dead.",
+      "expected_dsl": "BLUEPRINT: BP_HealthDrain\nPARENT: Actor\nVAR Health: Float = 100.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"Drain\", Time=2.0, Looping=true]\nNODE n3: Event_Custom [EventName=Drain]\nNODE n4: VariableGet [VarName=Health]\nNODE n5: SubtractFloat [B=10.0]\nNODE n6: VariableSet [VarName=Health]\nNODE n7: GreaterThan [B=50.0]\nNODE n8: Branch\nNODE n9: PrintString [InString=\"OK\"]\nNODE n10: GreaterThan [B=0.0]\nNODE n11: Branch\nNODE n12: PrintString [InString=\"Warning\"]\nNODE n13: ClearTimerByFunctionName [FunctionName=\"Drain\"]\nNODE n14: PrintString [InString=\"Dead\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n6.Execute\nDATA n4.Value -> n5.A [Float]\nDATA n5.ReturnValue -> n6.Value [Float]\nEXEC n6.Then -> n8.Execute\nDATA n6.Value -> n7.A [Float]\nDATA n7.ReturnValue -> n8.Condition [Bool]\nEXEC n8.True -> n9.Execute\nEXEC n8.False -> n11.Execute\nDATA n6.Value -> n10.A [Float]\nDATA n10.ReturnValue -> n11.Condition [Bool]\nEXEC n11.True -> n12.Execute\nEXEC n11.False -> n13.Execute\nEXEC n13.Then -> n14.Execute"
+    },
+    {
+      "id": "L09_11",
+      "category": "branch_equal",
+      "instruction": "Create a Blueprint with integer Score. On BeginPlay if Score equals 100 print Perfect. Else print Try Again.",
+      "expected_dsl": "BLUEPRINT: BP_ScoreCheck\nPARENT: Actor\nVAR Score: Int = 100\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Score]\nNODE n3: EqualEqual [B=100]\nNODE n4: Branch\nNODE n5: PrintString [InString=\"Perfect\"]\nNODE n6: PrintString [InString=\"Try Again\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.A [Int]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nEXEC n4.False -> n6.Execute"
+    },
+    {
+      "id": "L09_12",
+      "category": "nested_three_vars",
+      "instruction": "Create a Blueprint with bool A, bool B, bool C. On BeginPlay check A. If true check B. If B true check C. If all three true print All True. Each false branch prints the failing variable name.",
+      "expected_dsl": "BLUEPRINT: BP_TripleCheck\nPARENT: Actor\nVAR A: Bool = true\nVAR B: Bool = true\nVAR C: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=A]\nNODE n3: Branch\nNODE n4: VariableGet [VarName=B]\nNODE n5: Branch\nNODE n6: VariableGet [VarName=C]\nNODE n7: Branch\nNODE n8: PrintString [InString=\"All True\"]\nNODE n9: PrintString [InString=\"C Failed\"]\nNODE n10: PrintString [InString=\"B Failed\"]\nNODE n11: PrintString [InString=\"A Failed\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n5.Execute\nDATA n4.Value -> n5.Condition [Bool]\nEXEC n5.True -> n7.Execute\nDATA n6.Value -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute\nEXEC n7.False -> n9.Execute\nEXEC n5.False -> n10.Execute\nEXEC n3.False -> n11.Execute"
+    },
+    {
+      "id": "L09_13",
+      "category": "switch_with_timer",
+      "instruction": "Create a Blueprint with integer Mode. On BeginPlay switch on Mode. Case 1 sets a 1-second looping timer. Case 2 sets a 5-second looping timer. The timer prints Tick.",
+      "expected_dsl": "BLUEPRINT: BP_ModeTimer\nPARENT: Actor\nVAR Mode: Int = 1\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Mode]\nNODE n3: SwitchOnInt\nNODE n4: SetTimerByFunctionName [FunctionName=\"OnTick\", Time=1.0, Looping=true]\nNODE n5: SetTimerByFunctionName [FunctionName=\"OnTick\", Time=5.0, Looping=true]\nNODE n6: Event_Custom [EventName=OnTick]\nNODE n7: PrintString [InString=\"Tick\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Selection [Int]\nEXEC n3.Case_1 -> n4.Execute\nEXEC n3.Case_2 -> n5.Execute\nEXEC n6.Then -> n7.Execute"
+    },
+    {
+      "id": "L09_14",
+      "category": "branch_clamp",
+      "instruction": "Create a Blueprint with float Value. On BeginPlay if Value greater than 100, set to 100. If less than 0, set to 0. Print the final value.",
+      "expected_dsl": "BLUEPRINT: BP_ClampValue\nPARENT: Actor\nVAR Value: Float = 150.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Value]\nNODE n3: GreaterThan [B=100.0]\nNODE n4: Branch\nNODE n5: VariableSet [VarName=Value]\nNODE n6: LessThan [B=0.0]\nNODE n7: Branch\nNODE n8: VariableSet [VarName=Value]\nNODE n9: VariableGet [VarName=Value]\nNODE n10: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.A [Float]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nDATA 100.0 -> n5.Value [Float]\nEXEC n5.Then -> n10.Execute\nEXEC n4.False -> n7.Execute\nDATA n2.Value -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute\nDATA 0.0 -> n8.Value [Float]\nEXEC n8.Then -> n10.Execute\nEXEC n7.False -> n10.Execute\nDATA n9.Value -> n10.InString [String]"
+    },
+    {
+      "id": "L09_15",
+      "category": "branch_or_pattern",
+      "instruction": "Create a Blueprint with bool IsDay and bool HasTorch. On overlap if IsDay OR HasTorch print Can See. Else print Darkness.",
+      "expected_dsl": "BLUEPRINT: BP_VisionCheck\nPARENT: Actor\nVAR IsDay: Bool = false\nVAR HasTorch: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: VariableGet [VarName=IsDay]\nNODE n3: VariableGet [VarName=HasTorch]\nNODE n4: BooleanOR\nNODE n5: Branch\nNODE n6: PrintString [InString=\"Can See\"]\nNODE n7: PrintString [InString=\"Darkness\"]\nEXEC n1.Then -> n5.Execute\nDATA n2.Value -> n4.A [Bool]\nDATA n3.Value -> n4.B [Bool]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n7.Execute"
+    },
+    {
+      "id": "L09_16",
+      "category": "nested_damage_type",
+      "instruction": "Create a Blueprint with string DamageType and float Armor. On AnyDamage if DamageType equals Fire and Armor less than 50 print Burned. If DamageType equals Fire and armor 50+ print Resisted. If not fire print Hit.",
+      "expected_dsl": "BLUEPRINT: BP_DamageResponse\nPARENT: Actor\nVAR Armor: Float = 30.0\nGRAPH: EventGraph\nNODE n1: Event_AnyDamage\nNODE n2: EqualEqual [B=\"Fire\"]\nNODE n3: Branch\nNODE n4: VariableGet [VarName=Armor]\nNODE n5: LessThan [B=50.0]\nNODE n6: Branch\nNODE n7: PrintString [InString=\"Burned\"]\nNODE n8: PrintString [InString=\"Resisted\"]\nNODE n9: PrintString [InString=\"Hit\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.ReturnValue -> n3.Condition [Bool]\nEXEC n3.True -> n6.Execute\nDATA n4.Value -> n5.A [Float]\nDATA n5.ReturnValue -> n6.Condition [Bool]\nEXEC n6.True -> n7.Execute\nEXEC n6.False -> n8.Execute\nEXEC n3.False -> n9.Execute"
+    },
+    {
+      "id": "L09_17",
+      "category": "switch_spawn",
+      "instruction": "Create a Blueprint with integer EnemyType. On BeginPlay switch on EnemyType. Case 1 spawns BP_Goblin. Case 2 spawns BP_Skeleton. Case 3 spawns BP_Dragon. All spawn at actor location.",
+      "expected_dsl": "BLUEPRINT: BP_EnemySpawner\nPARENT: Actor\nVAR EnemyType: Int = 1\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=EnemyType]\nNODE n3: SwitchOnInt\nNODE n4: GetActorLocation\nNODE n5: SpawnActorFromClass [ActorClass=BP_Goblin]\nNODE n6: SpawnActorFromClass [ActorClass=BP_Skeleton]\nNODE n7: SpawnActorFromClass [ActorClass=BP_Dragon]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Selection [Int]\nEXEC n3.Case_1 -> n5.Execute\nEXEC n3.Case_2 -> n6.Execute\nEXEC n3.Case_3 -> n7.Execute\nDATA n4.ReturnValue -> n5.SpawnTransform [Transform]\nDATA n4.ReturnValue -> n6.SpawnTransform [Transform]\nDATA n4.ReturnValue -> n7.SpawnTransform [Transform]"
+    },
+    {
+      "id": "L09_18",
+      "category": "branch_range_check",
+      "instruction": "Create a Blueprint with float Temperature. On BeginPlay if Temperature less than 0 print Freezing. If between 0 and 30 print Normal. If above 30 print Hot.",
+      "expected_dsl": "BLUEPRINT: BP_TempCheck\nPARENT: Actor\nVAR Temperature: Float = 20.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Temperature]\nNODE n3: LessThan [B=0.0]\nNODE n4: Branch\nNODE n5: PrintString [InString=\"Freezing\"]\nNODE n6: GreaterThan [B=30.0]\nNODE n7: Branch\nNODE n8: PrintString [InString=\"Hot\"]\nNODE n9: PrintString [InString=\"Normal\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.A [Float]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nEXEC n4.False -> n7.Execute\nDATA n2.Value -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute\nEXEC n7.False -> n9.Execute"
+    },
+    {
+      "id": "L09_19",
+      "category": "nested_valid_branch",
+      "instruction": "Create a Blueprint with actor variable Target. On Tick check if Target is valid. If valid check distance less than 500. If close print Tracking. If far print Searching. If invalid print No Target.",
+      "expected_dsl": "BLUEPRINT: BP_TargetStatus\nPARENT: Actor\nVAR Target: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: VariableGet [VarName=Target]\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: GetDistanceTo\nNODE n6: LessThan [B=500.0]\nNODE n7: Branch\nNODE n8: PrintString [InString=\"Tracking\"]\nNODE n9: PrintString [InString=\"Searching\"]\nNODE n10: PrintString [InString=\"No Target\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n7.Execute\nDATA n2.Value -> n5.OtherActor [Actor]\nDATA n5.ReturnValue -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute\nEXEC n7.False -> n9.Execute\nEXEC n4.False -> n10.Execute"
+    },
+    {
+      "id": "L09_20",
+      "category": "switch_with_ui",
+      "instruction": "Create a Blueprint with integer Screen. On pressing Menu switch on Screen. Case 0 creates WBP_MainMenu. Case 1 creates WBP_Inventory. Case 2 creates WBP_Map. Add each to viewport.",
+      "expected_dsl": "BLUEPRINT: BP_ScreenSwitch\nPARENT: Actor\nVAR Screen: Int = 0\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Menu\"]\nNODE n2: VariableGet [VarName=Screen]\nNODE n3: SwitchOnInt\nNODE n4: CreateWidget [WidgetClass=WBP_MainMenu]\nNODE n5: AddToViewport\nNODE n6: CreateWidget [WidgetClass=WBP_Inventory]\nNODE n7: AddToViewport\nNODE n8: CreateWidget [WidgetClass=WBP_Map]\nNODE n9: AddToViewport\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Selection [Int]\nEXEC n3.Case_0 -> n4.Execute\nEXEC n4.Then -> n5.Execute\nDATA n4.ReturnValue -> n5.Target [Widget]\nEXEC n3.Case_1 -> n6.Execute\nEXEC n6.Then -> n7.Execute\nDATA n6.ReturnValue -> n7.Target [Widget]\nEXEC n3.Case_2 -> n8.Execute\nEXEC n8.Then -> n9.Execute\nDATA n8.ReturnValue -> n9.Target [Widget]"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Blueprint LLM fine-tunes LLaMA models (3.2-3B or 3.1-8B) using QLoRA to generate Unreal Engine 5 Blueprint code in a custom DSL. The system implements a curriculum-based training loop: raw UE5 clipboard exports are parsed into DSL, used to train LoRA adapters, evaluated via tiered exams, and failures feed back into new lessons for the next training iteration.
+Blueprint LLM fine-tunes LLaMA models using QLoRA to generate Unreal Engine 5 Blueprint code in a custom DSL. The current production model is **Meta-Llama-3.1-70B** with **8-bit quantization** (bitsandbytes) running on an NVIDIA RTX PRO 6000 Blackwell (96 GB VRAM). Smaller models (3.2-3B, 3.1-8B) are also supported. The system implements a curriculum-based training loop: raw UE5 clipboard exports are parsed into DSL, used to train LoRA adapters, evaluated via tiered exams, and failures feed back into new lessons for the next training iteration.
 
 ## Key Commands
 
@@ -115,6 +115,10 @@ The `pipeline_config.json` file at project root configures hardware-specific set
         "base_model": "meta-llama/Meta-Llama-3.1-70B",
         "max_seq_length": 4096
     },
+    "quantization": {
+        "use_8bit": true,
+        "use_4bit": false
+    },
     "lora": { "lora_r": 64, "lora_alpha": 128 },
     "training": {
         "learning_rate": 5e-5,
@@ -122,18 +126,29 @@ The `pipeline_config.json` file at project root configures hardware-specific set
         "gradient_accumulation_steps": 4
     },
     "stall_detection": {
-        "stall_kill_seconds_training": 1800
+        "stall_kill_seconds_training": 10800
     }
 }
 ```
 
 **GPU pinning**: `CUDA_VISIBLE_DEVICES` is set in `pipeline_config.json`, the orchestrator's subprocess env, `run_pipeline.ps1`, and `startup_blueprint_llm.ps1`. This ensures GPU 0 (training GPU) is used consistently, keeping GPU 1 (display) free.
 
+**Dual GPU setup**: The system has two GPUs:
+- GPU 0 (CUDA device 0): NVIDIA RTX PRO 6000 Blackwell (96 GB VRAM, compute)
+- GPU 1 (nvidia-smi index 0): NVIDIA RTX 5070 Ti (16 GB, display)
+Note: `CUDA_VISIBLE_DEVICES=0` maps to the PRO 6000 despite nvidia-smi showing it as index 1.
+
+**Quantization**: The 70B model uses 8-bit quantization (bitsandbytes `load_in_8bit=True`), consuming ~68 GB VRAM plus ~30 GB for gradients/optimizer state. GPTQ (INT4) and AWQ are NOT working due to package version incompatibilities with the Blackwell GPU (sm_120) and current toolchain (torch 2.10.0+cu130, transformers 4.57.6).
+
+**70B training performance**: The first training step takes ~96 minutes (measured) due to CUDA kernel JIT compilation, cuBLAS autotuning, bitsandbytes 8-bit warmup, and gradient checkpointing overhead on Blackwell architecture. This happens every training run, not just once. CUDA JIT kernels are cached to `.cuda_cache/` (via `CUDA_CACHE_PATH`) and `torch.backends.cudnn.benchmark = True` caches cuDNN autotuning within each run — both configured in `04_train_blueprint_lora.py`. The stall detection threshold is set to 10800s (3 hours) to accommodate this. Heartbeats are written at step boundaries.
+
+**Zombie process cleanup**: Failed pipeline runs can leave Python processes consuming all GPU VRAM. Before relaunching, always check `nvidia-smi` and kill zombie processes with `taskkill /F /PID <pid>`.
+
 **Model auto-detection**: If `base_model` is not set in `pipeline_config.json`, the orchestrator detects VRAM and picks: 70B (>=48 GB), 8B (>=12 GB), or 3B (fallback).
 
 ### Training Configuration
 
-Stored per model version at `models/blueprint-lora-vN/training_config.json`. Key settings: QLoRA with 4-bit NF4 quantization, LoRA targeting all attention + MLP projections, gradient checkpointing enabled. The system prompt embeds a full node vocabulary reference (~5660 chars) so the model can use it as a "cheat sheet" rather than memorizing all node types.
+Stored per model version at `models/blueprint-lora-vN/training_config.json`. Key settings: QLoRA with 8-bit quantization (for 70B) or 4-bit NF4 (for smaller models), LoRA targeting all attention + MLP projections, gradient checkpointing enabled. The system prompt embeds a full node vocabulary reference (~5660 chars) so the model can use it as a "cheat sheet" rather than memorizing all node types.
 
 ## DSL Format
 
@@ -344,6 +359,10 @@ Backups are created automatically at these pipeline milestones:
 - **Milestone** backups (train_complete, exam_complete, lesson_merged, manual): kept forever
 - **Scheduled** backups: last 5 kept
 - **Pre-train** backups: last 3 kept
+
+### Mirror to D:\BlueprintLLMBackup
+
+All backups are automatically mirrored to `D:\BlueprintLLMBackup` via `_mirror_to_external()` in `backup_utils.py`. The mirror is non-fatal — if D: is unavailable, the backup proceeds normally with a warning. Retention cleanup also removes mirror copies to keep them in sync. The `--list` command shows mirror status with `[LM]` indicators (L=local, M=mirror).
 
 ### Restore Safety
 

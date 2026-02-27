@@ -6,29 +6,33 @@
     },
     "model": {
         "base_model": "meta-llama/Meta-Llama-3.1-70B",
-        "max_seq_length": 4096
+        "max_seq_length": 1024
+    },
+    "quantization": {
+        "use_8bit": true,
+        "use_4bit": false
     },
     "lora": {
-        "lora_r": 64,
-        "lora_alpha": 128,
+        "lora_r": 32,
+        "lora_alpha": 64,
         "lora_dropout": 0.05
     },
     "training": {
-        "epochs": 3,
-        "batch_size": 2,
-        "gradient_accumulation_steps": 4,
+        "epochs": 2,
+        "batch_size": 1,
+        "gradient_accumulation_steps": 8,
         "learning_rate": 5e-5,
         "warmup_steps": 10,
         "weight_decay": 0.01,
         "max_grad_norm": 0.3,
-        "logging_steps": 10,
+        "logging_steps": 5,
         "save_steps": 100,
         "eval_steps": 100
     },
     "stall_detection": {
         "stall_warn_seconds": 300,
         "stall_kill_seconds": 600,
-        "stall_kill_seconds_training": 1800
+        "stall_kill_seconds_training": 10800
     },
     "synthetic": {
         "synthetic_count": 500

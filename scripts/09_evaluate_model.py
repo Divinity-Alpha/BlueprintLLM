@@ -370,8 +370,23 @@ def load_model(model_path: str, base_model: str = None):
 
     print(f"Loading base: {base_model}")
     tokenizer = AutoTokenizer.from_pretrained(base_model)
+
+    # Use 8-bit for 70B models (Blackwell compat), 4-bit for smaller.
+    # low_cpu_mem_usage=True prevents OOM on 32GB system RAM.
+    from transformers import BitsAndBytesConfig
+    if "70b" in base_model.lower():
+        bnb_config = BitsAndBytesConfig(load_in_8bit=True)
+    else:
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_compute_dtype=torch.float16,
+            bnb_4bit_quant_type="nf4",
+        )
     model = AutoModelForCausalLM.from_pretrained(
-        base_model, device_map="auto", torch_dtype=torch.float16,
+        base_model,
+        quantization_config=bnb_config,
+        device_map={"": 0},
+        low_cpu_mem_usage=True,
     )
 
     print(f"Loading LoRA: {model_path}")

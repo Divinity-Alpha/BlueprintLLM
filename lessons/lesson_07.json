@@ -1,0 +1,128 @@
+{
+  "lesson_id": "lesson_07",
+  "lesson_name": "String Operations and Debug Patterns",
+  "description": "20 prompts covering string formatting, concatenation, PrintString with dynamic values, debug output combining multiple data types.",
+  "created": "2026-02-27",
+  "prompts": [
+    {
+      "id": "L07_01",
+      "category": "string_concat",
+      "instruction": "Create a Blueprint with a string variable PlayerName set to Hero. On BeginPlay print Welcome followed by the player name.",
+      "expected_dsl": "BLUEPRINT: BP_WelcomeName\nPARENT: Actor\nVAR PlayerName: String = \"Hero\"\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=PlayerName]\nNODE n3: Concatenate [A=\"Welcome \"]\nNODE n4: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.B [String]\nDATA n3.ReturnValue -> n4.InString [String]"
+    },
+    {
+      "id": "L07_02",
+      "category": "string_score",
+      "instruction": "Create a Blueprint with an integer variable Score at 0. On overlap add 10 to Score and print Score: followed by the value.",
+      "expected_dsl": "BLUEPRINT: BP_ScoreDisplay\nPARENT: Actor\nVAR Score: Int = 0\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: VariableGet [VarName=Score]\nNODE n3: AddInt [B=10]\nNODE n4: VariableSet [VarName=Score]\nNODE n5: Concatenate [A=\"Score: \"]\nNODE n6: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.A [Int]\nDATA n3.ReturnValue -> n4.Value [Int]\nEXEC n4.Then -> n6.Execute\nDATA n4.Value -> n5.B [String]\nDATA n5.ReturnValue -> n6.InString [String]"
+    },
+    {
+      "id": "L07_03",
+      "category": "string_health",
+      "instruction": "Create a Blueprint with float Health at 100. On AnyDamage subtract damage, print Health: followed by the new value.",
+      "expected_dsl": "BLUEPRINT: BP_HealthDisplay\nPARENT: Actor\nVAR Health: Float = 100.0\nGRAPH: EventGraph\nNODE n1: Event_AnyDamage\nNODE n2: VariableGet [VarName=Health]\nNODE n3: SubtractFloat\nNODE n4: VariableSet [VarName=Health]\nNODE n5: Concatenate [A=\"Health: \"]\nNODE n6: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.A [Float]\nDATA n1.Damage -> n3.B [Float]\nDATA n3.ReturnValue -> n4.Value [Float]\nEXEC n4.Then -> n6.Execute\nDATA n4.Value -> n5.B [String]\nDATA n5.ReturnValue -> n6.InString [String]"
+    },
+    {
+      "id": "L07_04",
+      "category": "debug_location",
+      "instruction": "Create a Blueprint that on Tick gets actor location, breaks it into components, and prints the vector as a string.",
+      "expected_dsl": "BLUEPRINT: BP_LocationDebug\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetActorLocation\nNODE n3: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.ReturnValue -> n3.InString [String]"
+    },
+    {
+      "id": "L07_05",
+      "category": "string_overlap_name",
+      "instruction": "Create a Blueprint that on overlap gets the display name of the overlapping actor and prints Overlapped by: followed by the name.",
+      "expected_dsl": "BLUEPRINT: BP_NameOverlap\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: GetDisplayName\nNODE n3: Concatenate [A=\"Overlapped by: \"]\nNODE n4: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n1.OtherActor -> n2.Target [Actor]\nDATA n2.ReturnValue -> n3.B [String]\nDATA n3.ReturnValue -> n4.InString [String]"
+    },
+    {
+      "id": "L07_06",
+      "category": "debug_distance",
+      "instruction": "Create a Blueprint that on Tick gets distance to the player pawn and prints Distance: followed by the value.",
+      "expected_dsl": "BLUEPRINT: BP_DistDebug\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetPlayerPawn\nNODE n3: GetDistanceTo\nNODE n4: Concatenate [A=\"Distance: \"]\nNODE n5: PrintString\nEXEC n1.Then -> n5.Execute\nDATA n2.ReturnValue -> n3.OtherActor [Actor]\nDATA n3.ReturnValue -> n4.B [String]\nDATA n4.ReturnValue -> n5.InString [String]"
+    },
+    {
+      "id": "L07_07",
+      "category": "string_counter",
+      "instruction": "Create a Blueprint with integer Count at 0. On overlap increment Count and print Overlap Count: followed by the number.",
+      "expected_dsl": "BLUEPRINT: BP_OverlapCounter\nPARENT: Actor\nVAR Count: Int = 0\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: VariableGet [VarName=Count]\nNODE n3: AddInt [B=1]\nNODE n4: VariableSet [VarName=Count]\nNODE n5: Concatenate [A=\"Overlap Count: \"]\nNODE n6: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.A [Int]\nDATA n3.ReturnValue -> n4.Value [Int]\nEXEC n4.Then -> n6.Execute\nDATA n4.Value -> n5.B [String]\nDATA n5.ReturnValue -> n6.InString [String]"
+    },
+    {
+      "id": "L07_08",
+      "category": "debug_fps",
+      "instruction": "Create a Blueprint that on Tick calculates FPS by dividing 1 by DeltaSeconds and prints FPS: followed by the value.",
+      "expected_dsl": "BLUEPRINT: BP_FPSCounter\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: DivideFloat [A=1.0]\nNODE n3: Concatenate [A=\"FPS: \"]\nNODE n4: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n1.DeltaSeconds -> n2.B [Float]\nDATA n2.ReturnValue -> n3.B [String]\nDATA n3.ReturnValue -> n4.InString [String]"
+    },
+    {
+      "id": "L07_09",
+      "category": "string_timer_log",
+      "instruction": "Create a Blueprint that starts a 3-second timer on BeginPlay. Print Timer Started. When it fires print Timer Fired at: followed by game time.",
+      "expected_dsl": "BLUEPRINT: BP_TimerLog\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"OnTimer\", Time=3.0, Looping=false]\nNODE n3: PrintString [InString=\"Timer Started\"]\nNODE n4: Event_Custom [EventName=OnTimer]\nNODE n5: GetGameTimeInSeconds\nNODE n6: Concatenate [A=\"Timer Fired at: \"]\nNODE n7: PrintString\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nEXEC n4.Then -> n7.Execute\nDATA n5.ReturnValue -> n6.B [String]\nDATA n6.ReturnValue -> n7.InString [String]"
+    },
+    {
+      "id": "L07_10",
+      "category": "string_cast_result",
+      "instruction": "Create a Blueprint that on overlap casts to Character. If success print Player: followed by display name. If fail print Not a player.",
+      "expected_dsl": "BLUEPRINT: BP_CastLog\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: GetDisplayName\nNODE n4: Concatenate [A=\"Player: \"]\nNODE n5: PrintString\nNODE n6: PrintString [InString=\"Not a player\"]\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n5.Execute\nDATA n2.AsCharacter -> n3.Target [Actor]\nDATA n3.ReturnValue -> n4.B [String]\nDATA n4.ReturnValue -> n5.InString [String]\nEXEC n2.CastFailed -> n6.Execute"
+    },
+    {
+      "id": "L07_11",
+      "category": "string_multi_var",
+      "instruction": "Create a Blueprint with string Name set to Player and int Level set to 1. On BeginPlay print the name followed by Level: and the number.",
+      "expected_dsl": "BLUEPRINT: BP_PlayerInfo\nPARENT: Actor\nVAR Name: String = \"Player\"\nVAR Level: Int = 1\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Name]\nNODE n3: VariableGet [VarName=Level]\nNODE n4: Concatenate [B=\" Level: \"]\nNODE n5: Concatenate\nNODE n6: PrintString\nEXEC n1.Then -> n6.Execute\nDATA n2.Value -> n4.A [String]\nDATA n3.Value -> n5.B [String]\nDATA n4.ReturnValue -> n5.A [String]\nDATA n5.ReturnValue -> n6.InString [String]"
+    },
+    {
+      "id": "L07_12",
+      "category": "debug_spawn_log",
+      "instruction": "Create a Blueprint that on pressing Fire spawns an actor, gets its location, and prints Spawned at: followed by the location.",
+      "expected_dsl": "BLUEPRINT: BP_SpawnLog\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Fire\"]\nNODE n2: GetActorLocation\nNODE n3: SpawnActorFromClass [ActorClass=BP_Projectile]\nNODE n4: GetActorLocation\nNODE n5: Concatenate [A=\"Spawned at: \"]\nNODE n6: PrintString\nEXEC n1.Pressed -> n3.Execute\nDATA n2.ReturnValue -> n3.SpawnTransform [Transform]\nEXEC n3.Then -> n6.Execute\nDATA n3.ReturnValue -> n4.Target [Actor]\nDATA n4.ReturnValue -> n5.B [String]\nDATA n5.ReturnValue -> n6.InString [String]"
+    },
+    {
+      "id": "L07_13",
+      "category": "string_loop_index",
+      "instruction": "Create a Blueprint that on BeginPlay runs a ForLoop 1 to 5. Each iteration prints Item followed by the index number.",
+      "expected_dsl": "BLUEPRINT: BP_IndexPrinter\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: ForLoop [FirstIndex=1, LastIndex=5]\nNODE n3: Concatenate [A=\"Item \"]\nNODE n4: PrintString\nEXEC n1.Then -> n2.Execute\nEXEC n2.LoopBody -> n4.Execute\nDATA n2.Index -> n3.B [String]\nDATA n3.ReturnValue -> n4.InString [String]"
+    },
+    {
+      "id": "L07_14",
+      "category": "debug_branch_path",
+      "instruction": "Create a Blueprint with bool IsReady. On BeginPlay branch on IsReady. True path prints Path: Ready. False path prints Path: Not Ready.",
+      "expected_dsl": "BLUEPRINT: BP_PathDebug\nPARENT: Actor\nVAR IsReady: Bool = true\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=IsReady]\nNODE n3: Branch\nNODE n4: PrintString [InString=\"Path: Ready\"]\nNODE n5: PrintString [InString=\"Path: Not Ready\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n4.Execute\nEXEC n3.False -> n5.Execute"
+    },
+    {
+      "id": "L07_15",
+      "category": "string_damage_log",
+      "instruction": "Create a Blueprint that on AnyDamage prints Took X damage, Health: Y where X is damage amount and Y is remaining health.",
+      "expected_dsl": "BLUEPRINT: BP_DamageLog\nPARENT: Actor\nVAR Health: Float = 100.0\nGRAPH: EventGraph\nNODE n1: Event_AnyDamage\nNODE n2: VariableGet [VarName=Health]\nNODE n3: SubtractFloat\nNODE n4: VariableSet [VarName=Health]\nNODE n5: Concatenate [A=\"Took \"]\nNODE n6: Concatenate [B=\" damage\"]\nNODE n7: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.A [Float]\nDATA n1.Damage -> n3.B [Float]\nDATA n3.ReturnValue -> n4.Value [Float]\nEXEC n4.Then -> n7.Execute\nDATA n1.Damage -> n5.B [String]\nDATA n5.ReturnValue -> n6.A [String]\nDATA n6.ReturnValue -> n7.InString [String]"
+    },
+    {
+      "id": "L07_16",
+      "category": "debug_array_count",
+      "instruction": "Create a Blueprint with an actor array Items. On BeginPlay print Item Count: followed by the array length.",
+      "expected_dsl": "BLUEPRINT: BP_ArrayCount\nPARENT: Actor\nVAR Items: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Items]\nNODE n3: ArrayLength\nNODE n4: Concatenate [A=\"Item Count: \"]\nNODE n5: PrintString\nEXEC n1.Then -> n5.Execute\nDATA n2.Value -> n3.Array [Array]\nDATA n3.ReturnValue -> n4.B [String]\nDATA n4.ReturnValue -> n5.InString [String]"
+    },
+    {
+      "id": "L07_17",
+      "category": "string_time_display",
+      "instruction": "Create a Blueprint that on BeginPlay gets game time in seconds and prints Game started at: followed by the time.",
+      "expected_dsl": "BLUEPRINT: BP_TimeDisplay\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: GetGameTimeInSeconds\nNODE n3: Concatenate [A=\"Game started at: \"]\nNODE n4: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.ReturnValue -> n3.B [String]\nDATA n3.ReturnValue -> n4.InString [String]"
+    },
+    {
+      "id": "L07_18",
+      "category": "debug_gate_status",
+      "instruction": "Create a Blueprint with a Gate. When the gate opens print Gate: Open. When it closes print Gate: Closed. On Tick enter the gate, exit prints Active.",
+      "expected_dsl": "BLUEPRINT: BP_GateDebug\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Open\"]\nNODE n2: Gate\nNODE n3: PrintString [InString=\"Gate: Open\"]\nNODE n4: Event_InputAction [ActionName=\"Close\"]\nNODE n5: PrintString [InString=\"Gate: Closed\"]\nNODE n6: Event_Tick\nNODE n7: PrintString [InString=\"Active\"]\nEXEC n1.Pressed -> n2.Open\nEXEC n1.Pressed -> n3.Execute\nEXEC n4.Pressed -> n2.Close\nEXEC n4.Pressed -> n5.Execute\nEXEC n6.Then -> n2.Enter\nEXEC n2.Exit -> n7.Execute"
+    },
+    {
+      "id": "L07_19",
+      "category": "string_random_log",
+      "instruction": "Create a Blueprint that on BeginPlay generates a random integer 1-100 and prints Random number: followed by the value.",
+      "expected_dsl": "BLUEPRINT: BP_RandomLog\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: RandomInteger [Min=1, Max=100]\nNODE n3: Concatenate [A=\"Random number: \"]\nNODE n4: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.ReturnValue -> n3.B [String]\nDATA n3.ReturnValue -> n4.InString [String]"
+    },
+    {
+      "id": "L07_20",
+      "category": "debug_lifecycle",
+      "instruction": "Create a Blueprint that on BeginPlay prints BEGIN at: with game time. On EndPlay prints END at: with game time.",
+      "expected_dsl": "BLUEPRINT: BP_LifecycleLog\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: GetGameTimeInSeconds\nNODE n3: Concatenate [A=\"BEGIN at: \"]\nNODE n4: PrintString\nNODE n5: Event_EndPlay\nNODE n6: GetGameTimeInSeconds\nNODE n7: Concatenate [A=\"END at: \"]\nNODE n8: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.ReturnValue -> n3.B [String]\nDATA n3.ReturnValue -> n4.InString [String]\nEXEC n5.Then -> n8.Execute\nDATA n6.ReturnValue -> n7.B [String]\nDATA n7.ReturnValue -> n8.InString [String]"
+    }
+  ]
+}

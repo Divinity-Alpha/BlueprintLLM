@@ -1,0 +1,128 @@
+{
+  "lesson_id": "lesson_04",
+  "lesson_name": "Physics and Movement",
+  "description": "20 prompts covering AddForce, AddImpulse, SetSimulatePhysics, SetActorLocation, AddActorLocalOffset, velocity, movement patterns.",
+  "created": "2026-02-26",
+  "prompts": [
+    {
+      "id": "L04_01",
+      "category": "physics_impulse",
+      "instruction": "Create a Blueprint that on BeginPlay adds an upward impulse of 1000 units to launch the actor into the air.",
+      "expected_dsl": "BLUEPRINT: BP_Launcher\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: AddImpulse [Impulse=(X=0,Y=0,Z=1000)]\nEXEC n1.Then -> n2.Execute"
+    },
+    {
+      "id": "L04_02",
+      "category": "physics_force",
+      "instruction": "Create a Blueprint that on Tick adds a constant forward force of 500 units to the actor.",
+      "expected_dsl": "BLUEPRINT: BP_ConstantPush\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetActorForwardVector\nNODE n3: MultiplyFloat [B=500.0]\nNODE n4: AddForce\nEXEC n1.Then -> n4.Execute\nDATA n2.ReturnValue -> n3.A [Vector]\nDATA n3.ReturnValue -> n4.Force [Vector]"
+    },
+    {
+      "id": "L04_03",
+      "category": "physics_toggle",
+      "instruction": "Create a Blueprint that pressing Interact toggles physics simulation on and off using SetSimulatePhysics.",
+      "expected_dsl": "BLUEPRINT: BP_PhysicsToggle\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Interact\"]\nNODE n2: FlipFlop\nNODE n3: SetSimulatePhysics [Simulate=true]\nNODE n4: SetSimulatePhysics [Simulate=false]\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.A -> n3.Execute\nEXEC n2.B -> n4.Execute"
+    },
+    {
+      "id": "L04_04",
+      "category": "movement_offset",
+      "instruction": "Create a Blueprint that on Tick moves the actor forward by 2 units per frame using AddActorLocalOffset.",
+      "expected_dsl": "BLUEPRINT: BP_SlowMover\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: AddActorLocalOffset [DeltaLocation=(X=2.0,Y=0,Z=0)]\nEXEC n1.Then -> n2.Execute"
+    },
+    {
+      "id": "L04_05",
+      "category": "movement_teleport",
+      "instruction": "Create a Blueprint that on overlap teleports the overlapping actor to location (0, 0, 500) using SetActorLocation.",
+      "expected_dsl": "BLUEPRINT: BP_Teleporter\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: MakeVector [X=0, Y=0, Z=500]\nNODE n3: SetActorLocation\nEXEC n1.Then -> n3.Execute\nDATA n1.OtherActor -> n3.Target [Actor]\nDATA n2.ReturnValue -> n3.NewLocation [Vector]"
+    },
+    {
+      "id": "L04_06",
+      "category": "physics_overlap_launch",
+      "instruction": "Create a Blueprint that when overlapped, enables physics on itself and adds an upward impulse of 2000.",
+      "expected_dsl": "BLUEPRINT: BP_OverlapLaunch\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: SetSimulatePhysics [Simulate=true]\nNODE n3: AddImpulse [Impulse=(X=0,Y=0,Z=2000)]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute"
+    },
+    {
+      "id": "L04_07",
+      "category": "movement_lerp",
+      "instruction": "Create a Blueprint with a vector variable TargetLocation. On Tick, lerp the actor's position toward TargetLocation at alpha 0.05.",
+      "expected_dsl": "BLUEPRINT: BP_SmoothMover\nPARENT: Actor\nVAR TargetLocation: Vector\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetActorLocation\nNODE n3: VariableGet [VarName=TargetLocation]\nNODE n4: Lerp [Alpha=0.05]\nNODE n5: SetActorLocation\nEXEC n1.Then -> n5.Execute\nDATA n2.ReturnValue -> n4.A [Vector]\nDATA n3.Value -> n4.B [Vector]\nDATA n4.ReturnValue -> n5.NewLocation [Vector]"
+    },
+    {
+      "id": "L04_08",
+      "category": "movement_input",
+      "instruction": "Create a Blueprint that on Tick reads the MoveForward input axis value and moves the actor forward by that amount using AddActorLocalOffset.",
+      "expected_dsl": "BLUEPRINT: BP_InputMover\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetInputAxisValue [AxisName=\"MoveForward\"]\nNODE n3: MakeVector [Y=0, Z=0]\nNODE n4: AddActorLocalOffset\nEXEC n1.Then -> n4.Execute\nDATA n2.ReturnValue -> n3.X [Float]\nDATA n3.ReturnValue -> n4.DeltaLocation [Vector]"
+    },
+    {
+      "id": "L04_09",
+      "category": "physics_bounce",
+      "instruction": "Create a Blueprint that on Hit adds an impulse in the opposite direction of the hit normal multiplied by 500.",
+      "expected_dsl": "BLUEPRINT: BP_Bouncer\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Hit\nNODE n2: MultiplyFloat [B=-500.0]\nNODE n3: AddImpulse\nEXEC n1.Then -> n3.Execute\nDATA n1.HitNormal -> n2.A [Vector]\nDATA n2.ReturnValue -> n3.Impulse [Vector]"
+    },
+    {
+      "id": "L04_10",
+      "category": "movement_patrol",
+      "instruction": "Create a Blueprint with two vector variables PointA and PointB and a boolean AtA starting true. On Tick, if AtA is true move toward PointA, otherwise move toward PointB. When distance to target is less than 50, flip AtA.",
+      "expected_dsl": "BLUEPRINT: BP_Patrol\nPARENT: Actor\nVAR PointA: Vector\nVAR PointB: Vector\nVAR AtA: Bool = true\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: VariableGet [VarName=AtA]\nNODE n3: Branch\nNODE n4: VariableGet [VarName=PointA]\nNODE n5: VariableGet [VarName=PointB]\nNODE n6: GetActorLocation\nNODE n7: Lerp [Alpha=0.02]\nNODE n8: Lerp [Alpha=0.02]\nNODE n9: SetActorLocation\nNODE n10: SetActorLocation\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n9.Execute\nEXEC n3.False -> n10.Execute\nDATA n6.ReturnValue -> n7.A [Vector]\nDATA n4.Value -> n7.B [Vector]\nDATA n7.ReturnValue -> n9.NewLocation [Vector]\nDATA n6.ReturnValue -> n8.A [Vector]\nDATA n5.Value -> n8.B [Vector]\nDATA n8.ReturnValue -> n10.NewLocation [Vector]"
+    },
+    {
+      "id": "L04_11",
+      "category": "physics_delayed",
+      "instruction": "Create a Blueprint that on BeginPlay waits 3 seconds, then enables physics simulation and prints Physics Enabled.",
+      "expected_dsl": "BLUEPRINT: BP_DelayedPhysics\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Delay [Duration=3.0]\nNODE n3: SetSimulatePhysics [Simulate=true]\nNODE n4: PrintString [InString=\"Physics Enabled\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute\nEXEC n3.Then -> n4.Execute"
+    },
+    {
+      "id": "L04_12",
+      "category": "movement_rotate_and_move",
+      "instruction": "Create a Blueprint that on Tick rotates 1 degree on Yaw and moves forward 1 unit. This makes the actor move in a circle.",
+      "expected_dsl": "BLUEPRINT: BP_CircleMover\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: AddActorLocalRotation [DeltaRotation=(Pitch=0,Yaw=1.0,Roll=0)]\nNODE n3: AddActorLocalOffset [DeltaLocation=(X=1.0,Y=0,Z=0)]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute"
+    },
+    {
+      "id": "L04_13",
+      "category": "physics_conditional_force",
+      "instruction": "Create a Blueprint with a boolean IsHeavy. On overlap, if IsHeavy add force of 5000 upward, else add force of 1000 upward.",
+      "expected_dsl": "BLUEPRINT: BP_ConditionalForce\nPARENT: Actor\nVAR IsHeavy: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: VariableGet [VarName=IsHeavy]\nNODE n3: Branch\nNODE n4: AddImpulse [Impulse=(X=0,Y=0,Z=5000)]\nNODE n5: AddImpulse [Impulse=(X=0,Y=0,Z=1000)]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n4.Execute\nEXEC n3.False -> n5.Execute"
+    },
+    {
+      "id": "L04_14",
+      "category": "movement_speed_variable",
+      "instruction": "Create a Blueprint with a float variable Speed set to 5.0. On Tick, multiply DeltaSeconds by Speed and move the actor forward by that amount.",
+      "expected_dsl": "BLUEPRINT: BP_VariableSpeed\nPARENT: Actor\nVAR Speed: Float = 5.0\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: VariableGet [VarName=Speed]\nNODE n3: MultiplyFloat\nNODE n4: MakeVector [Y=0, Z=0]\nNODE n5: AddActorLocalOffset\nEXEC n1.Then -> n5.Execute\nDATA n1.DeltaSeconds -> n3.A [Float]\nDATA n2.Value -> n3.B [Float]\nDATA n3.ReturnValue -> n4.X [Float]\nDATA n4.ReturnValue -> n5.DeltaLocation [Vector]"
+    },
+    {
+      "id": "L04_15",
+      "category": "physics_gravity_zone",
+      "instruction": "Create a Blueprint that on overlap adds a downward force of 3000 to the overlapping actor every tick while they remain overlapped. On end overlap, stop.",
+      "expected_dsl": "BLUEPRINT: BP_GravityZone\nPARENT: Actor\nVAR IsOverlapping: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: VariableSet [VarName=IsOverlapping]\nNODE n3: Event_ActorEndOverlap\nNODE n4: VariableSet [VarName=IsOverlapping]\nEXEC n1.Then -> n2.Execute\nDATA true -> n2.Value [Bool]\nEXEC n3.Then -> n4.Execute\nDATA false -> n4.Value [Bool]"
+    },
+    {
+      "id": "L04_16",
+      "category": "movement_clamp",
+      "instruction": "Create a Blueprint that on Tick gets the actor location. If the Z position is below 0, set it to 0 using SetActorLocation. Print Clamped when this happens.",
+      "expected_dsl": "BLUEPRINT: BP_FloorClamp\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetActorLocation\nNODE n3: BreakVector\nNODE n4: LessThan [B=0.0]\nNODE n5: Branch\nNODE n6: MakeVector [Z=0.0]\nNODE n7: SetActorLocation\nNODE n8: PrintString [InString=\"Clamped\"]\nEXEC n1.Then -> n5.Execute\nDATA n2.ReturnValue -> n3.Input [Vector]\nDATA n3.Z -> n4.A [Float]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n7.Execute\nDATA n3.X -> n6.X [Float]\nDATA n3.Y -> n6.Y [Float]\nDATA n6.ReturnValue -> n7.NewLocation [Vector]\nEXEC n7.Then -> n8.Execute"
+    },
+    {
+      "id": "L04_17",
+      "category": "physics_multigate",
+      "instruction": "Create a Blueprint where pressing Fire uses a MultiGate with 3 outputs. Output 0 adds impulse right, output 1 adds impulse left, output 2 adds impulse up.",
+      "expected_dsl": "BLUEPRINT: BP_MultiImpulse\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Fire\"]\nNODE n2: MultiGate\nNODE n3: AddImpulse [Impulse=(X=0,Y=500,Z=0)]\nNODE n4: AddImpulse [Impulse=(X=0,Y=-500,Z=0)]\nNODE n5: AddImpulse [Impulse=(X=0,Y=0,Z=500)]\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.Out_0 -> n3.Execute\nEXEC n2.Out_1 -> n4.Execute\nEXEC n2.Out_2 -> n5.Execute"
+    },
+    {
+      "id": "L04_18",
+      "category": "movement_sine_wave",
+      "instruction": "Create a Blueprint that on Tick moves the actor up and down using a sine wave. Get game time, apply sine, multiply by 100, set the Z location.",
+      "expected_dsl": "BLUEPRINT: BP_SineWave\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetGameTimeInSeconds\nNODE n3: Sin\nNODE n4: MultiplyFloat [B=100.0]\nNODE n5: GetActorLocation\nNODE n6: BreakVector\nNODE n7: MakeVector\nNODE n8: SetActorLocation\nEXEC n1.Then -> n8.Execute\nDATA n2.ReturnValue -> n3.Input [Float]\nDATA n3.ReturnValue -> n4.A [Float]\nDATA n5.ReturnValue -> n6.Input [Vector]\nDATA n6.X -> n7.X [Float]\nDATA n6.Y -> n7.Y [Float]\nDATA n4.ReturnValue -> n7.Z [Float]\nDATA n7.ReturnValue -> n8.NewLocation [Vector]"
+    },
+    {
+      "id": "L04_19",
+      "category": "physics_projectile",
+      "instruction": "Create a Blueprint that on BeginPlay enables physics and adds a forward impulse of 3000. After 5 seconds, destroy itself.",
+      "expected_dsl": "BLUEPRINT: BP_Projectile\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetSimulatePhysics [Simulate=true]\nNODE n3: GetActorForwardVector\nNODE n4: MultiplyFloat [B=3000.0]\nNODE n5: AddImpulse\nNODE n6: Delay [Duration=5.0]\nNODE n7: DestroyActor\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n5.Execute\nDATA n3.ReturnValue -> n4.A [Vector]\nDATA n4.ReturnValue -> n5.Impulse [Vector]\nEXEC n5.Then -> n6.Execute\nEXEC n6.Completed -> n7.Execute"
+    },
+    {
+      "id": "L04_20",
+      "category": "movement_scale_speed",
+      "instruction": "Create a Blueprint with a float variable Speed at 100. On Tick, multiply Speed by DeltaSeconds, move actor forward by that amount. On pressing SpeedUp, add 50 to Speed.",
+      "expected_dsl": "BLUEPRINT: BP_Accelerator\nPARENT: Actor\nVAR Speed: Float = 100.0\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: VariableGet [VarName=Speed]\nNODE n3: MultiplyFloat\nNODE n4: MakeVector [Y=0, Z=0]\nNODE n5: AddActorLocalOffset\nNODE n6: Event_InputAction [ActionName=\"SpeedUp\"]\nNODE n7: VariableGet [VarName=Speed]\nNODE n8: AddFloat [B=50.0]\nNODE n9: VariableSet [VarName=Speed]\nEXEC n1.Then -> n5.Execute\nDATA n1.DeltaSeconds -> n3.A [Float]\nDATA n2.Value -> n3.B [Float]\nDATA n3.ReturnValue -> n4.X [Float]\nDATA n4.ReturnValue -> n5.DeltaLocation [Vector]\nEXEC n6.Pressed -> n9.Execute\nDATA n7.Value -> n8.A [Float]\nDATA n8.ReturnValue -> n9.Value [Float]"
+    }
+  ]
+}

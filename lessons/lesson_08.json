@@ -1,0 +1,128 @@
+{
+  "lesson_id": "lesson_08",
+  "lesson_name": "UI Widgets and HUD Patterns",
+  "description": "20 prompts covering CreateWidget, AddToViewport, RemoveFromParent, UI visibility toggling, HUD updates, widget+branch combos.",
+  "created": "2026-02-27",
+  "prompts": [
+    {
+      "id": "L08_01",
+      "category": "ui_create_basic",
+      "instruction": "Create a Blueprint that on BeginPlay creates a widget of class WBP_HUD and adds it to the viewport.",
+      "expected_dsl": "BLUEPRINT: BP_ShowHUD\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: CreateWidget [WidgetClass=WBP_HUD]\nNODE n3: AddToViewport\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nDATA n2.ReturnValue -> n3.Target [Widget]"
+    },
+    {
+      "id": "L08_02",
+      "category": "ui_remove",
+      "instruction": "Create a Blueprint with a widget variable HUDWidget. On pressing Escape, remove it from the viewport.",
+      "expected_dsl": "BLUEPRINT: BP_RemoveHUD\nPARENT: Actor\nVAR HUDWidget: Widget = None\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Escape\"]\nNODE n2: VariableGet [VarName=HUDWidget]\nNODE n3: RemoveFromParent\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Target [Widget]"
+    },
+    {
+      "id": "L08_03",
+      "category": "ui_toggle",
+      "instruction": "Create a Blueprint with a widget variable MenuWidget and bool MenuOpen. On pressing Menu, toggle: if open remove widget and set false, if closed create widget and set true.",
+      "expected_dsl": "BLUEPRINT: BP_ToggleMenu\nPARENT: Actor\nVAR MenuWidget: Widget = None\nVAR MenuOpen: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Menu\"]\nNODE n2: VariableGet [VarName=MenuOpen]\nNODE n3: Branch\nNODE n4: VariableGet [VarName=MenuWidget]\nNODE n5: RemoveFromParent\nNODE n6: VariableSet [VarName=MenuOpen]\nNODE n7: CreateWidget [WidgetClass=WBP_Menu]\nNODE n8: AddToViewport\nNODE n9: VariableSet [VarName=MenuWidget]\nNODE n10: VariableSet [VarName=MenuOpen]\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n5.Execute\nDATA n4.Value -> n5.Target [Widget]\nEXEC n5.Then -> n6.Execute\nDATA false -> n6.Value [Bool]\nEXEC n3.False -> n7.Execute\nEXEC n7.Then -> n8.Execute\nDATA n7.ReturnValue -> n8.Target [Widget]\nEXEC n8.Then -> n9.Execute\nDATA n7.ReturnValue -> n9.Value [Widget]\nEXEC n9.Then -> n10.Execute\nDATA true -> n10.Value [Bool]"
+    },
+    {
+      "id": "L08_04",
+      "category": "ui_delayed",
+      "instruction": "Create a Blueprint that on BeginPlay waits 3 seconds, then creates a widget WBP_Welcome and adds it to viewport. After 5 more seconds, remove it.",
+      "expected_dsl": "BLUEPRINT: BP_TimedWidget\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Delay [Duration=3.0]\nNODE n3: CreateWidget [WidgetClass=WBP_Welcome]\nNODE n4: AddToViewport\nNODE n5: Delay [Duration=5.0]\nNODE n6: RemoveFromParent\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute\nEXEC n3.Then -> n4.Execute\nDATA n3.ReturnValue -> n4.Target [Widget]\nEXEC n4.Then -> n5.Execute\nEXEC n5.Completed -> n6.Execute\nDATA n3.ReturnValue -> n6.Target [Widget]"
+    },
+    {
+      "id": "L08_05",
+      "category": "ui_overlap_show",
+      "instruction": "Create a Blueprint that on overlap creates a widget WBP_Tooltip and adds to viewport. On end overlap, remove it.",
+      "expected_dsl": "BLUEPRINT: BP_OverlapTooltip\nPARENT: Actor\nVAR TooltipWidget: Widget = None\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CreateWidget [WidgetClass=WBP_Tooltip]\nNODE n3: AddToViewport\nNODE n4: VariableSet [VarName=TooltipWidget]\nNODE n5: Event_ActorEndOverlap\nNODE n6: VariableGet [VarName=TooltipWidget]\nNODE n7: RemoveFromParent\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nDATA n2.ReturnValue -> n3.Target [Widget]\nEXEC n3.Then -> n4.Execute\nDATA n2.ReturnValue -> n4.Value [Widget]\nEXEC n5.Then -> n7.Execute\nDATA n6.Value -> n7.Target [Widget]"
+    },
+    {
+      "id": "L08_06",
+      "category": "ui_with_cast",
+      "instruction": "Create a Blueprint that on overlap casts to Character. If the cast succeeds, create widget WBP_PlayerHUD and add to viewport.",
+      "expected_dsl": "BLUEPRINT: BP_PlayerHUD\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: CreateWidget [WidgetClass=WBP_PlayerHUD]\nNODE n4: AddToViewport\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n3.Execute\nEXEC n3.Then -> n4.Execute\nDATA n3.ReturnValue -> n4.Target [Widget]"
+    },
+    {
+      "id": "L08_07",
+      "category": "ui_doonce",
+      "instruction": "Create a Blueprint that on overlap uses DoOnce, creates widget WBP_Tutorial and adds to viewport.",
+      "expected_dsl": "BLUEPRINT: BP_TutorialPopup\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: DoOnce\nNODE n3: CreateWidget [WidgetClass=WBP_Tutorial]\nNODE n4: AddToViewport\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute\nEXEC n3.Then -> n4.Execute\nDATA n3.ReturnValue -> n4.Target [Widget]"
+    },
+    {
+      "id": "L08_08",
+      "category": "ui_branch_show",
+      "instruction": "Create a Blueprint with bool ShowHUD. On BeginPlay, if ShowHUD is true create WBP_HUD and add to viewport. If false, print HUD Disabled.",
+      "expected_dsl": "BLUEPRINT: BP_ConditionalHUD\nPARENT: Actor\nVAR ShowHUD: Bool = true\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=ShowHUD]\nNODE n3: Branch\nNODE n4: CreateWidget [WidgetClass=WBP_HUD]\nNODE n5: AddToViewport\nNODE n6: PrintString [InString=\"HUD Disabled\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n4.Execute\nEXEC n4.Then -> n5.Execute\nDATA n4.ReturnValue -> n5.Target [Widget]\nEXEC n3.False -> n6.Execute"
+    },
+    {
+      "id": "L08_09",
+      "category": "ui_sequence_multi",
+      "instruction": "Create a Blueprint that on BeginPlay uses a Sequence. First output creates WBP_Background and adds to viewport. Second output creates WBP_Foreground and adds to viewport.",
+      "expected_dsl": "BLUEPRINT: BP_LayeredUI\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Sequence\nNODE n3: CreateWidget [WidgetClass=WBP_Background]\nNODE n4: AddToViewport\nNODE n5: CreateWidget [WidgetClass=WBP_Foreground]\nNODE n6: AddToViewport\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then_0 -> n3.Execute\nEXEC n3.Then -> n4.Execute\nDATA n3.ReturnValue -> n4.Target [Widget]\nEXEC n2.Then_1 -> n5.Execute\nEXEC n5.Then -> n6.Execute\nDATA n5.ReturnValue -> n6.Target [Widget]"
+    },
+    {
+      "id": "L08_10",
+      "category": "ui_valid_remove",
+      "instruction": "Create a Blueprint with widget variable CurrentUI. On pressing Close, check if CurrentUI is valid. If valid, remove from parent and set to None.",
+      "expected_dsl": "BLUEPRINT: BP_SafeRemoveUI\nPARENT: Actor\nVAR CurrentUI: Widget = None\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Close\"]\nNODE n2: VariableGet [VarName=CurrentUI]\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: RemoveFromParent\nNODE n6: VariableSet [VarName=CurrentUI]\nEXEC n1.Pressed -> n4.Execute\nDATA n2.Value -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nDATA n2.Value -> n5.Target [Widget]\nEXEC n5.Then -> n6.Execute\nDATA None -> n6.Value [Widget]"
+    },
+    {
+      "id": "L08_11",
+      "category": "ui_timer_show",
+      "instruction": "Create a Blueprint that on BeginPlay sets a 5-second timer. When it fires, create WBP_Alert and add to viewport. Print Alert Shown.",
+      "expected_dsl": "BLUEPRINT: BP_TimedAlert\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"ShowAlert\", Time=5.0, Looping=false]\nNODE n3: Event_Custom [EventName=ShowAlert]\nNODE n4: CreateWidget [WidgetClass=WBP_Alert]\nNODE n5: AddToViewport\nNODE n6: PrintString [InString=\"Alert Shown\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n4.Then -> n5.Execute\nDATA n4.ReturnValue -> n5.Target [Widget]\nEXEC n5.Then -> n6.Execute"
+    },
+    {
+      "id": "L08_12",
+      "category": "ui_flipflop_swap",
+      "instruction": "Create a Blueprint with two widget variables ScreenA and ScreenB. On pressing Swap, use FlipFlop. A shows ScreenA and hides ScreenB. B does the opposite.",
+      "expected_dsl": "BLUEPRINT: BP_SwapScreens\nPARENT: Actor\nVAR ScreenA: Widget = None\nVAR ScreenB: Widget = None\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Swap\"]\nNODE n2: FlipFlop\nNODE n3: VariableGet [VarName=ScreenA]\nNODE n4: AddToViewport\nNODE n5: VariableGet [VarName=ScreenB]\nNODE n6: RemoveFromParent\nNODE n7: VariableGet [VarName=ScreenB]\nNODE n8: AddToViewport\nNODE n9: VariableGet [VarName=ScreenA]\nNODE n10: RemoveFromParent\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.A -> n4.Execute\nDATA n3.Value -> n4.Target [Widget]\nEXEC n4.Then -> n6.Execute\nDATA n5.Value -> n6.Target [Widget]\nEXEC n2.B -> n8.Execute\nDATA n7.Value -> n8.Target [Widget]\nEXEC n8.Then -> n10.Execute\nDATA n9.Value -> n10.Target [Widget]"
+    },
+    {
+      "id": "L08_13",
+      "category": "ui_distance_trigger",
+      "instruction": "Create a Blueprint that on Tick checks distance to player. If less than 300, create and show WBP_Interact widget using DoOnce.",
+      "expected_dsl": "BLUEPRINT: BP_ProximityUI\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetPlayerPawn\nNODE n3: GetDistanceTo\nNODE n4: LessThan [B=300.0]\nNODE n5: Branch\nNODE n6: DoOnce\nNODE n7: CreateWidget [WidgetClass=WBP_Interact]\nNODE n8: AddToViewport\nEXEC n1.Then -> n5.Execute\nDATA n2.ReturnValue -> n3.OtherActor [Actor]\nDATA n3.ReturnValue -> n4.A [Float]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n6.Completed -> n7.Execute\nEXEC n7.Then -> n8.Execute\nDATA n7.ReturnValue -> n8.Target [Widget]"
+    },
+    {
+      "id": "L08_14",
+      "category": "ui_create_store",
+      "instruction": "Create a Blueprint that on BeginPlay creates WBP_HUD, stores it in variable MyHUD, and adds to viewport. Print HUD Ready.",
+      "expected_dsl": "BLUEPRINT: BP_StoredHUD\nPARENT: Actor\nVAR MyHUD: Widget = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: CreateWidget [WidgetClass=WBP_HUD]\nNODE n3: VariableSet [VarName=MyHUD]\nNODE n4: AddToViewport\nNODE n5: PrintString [InString=\"HUD Ready\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nDATA n2.ReturnValue -> n3.Value [Widget]\nEXEC n3.Then -> n4.Execute\nDATA n2.ReturnValue -> n4.Target [Widget]\nEXEC n4.Then -> n5.Execute"
+    },
+    {
+      "id": "L08_15",
+      "category": "ui_endplay_cleanup",
+      "instruction": "Create a Blueprint that creates WBP_HUD on BeginPlay. On EndPlay, check if widget is valid and remove it.",
+      "expected_dsl": "BLUEPRINT: BP_CleanupUI\nPARENT: Actor\nVAR HUD: Widget = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: CreateWidget [WidgetClass=WBP_HUD]\nNODE n3: AddToViewport\nNODE n4: VariableSet [VarName=HUD]\nNODE n5: Event_EndPlay\nNODE n6: VariableGet [VarName=HUD]\nNODE n7: IsValid\nNODE n8: Branch\nNODE n9: RemoveFromParent\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nDATA n2.ReturnValue -> n3.Target [Widget]\nEXEC n3.Then -> n4.Execute\nDATA n2.ReturnValue -> n4.Value [Widget]\nEXEC n5.Then -> n8.Execute\nDATA n6.Value -> n7.Input [Object]\nDATA n7.ReturnValue -> n8.Condition [Bool]\nEXEC n8.True -> n9.Execute\nDATA n6.Value -> n9.Target [Widget]"
+    },
+    {
+      "id": "L08_16",
+      "category": "ui_gate_controlled",
+      "instruction": "Create a Blueprint with a Gate. Opening the gate creates and shows WBP_Panel. Closing the gate removes it.",
+      "expected_dsl": "BLUEPRINT: BP_GatedUI\nPARENT: Actor\nVAR Panel: Widget = None\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Open\"]\nNODE n2: Gate\nNODE n3: CreateWidget [WidgetClass=WBP_Panel]\nNODE n4: AddToViewport\nNODE n5: VariableSet [VarName=Panel]\nNODE n6: Event_InputAction [ActionName=\"Close\"]\nNODE n7: VariableGet [VarName=Panel]\nNODE n8: RemoveFromParent\nEXEC n1.Pressed -> n2.Open\nEXEC n2.Exit -> n3.Execute\nEXEC n3.Then -> n4.Execute\nDATA n3.ReturnValue -> n4.Target [Widget]\nEXEC n4.Then -> n5.Execute\nDATA n3.ReturnValue -> n5.Value [Widget]\nEXEC n6.Pressed -> n2.Close\nEXEC n6.Pressed -> n8.Execute\nDATA n7.Value -> n8.Target [Widget]"
+    },
+    {
+      "id": "L08_17",
+      "category": "ui_foreach_create",
+      "instruction": "Create a Blueprint with a string array MenuItems. On BeginPlay, loop through MenuItems and print each item name. After loop, create WBP_Menu and add to viewport.",
+      "expected_dsl": "BLUEPRINT: BP_DynamicMenu\nPARENT: Actor\nVAR MenuItems: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=MenuItems]\nNODE n3: ForEachLoop\nNODE n4: PrintString\nNODE n5: CreateWidget [WidgetClass=WBP_Menu]\nNODE n6: AddToViewport\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n4.Execute\nDATA n3.ArrayElement -> n4.InString [String]\nEXEC n3.Completed -> n5.Execute\nEXEC n5.Then -> n6.Execute\nDATA n5.ReturnValue -> n6.Target [Widget]"
+    },
+    {
+      "id": "L08_18",
+      "category": "ui_input_close",
+      "instruction": "Create a Blueprint that on BeginPlay creates WBP_Dialog and adds to viewport. On pressing Confirm, remove the dialog and print Confirmed.",
+      "expected_dsl": "BLUEPRINT: BP_Dialog\nPARENT: Actor\nVAR Dialog: Widget = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: CreateWidget [WidgetClass=WBP_Dialog]\nNODE n3: AddToViewport\nNODE n4: VariableSet [VarName=Dialog]\nNODE n5: Event_InputAction [ActionName=\"Confirm\"]\nNODE n6: VariableGet [VarName=Dialog]\nNODE n7: RemoveFromParent\nNODE n8: PrintString [InString=\"Confirmed\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nDATA n2.ReturnValue -> n3.Target [Widget]\nEXEC n3.Then -> n4.Execute\nDATA n2.ReturnValue -> n4.Value [Widget]\nEXEC n5.Pressed -> n7.Execute\nDATA n6.Value -> n7.Target [Widget]\nEXEC n7.Then -> n8.Execute"
+    },
+    {
+      "id": "L08_19",
+      "category": "ui_multigate",
+      "instruction": "Create a Blueprint where pressing Next uses MultiGate with 3 outputs. Each output creates a different widget: WBP_Page1, WBP_Page2, WBP_Page3 and adds to viewport.",
+      "expected_dsl": "BLUEPRINT: BP_PagedUI\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Next\"]\nNODE n2: MultiGate\nNODE n3: CreateWidget [WidgetClass=WBP_Page1]\nNODE n4: AddToViewport\nNODE n5: CreateWidget [WidgetClass=WBP_Page2]\nNODE n6: AddToViewport\nNODE n7: CreateWidget [WidgetClass=WBP_Page3]\nNODE n8: AddToViewport\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.Out_0 -> n3.Execute\nEXEC n3.Then -> n4.Execute\nDATA n3.ReturnValue -> n4.Target [Widget]\nEXEC n2.Out_1 -> n5.Execute\nEXEC n5.Then -> n6.Execute\nDATA n5.ReturnValue -> n6.Target [Widget]\nEXEC n2.Out_2 -> n7.Execute\nEXEC n7.Then -> n8.Execute\nDATA n7.ReturnValue -> n8.Target [Widget]"
+    },
+    {
+      "id": "L08_20",
+      "category": "ui_complete_flow",
+      "instruction": "Create a Blueprint that on BeginPlay creates WBP_Loading and adds to viewport. After 3 seconds, remove loading widget, create WBP_MainMenu, and add to viewport. Print Ready.",
+      "expected_dsl": "BLUEPRINT: BP_LoadingFlow\nPARENT: Actor\nVAR LoadingWidget: Widget = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: CreateWidget [WidgetClass=WBP_Loading]\nNODE n3: AddToViewport\nNODE n4: VariableSet [VarName=LoadingWidget]\nNODE n5: Delay [Duration=3.0]\nNODE n6: VariableGet [VarName=LoadingWidget]\nNODE n7: RemoveFromParent\nNODE n8: CreateWidget [WidgetClass=WBP_MainMenu]\nNODE n9: AddToViewport\nNODE n10: PrintString [InString=\"Ready\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nDATA n2.ReturnValue -> n3.Target [Widget]\nEXEC n3.Then -> n4.Execute\nDATA n2.ReturnValue -> n4.Value [Widget]\nEXEC n4.Then -> n5.Execute\nEXEC n5.Completed -> n7.Execute\nDATA n6.Value -> n7.Target [Widget]\nEXEC n7.Then -> n8.Execute\nEXEC n8.Then -> n9.Execute\nDATA n8.ReturnValue -> n9.Target [Widget]\nEXEC n9.Then -> n10.Execute"
+    }
+  ]
+}

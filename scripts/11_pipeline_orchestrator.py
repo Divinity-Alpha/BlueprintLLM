@@ -181,6 +181,12 @@ class PipelineConfig:
         if self.cuda_visible_devices is not None:
             os.environ["CUDA_VISIBLE_DEVICES"] = str(self.cuda_visible_devices)
 
+        # CUDA JIT cache — persist compiled kernels across runs
+        cache_dir = str(self.root / ".cuda_cache")
+        os.makedirs(cache_dir, exist_ok=True)
+        os.environ.setdefault("CUDA_CACHE_PATH", cache_dir)
+        os.environ.setdefault("CUDA_CACHE_MAXSIZE", "4294967296")  # 4 GB
+
         # Model — prefer pipeline_config, then auto-detect from VRAM
         model_cfg = pcfg.get("model", {})
         self.base_model = model_cfg.get("base_model") or self._detect_best_model()
@@ -889,6 +895,155 @@ def step_dashboard_finalize(cfg, log, dry_run):
     log.complete_step("9", "Dashboard & Finalize")
 
 
+def step_git_push(cfg, log, state, dry_run):
+    """Auto-commit results and push to remote. Failure-safe — never crashes pipeline."""
+    log.section("GIT PUSH")
+    log.log("Committing training results to git...")
+    if dry_run:
+        log.log("DRY RUN — skipping git push")
+        return
+
+    version = state.get("last_model_version", "?")
+
+    try:
+        git_files = [
+            "results/", "logs/", "exams/",
+            "datasets/lesson_data.jsonl",
+            "health_report.json",
+            "CHANGELOG.md",
+            ".pipeline_state.json",
+            "pipeline_config.json",
+        ]
+        # Stage only files that exist
+        for f in git_files:
+            fpath = cfg.root / f
+            if fpath.exists():
+                subprocess.run(
+                    ["git", "add", f],
+                    cwd=str(cfg.root), capture_output=True, text=True, timeout=30,
+                )
+
+        # Check if there's anything to commit
+        status = subprocess.run(
+            ["git", "diff", "--cached", "--quiet"],
+            cwd=str(cfg.root), capture_output=True, timeout=30,
+        )
+        if status.returncode == 0:
+            log.log("Nothing to commit — working tree clean.")
+            return
+
+        msg = f"v{version} training results"
+        subprocess.run(
+            ["git", "commit", "-m", msg],
+            cwd=str(cfg.root), capture_output=True, text=True, timeout=60,
+        )
+        log.log(f"Committed: {msg}")
+
+        push = subprocess.run(
+            ["git", "push"],
+            cwd=str(cfg.root), capture_output=True, text=True, timeout=120,
+        )
+        if push.returncode == 0:
+            log.log("Pushed to remote.")
+        else:
+            log.log(f"Git push failed (non-fatal): {push.stderr.strip()}", "WARN")
+
+    except Exception as e:
+        log.log(f"Git push error (non-fatal): {e}", "WARN")
+
+
+def step_grade_me(cfg, log, state, dry_run):
+    """Create GRADE_ME.txt with raw GitHub URLs for exam/eval results. Failure-safe."""
+    log.section("GRADE_ME.txt")
+    if dry_run:
+        log.log("DRY RUN — skipping GRADE_ME.txt")
+        return
+
+    version = state.get("last_model_version", "?")
+
+    try:
+        repo_base = "https://raw.githubusercontent.com/Divinity-Alpha/BlueprintLLM/main"
+        lines = [f"Grade these v{version} results:"]
+
+        # Find exam result files from this run
+        exams_dir = cfg.root / "results" / "exams"
+        if exams_dir.exists():
+            # Get the most recent exam files (sorted by mtime, newest first)
+            exam_files = sorted(exams_dir.iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
+            # Collect pairs: .jsonl and _summary.json from this run
+            seen_bases = set()
+            for ef in exam_files:
+                if ef.suffix == ".jsonl" and ef.name.startswith("exam_"):
+                    base = ef.stem  # e.g. exam_lesson_01_20260227_123456
+                    if base not in seen_bases:
+                        seen_bases.add(base)
+                        lines.append(f"{repo_base}/results/exams/{ef.name}")
+                        summary = ef.with_name(base + "_summary.json")
+                        if summary.exists():
+                            lines.append(f"{repo_base}/results/exams/{summary.name}")
+                # Stop after 4 exam bases (covers lesson_01 + lesson_02 and some buffer)
+                if len(seen_bases) >= 4:
+                    break
+
+        # Find eval report from this run
+        results_dir = cfg.root / "results"
+        if results_dir.exists():
+            eval_files = sorted(
+                [f for f in results_dir.iterdir() if f.name.startswith("eval_v") and f.suffix == ".json"],
+                key=lambda p: p.stat().st_mtime, reverse=True,
+            )
+            if eval_files:
+                lines.append(f"{repo_base}/results/{eval_files[0].name}")
+
+        grade_path = cfg.root / "GRADE_ME.txt"
+        grade_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        log.log(f"Created {grade_path} with {len(lines) - 1} URLs")
+
+    except Exception as e:
+        log.log(f"GRADE_ME.txt error (non-fatal): {e}", "WARN")
+
+
+def step_notify_complete(cfg, log, state, dry_run):
+    """Windows desktop notification that pipeline is done. Failure-safe."""
+    if dry_run:
+        return
+
+    version = state.get("last_model_version", "?")
+    msg = (
+        f"v{version} pipeline complete! Results pushed to GitHub. "
+        f"Open GRADE_ME.txt and paste into Claude.ai for grading."
+    )
+
+    try:
+        # Try BurntToast first (non-blocking toast)
+        burnt = subprocess.run(
+            ["powershell", "-Command",
+             f'if (Get-Module -ListAvailable -Name BurntToast) {{ '
+             f'Import-Module BurntToast; '
+             f"New-BurntToastNotification -Text 'BlueprintLLM', '{msg}' "
+             f'}} else {{ exit 1 }}'],
+            capture_output=True, text=True, timeout=15,
+        )
+        if burnt.returncode == 0:
+            log.log("Desktop toast sent (BurntToast).")
+            return
+    except Exception:
+        pass
+
+    try:
+        # Fallback: MessageBox (blocking but reliable)
+        subprocess.Popen(
+            ["powershell", "-Command",
+             "Add-Type -AssemblyName System.Windows.Forms; "
+             "[System.Windows.Forms.MessageBox]::Show("
+             f"'{msg}', 'BlueprintLLM', 'OK', 'Information')"],
+            creationflags=0x00000008,  # DETACHED_PROCESS
+        )
+        log.log("Desktop notification sent (MessageBox).")
+    except Exception as e:
+        log.log(f"Notification error (non-fatal): {e}", "WARN")
+
+
 # ===========================================================================
 # PIPELINE RUNNER
 # ===========================================================================
@@ -1019,6 +1174,13 @@ def run_pipeline(mode, dry_run=False, force=False, root=None, resume=False):
                     mark_completed("step_dashboard_finalize")
                 else:
                     log.log("Skipping step_dashboard_finalize (already completed)")
+            # Git push — always runs last, never blocks pipeline
+            if not check_stop():
+                step_git_push(cfg, log, state, dry_run)
+            # GRADE_ME.txt + desktop notification — after push
+            if not check_stop():
+                step_grade_me(cfg, log, state, dry_run)
+                step_notify_complete(cfg, log, state, dry_run)
 
         # Eval-only mode
         if not stopped and mode == "eval-only":

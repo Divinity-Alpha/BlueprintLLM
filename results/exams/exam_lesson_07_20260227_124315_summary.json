@@ -1,0 +1,113 @@
+{
+  "lesson_id": "lesson_07",
+  "lesson_name": "String Operations and Debug Patterns",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v3\\final",
+  "base_model": "meta-llama/Meta-Llama-3.1-70B",
+  "timestamp": "20260227_124315",
+  "total_prompts": 20,
+  "valid_syntax": 18,
+  "valid_syntax_pct": 90.0,
+  "avg_similarity_score": 53.6,
+  "per_category": {
+    "string_concat": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 63.6
+    },
+    "string_score": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 87.5
+    },
+    "string_health": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 70.6
+    },
+    "debug_location": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 50.0
+    },
+    "string_overlap_name": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 81.8
+    },
+    "debug_distance": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 25.0
+    },
+    "string_counter": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 100.0
+    },
+    "debug_fps": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 27.3
+    },
+    "string_timer_log": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 60.0
+    },
+    "string_cast_result": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 31.2
+    },
+    "string_multi_var": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 31.2
+    },
+    "debug_spawn_log": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 20.0
+    },
+    "string_loop_index": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 63.6
+    },
+    "debug_branch_path": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 84.6
+    },
+    "string_damage_log": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 31.6
+    },
+    "debug_array_count": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 30.8
+    },
+    "string_time_display": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 70.0
+    },
+    "debug_gate_status": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 25.0
+    },
+    "string_random_log": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 30.0
+    },
+    "debug_lifecycle": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 88.2
+    }
+  }
+}

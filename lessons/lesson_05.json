@@ -1,0 +1,128 @@
+{
+  "lesson_id": "lesson_05",
+  "lesson_name": "IsValid Checks and Defensive Patterns",
+  "description": "20 prompts covering IsValid, null checks, defensive coding, cast failure handling, safe access patterns.",
+  "created": "2026-02-26",
+  "prompts": [
+    {
+      "id": "L05_01",
+      "category": "isvalid_basic",
+      "instruction": "Create a Blueprint with an actor variable Target. On BeginPlay, check if Target is valid. If valid, print Target Found. If not, print No Target.",
+      "expected_dsl": "BLUEPRINT: BP_ValidCheck\nPARENT: Actor\nVAR Target: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Target]\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: PrintString [InString=\"Target Found\"]\nNODE n6: PrintString [InString=\"No Target\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nEXEC n4.False -> n6.Execute"
+    },
+    {
+      "id": "L05_02",
+      "category": "isvalid_cast",
+      "instruction": "Create a Blueprint that on overlap casts to Character. If cast succeeds, print Player. If cast fails, print Not A Player.",
+      "expected_dsl": "BLUEPRINT: BP_SafeCast\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: PrintString [InString=\"Player\"]\nNODE n4: PrintString [InString=\"Not A Player\"]\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n3.Execute\nEXEC n2.CastFailed -> n4.Execute"
+    },
+    {
+      "id": "L05_03",
+      "category": "isvalid_destroy",
+      "instruction": "Create a Blueprint with an actor variable Target. On pressing Fire, check if Target is valid. If valid, destroy Target. If not, print Nothing To Destroy.",
+      "expected_dsl": "BLUEPRINT: BP_SafeDestroy\nPARENT: Actor\nVAR Target: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Fire\"]\nNODE n2: VariableGet [VarName=Target]\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: DestroyActor\nNODE n6: PrintString [InString=\"Nothing To Destroy\"]\nEXEC n1.Pressed -> n4.Execute\nDATA n2.Value -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nDATA n2.Value -> n5.Target [Actor]\nEXEC n4.False -> n6.Execute"
+    },
+    {
+      "id": "L05_04",
+      "category": "isvalid_overlap_cast",
+      "instruction": "Create a Blueprint that on overlap, casts to Pawn. If the cast succeeds and the pawn is valid, get its location and print it.",
+      "expected_dsl": "BLUEPRINT: BP_PawnDetector\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToPawn\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: GetActorLocation\nNODE n6: PrintString\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n4.Execute\nDATA n2.AsCharacter -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n6.Execute\nDATA n5.ReturnValue -> n6.InString [String]"
+    },
+    {
+      "id": "L05_05",
+      "category": "isvalid_timer_check",
+      "instruction": "Create a Blueprint that starts a timer on BeginPlay. The timer checks if a variable Target is valid. If valid, get distance to target and print it. If not valid, print Searching.",
+      "expected_dsl": "BLUEPRINT: BP_TargetTracker\nPARENT: Actor\nVAR Target: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"CheckTarget\", Time=1.0, Looping=true]\nNODE n3: Event_Custom [EventName=CheckTarget]\nNODE n4: VariableGet [VarName=Target]\nNODE n5: IsValid\nNODE n6: Branch\nNODE n7: GetDistanceTo\nNODE n8: PrintString\nNODE n9: PrintString [InString=\"Searching\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n6.Execute\nDATA n4.Value -> n5.Input [Object]\nDATA n5.ReturnValue -> n6.Condition [Bool]\nEXEC n6.True -> n8.Execute\nDATA n4.Value -> n7.OtherActor [Actor]\nDATA n7.ReturnValue -> n8.InString [String]\nEXEC n6.False -> n9.Execute"
+    },
+    {
+      "id": "L05_06",
+      "category": "isvalid_array",
+      "instruction": "Create a Blueprint with an array variable Items. On BeginPlay, loop through Items with ForEachLoop. For each item, check IsValid before printing its name.",
+      "expected_dsl": "BLUEPRINT: BP_SafeArrayLoop\nPARENT: Actor\nVAR Items: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Items]\nNODE n3: ForEachLoop\nNODE n4: IsValid\nNODE n5: Branch\nNODE n6: GetDisplayName\nNODE n7: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n5.Execute\nDATA n3.ArrayElement -> n4.Input [Object]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n7.Execute\nDATA n3.ArrayElement -> n6.Target [Actor]\nDATA n6.ReturnValue -> n7.InString [String]"
+    },
+    {
+      "id": "L05_07",
+      "category": "isvalid_spawn_check",
+      "instruction": "Create a Blueprint that on pressing Fire spawns an actor. Check if spawn was valid. If yes print Spawned. If no print Spawn Failed.",
+      "expected_dsl": "BLUEPRINT: BP_SafeSpawn\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Fire\"]\nNODE n2: GetActorLocation\nNODE n3: SpawnActorFromClass [ActorClass=BP_Projectile]\nNODE n4: IsValid\nNODE n5: Branch\nNODE n6: PrintString [InString=\"Spawned\"]\nNODE n7: PrintString [InString=\"Spawn Failed\"]\nEXEC n1.Pressed -> n3.Execute\nDATA n2.ReturnValue -> n3.SpawnTransform [Transform]\nEXEC n3.Then -> n5.Execute\nDATA n3.ReturnValue -> n4.Input [Object]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n7.Execute"
+    },
+    {
+      "id": "L05_08",
+      "category": "isvalid_get_player",
+      "instruction": "Create a Blueprint that on BeginPlay gets the player character. Check if valid. If valid, print the player's location.",
+      "expected_dsl": "BLUEPRINT: BP_FindPlayer\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: GetPlayerPawn\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: GetActorLocation\nNODE n6: PrintString\nNODE n7: PrintString [InString=\"No Player\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.ReturnValue -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n6.Execute\nDATA n2.ReturnValue -> n5.Target [Actor]\nDATA n5.ReturnValue -> n6.InString [String]\nEXEC n4.False -> n7.Execute"
+    },
+    {
+      "id": "L05_09",
+      "category": "isvalid_before_distance",
+      "instruction": "Create a Blueprint with an actor variable Enemy. On Tick, check if Enemy is valid. If valid and distance less than 300, print Danger.",
+      "expected_dsl": "BLUEPRINT: BP_EnemyProximity\nPARENT: Actor\nVAR Enemy: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: VariableGet [VarName=Enemy]\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: GetDistanceTo\nNODE n6: LessThan [B=300.0]\nNODE n7: Branch\nNODE n8: PrintString [InString=\"Danger\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n7.Execute\nDATA n2.Value -> n5.OtherActor [Actor]\nDATA n5.ReturnValue -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute"
+    },
+    {
+      "id": "L05_10",
+      "category": "isvalid_doonce_cast",
+      "instruction": "Create a Blueprint that on overlap uses DoOnce, then casts to Character. On success print First Player Contact.",
+      "expected_dsl": "BLUEPRINT: BP_FirstContact\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: DoOnce\nNODE n3: CastToCharacter\nNODE n4: PrintString [InString=\"First Player Contact\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute\nDATA n1.OtherActor -> n3.Object [Actor]\nEXEC n3.CastSucceeded -> n4.Execute"
+    },
+    {
+      "id": "L05_11",
+      "category": "cast_to_controller",
+      "instruction": "Create a Blueprint that on overlap casts the other actor to PlayerController. If success, print Controller Found.",
+      "expected_dsl": "BLUEPRINT: BP_ControllerCast\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToPlayerController\nNODE n3: PrintString [InString=\"Controller Found\"]\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n3.Execute"
+    },
+    {
+      "id": "L05_12",
+      "category": "isvalid_sequence_checks",
+      "instruction": "Create a Blueprint that on BeginPlay uses a Sequence. First output checks if variable A is valid. Second output checks if variable B is valid. Print the status of each.",
+      "expected_dsl": "BLUEPRINT: BP_MultiValidCheck\nPARENT: Actor\nVAR A: Actor = None\nVAR B: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Sequence\nNODE n3: VariableGet [VarName=A]\nNODE n4: IsValid\nNODE n5: Branch\nNODE n6: PrintString [InString=\"A Valid\"]\nNODE n7: PrintString [InString=\"A Invalid\"]\nNODE n8: VariableGet [VarName=B]\nNODE n9: IsValid\nNODE n10: Branch\nNODE n11: PrintString [InString=\"B Valid\"]\nNODE n12: PrintString [InString=\"B Invalid\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then_0 -> n5.Execute\nDATA n3.Value -> n4.Input [Object]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n7.Execute\nEXEC n2.Then_1 -> n10.Execute\nDATA n8.Value -> n9.Input [Object]\nDATA n9.ReturnValue -> n10.Condition [Bool]\nEXEC n10.True -> n11.Execute\nEXEC n10.False -> n12.Execute"
+    },
+    {
+      "id": "L05_13",
+      "category": "isvalid_set_after_spawn",
+      "instruction": "Create a Blueprint that on BeginPlay spawns an actor, checks if valid, and if so stores it in a variable SpawnedActor.",
+      "expected_dsl": "BLUEPRINT: BP_SpawnAndStore\nPARENT: Actor\nVAR SpawnedActor: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: GetActorLocation\nNODE n3: SpawnActorFromClass [ActorClass=BP_Item]\nNODE n4: IsValid\nNODE n5: Branch\nNODE n6: VariableSet [VarName=SpawnedActor]\nNODE n7: PrintString [InString=\"Stored\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.ReturnValue -> n3.SpawnTransform [Transform]\nEXEC n3.Then -> n5.Execute\nDATA n3.ReturnValue -> n4.Input [Object]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nDATA n3.ReturnValue -> n6.Value [Actor]\nEXEC n6.Then -> n7.Execute"
+    },
+    {
+      "id": "L05_14",
+      "category": "cast_with_variable",
+      "instruction": "Create a Blueprint that on overlap casts to Character. If cast succeeds, store the character in a variable LastPlayer and print Saved Player.",
+      "expected_dsl": "BLUEPRINT: BP_SavePlayer\nPARENT: Actor\nVAR LastPlayer: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: VariableSet [VarName=LastPlayer]\nNODE n4: PrintString [InString=\"Saved Player\"]\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n3.Execute\nDATA n2.AsCharacter -> n3.Value [Actor]\nEXEC n3.Then -> n4.Execute"
+    },
+    {
+      "id": "L05_15",
+      "category": "isvalid_conditional_destroy",
+      "instruction": "Create a Blueprint that on pressing Fire checks if variable Target is valid. If valid, destroy Target and set Target to None. Print the result either way.",
+      "expected_dsl": "BLUEPRINT: BP_CleanDestroy\nPARENT: Actor\nVAR Target: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Fire\"]\nNODE n2: VariableGet [VarName=Target]\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: DestroyActor\nNODE n6: VariableSet [VarName=Target]\nNODE n7: PrintString [InString=\"Destroyed\"]\nNODE n8: PrintString [InString=\"No Target\"]\nEXEC n1.Pressed -> n4.Execute\nDATA n2.Value -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nDATA n2.Value -> n5.Target [Actor]\nEXEC n5.Then -> n6.Execute\nDATA None -> n6.Value [Actor]\nEXEC n6.Then -> n7.Execute\nEXEC n4.False -> n8.Execute"
+    },
+    {
+      "id": "L05_16",
+      "category": "isvalid_gate_pattern",
+      "instruction": "Create a Blueprint with a Gate. On BeginPlay check if variable Controller is valid. If valid, open the gate. On Tick, enter the gate. Gate exit prints Active.",
+      "expected_dsl": "BLUEPRINT: BP_ValidGate\nPARENT: Actor\nVAR Controller: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Controller]\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: Gate\nNODE n6: Event_Tick\nNODE n7: PrintString [InString=\"Active\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Open\nEXEC n6.Then -> n5.Enter\nEXEC n5.Exit -> n7.Execute"
+    },
+    {
+      "id": "L05_17",
+      "category": "isvalid_multi_cast",
+      "instruction": "Create a Blueprint that on overlap first tries CastToCharacter. If that fails, try CastToPawn. If both fail, print Unknown Actor.",
+      "expected_dsl": "BLUEPRINT: BP_FallbackCast\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: PrintString [InString=\"Character\"]\nNODE n4: CastToPawn\nNODE n5: PrintString [InString=\"Pawn\"]\nNODE n6: PrintString [InString=\"Unknown Actor\"]\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n3.Execute\nEXEC n2.CastFailed -> n4.Execute\nDATA n1.OtherActor -> n4.Object [Actor]\nEXEC n4.CastSucceeded -> n5.Execute\nEXEC n4.CastFailed -> n6.Execute"
+    },
+    {
+      "id": "L05_18",
+      "category": "isvalid_foreach_destroy",
+      "instruction": "Create a Blueprint with an actor array Enemies. On pressing Fire, loop through Enemies, check each is valid, and destroy valid ones. Print how many were destroyed.",
+      "expected_dsl": "BLUEPRINT: BP_DestroyValid\nPARENT: Actor\nVAR Enemies: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Fire\"]\nNODE n2: VariableGet [VarName=Enemies]\nNODE n3: ForEachLoop\nNODE n4: IsValid\nNODE n5: Branch\nNODE n6: DestroyActor\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n5.Execute\nDATA n3.ArrayElement -> n4.Input [Object]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nDATA n3.ArrayElement -> n6.Target [Actor]"
+    },
+    {
+      "id": "L05_19",
+      "category": "isvalid_safe_distance",
+      "instruction": "Create a Blueprint that on Tick gets the player pawn, checks if valid, then gets distance. If distance less than 500 and player is valid, print Alert.",
+      "expected_dsl": "BLUEPRINT: BP_SafeAlert\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetPlayerPawn\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: GetDistanceTo\nNODE n6: LessThan [B=500.0]\nNODE n7: Branch\nNODE n8: PrintString [InString=\"Alert\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.ReturnValue -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n7.Execute\nDATA n2.ReturnValue -> n5.OtherActor [Actor]\nDATA n5.ReturnValue -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute"
+    },
+    {
+      "id": "L05_20",
+      "category": "isvalid_complete_pattern",
+      "instruction": "Create a Blueprint that on BeginPlay gets player pawn, validates it, casts to Character, and if all checks pass stores it in a variable Player and prints Connected.",
+      "expected_dsl": "BLUEPRINT: BP_FullValidation\nPARENT: Actor\nVAR Player: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: GetPlayerPawn\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: CastToCharacter\nNODE n6: VariableSet [VarName=Player]\nNODE n7: PrintString [InString=\"Connected\"]\nNODE n8: PrintString [InString=\"No Player Found\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.ReturnValue -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nDATA n2.ReturnValue -> n5.Object [Actor]\nEXEC n5.CastSucceeded -> n6.Execute\nDATA n5.AsCharacter -> n6.Value [Actor]\nEXEC n6.Then -> n7.Execute\nEXEC n4.False -> n8.Execute"
+    }
+  ]
+}

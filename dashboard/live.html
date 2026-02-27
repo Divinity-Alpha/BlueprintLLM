@@ -393,8 +393,7 @@ const STATE_URL = '../logs/pipeline_live_state.json';
 
 let lastRunId = null;
 let tickTimer = null;
-let elapsedBase = 0;
-let tickStart = 0;
+let cycleStartTime = null;  // Unix timestamp (seconds) — fixed for the entire run
 
 // ─── Fetch State ─────────────────────────────────────────────────────────
 async function fetchState() {
@@ -479,6 +478,7 @@ function renderClocks(state) {
       elapsed.textContent = '—';
     }
     eta.textContent = '—';
+    cycleStartTime = null;
     stopElapsedTick();
     return;
   }
@@ -488,18 +488,18 @@ function renderClocks(state) {
     ? fmtDuration(state.eta_remaining_seconds)
     : '—';
 
-  // Start local elapsed counter for smooth updates
-  elapsedBase = state.elapsed_seconds || 0;
-  tickStart = Date.now();
+  // Lock to cycle_start_time once — never reset mid-run
+  cycleStartTime = state.cycle_start_time;
   startElapsedTick();
 }
 
 function startElapsedTick() {
   if (tickTimer) return;
   tickTimer = setInterval(() => {
-    const now = Date.now();
-    const localElapsed = elapsedBase + (now - tickStart) / 1000;
-    document.getElementById('clockElapsed').textContent = fmtDuration(localElapsed);
+    if (cycleStartTime) {
+      const localElapsed = Date.now() / 1000 - cycleStartTime;
+      document.getElementById('clockElapsed').textContent = fmtDuration(localElapsed);
+    }
   }, 1000);
 }
 

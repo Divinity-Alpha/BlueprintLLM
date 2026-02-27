@@ -8,3 +8,4 @@ __pycache__/
 .env
 STOP_SIGNAL
 backups/
+.cuda_cache/

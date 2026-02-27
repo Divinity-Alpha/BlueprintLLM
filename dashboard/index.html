@@ -168,7 +168,7 @@ svg text { font-family: 'JetBrains Mono', monospace; }
       <div class="header-title">BlueprintLLM <span>Training Observatory</span></div>
     </div>
     <div class="header-right">
-      <div class="generated-time">Updated 2026-02-24 12:40:51</div>
+      <div class="generated-time">Updated 2026-02-27 13:35:30</div>
       <div class="status-pill idle">
         <div class="status-dot"></div>
         <span>v0</span>
@@ -296,7 +296,7 @@ svg text { font-family: 'JetBrains Mono', monospace; }
           <span class="icon">📋</span> Recent Activity
         </div>
         <div class="log-container"><div class="log-line">
-            <span class="log-time">12:40 PM</span>
+            <span class="log-time">01:35 PM</span>
             <span class="log-msg info">Dashboard initialized — awaiting first training run</span>
         </div>
 </div>
@@ -306,16 +306,16 @@ svg text { font-family: 'JetBrains Mono', monospace; }
   <div class="panel health-grid-panel" style="margin-top:28px">
     <div class="panel-header">
       <div class="panel-title"><span class="icon">🩺</span> Training Health Monitor</div>
-      <div class="panel-badge">10 alerts</div>
+      <div class="panel-badge">5 alerts</div>
     </div>
     <div class="health-grid">
       <div class="health-status">
-        <div class="health-badge health-crit">CRITICAL</div>
+        <div class="health-badge health-ok">SUGGESTION</div>
         <div class="health-counts">
-          <div class="health-count crit"><span>Critical</span><span>1</span></div>
-          <div class="health-count warn"><span>Warning</span><span>2</span></div>
+          <div class="health-count crit"><span>Critical</span><span>0</span></div>
+          <div class="health-count warn"><span>Warning</span><span>0</span></div>
           <div class="health-count sugg"><span>Suggestion</span><span>1</span></div>
-          <div class="health-count info"><span>Info</span><span>6</span></div>
+          <div class="health-count info"><span>Info</span><span>4</span></div>
         </div>
       </div>
       <div class="health-alert-list" id="healthAlerts"></div>
@@ -326,9 +326,9 @@ svg text { font-family: 'JetBrains Mono', monospace; }
 const LOSS_HISTORY = [];
 const EVAL_POINTS = [];
 const NODE_MASTERY = [{"name": "BeginPlay", "category": "Events", "score": null}, {"name": "PrintString", "category": "Debug", "score": null}, {"name": "Delay", "category": "Flow", "score": null}, {"name": "Branch", "category": "Flow", "score": null}, {"name": "Sequence", "category": "Flow", "score": null}, {"name": "FlipFlop", "category": "Flow", "score": null}, {"name": "DoOnce", "category": "Flow", "score": null}, {"name": "Gate", "category": "Flow", "score": null}, {"name": "ForEachLoop", "category": "Flow", "score": null}, {"name": "WhileLoop", "category": "Flow", "score": null}, {"name": "CustomEvent", "category": "Events", "score": null}, {"name": "EventTick", "category": "Events", "score": null}, {"name": "InputAction", "category": "Input", "score": null}, {"name": "OnOverlap", "category": "Collision", "score": null}, {"name": "OnHit", "category": "Collision", "score": null}, {"name": "SpawnActor", "category": "Actor", "score": null}, {"name": "DestroyActor", "category": "Actor", "score": null}, {"name": "SetActorLocation", "category": "Transform", "score": null}, {"name": "GetActorLocation", "category": "Transform", "score": null}, {"name": "AddActorOffset", "category": "Transform", "score": null}, {"name": "SetActorRotation", "category": "Transform", "score": null}, {"name": "SetVisibility", "category": "Rendering", "score": null}, {"name": "SetStaticMesh", "category": "Rendering", "score": null}, {"name": "PlaySound", "category": "Audio", "score": null}, {"name": "PlayAnimMontage", "category": "Animation", "score": null}, {"name": "Timeline", "category": "Animation", "score": null}, {"name": "SetTimer", "category": "Timer", "score": null}, {"name": "ClearTimer", "category": "Timer", "score": null}, {"name": "CastTo", "category": "Casting", "score": null}, {"name": "IsValid", "category": "Utility", "score": null}, {"name": "GetPlayerCharacter", "category": "Player", "score": null}, {"name": "GetPlayerController", "category": "Player", "score": null}, {"name": "SetVariable", "category": "Variables", "score": null}, {"name": "GetVariable", "category": "Variables", "score": null}, {"name": "MathAdd", "category": "Math", "score": null}, {"name": "MathMultiply", "category": "Math", "score": null}, {"name": "VectorLength", "category": "Math", "score": null}, {"name": "GetDistanceTo", "category": "Math", "score": null}, {"name": "Lerp", "category": "Math", "score": null}, {"name": "MakeArray", "category": "Arrays", "score": null}, {"name": "ArrayAdd", "category": "Arrays", "score": null}, {"name": "ArrayGet", "category": "Arrays", "score": null}];
-const LESSONS = [{"id": 1, "title": "Lesson 01", "prompts": 20, "status": "active", "score": null}, {"id": 2, "title": "Lesson 02", "prompts": 24, "status": "pending", "score": null}, {"id": 3, "title": "Lesson 03", "prompts": 20, "status": "pending", "score": null}, {"id": 4, "title": "Lesson 04", "prompts": 20, "status": "pending", "score": null}, {"id": 5, "title": "Lesson 05 \u2014 Advanced Patterns", "prompts": 0, "status": "pending", "score": null}];
-const HEALTH_ALERTS = [{"level": "INFO", "dimension": "epoch_efficiency", "title": "Training completed", "detail": "Version v2: 52 steps, 3 epochs, 120.2 minutes, 458 examples.", "metric": "training_time_seconds", "value": 7212, "threshold": null}, {"level": "INFO", "dimension": "overfitting", "title": "Generalization: healthy", "detail": "Train accuracy 99.8% vs eval accuracy 99.8% (gap: 0.0%).", "metric": "accuracy_gap", "value": 0.0, "threshold": null}, {"level": "INFO", "dimension": "learning_rate", "title": "Learning rate configuration", "detail": "LR: 0.0002, total steps: 52, loss range: 1.0670 -> 0.0134.", "metric": "learning_rate", "value": 0.0002, "threshold": null}, {"level": "INFO", "dimension": "dataset_quality", "title": "Dataset composition", "detail": "Total: 458 | Synthetic: 452 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0", "metric": "dataset_total", "value": 458, "threshold": null}, {"level": "INFO", "dimension": "node_mastery", "title": "Node mastery snapshot", "detail": "33 nodes scored: 3 mastered (>=85%), 8 learning (60-84%), 22 struggling (<60%).", "metric": "nodes_mastered", "value": 3, "threshold": null}, {"level": "INFO", "dimension": "resource_usage", "title": "Training throughput", "detail": "15.75s per training example, 120.2 minutes total for 458 examples.", "metric": "time_per_example", "value": 15.746724890829695, "threshold": null}, {"level": "SUGGESTION", "dimension": "dataset_quality", "title": "Missing node types in training data", "detail": "7 key node types have zero training examples: CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.", "metric": "missing_key_nodes", "value": 7, "threshold": null}, {"level": "WARNING", "dimension": "overfitting", "title": "Accuracy plateau", "detail": "Accuracy has changed less than 0.5% over the last 3 cycles (99.8%, 99.8%, 99.8%). Consider curriculum changes, learning rate adjustments, or new training data.", "metric": "accuracy_plateau_range", "value": 0.0, "threshold": 0.005}, {"level": "WARNING", "dimension": "node_mastery", "title": "Node scores stagnant for 3+ cycles", "detail": "30 node(s) unchanged: Event_Tick (67%), MakeRotator (36%), MultiplyFloat (40%), AddActorLocalRotation (36%), Event_ActorBeginOverlap (78%).... Consider targeted lessons or more examples for these types.", "metric": "stagnant_node_count", "value": 30, "threshold": 1}, {"level": "CRITICAL", "dimension": "overfitting", "title": "Possible memorization", "detail": "Final training loss is 0.0134 (< 0.05 threshold). The model may be memorizing training data rather than learning generalizable patterns.", "metric": "final_loss", "value": 0.01343504637479782, "threshold": 0.05}];
-const HEALTH_SUMMARY = {"total_alerts": 10, "by_level": {"INFO": 6, "SUGGESTION": 1, "WARNING": 2, "CRITICAL": 1}, "overall_health": "critical"};
+const LESSONS = [{"id": 1, "title": "Lesson 01", "prompts": 20, "status": "active", "score": null}, {"id": 2, "title": "Lesson 02", "prompts": 24, "status": "pending", "score": null}, {"id": 3, "title": "Lesson 03", "prompts": 20, "status": "pending", "score": null}, {"id": 4, "title": "Lesson 04", "prompts": 20, "status": "pending", "score": null}, {"id": 5, "title": "Lesson 05", "prompts": 20, "status": "pending", "score": null}];
+const HEALTH_ALERTS = [{"level": "INFO", "dimension": "overfitting", "title": "Generalization: healthy", "detail": "Train accuracy 92.7% vs eval accuracy 93.9% (gap: -1.2%).", "metric": "accuracy_gap", "value": -0.012225928902626082, "threshold": null}, {"level": "INFO", "dimension": "learning_rate", "title": "Learning rate configuration", "detail": "LR: 5e-05, total steps: 25, loss range: 3.2857 -> 0.4062.", "metric": "learning_rate", "value": 5e-05, "threshold": null}, {"level": "INFO", "dimension": "dataset_quality", "title": "Dataset composition", "detail": "Total: 511 | Synthetic: 511 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0", "metric": "dataset_total", "value": 511, "threshold": null}, {"level": "INFO", "dimension": "node_mastery", "title": "Node mastery snapshot", "detail": "33 nodes scored: 0 mastered (>=85%), 0 learning (60-84%), 33 struggling (<60%).", "metric": "nodes_mastered", "value": 0, "threshold": null}, {"level": "SUGGESTION", "dimension": "dataset_quality", "title": "Missing node types in training data", "detail": "7 key node types have zero training examples: CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.", "metric": "missing_key_nodes", "value": 7, "threshold": null}];
+const HEALTH_SUMMARY = {"total_alerts": 5, "by_level": {"INFO": 4, "SUGGESTION": 1, "WARNING": 0, "CRITICAL": 0}, "overall_health": "suggestion"};
 
 function renderChart() {
   if (!LOSS_HISTORY.length) return;

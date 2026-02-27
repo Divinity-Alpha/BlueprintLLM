@@ -1,0 +1,42 @@
+
+============================================================
+Health Check — 2026-02-27 05:19:05
+============================================================
+[INFO      ] [learning_rate] Learning rate configuration
+             LR: 5e-05, total steps: 19, loss range: 1.6938 -> 0.0199.
+             metric=learning_rate value=5e-05
+[INFO      ] [dataset_quality] Dataset composition
+             Total: 391 | Synthetic: 391 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0
+             metric=dataset_total value=391
+[INFO      ] [node_mastery] Node mastery snapshot
+             33 nodes scored: 3 mastered (>=85%), 8 learning (60-84%), 22 struggling (<60%).
+             metric=nodes_mastered value=3
+[SUGGESTION] [dataset_quality] Missing node types in training data
+             8 key node types have zero training examples: SetActorLocation, CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.
+             metric=missing_key_nodes value=8
+[CRITICAL  ] [overfitting] Possible memorization
+             Final training loss is 0.0199 (< 0.05 threshold). The model may be memorizing training data rather than learning generalizable patterns.
+             metric=final_loss value=0.0199 (threshold: 0.05)
+
+Total: 5 alerts
+
+============================================================
+Health Check — 2026-02-27 05:19:15
+============================================================
+[INFO      ] [learning_rate] Learning rate configuration
+             LR: 5e-05, total steps: 19, loss range: 1.6938 -> 0.0199.
+             metric=learning_rate value=5e-05
+[INFO      ] [dataset_quality] Dataset composition
+             Total: 391 | Synthetic: 391 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0
+             metric=dataset_total value=391
+[INFO      ] [node_mastery] Node mastery snapshot
+             33 nodes scored: 3 mastered (>=85%), 8 learning (60-84%), 22 struggling (<60%).
+             metric=nodes_mastered value=3
+[SUGGESTION] [dataset_quality] Missing node types in training data
+             8 key node types have zero training examples: SetActorLocation, CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.
+             metric=missing_key_nodes value=8
+[CRITICAL  ] [overfitting] Possible memorization
+             Final training loss is 0.0199 (< 0.05 threshold). The model may be memorizing training data rather than learning generalizable patterns.
+             metric=final_loss value=0.0199 (threshold: 0.05)
+
+Total: 5 alerts

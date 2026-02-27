@@ -1,0 +1,141 @@
+{
+  "generated": "2026-02-27T05:19:15",
+  "version": "v2",
+  "cycle": 2,
+  "summary": {
+    "total_alerts": 5,
+    "by_level": {
+      "INFO": 3,
+      "SUGGESTION": 1,
+      "WARNING": 0,
+      "CRITICAL": 1
+    },
+    "overall_health": "critical"
+  },
+  "alerts": [
+    {
+      "level": "INFO",
+      "dimension": "learning_rate",
+      "title": "Learning rate configuration",
+      "detail": "LR: 5e-05, total steps: 19, loss range: 1.6938 -> 0.0199.",
+      "metric": "learning_rate",
+      "value": 5e-05,
+      "threshold": null
+    },
+    {
+      "level": "INFO",
+      "dimension": "dataset_quality",
+      "title": "Dataset composition",
+      "detail": "Total: 391 | Synthetic: 391 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0",
+      "metric": "dataset_total",
+      "value": 391,
+      "threshold": null
+    },
+    {
+      "level": "INFO",
+      "dimension": "node_mastery",
+      "title": "Node mastery snapshot",
+      "detail": "33 nodes scored: 3 mastered (>=85%), 8 learning (60-84%), 22 struggling (<60%).",
+      "metric": "nodes_mastered",
+      "value": 3,
+      "threshold": null
+    },
+    {
+      "level": "SUGGESTION",
+      "dimension": "dataset_quality",
+      "title": "Missing node types in training data",
+      "detail": "8 key node types have zero training examples: SetActorLocation, CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.",
+      "metric": "missing_key_nodes",
+      "value": 8,
+      "threshold": null
+    },
+    {
+      "level": "CRITICAL",
+      "dimension": "overfitting",
+      "title": "Possible memorization",
+      "detail": "Final training loss is 0.0199 (< 0.05 threshold). The model may be memorizing training data rather than learning generalizable patterns.",
+      "metric": "final_loss",
+      "value": 0.0199,
+      "threshold": 0.05
+    }
+  ],
+  "current_cycle": {
+    "version": "v2",
+    "date": "2026-02-27",
+    "dataset_size": 391,
+    "lesson_data_size": 0,
+    "dataset_composition": {
+      "total": 391,
+      "synthetic": 391,
+      "lesson": 0,
+      "auto_translated": 0,
+      "manual": 0,
+      "unknown": 0,
+      "duplicates": 0
+    },
+    "epochs": 2,
+    "learning_rate": 5e-05,
+    "training_time_seconds": null,
+    "total_steps": 19,
+    "initial_loss": 1.6938,
+    "final_loss": 0.0199,
+    "eval_loss": null,
+    "train_accuracy": 0.9980449676513672,
+    "eval_accuracy": null,
+    "node_scores": {
+      "Event_BeginPlay": 1.0,
+      "PrintString": 1.0,
+      "Event_Tick": 0.667,
+      "MakeRotator": 0.364,
+      "MultiplyFloat": 0.4,
+      "AddActorLocalRotation": 0.364,
+      "Event_ActorBeginOverlap": 0.778,
+      "Event_ActorEndOverlap": 0.444,
+      "Branch": 0.167,
+      "Delay": 0.929,
+      "DestroyActor": 0.75,
+      "Sequence": 0.333,
+      "Event_InputAction": 0.8,
+      "FlipFlop": 0.8,
+      "SetActorHiddenInGame": 0.8,
+      "DoOnce": 0.5,
+      "CastToCharacter": 0.778,
+      "ForEachLoop": 0.182,
+      "Gate": 0.167,
+      "CallEvent": 0.222,
+      "Event_CustomEvent": 0.222,
+      "GetVariable": 0.143,
+      "AddInt": 0.143,
+      "SetVariable": 0.143,
+      "GetActorLocation": 0.375,
+      "GetActorRotation": 0.1,
+      "SpawnActor": 0.1,
+      "PlaySound": 0.375,
+      "GetDistanceTo": 0.143,
+      "LessThanFloat": 0.143,
+      "Event_EndPlay": 0.667,
+      "NotBool": 0.143,
+      "AddFloat": 0.4
+    },
+    "eval_summary": {
+      "total": 20,
+      "passed": 18,
+      "avg_score": 0.43
+    }
+  },
+  "trends": {
+    "loss": [
+      0.0199,
+      0.0199
+    ],
+    "accuracy": [
+      0.9980449676513672,
+      0.9980449676513672
+    ],
+    "dataset_size": [
+      391,
+      391
+    ],
+    "training_time": []
+  }
+}

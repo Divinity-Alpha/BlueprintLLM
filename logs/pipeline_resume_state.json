@@ -1,0 +1,58 @@
+{
+  "completed_steps": [
+    "step_data_foundation",
+    "step_preflight",
+    "step_train",
+    "step_post_training",
+    "step_exam",
+    "step_grading",
+    "step_lesson_integration",
+    "step_dashboard_finalize"
+  ],
+  "failed_step": "unknown",
+  "error_info": {
+    "errors": [
+      {
+        "step": "Fine-tuning v2",
+        "category": "timeout",
+        "message": "TIMED OUT (4.0h limit)",
+        "timestamp": "2026-02-27T04:00:55.106738",
+        "attempt": 0
+      },
+      {
+        "step": "Training summary",
+        "category": "encoding",
+        "message": "exit 1: encoding",
+        "timestamp": "2026-02-27T05:18:55.524719",
+        "attempt": 0
+      },
+      {
+        "step": "Training summary",
+        "category": "encoding",
+        "message": "exit 1: encoding",
+        "timestamp": "2026-02-27T05:19:05.574927",
+        "attempt": 1
+      },
+      {
+        "step": "Health check v2",
+        "category": "unknown",
+        "message": "exit 2: unknown",
+        "timestamp": "2026-02-27T05:19:05.675347",
+        "attempt": 0
+      },
+      {
+        "step": "Health check v2",
+        "category": "unknown",
+        "message": "exit 2: unknown",
+        "timestamp": "2026-02-27T05:19:15.775381",
+        "attempt": 1
+      }
+    ],
+    "message": "  FAILED (exit 2, category=unknown)"
+  },
+  "state_snapshot": {
+    "last_training_data_hash": "95142c7168fff3d4",
+    "last_model_version": 2
+  },
+  "timestamp": "2026-02-27T08:20:43.146564"
+}

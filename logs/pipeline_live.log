@@ -1,755 +1,763 @@
-[14:01:00] [STEP 1] STARTING: Data Foundation | ETA: 0.6s
-[14:01:00] [STEP 1.3] STARTING: Generate synthetic data | ETA: 0.0s
+[19:06:06] [STEP 1] STARTING: Data Foundation | ETA: 0.8s
+[19:06:06] [STEP 1.3] STARTING: Generate synthetic data | ETA: 0.0s
            count=500
-[14:01:00] [STEP 1.3] COMPLETE: Generate synthetic data (0.0s)
+[19:06:06] [STEP 1.3] COMPLETE: Generate synthetic data (0.0s)
            295 examples
-[14:01:00] [STEP 1.4] STARTING: Convert lessons to training data | ETA: 2.6s
-[14:01:03] [STEP 1.4] COMPLETE: Convert lessons to training data (2.6s)
-[14:01:03] [STEP 1] COMPLETE: Data Foundation (2.7s)
-[14:01:03] [STEP 2] STARTING: Pre-Flight Checks | ETA: 4.2s
-[14:01:03] [STEP 2.1] STARTING: Validate DSL
+[19:06:06] [STEP 1.4] STARTING: Convert lessons to training data | ETA: 2.6s
+[19:06:10] [STEP 1.4] COMPLETE: Convert lessons to training data (4.0s)
+[19:06:10] [STEP 1] COMPLETE: Data Foundation (4.1s)
+[19:06:10] [STEP 2] STARTING: Pre-Flight Checks | ETA: 4.2s
+[19:06:10] [STEP 2.1] STARTING: Validate DSL
            Demo111_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:10] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:10] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo112_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:10] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:10] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo113_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:10] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:10] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo114_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:10] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:10] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo115_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:10] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo116_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo117_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo118_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo119_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo120_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo121_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo122_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:03] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo123_auto.dsl
-[14:01:03] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo124_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo125_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo126_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo127_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo128_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo129_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:11] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            Demo130_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:11] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoBP_ThirdPersonCharacter_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoBP_ThirdPersonController_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoEnvQueryContext_Player_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoFirstPersonCharacter_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoFPSBP_DoorFrame_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoFPSController_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoFPSCR_Mannequin_Body_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:04] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoFPSCR_Mannequin_FootIK_auto.dsl
-[14:01:04] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoFPSCR_Mannequin_Procedural_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoFPSUIThumbstick_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoFPSUITouchSimple_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoStateTreeCondition_IsCharacterGrounded_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            DemoStateTreeTask_ChargedAttack_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr101_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:12] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr102_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:12] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr103_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr104_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr105_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr106_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr107_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr108_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:05] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr109_auto.dsl
-[14:01:05] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:06] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr110_auto.dsl
-[14:01:06] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:06] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr111_auto.dsl
-[14:01:06] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:06] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr112_auto.dsl
-[14:01:06] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:06] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            fhfhgytr113_auto.dsl
-[14:01:06] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:06] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.1] STARTING: Validate DSL | ETA: 0.0s
            hello_world_auto.dsl
-[14:01:06] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
-[14:01:06] [STEP 2.2] STARTING: Validate DSL
+[19:06:13] [STEP 2.1] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.2] STARTING: Validate DSL
            train.jsonl
-[14:01:06] [STEP 2.2] COMPLETE: Validate DSL (0.0s)
-[14:01:06] [STEP 2.3] STARTING: Generate system prompt
-[14:01:06] [STEP 2.3] COMPLETE: Generate system prompt (0.0s)
+[19:06:13] [STEP 2.2] COMPLETE: Validate DSL (0.0s)
+[19:06:13] [STEP 2.3] STARTING: Generate system prompt
+[19:06:13] [STEP 2.3] COMPLETE: Generate system prompt (0.0s)
            5,660 chars, 34 nodes
-[14:01:06] [STEP 2.4] STARTING: Compute data hash | ETA: 0.0s
-[14:01:06] [STEP 2.4] COMPLETE: Compute data hash (0.0s)
-           hash=c20dcde85915e577
-[14:01:06] [STEP 2] COMPLETE: Pre-Flight Checks (3.3s)
-[14:01:11] [STEP 3.1] STARTING: Load system prompt | ETA: 0.0s
-[14:01:11] [STEP 3.1] COMPLETE: Load system prompt (0.0s)
+[19:06:13] [STEP 2.4] STARTING: Compute data hash | ETA: 0.0s
+[19:06:13] [STEP 2.4] COMPLETE: Compute data hash (0.0s)
+           hash=ff48b2274612f318
+[19:06:13] [STEP 2] COMPLETE: Pre-Flight Checks (3.3s)
+[19:06:18] [STEP 3.1] STARTING: Load system prompt | ETA: 0.0s
+[19:06:18] [STEP 3.1] COMPLETE: Load system prompt (0.0s)
            463 chars
-[14:01:11] [STEP 3.2] STARTING: Load training dataset | ETA: 0.2s
+[19:06:18] [STEP 3.2] STARTING: Load training dataset | ETA: 0.2s
            From C:\BlueprintLLM\datasets\train.jsonl
-[14:01:11] [STEP 3.2] COMPLETE: Load training dataset (0.1s)
-           573 examples
-[14:01:11] [STEP 3.3] STARTING: Detect GPU + configure precision | ETA: 0.0s
-[14:01:11] [STEP 3.3] COMPLETE: Detect GPU + configure precision (0.0s)
+[19:06:18] [STEP 3.2] COMPLETE: Load training dataset (0.1s)
+           587 examples
+[19:06:18] [STEP 3.3] STARTING: Detect GPU + configure precision | ETA: 0.0s
+[19:06:18] [STEP 3.3] COMPLETE: Detect GPU + configure precision (0.0s)
            NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition
-[14:01:11] [STEP 3.4] STARTING: Load base model + quantize | ETA: 2m 48s
+[19:06:18] [STEP 3.4] STARTING: Load base model + quantize | ETA: 2m 48s
            Model: meta-llama/Meta-Llama-3.1-70B
-[14:03:24] [STEP 3.4] COMPLETE: Load base model + quantize (2m 13s)
-[14:03:24] [STEP 3.5] STARTING: Attach LoRA adapter | ETA: 0.0s
-[14:03:24] [STEP 3.5] COMPLETE: Attach LoRA adapter (0.0s)
-[14:03:24] [STEP 3.6] STARTING: Configure SFT Trainer | ETA: 1.7s
-[14:03:24] [STEP 3.6] COMPLETE: Configure SFT Trainer (0.5s)
-[14:03:24] [STEP 4.1] STARTING: Pre-training backup | ETA: 0.1s
-[14:03:27] [STEP 4.1] COMPLETE: Pre-training backup (2.6s)
-[14:03:27] [STEP 4.2] STARTING: Initialize training | ETA: 0.0s
-[14:03:27] [STEP 4.2] COMPLETE: Initialize training (0.0s)
-[14:03:27] [STEP 4.3] STARTING: Training loop
-           2 epochs, 573 examples
-[14:03:51]   [4.3] 1/144 (0%)
-[14:04:14]   [4.3] 2/144 (1%)
-[14:04:37]   [4.3] 3/144 (2%)
-[14:05:01]   [4.3] 4/144 (2%)
-[14:05:22]   [4.3] 5/144 (3%)
-[14:05:43]   [4.3] 6/144 (4%)
-[14:06:06]   [4.3] 7/144 (4%)
-[14:06:27]   [4.3] 8/144 (5%)
-[14:06:49]   [4.3] 9/144 (6%)
-[14:07:15]   [4.3] 10/144 (6%)
-[14:07:37]   [4.3] 11/144 (7%)
-[14:08:01]   [4.3] 12/144 (8%)
-[14:08:23]   [4.3] 13/144 (9%)
-[14:08:46]   [4.3] 14/144 (9%)
-[14:09:09]   [4.3] 15/144 (10%)
-[14:09:29]   [4.3] 16/144 (11%)
-[14:09:53]   [4.3] 17/144 (11%)
-[14:10:17]   [4.3] 18/144 (12%)
-[14:10:40]   [4.3] 19/144 (13%)
-[14:11:04]   [4.3] 20/144 (13%)
-[14:11:24]   [4.3] 21/144 (14%)
-[14:11:48]   [4.3] 22/144 (15%)
-[14:12:11]   [4.3] 23/144 (15%)
-[14:12:34]   [4.3] 24/144 (16%)
-[14:12:56]   [4.3] 25/144 (17%)
-[14:13:19]   [4.3] 26/144 (18%)
-[14:13:43]   [4.3] 27/144 (18%)
-[14:14:08]   [4.3] 28/144 (19%)
-[14:14:30]   [4.3] 29/144 (20%)
-[14:14:52]   [4.3] 30/144 (20%)
-[14:15:16]   [4.3] 31/144 (21%)
-[14:15:37]   [4.3] 32/144 (22%)
-[14:16:00]   [4.3] 33/144 (22%)
-[14:16:22]   [4.3] 34/144 (23%)
-[14:16:45]   [4.3] 35/144 (24%)
-[14:17:12]   [4.3] 36/144 (25%)
-[14:17:34]   [4.3] 37/144 (25%)
-[14:17:56]   [4.3] 38/144 (26%)
-[14:18:20]   [4.3] 39/144 (27%)
-[14:18:44]   [4.3] 40/144 (27%)
-[14:19:07]   [4.3] 41/144 (28%)
-[14:19:29]   [4.3] 42/144 (29%)
-[14:20:02]   [4.3] 43/144 (29%)
-[14:20:24]   [4.3] 44/144 (30%)
-[14:20:48]   [4.3] 45/144 (31%)
-[14:23:56]   [4.3] 46/144 (31%)
-[14:25:03]   [4.3] 47/144 (32%)
-[14:25:25]   [4.3] 48/144 (33%)
-[14:25:46]   [4.3] 49/144 (34%)
-[14:26:09]   [4.3] 50/144 (34%)
-[14:29:36]   [4.3] 51/144 (35%)
-[14:30:00]   [4.3] 52/144 (36%)
-[14:30:22]   [4.3] 53/144 (36%)
-[14:30:45]   [4.3] 54/144 (37%)
-[14:31:16]   [4.3] 55/144 (38%)
-[14:31:38]   [4.3] 56/144 (38%)
-[14:32:02]   [4.3] 57/144 (39%)
-[14:32:25]   [4.3] 58/144 (40%)
-[14:32:47]   [4.3] 59/144 (40%)
-[14:34:04]   [4.3] 60/144 (41%)
-[14:34:28]   [4.3] 61/144 (42%)
-[14:34:52]   [4.3] 62/144 (43%)
-[14:36:21]   [4.3] 63/144 (43%)
-[14:36:43]   [4.3] 64/144 (44%)
-[14:37:07]   [4.3] 65/144 (45%)
-[14:37:29]   [4.3] 66/144 (45%)
-[14:37:53]   [4.3] 67/144 (46%)
-[14:38:18]   [4.3] 68/144 (47%)
-[14:38:38]   [4.3] 69/144 (47%)
-[14:38:58]   [4.3] 70/144 (48%)
-[14:39:20]   [4.3] 71/144 (49%)
-[14:39:33]   [4.3] 72/144 (50%)
-[14:39:56]   [4.3] 73/144 (50%)
-[14:40:27]   [4.3] 74/144 (51%)
-[14:40:49]   [4.3] 75/144 (52%)
-[14:41:11]   [4.3] 76/144 (52%)
-[14:41:33]   [4.3] 77/144 (53%)
-[14:44:40]   [4.3] 78/144 (54%)
-[14:45:06]   [4.3] 79/144 (54%)
-[14:45:27]   [4.3] 80/144 (55%)
-[14:45:50]   [4.3] 81/144 (56%)
-[14:46:14]   [4.3] 82/144 (56%)
-[14:46:36]   [4.3] 83/144 (57%)
-[14:46:58]   [4.3] 84/144 (58%)
-[14:47:40]   [4.3] 85/144 (59%)
-[14:48:05]   [4.3] 86/144 (59%)
-[14:48:27]   [4.3] 87/144 (60%)
-[14:48:51]   [4.3] 88/144 (61%)
-[14:49:14]   [4.3] 89/144 (61%)
-[14:49:34]   [4.3] 90/144 (62%)
-[14:50:00]   [4.3] 91/144 (63%)
-[14:50:31]   [4.3] 92/144 (63%)
-[14:50:54]   [4.3] 93/144 (64%)
-[14:51:16]   [4.3] 94/144 (65%)
-[14:52:13]   [4.3] 95/144 (65%)
-[14:54:48]   [4.3] 96/144 (66%)
-[14:56:21]   [4.3] 97/144 (67%)
-[14:56:49]   [4.3] 98/144 (68%)
-[14:58:00]   [4.3] 99/144 (68%)
-[14:58:22]   [4.3] 100/144 (69%)
-[14:58:30]   [4.3] 100/144 (69%)
-[14:58:56]   [4.3] 101/144 (70%)
-[14:59:19]   [4.3] 102/144 (70%)
-[14:59:45]   [4.3] 103/144 (71%)
-[15:00:09]   [4.3] 104/144 (72%)
-[15:00:32]   [4.3] 105/144 (72%)
-[15:00:56]   [4.3] 106/144 (73%)
-[15:01:19]   [4.3] 107/144 (74%)
-[15:01:42]   [4.3] 108/144 (75%)
-[15:02:24]   [4.3] 109/144 (75%)
-[15:04:05]   [4.3] 110/144 (76%)
-[15:04:33]   [4.3] 111/144 (77%)
-[15:04:55]   [4.3] 112/144 (77%)
-[15:05:19]   [4.3] 113/144 (78%)
-[15:05:40]   [4.3] 114/144 (79%)
-[15:07:19]   [4.3] 115/144 (79%)
-[15:07:40]   [4.3] 116/144 (80%)
-[15:08:03]   [4.3] 117/144 (81%)
-[15:08:25]   [4.3] 118/144 (81%)
-[15:08:45]   [4.3] 119/144 (82%)
-[15:09:06]   [4.3] 120/144 (83%)
-[15:09:29]   [4.3] 121/144 (84%)
-[15:09:51]   [4.3] 122/144 (84%)
-[15:10:14]   [4.3] 123/144 (85%)
-[15:10:39]   [4.3] 124/144 (86%)
-[15:13:56]   [4.3] 125/144 (86%)
-[15:14:19]   [4.3] 126/144 (87%)
-[15:14:40]   [4.3] 127/144 (88%)
-[15:15:02]   [4.3] 128/144 (88%)
-[15:15:23]   [4.3] 129/144 (89%)
-[15:15:46]   [4.3] 130/144 (90%)
-[15:16:09]   [4.3] 131/144 (90%)
-[15:16:33]   [4.3] 132/144 (91%)
-[15:16:55]   [4.3] 133/144 (92%)
-[15:17:16]   [4.3] 134/144 (93%)
-[15:17:38]   [4.3] 135/144 (93%)
-[15:23:04]   [4.3] 136/144 (94%)
-[15:23:26]   [4.3] 137/144 (95%)
-[15:23:49]   [4.3] 138/144 (95%)
-[15:24:20]   [4.3] 139/144 (96%)
-[15:24:41]   [4.3] 140/144 (97%)
-[15:25:09]   [4.3] 141/144 (97%)
-[15:25:31]   [4.3] 142/144 (98%)
-[15:28:04]   [4.3] 143/144 (99%)
-[15:28:18]   [4.3] 144/144 (100%)
-[15:28:22] [STEP 4.3] COMPLETE: Training loop (1h 24m)
-[15:28:22] [STEP 4.4] STARTING: Save model weights
-[15:28:24] [STEP 4.4] COMPLETE: Save model weights (1.6s)
-[15:28:24] [STEP 4.5] STARTING: Save training config
-[15:28:24] [STEP 4.5] COMPLETE: Save training config (0.0s)
-[15:28:24] [STEP 4.6] STARTING: Save system prompt
-[15:28:24] [STEP 4.6] COMPLETE: Save system prompt (0.0s)
-[15:28:24] [STEP 4.7] STARTING: Post-training backup
-[15:28:24] [STEP 4.7] COMPLETE: Post-training backup (0.3s)
-[15:28:25] [STEP 5] STARTING: Post-Training | ETA: 20.3s
-[15:28:25] [STEP 5.1] STARTING: Verify model output | ETA: 0.0s
-[15:28:25] [STEP 5.1] COMPLETE: Verify model output (0.0s)
-[15:28:36] [STEP 5.3] STARTING: Run health checks
-           v4
-[15:28:36] [STEP 5.3] COMPLETE: Run health checks (0.0s)
-           Health: suggestion
-[15:28:36] [STEP 5] COMPLETE: Post-Training (10.2s)
-[15:28:36] [STEP 6] STARTING: Exam | ETA: 2h 27m
-[15:28:36] [STEP 6.1] STARTING: Load lesson
+[19:08:32] [STEP 3.4] COMPLETE: Load base model + quantize (2m 13s)
+[19:08:32] [STEP 3.5] STARTING: Attach LoRA adapter | ETA: 0.0s
+[19:08:32] [STEP 3.5] COMPLETE: Attach LoRA adapter (0.0s)
+[19:08:32] [STEP 3.6] STARTING: Configure SFT Trainer | ETA: 1.7s
+[19:08:33] [STEP 3.6] COMPLETE: Configure SFT Trainer (0.5s)
+[19:08:33] [STEP 4.1] STARTING: Pre-training backup | ETA: 0.1s
+[19:08:35] [STEP 4.1] COMPLETE: Pre-training backup (2.7s)
+[19:08:35] [STEP 4.2] STARTING: Initialize training | ETA: 0.0s
+[19:08:35] [STEP 4.2] COMPLETE: Initialize training (0.0s)
+[19:08:35] [STEP 4.3] STARTING: Training loop
+           2 epochs, 587 examples
+[19:08:59]   [4.3] 1/148 (0%)
+[19:09:21]   [4.3] 2/148 (1%)
+[19:09:44]   [4.3] 3/148 (2%)
+[19:10:07]   [4.3] 4/148 (2%)
+[19:10:31]   [4.3] 5/148 (3%)
+[19:10:55]   [4.3] 6/148 (4%)
+[19:11:17]   [4.3] 7/148 (4%)
+[19:11:38]   [4.3] 8/148 (5%)
+[19:12:05]   [4.3] 9/148 (6%)
+[19:12:26]   [4.3] 10/148 (6%)
+[19:12:50]   [4.3] 11/148 (7%)
+[19:13:13]   [4.3] 12/148 (8%)
+[19:13:35]   [4.3] 13/148 (8%)
+[19:13:58]   [4.3] 14/148 (9%)
+[19:14:21]   [4.3] 15/148 (10%)
+[19:14:43]   [4.3] 16/148 (10%)
+[19:15:09]   [4.3] 17/148 (11%)
+[19:15:31]   [4.3] 18/148 (12%)
+[19:15:55]   [4.3] 19/148 (12%)
+[19:16:17]   [4.3] 20/148 (13%)
+[19:16:39]   [4.3] 21/148 (14%)
+[19:17:03]   [4.3] 22/148 (14%)
+[19:17:25]   [4.3] 23/148 (15%)
+[19:17:49]   [4.3] 24/148 (16%)
+[19:18:12]   [4.3] 25/148 (16%)
+[19:18:33]   [4.3] 26/148 (17%)
+[19:18:59]   [4.3] 27/148 (18%)
+[19:19:22]   [4.3] 28/148 (18%)
+[19:19:45]   [4.3] 29/148 (19%)
+[19:20:10]   [4.3] 30/148 (20%)
+[19:20:32]   [4.3] 31/148 (20%)
+[19:20:55]   [4.3] 32/148 (21%)
+[19:21:20]   [4.3] 33/148 (22%)
+[19:21:42]   [4.3] 34/148 (22%)
+[19:22:05]   [4.3] 35/148 (23%)
+[19:22:27]   [4.3] 36/148 (24%)
+[19:22:49]   [4.3] 37/148 (25%)
+[19:23:15]   [4.3] 38/148 (25%)
+[19:23:37]   [4.3] 39/148 (26%)
+[19:24:03]   [4.3] 40/148 (27%)
+[19:24:26]   [4.3] 41/148 (27%)
+[19:24:51]   [4.3] 42/148 (28%)
+[19:25:15]   [4.3] 43/148 (29%)
+[19:25:40]   [4.3] 44/148 (29%)
+[19:26:03]   [4.3] 45/148 (30%)
+[19:26:25]   [4.3] 46/148 (31%)
+[19:26:50]   [4.3] 47/148 (31%)
+[19:27:13]   [4.3] 48/148 (32%)
+[19:27:37]   [4.3] 49/148 (33%)
+[19:28:01]   [4.3] 50/148 (33%)
+[19:28:24]   [4.3] 51/148 (34%)
+[19:28:47]   [4.3] 52/148 (35%)
+[19:29:10]   [4.3] 53/148 (35%)
+[19:29:31]   [4.3] 54/148 (36%)
+[19:29:53]   [4.3] 55/148 (37%)
+[19:30:16]   [4.3] 56/148 (37%)
+[19:30:38]   [4.3] 57/148 (38%)
+[19:31:02]   [4.3] 58/148 (39%)
+[19:36:55]   [4.3] 59/148 (39%)
+[19:37:32]   [4.3] 60/148 (40%)
+[19:37:56]   [4.3] 61/148 (41%)
+[19:42:39]   [4.3] 62/148 (41%)
+[19:43:03]   [4.3] 63/148 (42%)
+[19:43:24]   [4.3] 64/148 (43%)
+[19:44:11]   [4.3] 65/148 (43%)
+[19:44:32]   [4.3] 66/148 (44%)
+[19:44:56]   [4.3] 67/148 (45%)
+[19:45:18]   [4.3] 68/148 (45%)
+[19:45:40]   [4.3] 69/148 (46%)
+[19:46:04]   [4.3] 70/148 (47%)
+[19:50:47]   [4.3] 71/148 (47%)
+[19:51:17]   [4.3] 72/148 (48%)
+[19:51:38]   [4.3] 73/148 (49%)
+[19:51:47]   [4.3] 74/148 (50%)
+[19:52:10]   [4.3] 75/148 (50%)
+[19:52:32]   [4.3] 76/148 (51%)
+[19:53:13]   [4.3] 77/148 (52%)
+[19:53:36]   [4.3] 78/148 (52%)
+[19:53:59]   [4.3] 79/148 (53%)
+[19:54:22]   [4.3] 80/148 (54%)
+[19:54:45]   [4.3] 81/148 (54%)
+[19:55:10]   [4.3] 82/148 (55%)
+[19:55:35]   [4.3] 83/148 (56%)
+[19:58:42]   [4.3] 84/148 (56%)
+[19:59:06]   [4.3] 85/148 (57%)
+[20:03:18]   [4.3] 86/148 (58%)
+[20:03:38]   [4.3] 87/148 (58%)
+[20:04:02]   [4.3] 88/148 (59%)
+[20:04:25]   [4.3] 89/148 (60%)
+[20:04:48]   [4.3] 90/148 (60%)
+[20:07:23]   [4.3] 91/148 (61%)
+[20:07:44]   [4.3] 92/148 (62%)
+[20:08:09]   [4.3] 93/148 (62%)
+[20:08:30]   [4.3] 94/148 (63%)
+[20:13:17]   [4.3] 95/148 (64%)
+[20:13:38]   [4.3] 96/148 (64%)
+[20:14:03]   [4.3] 97/148 (65%)
+[20:14:25]   [4.3] 98/148 (66%)
+[20:14:55]   [4.3] 99/148 (66%)
+[20:15:17]   [4.3] 100/148 (67%)
+[20:15:25]   [4.3] 100/148 (67%)
+[20:16:06]   [4.3] 101/148 (68%)
+[20:16:30]   [4.3] 102/148 (68%)
+[20:16:55]   [4.3] 103/148 (69%)
+[20:17:17]   [4.3] 104/148 (70%)
+[20:17:38]   [4.3] 105/148 (70%)
+[20:18:32]   [4.3] 106/148 (71%)
+[20:18:54]   [4.3] 107/148 (72%)
+[20:19:14]   [4.3] 108/148 (72%)
+[20:19:36]   [4.3] 109/148 (73%)
+[20:19:58]   [4.3] 110/148 (74%)
+[20:20:22]   [4.3] 111/148 (75%)
+[20:20:46]   [4.3] 112/148 (75%)
+[20:25:02]   [4.3] 113/148 (76%)
+[20:25:25]   [4.3] 114/148 (77%)
+[20:26:11]   [4.3] 115/148 (77%)
+[20:26:34]   [4.3] 116/148 (78%)
+[20:26:56]   [4.3] 117/148 (79%)
+[20:32:30]   [4.3] 118/148 (79%)
+[20:36:46]   [4.3] 119/148 (80%)
+[20:38:56]   [4.3] 120/148 (81%)
+[20:39:17]   [4.3] 121/148 (81%)
+[20:40:32]   [4.3] 122/148 (82%)
+[20:41:12]   [4.3] 123/148 (83%)
+[20:41:33]   [4.3] 124/148 (83%)
+[20:41:56]   [4.3] 125/148 (84%)
+[20:42:19]   [4.3] 126/148 (85%)
+[20:42:42]   [4.3] 127/148 (85%)
+[20:47:59]   [4.3] 128/148 (86%)
+[20:48:22]   [4.3] 129/148 (87%)
+[20:48:45]   [4.3] 130/148 (87%)
+[20:51:12]   [4.3] 131/148 (88%)
+[20:51:33]   [4.3] 132/148 (89%)
+[20:51:56]   [4.3] 133/148 (89%)
+[20:52:20]   [4.3] 134/148 (90%)
+[20:52:43]   [4.3] 135/148 (91%)
+[20:53:06]   [4.3] 136/148 (91%)
+[20:53:41]   [4.3] 137/148 (92%)
+[20:54:05]   [4.3] 138/148 (93%)
+[20:54:50]   [4.3] 139/148 (93%)
+[20:55:12]   [4.3] 140/148 (94%)
+[20:55:33]   [4.3] 141/148 (95%)
+[20:55:56]   [4.3] 142/148 (95%)
+[21:00:40]   [4.3] 143/148 (96%)
+[21:06:24]   [4.3] 144/148 (97%)
+[21:06:44]   [4.3] 145/148 (97%)
+[21:07:06]   [4.3] 146/148 (98%)
+[21:07:28]   [4.3] 147/148 (99%)
+[21:07:37]   [4.3] 148/148 (100%)
+[21:07:40] [STEP 4.3] COMPLETE: Training loop (1h 59m)
+[21:07:40] [STEP 4.4] STARTING: Save model weights
+[21:07:42] [STEP 4.4] COMPLETE: Save model weights (1.7s)
+[21:07:42] [STEP 4.5] STARTING: Save training config
+[21:07:42] [STEP 4.5] COMPLETE: Save training config (0.0s)
+[21:07:42] [STEP 4.6] STARTING: Save system prompt
+[21:07:42] [STEP 4.6] COMPLETE: Save system prompt (0.0s)
+[21:07:42] [STEP 4.7] STARTING: Post-training backup
+[21:07:43] [STEP 4.7] COMPLETE: Post-training backup (0.8s)
+[21:07:45] [STEP 5] STARTING: Post-Training | ETA: 17.0s
+[21:07:45] [STEP 5.1] STARTING: Verify model output | ETA: 0.0s
+[21:07:45] [STEP 5.1] COMPLETE: Verify model output (0.0s)
+[21:07:56] [STEP 5.3] STARTING: Run health checks
+           v5
+[21:07:56] [STEP 5.3] COMPLETE: Run health checks (0.0s)
+           Health: critical
+[21:08:06] [STEP 5.3] STARTING: Run health checks | ETA: 0.0s
+           v5
+[21:08:06] [STEP 5.3] COMPLETE: Run health checks (0.0s)
+           Health: warning
+[21:08:06] [STEP 5] COMPLETE: Post-Training (20.5s)
+[21:08:06] [STEP 6] STARTING: Exam | ETA: 2h 42m
+[21:08:18] [STEP 6.1] STARTING: Load lesson
            C:\BlueprintLLM\lessons\lesson_01.json
-[15:28:36] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[21:08:18] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            20 prompts
-[15:28:36] [STEP 6.2] STARTING: Load model for exam
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[15:30:58] [STEP 6.2] COMPLETE: Load model for exam (2m 22s)
-[15:30:58] [STEP 6.3] STARTING: Run prompts
+[21:08:18] [STEP 6.2] STARTING: Load model for exam
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[21:10:59] [STEP 6.2] COMPLETE: Load model for exam (2m 40s)
+[21:10:59] [STEP 6.3] STARTING: Run prompts
            20 prompts
-[15:31:18]   [6.3] 1/20 (5%) — L01_01 OK
-[15:31:59]   [6.3] 2/20 (10%) — L01_02 OK
-[15:32:24]   [6.3] 3/20 (15%) — L01_03 OK
-[15:33:00]   [6.3] 4/20 (20%) — L01_04 OK
-[15:33:20]   [6.3] 5/20 (25%) — L01_05 OK
-[15:34:01]   [6.3] 6/20 (30%) — L01_06 OK
-[15:34:36]   [6.3] 7/20 (35%) — L01_07 OK
-[15:34:57]   [6.3] 8/20 (40%) — L01_08 OK
-[15:35:21]   [6.3] 9/20 (45%) — L01_09 OK
-[15:35:59]   [6.3] 10/20 (50%) — L01_10 OK
-[15:36:41]   [6.3] 11/20 (55%) — L01_11 OK
-[15:37:04]   [6.3] 12/20 (60%) — L01_12 OK
-[15:37:49]   [6.3] 13/20 (65%) — L01_13 OK
-[15:38:14]   [6.3] 14/20 (70%) — L01_14 OK
-[15:38:34]   [6.3] 15/20 (75%) — L01_15 OK
-[15:39:18]   [6.3] 16/20 (80%) — L01_16 OK
-[15:40:25]   [6.3] 17/20 (85%) — L01_17 OK
-[15:41:00]   [6.3] 18/20 (90%) — L01_18 FAIL
-[15:41:34]   [6.3] 19/20 (95%) — L01_19 OK
-[15:42:18]   [6.3] 20/20 (100%) — L01_20 OK
-[15:42:18] [STEP 6.3] COMPLETE: Run prompts (11m 20s)
-           19/20 valid
-[15:42:18] [STEP 6.6] STARTING: Save exam results
-[15:42:18] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 60.5%
-[15:42:18] [STEP 6.7] STARTING: Post-exam backup
-[15:42:18] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
-[15:42:19] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
+[21:11:18]   [6.3] 1/20 (5%) — L01_01 OK
+[21:11:51]   [6.3] 2/20 (10%) — L01_02 OK
+[21:12:22]   [6.3] 3/20 (15%) — L01_03 OK
+[21:13:00]   [6.3] 4/20 (20%) — L01_04 OK
+[21:13:22]   [6.3] 5/20 (25%) — L01_05 OK
+[21:14:01]   [6.3] 6/20 (30%) — L01_06 OK
+[21:14:30]   [6.3] 7/20 (35%) — L01_07 FAIL
+[21:14:53]   [6.3] 8/20 (40%) — L01_08 OK
+[21:15:16]   [6.3] 9/20 (45%) — L01_09 FAIL
+[21:15:43]   [6.3] 10/20 (50%) — L01_10 FAIL
+[21:16:14]   [6.3] 11/20 (55%) — L01_11 OK
+[21:16:38]   [6.3] 12/20 (60%) — L01_12 OK
+[21:17:05]   [6.3] 13/20 (65%) — L01_13 FAIL
+[21:17:31]   [6.3] 14/20 (70%) — L01_14 OK
+[21:17:52]   [6.3] 15/20 (75%) — L01_15 OK
+[21:18:21]   [6.3] 16/20 (80%) — L01_16 FAIL
+[21:18:55]   [6.3] 17/20 (85%) — L01_17 FAIL
+[21:19:25]   [6.3] 18/20 (90%) — L01_18 OK
+[21:20:04]   [6.3] 19/20 (95%) — L01_19 OK
+[21:20:34]   [6.3] 20/20 (100%) — L01_20 FAIL
+[21:20:34] [STEP 6.3] COMPLETE: Run prompts (9m 34s)
+           13/20 valid
+[21:20:34] [STEP 6.6] STARTING: Save exam results
+[21:20:34] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 56.6%
+[21:20:34] [STEP 6.7] STARTING: Post-exam backup
+[21:20:34] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
+[21:20:37] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
            C:\BlueprintLLM\lessons\lesson_02.json
-[15:42:19] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[21:20:37] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            24 prompts
-[15:42:19] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 22s
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[15:44:41] [STEP 6.2] COMPLETE: Load model for exam (2m 21s)
-[15:44:41] [STEP 6.3] STARTING: Run prompts | ETA: 11m 20s
+[21:20:37] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 40s
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[21:23:14] [STEP 6.2] COMPLETE: Load model for exam (2m 36s)
+[21:23:14] [STEP 6.3] STARTING: Run prompts | ETA: 9m 34s
            24 prompts
-[15:45:17]   [6.3] 1/24 (4%) — L02_01 OK
-[15:46:06]   [6.3] 2/24 (8%) — L02_02 OK
-[15:46:31]   [6.3] 3/24 (12%) — L02_03 OK
-[15:47:09]   [6.3] 4/24 (16%) — L02_04 OK
-[15:47:34]   [6.3] 5/24 (20%) — L02_05 FAIL
-[15:48:03]   [6.3] 6/24 (25%) — L02_06 OK
-[15:48:33]   [6.3] 7/24 (29%) — L02_07 OK
-[15:49:15]   [6.3] 8/24 (33%) — L02_08 OK
-[15:49:41]   [6.3] 9/24 (37%) — L02_09 OK
-[15:50:24]   [6.3] 10/24 (41%) — L02_10 OK
-[15:50:56]   [6.3] 11/24 (45%) — L02_11 OK
-[15:51:28]   [6.3] 12/24 (50%) — L02_12 OK
-[15:52:12]   [6.3] 13/24 (54%) — L02_13 OK
-[15:53:25]   [6.3] 14/24 (58%) — L02_14 OK
-[15:53:54]   [6.3] 15/24 (62%) — L02_15 FAIL
-[15:54:25]   [6.3] 16/24 (66%) — L02_16 OK
-[15:55:05]   [6.3] 17/24 (70%) — L02_17 OK
-[15:55:47]   [6.3] 18/24 (75%) — L02_18 OK
-[15:56:12]   [6.3] 19/24 (79%) — L02_19 OK
-[15:56:34]   [6.3] 20/24 (83%) — L02_20 OK
-[15:56:54]   [6.3] 21/24 (87%) — L02_21 OK
-[15:57:31]   [6.3] 22/24 (91%) — L02_22 OK
-[15:57:58]   [6.3] 23/24 (95%) — L02_23 OK
-[15:58:39]   [6.3] 24/24 (100%) — L02_24 OK
-[15:58:39] [STEP 6.3] COMPLETE: Run prompts (13m 57s)
-           22/24 valid
-[15:58:39] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
-[15:58:39] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 69.0%
-[15:58:39] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.2s
-[15:58:39] [STEP 6.7] COMPLETE: Post-exam backup (0.2s)
-[15:58:40] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
+[21:23:43]   [6.3] 1/24 (4%) — L02_01 FAIL
+[21:24:15]   [6.3] 2/24 (8%) — L02_02 FAIL
+[21:24:50]   [6.3] 3/24 (12%) — L02_03 OK
+[21:25:27]   [6.3] 4/24 (16%) — L02_04 FAIL
+[21:25:50]   [6.3] 5/24 (20%) — L02_05 FAIL
+[21:26:20]   [6.3] 6/24 (25%) — L02_06 OK
+[21:26:48]   [6.3] 7/24 (29%) — L02_07 OK
+[21:27:24]   [6.3] 8/24 (33%) — L02_08 FAIL
+[21:27:45]   [6.3] 9/24 (37%) — L02_09 OK
+[21:28:30]   [6.3] 10/24 (41%) — L02_10 OK
+[21:28:53]   [6.3] 11/24 (45%) — L02_11 FAIL
+[21:29:24]   [6.3] 12/24 (50%) — L02_12 FAIL
+[21:29:51]   [6.3] 13/24 (54%) — L02_13 FAIL
+[21:30:33]   [6.3] 14/24 (58%) — L02_14 FAIL
+[21:31:02]   [6.3] 15/24 (62%) — L02_15 FAIL
+[21:31:33]   [6.3] 16/24 (66%) — L02_16 FAIL
+[21:32:12]   [6.3] 17/24 (70%) — L02_17 OK
+[21:32:54]   [6.3] 18/24 (75%) — L02_18 OK
+[21:33:19]   [6.3] 19/24 (79%) — L02_19 OK
+[21:33:37]   [6.3] 20/24 (83%) — L02_20 FAIL
+[21:34:04]   [6.3] 21/24 (87%) — L02_21 OK
+[21:34:44]   [6.3] 22/24 (91%) — L02_22 OK
+[21:35:09]   [6.3] 23/24 (95%) — L02_23 OK
+[21:35:49]   [6.3] 24/24 (100%) — L02_24 OK
+[21:35:49] [STEP 6.3] COMPLETE: Run prompts (12m 34s)
+           12/24 valid
+[21:35:49] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
+[21:35:49] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 62.2%
+[21:35:49] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
+[21:35:49] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
+[21:35:53] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
            C:\BlueprintLLM\lessons\lesson_03.json
-[15:58:40] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[21:35:53] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            20 prompts
-[15:58:40] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 21s
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[16:01:02] [STEP 6.2] COMPLETE: Load model for exam (2m 21s)
-[16:01:02] [STEP 6.3] STARTING: Run prompts | ETA: 12m 38s
+[21:35:53] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 38s
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[21:38:30] [STEP 6.2] COMPLETE: Load model for exam (2m 37s)
+[21:38:30] [STEP 6.3] STARTING: Run prompts | ETA: 11m 4s
            20 prompts
-[16:01:45]   [6.3] 1/20 (5%) — L03_01 FAIL
-[16:02:17]   [6.3] 2/20 (10%) — L03_02 OK
-[16:02:45]   [6.3] 3/20 (15%) — L03_03 OK
-[16:03:15]   [6.3] 4/20 (20%) — L03_04 OK
-[16:04:00]   [6.3] 5/20 (25%) — L03_05 OK
-[16:04:59]   [6.3] 6/20 (30%) — L03_06 OK
-[16:06:10]   [6.3] 7/20 (35%) — L03_07 OK
-[16:06:41]   [6.3] 8/20 (40%) — L03_08 OK
-[16:07:38]   [6.3] 9/20 (45%) — L03_09 OK
-[16:08:13]   [6.3] 10/20 (50%) — L03_10 OK
-[16:08:51]   [6.3] 11/20 (55%) — L03_11 OK
-[16:09:39]   [6.3] 12/20 (60%) — L03_12 OK
-[16:11:13]   [6.3] 13/20 (65%) — L03_13 OK
-[16:11:45]   [6.3] 14/20 (70%) — L03_14 FAIL
-[16:12:23]   [6.3] 15/20 (75%) — L03_15 OK
-[16:12:58]   [6.3] 16/20 (80%) — L03_16 OK
-[16:13:36]   [6.3] 17/20 (85%) — L03_17 OK
-[16:14:20]   [6.3] 18/20 (90%) — L03_18 OK
-[16:15:04]   [6.3] 19/20 (95%) — L03_19 OK
-[16:15:52]   [6.3] 20/20 (100%) — L03_20 OK
-[16:15:52] [STEP 6.3] COMPLETE: Run prompts (14m 50s)
-           18/20 valid
-[16:15:52] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
-[16:15:52] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 57.0%
-[16:15:52] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.2s
-[16:15:53] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
-[16:15:54] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
+[21:38:57]   [6.3] 1/20 (5%) — L03_01 FAIL
+[21:39:27]   [6.3] 2/20 (10%) — L03_02 FAIL
+[21:40:00]   [6.3] 3/20 (15%) — L03_03 OK
+[21:40:39]   [6.3] 4/20 (20%) — L03_04 OK
+[21:41:17]   [6.3] 5/20 (25%) — L03_05 FAIL
+[21:41:58]   [6.3] 6/20 (30%) — L03_06 FAIL
+[21:43:13]   [6.3] 7/20 (35%) — L03_07 FAIL
+[21:43:45]   [6.3] 8/20 (40%) — L03_08 OK
+[21:44:20]   [6.3] 9/20 (45%) — L03_09 FAIL
+[21:44:48]   [6.3] 10/20 (50%) — L03_10 FAIL
+[21:45:29]   [6.3] 11/20 (55%) — L03_11 OK
+[21:46:10]   [6.3] 12/20 (60%) — L03_12 FAIL
+[21:47:32]   [6.3] 13/20 (65%) — L03_13 FAIL
+[21:48:04]   [6.3] 14/20 (70%) — L03_14 OK
+[21:48:36]   [6.3] 15/20 (75%) — L03_15 FAIL
+[21:49:09]   [6.3] 16/20 (80%) — L03_16 OK
+[21:49:57]   [6.3] 17/20 (85%) — L03_17 OK
+[21:50:34]   [6.3] 18/20 (90%) — L03_18 FAIL
+[21:51:13]   [6.3] 19/20 (95%) — L03_19 OK
+[21:51:40]   [6.3] 20/20 (100%) — L03_20 OK
+[21:51:40] [STEP 6.3] COMPLETE: Run prompts (13m 10s)
+           9/20 valid
+[21:51:40] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
+[21:51:40] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 52.5%
+[21:51:40] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
+[21:51:41] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
+[21:51:44] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
            C:\BlueprintLLM\lessons\lesson_04.json
-[16:15:54] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[21:51:44] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            20 prompts
-[16:15:54] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 21s
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[16:18:16] [STEP 6.2] COMPLETE: Load model for exam (2m 21s)
-[16:18:16] [STEP 6.3] STARTING: Run prompts | ETA: 13m 22s
+[21:51:44] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 38s
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[21:54:23] [STEP 6.2] COMPLETE: Load model for exam (2m 38s)
+[21:54:23] [STEP 6.3] STARTING: Run prompts | ETA: 11m 46s
            20 prompts
-[16:18:40]   [6.3] 1/20 (5%) — L04_01 OK
-[16:19:15]   [6.3] 2/20 (10%) — L04_02 OK
-[16:19:47]   [6.3] 3/20 (15%) — L04_03 OK
-[16:20:26]   [6.3] 4/20 (20%) — L04_04 OK
-[16:21:15]   [6.3] 5/20 (25%) — L04_05 OK
-[16:21:46]   [6.3] 6/20 (30%) — L04_06 OK
-[16:22:29]   [6.3] 7/20 (35%) — L04_07 OK
-[16:23:09]   [6.3] 8/20 (40%) — L04_08 OK
-[16:23:44]   [6.3] 9/20 (45%) — L04_09 OK
-[16:25:45]   [6.3] 10/20 (50%) — L04_10 FAIL
-[16:26:13]   [6.3] 11/20 (55%) — L04_11 OK
-[16:27:08]   [6.3] 12/20 (60%) — L04_12 OK
-[16:28:00]   [6.3] 13/20 (65%) — L04_13 OK
-[16:28:45]   [6.3] 14/20 (70%) — L04_14 OK
-[16:29:36]   [6.3] 15/20 (75%) — L04_15 FAIL
-[16:30:25]   [6.3] 16/20 (80%) — L04_16 OK
-[16:31:16]   [6.3] 17/20 (85%) — L04_17 OK
-[16:32:00]   [6.3] 18/20 (90%) — L04_18 OK
-[16:32:37]   [6.3] 19/20 (95%) — L04_19 OK
-[16:33:50]   [6.3] 20/20 (100%) — L04_20 OK
-[16:33:50] [STEP 6.3] COMPLETE: Run prompts (15m 34s)
-           18/20 valid
-[16:33:50] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
-[16:33:50] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 51.9%
-[16:33:50] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
-[16:33:50] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
-[16:33:51] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
+[21:55:03]   [6.3] 1/20 (5%) — L04_01 FAIL
+[21:55:39]   [6.3] 2/20 (10%) — L04_02 OK
+[21:56:10]   [6.3] 3/20 (15%) — L04_03 OK
+[21:56:40]   [6.3] 4/20 (20%) — L04_04 FAIL
+[21:57:10]   [6.3] 5/20 (25%) — L04_05 OK
+[21:57:39]   [6.3] 6/20 (30%) — L04_06 OK
+[21:58:24]   [6.3] 7/20 (35%) — L04_07 OK
+[21:58:52]   [6.3] 8/20 (40%) — L04_08 OK
+[21:59:26]   [6.3] 9/20 (45%) — L04_09 OK
+[22:00:41]   [6.3] 10/20 (50%) — L04_10 FAIL
+[22:01:12]   [6.3] 11/20 (55%) — L04_11 OK
+[22:01:51]   [6.3] 12/20 (60%) — L04_12 FAIL
+[22:02:37]   [6.3] 13/20 (65%) — L04_13 OK
+[22:03:18]   [6.3] 14/20 (70%) — L04_14 FAIL
+[22:03:49]   [6.3] 15/20 (75%) — L04_15 FAIL
+[22:04:24]   [6.3] 16/20 (80%) — L04_16 FAIL
+[22:04:58]   [6.3] 17/20 (85%) — L04_17 FAIL
+[22:05:19]   [6.3] 18/20 (90%) — L04_18 OK
+[22:06:01]   [6.3] 19/20 (95%) — L04_19 FAIL
+[22:07:26]   [6.3] 20/20 (100%) — L04_20 OK
+[22:07:26] [STEP 6.3] COMPLETE: Run prompts (13m 3s)
+           11/20 valid
+[22:07:26] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
+[22:07:26] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 45.9%
+[22:07:26] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
+[22:07:26] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
+[22:07:29] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
            C:\BlueprintLLM\lessons\lesson_05.json
-[16:33:51] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[22:07:29] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            20 prompts
-[16:33:51] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 21s
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[16:36:13] [STEP 6.2] COMPLETE: Load model for exam (2m 21s)
-[16:36:13] [STEP 6.3] STARTING: Run prompts | ETA: 13m 55s
+[22:07:29] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 38s
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[22:10:06] [STEP 6.2] COMPLETE: Load model for exam (2m 36s)
+[22:10:06] [STEP 6.3] STARTING: Run prompts | ETA: 12m 5s
            20 prompts
-[16:36:58]   [6.3] 1/20 (5%) — L05_01 OK
-[16:37:34]   [6.3] 2/20 (10%) — L05_02 OK
-[16:38:21]   [6.3] 3/20 (15%) — L05_03 OK
-[16:39:05]   [6.3] 4/20 (20%) — L05_04 OK
-[16:40:17]   [6.3] 5/20 (25%) — L05_05 OK
-[16:41:07]   [6.3] 6/20 (30%) — L05_06 OK
-[16:42:03]   [6.3] 7/20 (35%) — L05_07 OK
-[16:42:40]   [6.3] 8/20 (40%) — L05_08 OK
-[16:43:43]   [6.3] 9/20 (45%) — L05_09 OK
-[16:44:13]   [6.3] 10/20 (50%) — L05_10 OK
-[16:44:39]   [6.3] 11/20 (55%) — L05_11 OK
-[16:45:47]   [6.3] 12/20 (60%) — L05_12 OK
-[16:46:43]   [6.3] 13/20 (65%) — L05_13 OK
-[16:47:22]   [6.3] 14/20 (70%) — L05_14 OK
-[16:48:33]   [6.3] 15/20 (75%) — L05_15 FAIL
-[16:49:20]   [6.3] 16/20 (80%) — L05_16 OK
-[16:50:26]   [6.3] 17/20 (85%) — L05_17 FAIL
-[16:51:39]   [6.3] 18/20 (90%) — L05_18 OK
-[16:52:44]   [6.3] 19/20 (95%) — L05_19 OK
-[16:53:49]   [6.3] 20/20 (100%) — L05_20 OK
-[16:53:49] [STEP 6.3] COMPLETE: Run prompts (17m 35s)
-           18/20 valid
-[16:53:49] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
-[16:53:49] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 70.3%
-[16:53:49] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
-[16:53:49] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
-[16:53:50] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
+[22:10:47]   [6.3] 1/20 (5%) — L05_01 FAIL
+[22:11:21]   [6.3] 2/20 (10%) — L05_02 FAIL
+[22:12:10]   [6.3] 3/20 (15%) — L05_03 FAIL
+[22:12:38]   [6.3] 4/20 (20%) — L05_04 FAIL
+[22:13:39]   [6.3] 5/20 (25%) — L05_05 FAIL
+[22:14:05]   [6.3] 6/20 (30%) — L05_06 FAIL
+[22:14:39]   [6.3] 7/20 (35%) — L05_07 FAIL
+[22:15:10]   [6.3] 8/20 (40%) — L05_08 OK
+[22:16:07]   [6.3] 9/20 (45%) — L05_09 OK
+[22:16:32]   [6.3] 10/20 (50%) — L05_10 FAIL
+[22:16:52]   [6.3] 11/20 (55%) — L05_11 FAIL
+[22:17:54]   [6.3] 12/20 (60%) — L05_12 FAIL
+[22:18:44]   [6.3] 13/20 (65%) — L05_13 FAIL
+[22:19:20]   [6.3] 14/20 (70%) — L05_14 OK
+[22:20:03]   [6.3] 15/20 (75%) — L05_15 FAIL
+[22:20:52]   [6.3] 16/20 (80%) — L05_16 OK
+[22:21:26]   [6.3] 17/20 (85%) — L05_17 OK
+[22:22:53]   [6.3] 18/20 (90%) — L05_18 OK
+[22:23:46]   [6.3] 19/20 (95%) — L05_19 FAIL
+[22:24:44]   [6.3] 20/20 (100%) — L05_20 OK
+[22:24:44] [STEP 6.3] COMPLETE: Run prompts (14m 37s)
+           7/20 valid
+[22:24:44] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
+[22:24:44] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 54.8%
+[22:24:44] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
+[22:24:44] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
+[22:24:47] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
            C:\BlueprintLLM\lessons\lesson_06.json
-[16:53:50] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[22:24:47] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            20 prompts
-[16:53:50] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 21s
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[16:56:13] [STEP 6.2] COMPLETE: Load model for exam (2m 22s)
-[16:56:13] [STEP 6.3] STARTING: Run prompts | ETA: 14m 39s
+[22:24:47] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 37s
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[22:27:24] [STEP 6.2] COMPLETE: Load model for exam (2m 36s)
+[22:27:24] [STEP 6.3] STARTING: Run prompts | ETA: 12m 36s
            20 prompts
-[16:56:40]   [6.3] 1/20 (5%) — L06_01 OK
-[16:57:26]   [6.3] 2/20 (10%) — L06_02 OK
-[16:58:26]   [6.3] 3/20 (15%) — L06_03 OK
-[16:59:29]   [6.3] 4/20 (20%) — L06_04 OK
-[17:02:06]   [6.3] 5/20 (25%) — L06_05 OK
-[17:02:47]   [6.3] 6/20 (30%) — L06_06 OK
-[17:04:07]   [6.3] 7/20 (35%) — L06_07 OK
-[17:04:50]   [6.3] 8/20 (40%) — L06_08 OK
-[17:05:52]   [6.3] 9/20 (45%) — L06_09 OK
-[17:06:34]   [6.3] 10/20 (50%) — L06_10 OK
-[17:07:20]   [6.3] 11/20 (55%) — L06_11 OK
-[17:08:34]   [6.3] 12/20 (60%) — L06_12 OK
-[17:10:02]   [6.3] 13/20 (65%) — L06_13 OK
-[17:11:16]   [6.3] 14/20 (70%) — L06_14 OK
-[17:12:25]   [6.3] 15/20 (75%) — L06_15 OK
-[17:13:48]   [6.3] 16/20 (80%) — L06_16 OK
-[17:14:27]   [6.3] 17/20 (85%) — L06_17 OK
-[17:14:57]   [6.3] 18/20 (90%) — L06_18 OK
-[17:15:35]   [6.3] 19/20 (95%) — L06_19 OK
-[17:16:20]   [6.3] 20/20 (100%) — L06_20 OK
-[17:16:20] [STEP 6.3] COMPLETE: Run prompts (20m 7s)
-           20/20 valid
-[17:16:20] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
-[17:16:20] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 56.2%
-[17:16:20] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
-[17:16:21] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
-[17:16:22] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
+[22:27:55]   [6.3] 1/20 (5%) — L06_01 OK
+[22:28:44]   [6.3] 2/20 (10%) — L06_02 OK
+[22:29:24]   [6.3] 3/20 (15%) — L06_03 FAIL
+[22:30:06]   [6.3] 4/20 (20%) — L06_04 FAIL
+[22:30:50]   [6.3] 5/20 (25%) — L06_05 OK
+[22:31:31]   [6.3] 6/20 (30%) — L06_06 FAIL
+[22:32:19]   [6.3] 7/20 (35%) — L06_07 FAIL
+[22:32:45]   [6.3] 8/20 (40%) — L06_08 FAIL
+[22:33:20]   [6.3] 9/20 (45%) — L06_09 FAIL
+[22:33:49]   [6.3] 10/20 (50%) — L06_10 FAIL
+[22:34:28]   [6.3] 11/20 (55%) — L06_11 OK
+[22:35:09]   [6.3] 12/20 (60%) — L06_12 FAIL
+[22:36:25]   [6.3] 13/20 (65%) — L06_13 OK
+[22:37:10]   [6.3] 14/20 (70%) — L06_14 FAIL
+[22:37:50]   [6.3] 15/20 (75%) — L06_15 FAIL
+[22:38:38]   [6.3] 16/20 (80%) — L06_16 FAIL
+[22:39:03]   [6.3] 17/20 (85%) — L06_17 FAIL
+[22:39:33]   [6.3] 18/20 (90%) — L06_18 FAIL
+[22:40:21]   [6.3] 19/20 (95%) — L06_19 OK
+[22:41:00]   [6.3] 20/20 (100%) — L06_20 FAIL
+[22:41:00] [STEP 6.3] COMPLETE: Run prompts (13m 35s)
+           6/20 valid
+[22:41:00] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
+[22:41:00] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 51.8%
+[22:41:00] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
+[22:41:00] [STEP 6.7] COMPLETE: Post-exam backup (0.4s)
+[22:41:04] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
            C:\BlueprintLLM\lessons\lesson_07.json
-[17:16:22] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[22:41:04] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            20 prompts
-[17:16:22] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 21s
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[17:18:44] [STEP 6.2] COMPLETE: Load model for exam (2m 21s)
-[17:18:44] [STEP 6.3] STARTING: Run prompts | ETA: 15m 34s
+[22:41:04] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 37s
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[22:43:41] [STEP 6.2] COMPLETE: Load model for exam (2m 36s)
+[22:43:41] [STEP 6.3] STARTING: Run prompts | ETA: 12m 46s
            20 prompts
-[17:19:25]   [6.3] 1/20 (5%) — L07_01 OK
-[17:20:19]   [6.3] 2/20 (10%) — L07_02 OK
-[17:21:11]   [6.3] 3/20 (15%) — L07_03 OK
-[17:21:52]   [6.3] 4/20 (20%) — L07_04 OK
-[17:22:30]   [6.3] 5/20 (25%) — L07_05 OK
-[17:23:03]   [6.3] 6/20 (30%) — L07_06 OK
-[17:24:00]   [6.3] 7/20 (35%) — L07_07 OK
-[17:24:33]   [6.3] 8/20 (40%) — L07_08 OK
-[17:25:25]   [6.3] 9/20 (45%) — L07_09 OK
-[17:26:15]   [6.3] 10/20 (50%) — L07_10 OK
-[17:27:08]   [6.3] 11/20 (55%) — L07_11 OK
-[17:28:03]   [6.3] 12/20 (60%) — L07_12 OK
-[17:28:37]   [6.3] 13/20 (65%) — L07_13 OK
-[17:29:17]   [6.3] 14/20 (70%) — L07_14 OK
-[17:29:46]   [6.3] 15/20 (75%) — L07_15 OK
-[17:30:24]   [6.3] 16/20 (80%) — L07_16 OK
-[17:30:52]   [6.3] 17/20 (85%) — L07_17 OK
-[17:31:26]   [6.3] 18/20 (90%) — L07_18 OK
-[17:31:56]   [6.3] 19/20 (95%) — L07_19 OK
-[17:32:47]   [6.3] 20/20 (100%) — L07_20 OK
-[17:32:47] [STEP 6.3] COMPLETE: Run prompts (14m 3s)
-           20/20 valid
-[17:32:47] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
-[17:32:47] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 66.2%
-[17:32:47] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
-[17:32:48] [STEP 6.7] COMPLETE: Post-exam backup (0.4s)
-[17:32:49] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
+[22:44:20]   [6.3] 1/20 (5%) — L07_01 OK
+[22:45:03]   [6.3] 2/20 (10%) — L07_02 FAIL
+[22:45:33]   [6.3] 3/20 (15%) — L07_03 FAIL
+[22:46:17]   [6.3] 4/20 (20%) — L07_04 FAIL
+[22:46:44]   [6.3] 5/20 (25%) — L07_05 FAIL
+[22:47:14]   [6.3] 6/20 (30%) — L07_06 FAIL
+[22:48:11]   [6.3] 7/20 (35%) — L07_07 OK
+[22:48:37]   [6.3] 8/20 (40%) — L07_08 FAIL
+[22:49:24]   [6.3] 9/20 (45%) — L07_09 FAIL
+[22:50:14]   [6.3] 10/20 (50%) — L07_10 FAIL
+[22:50:49]   [6.3] 11/20 (55%) — L07_11 OK
+[22:51:26]   [6.3] 12/20 (60%) — L07_12 FAIL
+[22:52:07]   [6.3] 13/20 (65%) — L07_13 OK
+[22:52:50]   [6.3] 14/20 (70%) — L07_14 OK
+[22:53:30]   [6.3] 15/20 (75%) — L07_15 FAIL
+[22:53:59]   [6.3] 16/20 (80%) — L07_16 FAIL
+[22:54:30]   [6.3] 17/20 (85%) — L07_17 OK
+[22:54:54]   [6.3] 18/20 (90%) — L07_18 FAIL
+[22:55:27]   [6.3] 19/20 (95%) — L07_19 OK
+[22:56:10]   [6.3] 20/20 (100%) — L07_20 FAIL
+[22:56:10] [STEP 6.3] COMPLETE: Run prompts (12m 29s)
+           7/20 valid
+[22:56:10] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
+[22:56:10] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 55.6%
+[22:56:10] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
+[22:56:10] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
+[22:56:13] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
            C:\BlueprintLLM\lessons\lesson_08.json
-[17:32:49] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[22:56:13] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            20 prompts
-[17:32:49] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 21s
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[17:35:10] [STEP 6.2] COMPLETE: Load model for exam (2m 21s)
-[17:35:10] [STEP 6.3] STARTING: Run prompts | ETA: 15m 21s
+[22:56:13] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 37s
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[22:58:51] [STEP 6.2] COMPLETE: Load model for exam (2m 37s)
+[22:58:51] [STEP 6.3] STARTING: Run prompts | ETA: 12m 43s
            20 prompts
-[17:35:36]   [6.3] 1/20 (5%) — L08_01 OK
-[17:36:08]   [6.3] 2/20 (10%) — L08_02 OK
-[17:37:34]   [6.3] 3/20 (15%) — L08_03 OK
-[17:38:21]   [6.3] 4/20 (20%) — L08_04 OK
-[17:39:02]   [6.3] 5/20 (25%) — L08_05 OK
-[17:39:37]   [6.3] 6/20 (30%) — L08_06 OK
-[17:40:07]   [6.3] 7/20 (35%) — L08_07 OK
-[17:40:54]   [6.3] 8/20 (40%) — L08_08 OK
-[17:41:40]   [6.3] 9/20 (45%) — L08_09 OK
-[17:42:36]   [6.3] 10/20 (50%) — L08_10 FAIL
-[17:43:25]   [6.3] 11/20 (55%) — L08_11 OK
-[17:44:15]   [6.3] 12/20 (60%) — L08_12 OK
-[17:45:18]   [6.3] 13/20 (65%) — L08_13 OK
-[17:46:02]   [6.3] 14/20 (70%) — L08_14 OK
-[17:46:52]   [6.3] 15/20 (75%) — L08_15 OK
-[17:47:44]   [6.3] 16/20 (80%) — L08_16 OK
-[17:48:36]   [6.3] 17/20 (85%) — L08_17 OK
-[17:49:26]   [6.3] 18/20 (90%) — L08_18 OK
-[17:50:34]   [6.3] 19/20 (95%) — L08_19 OK
-[17:51:37]   [6.3] 20/20 (100%) — L08_20 OK
-[17:51:37] [STEP 6.3] COMPLETE: Run prompts (16m 26s)
-           19/20 valid
-[17:51:37] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
-[17:51:37] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 63.9%
-[17:51:37] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
-[17:51:38] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
-[17:51:39] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
+[22:59:24]   [6.3] 1/20 (5%) — L08_01 OK
+[22:59:53]   [6.3] 2/20 (10%) — L08_02 FAIL
+[23:00:39]   [6.3] 3/20 (15%) — L08_03 FAIL
+[23:01:10]   [6.3] 4/20 (20%) — L08_04 FAIL
+[23:01:43]   [6.3] 5/20 (25%) — L08_05 OK
+[23:02:13]   [6.3] 6/20 (30%) — L08_06 OK
+[23:02:40]   [6.3] 7/20 (35%) — L08_07 OK
+[23:03:25]   [6.3] 8/20 (40%) — L08_08 OK
+[23:04:09]   [6.3] 9/20 (45%) — L08_09 OK
+[23:04:41]   [6.3] 10/20 (50%) — L08_10 FAIL
+[23:05:34]   [6.3] 11/20 (55%) — L08_11 FAIL
+[23:06:33]   [6.3] 12/20 (60%) — L08_12 OK
+[23:07:15]   [6.3] 13/20 (65%) — L08_13 FAIL
+[23:08:04]   [6.3] 14/20 (70%) — L08_14 OK
+[23:08:48]   [6.3] 15/20 (75%) — L08_15 OK
+[23:09:22]   [6.3] 16/20 (80%) — L08_16 FAIL
+[23:10:04]   [6.3] 17/20 (85%) — L08_17 FAIL
+[23:10:39]   [6.3] 18/20 (90%) — L08_18 FAIL
+[23:11:20]   [6.3] 19/20 (95%) — L08_19 FAIL
+[23:12:07]   [6.3] 20/20 (100%) — L08_20 FAIL
+[23:12:07] [STEP 6.3] COMPLETE: Run prompts (13m 16s)
+           9/20 valid
+[23:12:07] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
+[23:12:07] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 52.7%
+[23:12:07] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
+[23:12:07] [STEP 6.7] COMPLETE: Post-exam backup (0.4s)
+[23:12:11] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
            C:\BlueprintLLM\lessons\lesson_09.json
-[17:51:39] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[23:12:11] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            20 prompts
-[17:51:39] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 21s
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[17:54:03] [STEP 6.2] COMPLETE: Load model for exam (2m 23s)
-[17:54:03] [STEP 6.3] STARTING: Run prompts | ETA: 15m 29s
+[23:12:11] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 37s
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[23:14:49] [STEP 6.2] COMPLETE: Load model for exam (2m 37s)
+[23:14:49] [STEP 6.3] STARTING: Run prompts | ETA: 12m 47s
            20 prompts
-[17:55:05]   [6.3] 1/20 (5%) — L09_01 OK
-[17:56:15]   [6.3] 2/20 (10%) — L09_02 OK
-[17:57:08]   [6.3] 3/20 (15%) — L09_03 OK
-[17:58:09]   [6.3] 4/20 (20%) — L09_04 OK
-[17:59:12]   [6.3] 5/20 (25%) — L09_05 OK
-[17:59:54]   [6.3] 6/20 (30%) — L09_06 OK
-[18:01:09]   [6.3] 7/20 (35%) — L09_07 OK
-[18:02:04]   [6.3] 8/20 (40%) — L09_08 OK
-[18:02:53]   [6.3] 9/20 (45%) — L09_09 OK
-[18:04:47]   [6.3] 10/20 (50%) — L09_10 OK
-[18:05:35]   [6.3] 11/20 (55%) — L09_11 OK
-[18:07:03]   [6.3] 12/20 (60%) — L09_12 OK
-[18:07:58]   [6.3] 13/20 (65%) — L09_13 OK
-[18:09:13]   [6.3] 14/20 (70%) — L09_14 OK
-[18:10:07]   [6.3] 15/20 (75%) — L09_15 OK
-[18:11:29]   [6.3] 16/20 (80%) — L09_16 OK
-[18:12:57]   [6.3] 17/20 (85%) — L09_17 OK
-[18:14:06]   [6.3] 18/20 (90%) — L09_18 OK
-[18:15:16]   [6.3] 19/20 (95%) — L09_19 OK
-[18:16:33]   [6.3] 20/20 (100%) — L09_20 OK
-[18:16:33] [STEP 6.3] COMPLETE: Run prompts (22m 30s)
-           20/20 valid
-[18:16:33] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
-[18:16:33] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 73.3%
-[18:16:33] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
-[18:16:34] [STEP 6.7] COMPLETE: Post-exam backup (0.4s)
-[18:16:35] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
+[23:15:32]   [6.3] 1/20 (5%) — L09_01 FAIL
+[23:16:30]   [6.3] 2/20 (10%) — L09_02 FAIL
+[23:17:09]   [6.3] 3/20 (15%) — L09_03 FAIL
+[23:18:08]   [6.3] 4/20 (20%) — L09_04 OK
+[23:18:44]   [6.3] 5/20 (25%) — L09_05 FAIL
+[23:19:18]   [6.3] 6/20 (30%) — L09_06 OK
+[23:20:02]   [6.3] 7/20 (35%) — L09_07 FAIL
+[23:20:56]   [6.3] 8/20 (40%) — L09_08 FAIL
+[23:21:47]   [6.3] 9/20 (45%) — L09_09 OK
+[23:23:10]   [6.3] 10/20 (50%) — L09_10 FAIL
+[23:23:55]   [6.3] 11/20 (55%) — L09_11 FAIL
+[23:25:12]   [6.3] 12/20 (60%) — L09_12 FAIL
+[23:26:14]   [6.3] 13/20 (65%) — L09_13 OK
+[23:27:36]   [6.3] 14/20 (70%) — L09_14 FAIL
+[23:28:24]   [6.3] 15/20 (75%) — L09_15 FAIL
+[23:29:14]   [6.3] 16/20 (80%) — L09_16 FAIL
+[23:29:59]   [6.3] 17/20 (85%) — L09_17 FAIL
+[23:30:47]   [6.3] 18/20 (90%) — L09_18 OK
+[23:31:59]   [6.3] 19/20 (95%) — L09_19 OK
+[23:32:47]   [6.3] 20/20 (100%) — L09_20 FAIL
+[23:32:47] [STEP 6.3] COMPLETE: Run prompts (17m 58s)
+           6/20 valid
+[23:32:47] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
+[23:32:47] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 48.8%
+[23:32:47] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
+[23:32:48] [STEP 6.7] COMPLETE: Post-exam backup (0.4s)
+[23:32:51] [STEP 6.1] STARTING: Load lesson | ETA: 0.0s
            C:\BlueprintLLM\lessons\lesson_10.json
-[18:16:35] [STEP 6.1] COMPLETE: Load lesson (0.0s)
+[23:32:51] [STEP 6.1] COMPLETE: Load lesson (0.0s)
            20 prompts
-[18:16:35] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 22s
-           C:\BlueprintLLM\models\blueprint-lora-v4\final
-[18:18:59] [STEP 6.2] COMPLETE: Load model for exam (2m 23s)
-[18:18:59] [STEP 6.3] STARTING: Run prompts | ETA: 16m 16s
+[23:32:51] [STEP 6.2] STARTING: Load model for exam | ETA: 2m 37s
+           C:\BlueprintLLM\models\blueprint-lora-v5\final
+[23:35:28] [STEP 6.2] COMPLETE: Load model for exam (2m 37s)
+[23:35:28] [STEP 6.3] STARTING: Run prompts | ETA: 13m 22s
            20 prompts
-[18:19:56]   [6.3] 1/20 (5%) — L10_01 OK
-[18:20:43]   [6.3] 2/20 (10%) — L10_02 OK
-[18:21:44]   [6.3] 3/20 (15%) — L10_03 OK
-[18:23:25]   [6.3] 4/20 (20%) — L10_04 OK
-[18:24:21]   [6.3] 5/20 (25%) — L10_05 OK
-[18:25:35]   [6.3] 6/20 (30%) — L10_06 OK
-[18:26:43]   [6.3] 7/20 (35%) — L10_07 OK
-[18:28:00]   [6.3] 8/20 (40%) — L10_08 OK
-[18:29:17]   [6.3] 9/20 (45%) — L10_09 OK
-[18:30:15]   [6.3] 10/20 (50%) — L10_10 FAIL
-[18:31:34]   [6.3] 11/20 (55%) — L10_11 OK
-[18:32:33]   [6.3] 12/20 (60%) — L10_12 OK
-[18:33:57]   [6.3] 13/20 (65%) — L10_13 OK
-[18:34:59]   [6.3] 14/20 (70%) — L10_14 OK
-[18:36:10]   [6.3] 15/20 (75%) — L10_15 OK
-[18:37:09]   [6.3] 16/20 (80%) — L10_16 FAIL
-[18:38:44]   [6.3] 17/20 (85%) — L10_17 OK
-[18:39:44]   [6.3] 18/20 (90%) — L10_18 OK
-[18:40:59]   [6.3] 19/20 (95%) — L10_19 OK
-[18:43:07]   [6.3] 20/20 (100%) — L10_20 FAIL
-[18:43:07] [STEP 6.3] COMPLETE: Run prompts (24m 8s)
-           17/20 valid
-[18:43:07] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
-[18:43:07] [STEP 6.6] COMPLETE: Save exam results (0.0s)
-           Avg similarity: 49.0%
-[18:43:07] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.3s
-[18:43:08] [STEP 6.7] COMPLETE: Post-exam backup (0.3s)
-[18:43:09] [STEP 6] COMPLETE: Exam (3h 14m)
+[23:36:14]   [6.3] 1/20 (5%) — L10_01 FAIL
+[23:36:51]   [6.3] 2/20 (10%) — L10_02 FAIL
+[23:38:03]   [6.3] 3/20 (15%) — L10_03 FAIL
+[23:39:05]   [6.3] 4/20 (20%) — L10_04 FAIL
+[23:39:39]   [6.3] 5/20 (25%) — L10_05 FAIL
+[23:40:29]   [6.3] 6/20 (30%) — L10_06 FAIL
+[23:41:15]   [6.3] 7/20 (35%) — L10_07 FAIL
+[23:42:13]   [6.3] 8/20 (40%) — L10_08 OK
+[23:43:08]   [6.3] 9/20 (45%) — L10_09 FAIL
+[23:44:03]   [6.3] 10/20 (50%) — L10_10 FAIL
+[23:44:46]   [6.3] 11/20 (55%) — L10_11 FAIL
+[23:45:34]   [6.3] 12/20 (60%) — L10_12 FAIL
+[23:46:37]   [6.3] 13/20 (65%) — L10_13 FAIL
+[23:47:28]   [6.3] 14/20 (70%) — L10_14 FAIL
+[23:48:02]   [6.3] 15/20 (75%) — L10_15 FAIL
+[23:49:16]   [6.3] 16/20 (80%) — L10_16 FAIL
+[23:50:46]   [6.3] 17/20 (85%) — L10_17 FAIL
+[23:51:38]   [6.3] 18/20 (90%) — L10_18 FAIL
+[23:52:25]   [6.3] 19/20 (95%) — L10_19 FAIL
+[23:53:57]   [6.3] 20/20 (100%) — L10_20 FAIL
+[23:53:57] [STEP 6.3] COMPLETE: Run prompts (18m 29s)
+           1/20 valid
+[23:53:57] [STEP 6.6] STARTING: Save exam results | ETA: 0.0s
+[23:53:57] [STEP 6.6] COMPLETE: Save exam results (0.0s)
+           Avg similarity: 42.0%
+[23:53:57] [STEP 6.7] STARTING: Post-exam backup | ETA: 0.4s
+[23:53:58] [STEP 6.7] COMPLETE: Post-exam backup (0.4s)
+[23:53:59] [STEP 6] COMPLETE: Exam (2h 45m)
            10 lessons examined
-[18:43:09] [STEP 7] STARTING: Evaluation | ETA: 28m 51s
-[18:43:09] [STEP 7.1] STARTING: Load model
-           Model: C:\BlueprintLLM\models\blueprint-lora-v4\final
-[18:45:29] [STEP 7.1] COMPLETE: Load model (2m 20s)
-[18:45:29] [STEP 7.2] STARTING: Run test suite
+[23:53:59] [STEP 7] STARTING: Evaluation | ETA: 22m 33s
+[23:53:59] [STEP 7.1] STARTING: Load model
+           Model: C:\BlueprintLLM\models\blueprint-lora-v5\final
+[23:56:39] [STEP 7.1] COMPLETE: Load model (2m 39s)
+[23:56:39] [STEP 7.2] STARTING: Run test suite
            11 tests
-[18:45:49]   [7.2] 1/11 (9%) — T1_01 PASS
-[18:46:06]   [7.2] 2/11 (18%) — T1_02 PASS
-[18:46:21]   [7.2] 3/11 (27%) — T1_03 PASS
-[18:47:02]   [7.2] 4/11 (36%) — T2_01 PASS
-[18:47:46]   [7.2] 5/11 (45%) — T2_02 PASS
-[18:48:34]   [7.2] 6/11 (54%) — T2_03 PASS
-[18:49:18]   [7.2] 7/11 (63%) — T3_01 PASS
-[18:50:42]   [7.2] 8/11 (72%) — T3_02 PASS
-[18:51:11]   [7.2] 9/11 (81%) — T3_03 PASS
-[18:52:15]   [7.2] 10/11 (90%) — T4_01 PASS
-[18:53:03]   [7.2] 11/11 (100%) — T4_02 PASS
-[18:53:03] [STEP 7.2] COMPLETE: Run test suite (7m 33s)
+[23:56:55]   [7.2] 1/11 (9%) — T1_01 PASS
+[23:57:09]   [7.2] 2/11 (18%) — T1_02 PASS
+[23:57:23]   [7.2] 3/11 (27%) — T1_03 PASS
+[23:58:09]   [7.2] 4/11 (36%) — T2_01 PASS
+[23:58:42]   [7.2] 5/11 (45%) — T2_02 PASS
+[23:59:00]   [7.2] 6/11 (54%) — T2_03 PASS
+[00:00:09]   [7.2] 7/11 (63%) — T3_01 PASS
+[00:01:30]   [7.2] 8/11 (72%) — T3_02 PASS
+[00:01:46]   [7.2] 9/11 (81%) — T3_03 PASS
+[00:02:33]   [7.2] 10/11 (90%) — T4_01 PASS
+[00:03:23]   [7.2] 11/11 (100%) — T4_02 PASS
+[00:03:23] [STEP 7.2] COMPLETE: Run test suite (6m 43s)
            11/11 passed
-[18:53:03] [STEP 7.3] STARTING: Score results
-[18:53:03] [STEP 7.3] COMPLETE: Score results (0.0s)
-[18:53:03] [STEP 7.4] STARTING: Generate report
-[18:53:03] [STEP 7.4] COMPLETE: Generate report (0.0s)
-           C:\BlueprintLLM\results\eval_v4_20260227.json
-[18:53:04] [STEP 7] COMPLETE: Evaluation (9m 55s)
+[00:03:23] [STEP 7.3] STARTING: Score results
+[00:03:23] [STEP 7.3] COMPLETE: Score results (0.0s)
+[00:03:23] [STEP 7.4] STARTING: Generate report
+[00:03:23] [STEP 7.4] COMPLETE: Generate report (0.0s)
+           C:\BlueprintLLM\results\eval_v5_20260227.json
+[00:03:24] [STEP 7] COMPLETE: Evaluation (9m 24s)
            11/11 passed
-[18:53:04] [STEP 8] STARTING: Lesson Integration | ETA: 1.5s
-[18:53:04] [STEP 8.1] STARTING: Convert lessons to training data
-[18:53:08] [STEP 8.1] COMPLETE: Convert lessons to training data (3.7s)
-[18:53:08] [STEP 8] COMPLETE: Lesson Integration (3.8s)
-[18:53:08] [STEP 9] STARTING: Dashboard & Finalize | ETA: 0.1s
-[18:53:08] [STEP 9.1] STARTING: Collect metrics
-[18:53:08] [STEP 9.1] COMPLETE: Collect metrics (0.0s)
-[18:53:08] [STEP 9.2] STARTING: Generate charts
-[18:53:08] [STEP 9.2] COMPLETE: Generate charts (0.0s)
-[18:53:08] [STEP 9.3] STARTING: Build HTML
-[18:53:08] [STEP 9.3] COMPLETE: Build HTML (0.0s)
-[18:53:08] [STEP 9.4] STARTING: Write dashboard
-[18:53:08] [STEP 9.4] COMPLETE: Write dashboard (0.0s)
+[00:03:24] [STEP 8] STARTING: Lesson Integration | ETA: 2.2s
+[00:03:24] [STEP 8.1] STARTING: Convert lessons to training data
+[00:03:28] [STEP 8.1] COMPLETE: Convert lessons to training data (4.6s)
+[00:03:29] [STEP 8] COMPLETE: Lesson Integration (4.7s)
+[00:03:29] [STEP 9] STARTING: Dashboard & Finalize | ETA: 0.1s
+[00:03:29] [STEP 9.1] STARTING: Collect metrics
+[00:03:29] [STEP 9.1] COMPLETE: Collect metrics (0.0s)
+[00:03:29] [STEP 9.2] STARTING: Generate charts
+[00:03:29] [STEP 9.2] COMPLETE: Generate charts (0.0s)
+[00:03:29] [STEP 9.3] STARTING: Build HTML
+[00:03:29] [STEP 9.3] COMPLETE: Build HTML (0.0s)
+[00:03:29] [STEP 9.4] STARTING: Write dashboard
+[00:03:29] [STEP 9.4] COMPLETE: Write dashboard (0.0s)
            C:\BlueprintLLM\dashboard\index.html
-[18:53:08] [STEP 9.5] STARTING: Finalize
-[18:53:08] [STEP 9.5] COMPLETE: Finalize (0.0s)
-[18:53:08] [STEP 9] COMPLETE: Dashboard & Finalize (0.1s)
+[00:03:29] [STEP 9.5] STARTING: Finalize
+[00:03:29] [STEP 9.5] COMPLETE: Finalize (0.0s)
+[00:03:29] [STEP 9] COMPLETE: Dashboard & Finalize (0.1s)

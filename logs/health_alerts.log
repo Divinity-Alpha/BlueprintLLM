@@ -145,3 +145,57 @@ Health Check — 2026-02-27 15:28:36
              metric=missing_key_nodes value=7
 
 Total: 5 alerts
+
+============================================================
+Health Check — 2026-02-27 21:07:56
+============================================================
+[INFO      ] [overfitting] Generalization: healthy
+             Train accuracy 86.6% vs eval accuracy 94.7% (gap: -8.1%).
+             metric=accuracy_gap value=-0.08131886217743156
+[INFO      ] [learning_rate] Learning rate configuration
+             LR: 5e-05, total steps: 29, loss range: 2.9848 -> 0.8766.
+             metric=learning_rate value=5e-05
+[INFO      ] [dataset_quality] Dataset composition
+             Total: 587 | Synthetic: 587 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0
+             metric=dataset_total value=587
+[INFO      ] [node_mastery] Node mastery snapshot
+             43 nodes scored: 25 mastered (>=85%), 4 learning (60-84%), 14 struggling (<60%).
+             metric=nodes_mastered value=25
+[SUGGESTION] [dataset_quality] Missing node types in training data
+             7 key node types have zero training examples: CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.
+             metric=missing_key_nodes value=7
+[CRITICAL  ] [node_mastery] Node regression: Event_InputAction
+             Event_InputAction score dropped from 82% to 18% (-64%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_Event_InputAction value=-0.6419999999999999 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: DoOnce
+             DoOnce score dropped from 84% to 37% (-47%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_DoOnce value=-0.474 (threshold: -0.1)
+
+Total: 7 alerts
+
+============================================================
+Health Check — 2026-02-27 21:08:06
+============================================================
+[INFO      ] [overfitting] Generalization: healthy
+             Train accuracy 86.6% vs eval accuracy 94.7% (gap: -8.1%).
+             metric=accuracy_gap value=-0.08131886217743156
+[INFO      ] [learning_rate] Learning rate configuration
+             LR: 5e-05, total steps: 29, loss range: 2.9848 -> 0.8766.
+             metric=learning_rate value=5e-05
+[INFO      ] [dataset_quality] Dataset composition
+             Total: 587 | Synthetic: 587 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0
+             metric=dataset_total value=587
+[INFO      ] [node_mastery] Node mastery snapshot
+             43 nodes scored: 25 mastered (>=85%), 4 learning (60-84%), 14 struggling (<60%).
+             metric=nodes_mastered value=25
+[SUGGESTION] [dataset_quality] Missing node types in training data
+             7 key node types have zero training examples: CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.
+             metric=missing_key_nodes value=7
+[WARNING   ] [overfitting] Accuracy plateau
+             Accuracy has changed less than 0.5% over the last 3 cycles (94.3%, 94.7%, 94.7%). Consider curriculum changes, learning rate adjustments, or new training data.
+             metric=accuracy_plateau_range value=0.004024311900138855 (threshold: 0.005)
+[WARNING   ] [node_mastery] Node scores stagnant for 3+ cycles
+             2 node(s) unchanged: FlipFlop (18%), Event_ActorEndOverlap (35%). Consider targeted lessons or more examples for these types.
+             metric=stagnant_node_count value=2 (threshold: 1)
+
+Total: 7 alerts

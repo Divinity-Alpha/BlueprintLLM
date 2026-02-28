@@ -1,16 +1,16 @@
 {
   "status": "running",
-  "run_id": "a8624389",
+  "run_id": "b8d3556f",
   "step_id": "",
   "description": "",
-  "timestamp": "2026-02-27T18:53:08.688356",
-  "cycle_start_time": 1772222460.3725176,
-  "elapsed_seconds": 17528.3,
+  "timestamp": "2026-02-28T00:03:29.123592",
+  "cycle_start_time": 1772240766.540881,
+  "elapsed_seconds": 17842.6,
   "completed_steps": [
     {
       "step": "1",
       "name": "Data Foundation",
-      "duration": 2.74,
+      "duration": 4.1,
       "status": "complete"
     },
     {
@@ -22,43 +22,43 @@
     {
       "step": "2",
       "name": "Pre-Flight Checks",
-      "duration": 3.33,
+      "duration": 3.32,
       "status": "complete"
     },
     {
       "step": "5.1",
       "name": "Verify model output",
-      "duration": 0.0,
+      "duration": 0.01,
       "status": "complete"
     },
     {
       "step": "5",
       "name": "Post-Training",
-      "duration": 10.22,
+      "duration": 20.46,
       "status": "complete"
     },
     {
       "step": "6",
       "name": "Exam",
-      "duration": 11673.1,
+      "duration": 9953.07,
       "status": "complete"
     },
     {
       "step": "7",
       "name": "Evaluation",
-      "duration": 595.53,
+      "duration": 564.92,
       "status": "complete"
     },
     {
       "step": "8",
       "name": "Lesson Integration",
-      "duration": 3.79,
+      "duration": 4.7,
       "status": "complete"
     },
     {
       "step": "9",
       "name": "Dashboard & Finalize",
-      "duration": 0.11,
+      "duration": 0.12,
       "status": "complete"
     }
   ],
@@ -615,28 +615,34 @@
   "loss_history": [],
   "error_info": {
     "step_id": "",
-    "category": "encoding",
-    "message": "exit 1: encoding",
-    "timestamp": "2026-02-27T15:28:36.047946"
+    "category": "unknown",
+    "message": "exit 2: unknown",
+    "timestamp": "2026-02-27T21:07:56.201484"
   },
   "retry_info": {
     "step_id": "",
     "attempt": 1,
     "max_retries": 1,
-    "timestamp": "2026-02-27T15:28:25.999127"
+    "timestamp": "2026-02-27T21:07:56.204141"
   },
   "error_history": [
     {
       "step_id": "",
       "category": "encoding",
       "message": "exit 1: encoding",
-      "timestamp": "2026-02-27T15:28:25.996418"
+      "timestamp": "2026-02-27T21:07:46.049703"
     },
     {
       "step_id": "",
       "category": "encoding",
       "message": "exit 1: encoding",
-      "timestamp": "2026-02-27T15:28:36.047946"
+      "timestamp": "2026-02-27T21:07:56.098189"
+    },
+    {
+      "step_id": "",
+      "category": "unknown",
+      "message": "exit 2: unknown",
+      "timestamp": "2026-02-27T21:07:56.201484"
     }
   ],
   "eta_remaining_seconds": 172.9

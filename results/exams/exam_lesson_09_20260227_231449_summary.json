@@ -1,0 +1,113 @@
+{
+  "lesson_id": "lesson_09",
+  "lesson_name": "Nested Branches and Switch Patterns",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v5\\final",
+  "base_model": "meta-llama/Meta-Llama-3.1-70B",
+  "timestamp": "20260227_231449",
+  "total_prompts": 20,
+  "valid_syntax": 6,
+  "valid_syntax_pct": 30.0,
+  "avg_similarity_score": 48.8,
+  "per_category": {
+    "nested_branch_basic": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 70.0
+    },
+    "nested_branch_three": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 27.3
+    },
+    "switch_int": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 58.8
+    },
+    "switch_string": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 88.2
+    },
+    "branch_and_or": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 16.7
+    },
+    "branch_not": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 38.5
+    },
+    "nested_overlap_cast": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 25.0
+    },
+    "branch_compare_vars": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 66.7
+    },
+    "switch_int_action": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 80.0
+    },
+    "nested_timer_branch": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 31.2
+    },
+    "branch_equal": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 80.0
+    },
+    "nested_three_vars": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 74.1
+    },
+    "switch_with_timer": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 68.8
+    },
+    "branch_clamp": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 17.9
+    },
+    "branch_or_pattern": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 44.4
+    },
+    "nested_damage_type": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 19.0
+    },
+    "switch_spawn": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 63.2
+    },
+    "branch_range_check": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 18.2
+    },
+    "nested_valid_branch": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 29.2
+    },
+    "switch_with_ui": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 58.3
+    }
+  }
+}

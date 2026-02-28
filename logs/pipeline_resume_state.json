@@ -1,13 +1,37 @@
 {
-  "completed_steps": [],
+  "completed_steps": [
+    "step_data_foundation",
+    "step_preflight",
+    "step_train",
+    "step_post_training",
+    "step_exam",
+    "step_grading",
+    "step_lesson_integration",
+    "step_dashboard_finalize"
+  ],
   "failed_step": "unknown",
   "error_info": {
-    "errors": [],
-    "message": "Traceback (most recent call last):\n  File \"C:\\BlueprintLLM\\scripts\\11_pipeline_orchestrator.py\", line 1115, in run_pipeline\n    step_data_foundation(cfg, log, dry_run)\n  File \"C:\\BlueprintLLM\\scripts\\11_pipeline_orchestrator.py\", line 684, in step_data_foundation\n    log.complete_step(\"1\", \"Data Foundation\")\n  File \"C:\\BlueprintLLM\\scripts\\11_pipeline_orchestrator.py\", line 315, in complete_step\n    self.plog.complete_step(step_id, description, details)\n  File \"C:\\BlueprintLLM\\scripts\\pipeline_logger.py\", line 334, in complete_step\n    print(line, flush=True)\nOSError: [Errno 22] Invalid argument\n"
+    "errors": [
+      {
+        "step": "Training summary",
+        "category": "encoding",
+        "message": "exit 1: encoding",
+        "timestamp": "2026-02-27T15:28:25.999127",
+        "attempt": 0
+      },
+      {
+        "step": "Training summary",
+        "category": "encoding",
+        "message": "exit 1: encoding",
+        "timestamp": "2026-02-27T15:28:36.047946",
+        "attempt": 1
+      }
+    ],
+    "message": "  ERR| UnicodeEncodeError: 'charmap' codec can't encode character '\\u2502' in position 10: character maps to <undefined>"
   },
   "state_snapshot": {
-    "last_training_data_hash": "df7a69444ad7ab07",
-    "last_model_version": 3
+    "last_training_data_hash": "c20dcde85915e577",
+    "last_model_version": 4
   },
-  "timestamp": "2026-02-27T14:00:59.524410"
+  "timestamp": "2026-02-27T18:53:10.330658"
 }

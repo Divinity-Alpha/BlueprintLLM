@@ -40,3 +40,108 @@ Health Check — 2026-02-27 05:19:15
              metric=final_loss value=0.0199 (threshold: 0.05)
 
 Total: 5 alerts
+
+============================================================
+Health Check — 2026-02-27 10:44:50
+============================================================
+[INFO      ] [overfitting] Generalization: healthy
+             Train accuracy 92.7% vs eval accuracy 93.9% (gap: -1.2%).
+             metric=accuracy_gap value=-0.012225928902626082
+[INFO      ] [learning_rate] Learning rate configuration
+             LR: 5e-05, total steps: 25, loss range: 3.2857 -> 0.4062.
+             metric=learning_rate value=5e-05
+[INFO      ] [dataset_quality] Dataset composition
+             Total: 511 | Synthetic: 511 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0
+             metric=dataset_total value=511
+[INFO      ] [node_mastery] Node mastery snapshot
+             33 nodes scored: 0 mastered (>=85%), 0 learning (60-84%), 33 struggling (<60%).
+             metric=nodes_mastered value=0
+[SUGGESTION] [dataset_quality] Missing node types in training data
+             7 key node types have zero training examples: CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.
+             metric=missing_key_nodes value=7
+[CRITICAL  ] [node_mastery] Node regression: Event_BeginPlay
+             Event_BeginPlay score dropped from 100% to 12% (-88%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_Event_BeginPlay value=-0.875 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: Branch
+             Branch score dropped from 17% to 5% (-12%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_Branch value=-0.11900000000000001 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: PrintString
+             PrintString score dropped from 100% to 5% (-95%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_PrintString value=-0.952 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: Event_ActorBeginOverlap
+             Event_ActorBeginOverlap score dropped from 78% to 0% (-78%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_Event_ActorBeginOverlap value=-0.778 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: CallEvent
+             CallEvent score dropped from 22% to 0% (-22%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_CallEvent value=-0.222 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: Event_InputAction
+             Event_InputAction score dropped from 80% to 10% (-70%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_Event_InputAction value=-0.7000000000000001 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: GetActorLocation
+             GetActorLocation score dropped from 38% to 12% (-25%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_GetActorLocation value=-0.25 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: DestroyActor
+             DestroyActor score dropped from 75% to 8% (-67%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_DestroyActor value=-0.667 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: Event_Tick
+             Event_Tick score dropped from 67% to 5% (-62%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_Event_Tick value=-0.619 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: FlipFlop
+             FlipFlop score dropped from 80% to 0% (-80%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_FlipFlop value=-0.8 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: Sequence
+             Sequence score dropped from 33% to 0% (-33%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_Sequence value=-0.333 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: AddActorLocalRotation
+             AddActorLocalRotation score dropped from 36% to 0% (-36%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_AddActorLocalRotation value=-0.364 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: DoOnce
+             DoOnce score dropped from 50% to 0% (-50%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_DoOnce value=-0.5 (threshold: -0.1)
+[CRITICAL  ] [node_mastery] Node regression: Event_EndPlay
+             Event_EndPlay score dropped from 67% to 0% (-67%). Possible catastrophic forgetting. Check if new lesson data displaced training for this node type.
+             metric=node_regression_Event_EndPlay value=-0.667 (threshold: -0.1)
+
+Total: 19 alerts
+
+============================================================
+Health Check — 2026-02-27 10:45:00
+============================================================
+[INFO      ] [overfitting] Generalization: healthy
+             Train accuracy 92.7% vs eval accuracy 93.9% (gap: -1.2%).
+             metric=accuracy_gap value=-0.012225928902626082
+[INFO      ] [learning_rate] Learning rate configuration
+             LR: 5e-05, total steps: 25, loss range: 3.2857 -> 0.4062.
+             metric=learning_rate value=5e-05
+[INFO      ] [dataset_quality] Dataset composition
+             Total: 511 | Synthetic: 511 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0
+             metric=dataset_total value=511
+[INFO      ] [node_mastery] Node mastery snapshot
+             33 nodes scored: 0 mastered (>=85%), 0 learning (60-84%), 33 struggling (<60%).
+             metric=nodes_mastered value=0
+[SUGGESTION] [dataset_quality] Missing node types in training data
+             7 key node types have zero training examples: CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.
+             metric=missing_key_nodes value=7
+
+Total: 5 alerts
+
+============================================================
+Health Check — 2026-02-27 15:28:36
+============================================================
+[INFO      ] [overfitting] Generalization: healthy
+             Train accuracy 93.4% vs eval accuracy 94.3% (gap: -0.9%).
+             metric=accuracy_gap value=-0.00889521837234497
+[INFO      ] [learning_rate] Learning rate configuration
+             LR: 5e-05, total steps: 28, loss range: 2.9827 -> 0.3485.
+             metric=learning_rate value=5e-05
+[INFO      ] [dataset_quality] Dataset composition
+             Total: 573 | Synthetic: 573 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0
+             metric=dataset_total value=573
+[INFO      ] [node_mastery] Node mastery snapshot
+             27 nodes scored: 10 mastered (>=85%), 10 learning (60-84%), 7 struggling (<60%).
+             metric=nodes_mastered value=10
+[SUGGESTION] [dataset_quality] Missing node types in training data
+             7 key node types have zero training examples: CastTo, SetTimer, Timeline, CustomEvent, EventTick, OnOverlap, OnHit. Consider adding synthetic examples for these.
+             metric=missing_key_nodes value=7
+
+Total: 5 alerts

@@ -1,6 +1,6 @@
 {
-  "generated": "2026-02-27T10:45:00",
-  "version": "v3",
+  "generated": "2026-02-27T15:28:36",
+  "version": "v4",
   "cycle": 3,
   "summary": {
     "total_alerts": 5,
@@ -17,16 +17,16 @@
       "level": "INFO",
       "dimension": "overfitting",
       "title": "Generalization: healthy",
-      "detail": "Train accuracy 92.7% vs eval accuracy 93.9% (gap: -1.2%).",
+      "detail": "Train accuracy 93.4% vs eval accuracy 94.3% (gap: -0.9%).",
       "metric": "accuracy_gap",
-      "value": -0.012225928902626082,
+      "value": -0.00889521837234497,
       "threshold": null
     },
     {
       "level": "INFO",
       "dimension": "learning_rate",
       "title": "Learning rate configuration",
-      "detail": "LR: 5e-05, total steps: 25, loss range: 3.2857 -> 0.4062.",
+      "detail": "LR: 5e-05, total steps: 28, loss range: 2.9827 -> 0.3485.",
       "metric": "learning_rate",
       "value": 5e-05,
       "threshold": null
@@ -35,18 +35,18 @@
       "level": "INFO",
       "dimension": "dataset_quality",
       "title": "Dataset composition",
-      "detail": "Total: 511 | Synthetic: 511 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0",
+      "detail": "Total: 573 | Synthetic: 573 | Lesson: 0 | Auto-translated: 0 | Manual: 0 | Duplicates: 0",
       "metric": "dataset_total",
-      "value": 511,
+      "value": 573,
       "threshold": null
     },
     {
       "level": "INFO",
       "dimension": "node_mastery",
       "title": "Node mastery snapshot",
-      "detail": "33 nodes scored: 0 mastered (>=85%), 0 learning (60-84%), 33 struggling (<60%).",
+      "detail": "27 nodes scored: 10 mastered (>=85%), 10 learning (60-84%), 7 struggling (<60%).",
       "metric": "nodes_mastered",
-      "value": 0,
+      "value": 10,
       "threshold": null
     },
     {
@@ -60,13 +60,13 @@
     }
   ],
   "current_cycle": {
-    "version": "v3",
+    "version": "v4",
     "date": "2026-02-27",
-    "dataset_size": 511,
+    "dataset_size": 573,
     "lesson_data_size": 0,
     "dataset_composition": {
-      "total": 511,
-      "synthetic": 511,
+      "total": 573,
+      "synthetic": 573,
       "lesson": 0,
       "auto_translated": 0,
       "manual": 0,
@@ -76,68 +76,62 @@
     "epochs": 2,
     "learning_rate": 5e-05,
     "training_time_seconds": null,
-    "total_steps": 25,
-    "initial_loss": 3.2857,
-    "final_loss": 0.4062,
-    "eval_loss": 0.316992849111557,
-    "train_accuracy": 0.9265465855598449,
-    "eval_accuracy": 0.938772514462471,
+    "total_steps": 28,
+    "initial_loss": 2.9827,
+    "final_loss": 0.3485,
+    "eval_loss": 0.2768014073371887,
+    "train_accuracy": 0.9341077953577042,
+    "eval_accuracy": 0.9430030137300491,
     "node_scores": {
-      "Event_BeginPlay": 0.125,
-      "VariableGet": 0.083,
-      "Branch": 0.048,
-      "PrintString": 0.048,
-      "Event_ActorBeginOverlap": 0.0,
-      "ActorHasTag": 0.0,
-      "VariableSet": 0.0,
-      "Event_AnyDamage": 0.0,
-      "Subtract": 0.0,
-      "CallEvent": 0.0,
-      "Event_Custom": 0.0,
-      "Gate": 0.1,
-      "Event_InputAction": 0.1,
-      "ToggleVisibility": 0.1,
-      "GetActorLocation": 0.125,
-      "SpawnActorFromClass": 0.0,
-      "ForEachLoop": 0.083,
-      "DestroyActor": 0.083,
-      "Event_Tick": 0.048,
-      "GetPlayerPawn": 0.048,
-      "GetDistanceTo": 0.048,
-      "LessThan": 0.048,
-      "GreaterThan": 0.048,
-      "SetVisibility": 0.0,
-      "FlipFlop": 0.0,
-      "Sequence": 0.0,
-      "AddActorLocalRotation": 0.0,
-      "GetDisplayName": 0.0,
-      "PlaySoundAtLocation": 0.125,
-      "DoOnce": 0.0,
-      "Multiply": 0.0,
-      "Add": 0.0,
-      "Event_EndPlay": 0.0
+      "Event_BeginPlay": 0.941,
+      "CreateWidget": 0.941,
+      "AddToViewport": 0.941,
+      "Event_InputAction": 0.824,
+      "VariableGet": 0.941,
+      "RemoveFromParent": 0.938,
+      "Branch": 0.875,
+      "VariableSet": 0.867,
+      "Delay": 0.938,
+      "Event_ActorBeginOverlap": 0.818,
+      "Event_ActorEndOverlap": 0.333,
+      "CastToCharacter": 0.5,
+      "DoOnce": 0.842,
+      "PrintString": 0.941,
+      "Sequence": 0.562,
+      "IsValid": 0.824,
+      "SetTimerByFunctionName": 0.786,
+      "Event_Custom": 0.786,
+      "FlipFlop": 0.208,
+      "Event_Tick": 0.842,
+      "GetPlayerPawn": 0.842,
+      "GetDistanceTo": 0.842,
+      "LessThan": 0.842,
+      "Event_EndPlay": 0.174,
+      "Gate": 0.143,
+      "ForEachLoop": 0.941,
+      "MultiGate": 0.524
     },
     "eval_summary": {
-      "total": 24,
-      "passed": 1,
-      "avg_score": 0.015
+      "total": 20,
+      "passed": 16,
+      "avg_score": 0.586
     }
   },
   "trends": {
     "loss": [
       0.0199,
       0.4062,
-      0.4062
+      0.3485
     ],
     "accuracy": [
       0.9980449676513672,
       0.938772514462471,
-      0.938772514462471
+      0.9430030137300491
     ],
     "dataset_size": [
       391,
       511,
-      511
+      573
     ],
     "training_time": []
   }

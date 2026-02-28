@@ -1,0 +1,113 @@
+{
+  "lesson_id": "lesson_01",
+  "lesson_name": "Core Pattern Gaps",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v4\\final",
+  "base_model": "meta-llama/Meta-Llama-3.1-70B",
+  "timestamp": "20260227_153058",
+  "total_prompts": 20,
+  "valid_syntax": 19,
+  "valid_syntax_pct": 95.0,
+  "avg_similarity_score": 60.5,
+  "per_category": {
+    "print_hello": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "rotating_actor": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 36.4
+    },
+    "overlap_event": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 77.8
+    },
+    "branch": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 33.3
+    },
+    "delay": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 62.5
+    },
+    "sequence": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 91.7
+    },
+    "flipflop": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 70.0
+    },
+    "doonce": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 75.0
+    },
+    "cast": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 77.8
+    },
+    "foreach": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 27.3
+    },
+    "gate": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 75.0
+    },
+    "custom_event": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 44.4
+    },
+    "variable_set_get": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 71.4
+    },
+    "spawn_actor": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 40.0
+    },
+    "play_sound": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 37.5
+    },
+    "distance_check": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 28.6
+    },
+    "multi_event": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 50.0
+    },
+    "set_visibility": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 28.6
+    },
+    "math_chain": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 90.0
+    },
+    "delay_chain": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 92.9
+    }
+  }
+}

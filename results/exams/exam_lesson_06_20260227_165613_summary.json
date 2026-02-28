@@ -1,0 +1,113 @@
+{
+  "lesson_id": "lesson_06",
+  "lesson_name": "While Loops, For Loops, and Iteration",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v4\\final",
+  "base_model": "meta-llama/Meta-Llama-3.1-70B",
+  "timestamp": "20260227_165613",
+  "total_prompts": 20,
+  "valid_syntax": 20,
+  "valid_syntax_pct": 100.0,
+  "avg_similarity_score": 56.2,
+  "per_category": {
+    "forloop_basic": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 77.8
+    },
+    "forloop_spawn": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 61.5
+    },
+    "forloop_sum": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 38.9
+    },
+    "whileloop_basic": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 20.0
+    },
+    "forloop_even": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 25.0
+    },
+    "foreach_destroy": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 85.7
+    },
+    "forloop_grid": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 44.4
+    },
+    "forloop_delay_after": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 84.6
+    },
+    "foreach_filter": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 71.4
+    },
+    "forloop_countdown": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 45.5
+    },
+    "foreach_toggle_vis": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 75.0
+    },
+    "whileloop_halving": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 19.0
+    },
+    "forloop_random_spawn": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 21.4
+    },
+    "foreach_max": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 61.9
+    },
+    "whileloop_damage": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 22.7
+    },
+    "foreach_closest": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 43.8
+    },
+    "forloop_sequence": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 84.6
+    },
+    "foreach_doonce": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 71.4
+    },
+    "forloop_health_bars": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 85.7
+    },
+    "forloop_complete": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 84.6
+    }
+  }
+}

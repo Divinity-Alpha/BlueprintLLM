@@ -110,5 +110,55 @@
       "passed": 1,
       "avg_score": 0.015
     }
+  },
+  {
+    "cycle": 3,
+    "version": "v4",
+    "date": "2026-02-27",
+    "dataset_size": 573,
+    "lesson_data_size": 0,
+    "epochs": 2,
+    "learning_rate": 5e-05,
+    "training_time_seconds": null,
+    "total_steps": 28,
+    "initial_loss": 2.9827,
+    "final_loss": 0.3485,
+    "eval_loss": 0.2768014073371887,
+    "train_accuracy": 0.9341077953577042,
+    "eval_accuracy": 0.9430030137300491,
+    "node_scores": {
+      "Event_BeginPlay": 0.941,
+      "CreateWidget": 0.941,
+      "AddToViewport": 0.941,
+      "Event_InputAction": 0.824,
+      "VariableGet": 0.941,
+      "RemoveFromParent": 0.938,
+      "Branch": 0.875,
+      "VariableSet": 0.867,
+      "Delay": 0.938,
+      "Event_ActorBeginOverlap": 0.818,
+      "Event_ActorEndOverlap": 0.333,
+      "CastToCharacter": 0.5,
+      "DoOnce": 0.842,
+      "PrintString": 0.941,
+      "Sequence": 0.562,
+      "IsValid": 0.824,
+      "SetTimerByFunctionName": 0.786,
+      "Event_Custom": 0.786,
+      "FlipFlop": 0.208,
+      "Event_Tick": 0.842,
+      "GetPlayerPawn": 0.842,
+      "GetDistanceTo": 0.842,
+      "LessThan": 0.842,
+      "Event_EndPlay": 0.174,
+      "Gate": 0.143,
+      "ForEachLoop": 0.941,
+      "MultiGate": 0.524
+    },
+    "eval_summary": {
+      "total": 20,
+      "passed": 16,
+      "avg_score": 0.586
+    }
   }
 ]

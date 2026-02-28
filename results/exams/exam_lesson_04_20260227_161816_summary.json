@@ -1,0 +1,113 @@
+{
+  "lesson_id": "lesson_04",
+  "lesson_name": "Physics and Movement",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v4\\final",
+  "base_model": "meta-llama/Meta-Llama-3.1-70B",
+  "timestamp": "20260227_161816",
+  "total_prompts": 20,
+  "valid_syntax": 18,
+  "valid_syntax_pct": 90.0,
+  "avg_similarity_score": 51.9,
+  "per_category": {
+    "physics_impulse": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "physics_force": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 30.0
+    },
+    "physics_toggle": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 80.0
+    },
+    "movement_offset": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 50.0
+    },
+    "movement_teleport": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 33.3
+    },
+    "physics_overlap_launch": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 87.5
+    },
+    "movement_lerp": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 23.1
+    },
+    "movement_input": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 30.0
+    },
+    "physics_bounce": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 33.3
+    },
+    "movement_patrol": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 30.8
+    },
+    "physics_delayed": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 90.0
+    },
+    "movement_rotate_and_move": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 37.5
+    },
+    "physics_conditional_force": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 76.9
+    },
+    "movement_speed_variable": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 64.3
+    },
+    "physics_gravity_zone": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 25.0
+    },
+    "movement_clamp": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 20.0
+    },
+    "physics_multigate": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 66.7
+    },
+    "movement_sine_wave": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 42.1
+    },
+    "physics_projectile": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 31.2
+    },
+    "movement_scale_speed": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 85.7
+    }
+  }
+}

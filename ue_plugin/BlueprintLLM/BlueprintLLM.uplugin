@@ -1,0 +1,19 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.1.0",
+	"FriendlyName": "BlueprintLLM",
+	"Description": "Import LLM-generated DSL into Blueprint graphs",
+	"Category": "Editor",
+	"CreatedBy": "BlueprintLLM",
+	"EnabledByDefault": true,
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"Modules": [
+		{
+			"Name": "BlueprintLLM",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
+}

@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "name": "BP_HelloWorld",
+    "parent_class": "Actor",
+    "category": null
+  },
+  "variables": [],
+  "nodes": [
+    {
+      "id": "n1",
+      "dsl_type": "Event_BeginPlay",
+      "params": {},
+      "ue_class": "UK2Node_Event",
+      "ue_event": "ReceiveBeginPlay",
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "n2",
+      "dsl_type": "PrintString",
+      "params": {
+        "InString": "Hello World"
+      },
+      "ue_class": "UK2Node_CallFunction",
+      "ue_function": "/Script/Engine.KismetSystemLibrary:PrintString",
+      "position": [
+        300,
+        0
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "type": "exec",
+      "src_node": "n1",
+      "src_pin": "Then",
+      "dst_node": "n2",
+      "dst_pin": "Execute"
+    }
+  ]
+}

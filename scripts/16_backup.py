@@ -28,12 +28,16 @@ def show_list():
         print("No backups found.")
         return
 
-    print(f"\n{'Label':<55} {'Category':<12} {'Files':>6}  {'Timestamp'}")
-    print("-" * 95)
+    print(f"\n{'Label':<55} {'Category':<12} {'Files':>6}  {'Timestamp'}  {'Status'}")
+    print("-" * 105)
     for b in backups:
-        exists = "[OK]" if Path(b["path"]).exists() else "[MISSING]"
-        print(f"{b['label']:<55} {b['category']:<12} {b['file_count']:>6}  {b['timestamp']}  {exists}")
+        local_ok = Path(b["path"]).exists()
+        mirror_path = b.get("mirror_path", "")
+        mirror_ok = Path(mirror_path).exists() if mirror_path else False
+        status = f"{'L' if local_ok else '-'}{'M' if mirror_ok else '-'}"
+        print(f"{b['label']:<55} {b['category']:<12} {b['file_count']:>6}  {b['timestamp']}  [{status}]")
     print(f"\nTotal: {len(backups)} backup(s)")
+    print("Status: L=local, M=mirror (D:\\BlueprintLLMBackup)")
 
 
 def run_cleanup():

@@ -159,23 +159,37 @@ body::after {
   background: var(--bg-deep); color: var(--text-dim); border: 1px solid var(--border);
 }
 
-/* Timeline */
-.timeline { display: flex; flex-direction: column; gap: 0; }
-.tl-item { display: flex; align-items: stretch; gap: 12px; }
-.tl-rail { display: flex; flex-direction: column; align-items: center; width: 20px; flex-shrink: 0; }
-.tl-dot {
-  width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--border);
-  flex-shrink: 0; margin-top: 2px;
+/* Step Progress Table */
+.step-table { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+.st-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 6px; border-bottom: 1px solid rgba(42, 54, 80, 0.4);
 }
-.tl-dot.complete { background: var(--accent-emerald); border-color: var(--accent-emerald); }
-.tl-dot.active { background: var(--accent-blue); border-color: var(--accent-blue); box-shadow: 0 0 10px rgba(59,130,246,0.5); animation: pulse 2s ease-in-out infinite; }
-.tl-dot.upcoming { background: transparent; border-color: var(--border); }
-.tl-line { width: 2px; flex: 1; min-height: 8px; background: var(--border); }
-.tl-line.done { background: var(--accent-emerald); }
-.tl-content { flex: 1; padding: 0 0 14px; }
-.tl-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
-.tl-title.dim { color: var(--text-dim); }
-.tl-meta { font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+.st-row:last-child { border-bottom: none; }
+.st-sub-row { padding-left: 30px; background: rgba(10, 14, 23, 0.4); }
+.st-num {
+  width: 22px; text-align: right; color: var(--text-dim);
+  font-size: 12px; flex-shrink: 0;
+}
+.st-name {
+  flex: 1; font-family: 'Outfit', sans-serif; font-weight: 500;
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.st-name.dim { color: var(--text-dim); font-weight: 400; }
+.st-badge {
+  font-size: 10px; padding: 2px 8px; border-radius: 4px;
+  font-weight: 600; white-space: nowrap; flex-shrink: 0;
+}
+.st-done { background: var(--glow-emerald); color: var(--accent-emerald); }
+.st-running { background: var(--glow-blue); color: var(--accent-blue); animation: pulse 2s ease-in-out infinite; }
+.st-pending { color: var(--text-dim); }
+.st-error { background: var(--glow-rose); color: var(--accent-rose); }
+.st-dur {
+  font-size: 12px; color: var(--text-secondary); text-align: right;
+  white-space: nowrap; flex-shrink: 0; min-width: 60px;
+}
+.st-dur.dim { color: var(--text-dim); }
+.st-tree { color: var(--text-dim); }
 
 /* Metrics cards */
 .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
@@ -337,13 +351,13 @@ svg text { font-family: 'JetBrains Mono', monospace; }
 
   <!-- Main grid -->
   <div class="main-grid">
-    <!-- Left: Timeline -->
+    <!-- Left: Step Progress -->
     <div class="panel">
       <div class="panel-header">
-        <div class="panel-title">Step Timeline</div>
+        <div class="panel-title">Step Progress</div>
         <div id="timelineBadge" class="panel-badge">0 steps</div>
       </div>
-      <div id="timeline" class="timeline"></div>
+      <div id="stepTable" class="step-table"></div>
     </div>
 
     <!-- Right: Training metrics -->
@@ -541,9 +555,9 @@ function renderCurrentStep(state) {
   }
 }
 
-// ─── Render: Timeline (hierarchical) ─────────────────────────────────────
-// Groups substeps (e.g. "1.3") under parent steps (e.g. "1") derived from
-// step_plan. Active parent is expanded; completed parents are collapsed.
+// ─── Render: Step Progress Table ─────────────────────────────────────────
+// Replaces the dot-and-rail timeline with a compact table. Active parent
+// is expanded to show sub-steps; completed parents are collapsed rows.
 
 function getParentId(stepId) {
   if (!stepId) return null;
@@ -551,8 +565,8 @@ function getParentId(stepId) {
   return dot > 0 ? stepId.substring(0, dot) : null;
 }
 
-function renderTimeline(state) {
-  const container = document.getElementById('timeline');
+function renderStepTable(state) {
+  const container = document.getElementById('stepTable');
   const badge = document.getElementById('timelineBadge');
 
   if (!state) { container.innerHTML = ''; badge.textContent = '0 steps'; return; }
@@ -560,12 +574,11 @@ function renderTimeline(state) {
   const plan = state.step_plan || [];
   const completed = state.completed_steps || [];
   const upcoming = state.upcoming_steps || [];
-  const currentId = (state.status === 'running') ? state.step_id : null;
+  const currentId = (state.status === 'running' || state.status === 'retrying') ? state.step_id : null;
   const activeParent = currentId ? (getParentId(currentId) || currentId) : null;
 
-  // Build sets for quick lookup
+  // Build lookup maps
   const completedIds = new Set(completed.map(s => s.step));
-  const upcomingIds = new Set(upcoming.map(s => s.step));
   const completedMap = {};
   completed.forEach(s => { completedMap[s.step] = s; });
   const upcomingMap = {};
@@ -573,23 +586,22 @@ function renderTimeline(state) {
 
   // Identify parent steps (no dot) from plan
   const parents = plan.filter(s => !s.step.includes('.'));
-  const completedParents = parents.filter(p =>
-    completedIds.has(p.step) ||
-    plan.filter(s => getParentId(s.step) === p.step).every(s => completedIds.has(s.step))
-  );
+  const completedParentCount = parents.filter(p => {
+    const children = plan.filter(s => getParentId(s.step) === p.step);
+    return completedIds.has(p.step) || (children.length > 0 && children.every(c => completedIds.has(c.step)));
+  }).length;
 
-  badge.textContent = completedParents.length + '/' + parents.length + ' phases';
+  badge.textContent = completedParentCount + '/' + parents.length + ' phases';
 
   let html = '';
 
-  parents.forEach((parent, pi) => {
+  parents.forEach(parent => {
     const children = plan.filter(s => getParentId(s.step) === parent.step);
     const allChildrenDone = children.length > 0 && children.every(c => completedIds.has(c.step));
     const parentDone = completedIds.has(parent.step) || allChildrenDone;
     const isActive = parent.step === activeParent;
-    const isLast = (pi === parents.length - 1);
 
-    // Compute total duration for collapsed parent
+    // Compute total duration for completed parent
     let totalDur = 0;
     if (parentDone) {
       children.forEach(c => {
@@ -600,78 +612,104 @@ function renderTimeline(state) {
 
     if (parentDone && !isActive) {
       // Collapsed completed parent
-      html += tlItem('complete', parent.name || parent.step,
-        fmtDuration(totalDur), !isLast, true);
+      html += '<div class="st-row">' +
+        '<div class="st-num">' + esc(parent.step) + '</div>' +
+        '<div class="st-name">' + esc(parent.name || parent.step) + '</div>' +
+        '<div class="st-badge st-done">done</div>' +
+        '<div class="st-dur">' + fmtDuration(totalDur) + '</div>' +
+      '</div>';
     } else if (isActive) {
-      // Expanded active parent
-      html += tlItem('active', parent.name || parent.step, 'in progress', true, false);
-      // Show children
-      children.forEach((child, ci) => {
+      // Active parent row (expanded)
+      html += '<div class="st-row">' +
+        '<div class="st-num">' + esc(parent.step) + '</div>' +
+        '<div class="st-name">' + esc(parent.name || parent.step) + '</div>' +
+        '<div class="st-badge st-running">running</div>' +
+        '<div class="st-dur"></div>' +
+      '</div>';
+      // Sub-step rows
+      children.forEach(child => {
         const childDone = completedIds.has(child.step);
         const childActive = child.step === currentId;
-        const childIsLast = (ci === children.length - 1) && isLast;
+        let statusBadge, durText, dimClass;
+
         if (childDone) {
-          const dur = completedMap[child.step] ? fmtDuration(completedMap[child.step].duration) : '';
-          html += tlItem('complete', '  ' + (child.name || child.step), dur, !childIsLast, true);
+          const dur = completedMap[child.step] ? completedMap[child.step].duration : null;
+          statusBadge = '<div class="st-badge st-done">done</div>';
+          durText = fmtDuration(dur);
+          dimClass = '';
         } else if (childActive) {
-          let meta = 'in progress';
+          let progressText = '';
           if (state.progress_current != null && state.progress_total) {
             const p = Math.round(100 * state.progress_current / state.progress_total);
-            meta = state.progress_current + '/' + state.progress_total + ' (' + p + '%)';
+            progressText = state.progress_current + '/' + state.progress_total + ' (' + p + '%)';
           }
-          html += tlItem('active', '  ' + (child.name || child.step), meta, !childIsLast, false);
+          statusBadge = '<div class="st-badge st-running">running</div>';
+          durText = progressText || '';
+          dimClass = '';
         } else {
           const eta = upcomingMap[child.step] && upcomingMap[child.step].eta_seconds != null
-            ? 'ETA: ' + fmtDuration(upcomingMap[child.step].eta_seconds) : '';
-          html += tlItem('upcoming', '  ' + (child.name || child.step), eta, !childIsLast, false);
+            ? 'ETA ' + fmtDuration(upcomingMap[child.step].eta_seconds) : '';
+          statusBadge = '<div class="st-badge st-pending">pending</div>';
+          durText = eta;
+          dimClass = ' dim';
         }
+
+        html += '<div class="st-row st-sub-row">' +
+          '<div class="st-name' + dimClass + '"><span class="st-tree">\u2514 </span>' +
+            esc(child.step) + ' ' + esc(child.name || '') + '</div>' +
+          statusBadge +
+          '<div class="st-dur' + dimClass + '">' + durText + '</div>' +
+        '</div>';
       });
     } else {
-      // Upcoming parent
+      // Pending parent
       const eta = upcomingMap[parent.step] && upcomingMap[parent.step].eta_seconds != null
-        ? 'ETA: ' + fmtDuration(upcomingMap[parent.step].eta_seconds) : '';
-      html += tlItem('upcoming', parent.name || parent.step, eta, !isLast, false);
+        ? 'ETA ' + fmtDuration(upcomingMap[parent.step].eta_seconds) : '\u2014';
+      html += '<div class="st-row">' +
+        '<div class="st-num">' + esc(parent.step) + '</div>' +
+        '<div class="st-name dim">' + esc(parent.name || parent.step) + '</div>' +
+        '<div class="st-badge st-pending">pending</div>' +
+        '<div class="st-dur dim">' + eta + '</div>' +
+      '</div>';
     }
   });
 
   // Fallback if no plan: flat list (backwards compat)
   if (parents.length === 0) {
-    completed.forEach((s, i) => {
-      const isLast2 = (!currentId && i === completed.length - 1 && upcoming.length === 0);
-      html += tlItem('complete', s.name || s.step, fmtDuration(s.duration), !isLast2, true);
+    completed.forEach(s => {
+      html += '<div class="st-row">' +
+        '<div class="st-num">' + esc(s.step) + '</div>' +
+        '<div class="st-name">' + esc(s.name || s.step) + '</div>' +
+        '<div class="st-badge st-done">done</div>' +
+        '<div class="st-dur">' + fmtDuration(s.duration) + '</div>' +
+      '</div>';
     });
-    if (currentId && state.status === 'running') {
+    if (currentId) {
       const desc = state.description || currentId;
-      let meta = 'in progress';
+      let meta = '';
       if (state.progress_current != null && state.progress_total) {
         const p = Math.round(100 * state.progress_current / state.progress_total);
         meta = state.progress_current + '/' + state.progress_total + ' (' + p + '%)';
       }
-      html += tlItem('active', desc, meta, upcoming.length > 0, false);
+      html += '<div class="st-row">' +
+        '<div class="st-num">' + esc(currentId) + '</div>' +
+        '<div class="st-name">' + esc(desc) + '</div>' +
+        '<div class="st-badge st-running">running</div>' +
+        '<div class="st-dur">' + meta + '</div>' +
+      '</div>';
     }
-    upcoming.forEach((s, i) => {
-      const isLast2 = (i === upcoming.length - 1);
-      const meta = s.eta_seconds != null ? 'ETA: ' + fmtDuration(s.eta_seconds) : '';
-      html += tlItem('upcoming', s.name || s.step, meta, !isLast2, false);
+    upcoming.forEach(s => {
+      const eta = s.eta_seconds != null ? 'ETA ' + fmtDuration(s.eta_seconds) : '\u2014';
+      html += '<div class="st-row">' +
+        '<div class="st-num">' + esc(s.step) + '</div>' +
+        '<div class="st-name dim">' + esc(s.name || s.step) + '</div>' +
+        '<div class="st-badge st-pending">pending</div>' +
+        '<div class="st-dur dim">' + eta + '</div>' +
+      '</div>';
     });
   }
 
   container.innerHTML = html;
-}
-
-function tlItem(type, title, meta, showLine, isDone) {
-  const dimClass = type === 'upcoming' ? ' dim' : '';
-  const lineClass = isDone ? ' done' : '';
-  return '<div class="tl-item">' +
-    '<div class="tl-rail">' +
-      '<div class="tl-dot ' + type + '"></div>' +
-      (showLine ? '<div class="tl-line' + lineClass + '"></div>' : '') +
-    '</div>' +
-    '<div class="tl-content">' +
-      '<div class="tl-title' + dimClass + '">' + esc(title) + '</div>' +
-      (meta ? '<div class="tl-meta">' + esc(meta) + '</div>' : '') +
-    '</div>' +
-  '</div>';
 }
 
 // ─── Render: Training Metrics ────────────────────────────────────────────
@@ -829,21 +867,17 @@ function renderIdleOverlay(state) {
     return;
   }
 
-  overlay.classList.remove('hidden');
-
+  // If we have last-run data, the step table already shows it — no overlay needed
   const completed = state.completed_steps || [];
   if (completed.length > 0) {
-    sub.textContent = completed.length + ' steps completed in last run (' + state.run_id + ')';
-    let html = '';
-    completed.forEach(s => {
-      html += '<div class="idle-step"><span class="check">&#10003;</span>' +
-        esc(s.name || s.step) + ' <span style="color:var(--text-dim)">(' + fmtDuration(s.duration) + ')</span></div>';
-    });
-    stepsDiv.innerHTML = html;
-  } else {
-    sub.textContent = 'No pipeline is currently running';
-    stepsDiv.innerHTML = '';
+    overlay.classList.add('hidden');
+    return;
   }
+
+  // Truly idle with no prior run data
+  overlay.classList.remove('hidden');
+  sub.textContent = 'No pipeline is currently running';
+  stepsDiv.innerHTML = '';
 }
 
 function showDisconnected() {
@@ -860,7 +894,7 @@ function render(state) {
   renderClocks(state);
   renderCurrentStep(state);
   renderErrorPanel(state);
-  renderTimeline(state);
+  renderStepTable(state);
   renderTrainingMetrics(state);
   renderIdleOverlay(state);
 }

@@ -125,7 +125,7 @@ class RetryConfig:
 STEP_RETRY_CONFIGS = {
     "data":     RetryConfig(max_retries=2, backoff=(10, 30),   timeout=600),
     "validate": RetryConfig(max_retries=1, backoff=(5,),       timeout=300),
-    "training": RetryConfig(max_retries=2, backoff=(60, 120),  timeout=14400),
+    "training": RetryConfig(max_retries=2, backoff=(60, 120),  timeout=28800),
     "eval":     RetryConfig(max_retries=1, backoff=(30,),      timeout=14400),
     "exam":     RetryConfig(max_retries=1, backoff=(30,),      timeout=14400),
     "utility":  RetryConfig(max_retries=1, backoff=(10,),      timeout=600),

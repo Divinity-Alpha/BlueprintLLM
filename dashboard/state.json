@@ -1,0 +1,76 @@
+{
+  "version": "v6",
+  "status": "idle",
+  "pipeline_start_time": 1772319611.0338998,
+  "current_step": {
+    "number": 9,
+    "total_steps": 9,
+    "name": "Finalize",
+    "started_at": 1772346101.538757
+  },
+  "steps": [
+    {
+      "number": 1,
+      "name": "Data Foundation",
+      "status": "done",
+      "started_at": 1772319611.0348399,
+      "duration_seconds": 7.4
+    },
+    {
+      "number": 2,
+      "name": "Pre-Flight Checks",
+      "status": "done",
+      "started_at": 1772319618.469482,
+      "duration_seconds": 3.4
+    },
+    {
+      "number": 3,
+      "name": "Model Setup",
+      "status": "done"
+    },
+    {
+      "number": 4,
+      "name": "Training",
+      "status": "done",
+      "started_at": 1772319621.821675,
+      "duration_seconds": 12111.1
+    },
+    {
+      "number": 5,
+      "name": "Post-Training",
+      "status": "done",
+      "started_at": 1772331732.9177449,
+      "duration_seconds": 20.4
+    },
+    {
+      "number": 6,
+      "name": "Run exams",
+      "status": "done",
+      "started_at": 1772331753.2871253,
+      "duration_seconds": 13733.2
+    },
+    {
+      "number": 7,
+      "name": "Run eval suite",
+      "status": "done",
+      "started_at": 1772345486.4612086,
+      "duration_seconds": 606.9
+    },
+    {
+      "number": 8,
+      "name": "Lesson Integration",
+      "status": "done",
+      "started_at": 1772346093.4044917,
+      "duration_seconds": 8.1
+    },
+    {
+      "number": 9,
+      "name": "Finalize",
+      "status": "done",
+      "started_at": 1772346101.538757,
+      "duration_seconds": 0.1
+    }
+  ],
+  "training": null,
+  "exam_active": null
+}

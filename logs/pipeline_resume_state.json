@@ -16,29 +16,29 @@
         "step": "Training summary",
         "category": "encoding",
         "message": "exit 1: encoding",
-        "timestamp": "2026-02-27T21:07:46.051115",
+        "timestamp": "2026-02-28T20:22:13.009823",
         "attempt": 0
       },
       {
         "step": "Training summary",
         "category": "encoding",
         "message": "exit 1: encoding",
-        "timestamp": "2026-02-27T21:07:56.098189",
+        "timestamp": "2026-02-28T20:22:23.059899",
         "attempt": 1
       },
       {
-        "step": "Health check v5",
+        "step": "Health check v6",
         "category": "unknown",
         "message": "exit 2: unknown",
-        "timestamp": "2026-02-27T21:07:56.204141",
+        "timestamp": "2026-02-28T20:22:23.176492",
         "attempt": 0
       }
     ],
     "message": "  FAILED (exit 2, category=unknown)"
   },
   "state_snapshot": {
-    "last_training_data_hash": "ff48b2274612f318",
-    "last_model_version": 5
+    "last_training_data_hash": "3bc2ae96696b9ce2",
+    "last_model_version": 6
   },
-  "timestamp": "2026-02-28T00:03:30.748329"
+  "timestamp": "2026-03-01T00:21:43.745278"
 }

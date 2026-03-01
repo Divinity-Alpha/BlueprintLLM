@@ -1,0 +1,56 @@
+{
+  "lesson_id": "correction_v3b",
+  "lesson_name": "Corrections: Format Consistency and Output Discipline",
+  "description": "8 simple examples reinforcing clean output format: no trailing tokens, no hallucinated follow-ups, consistent node naming. These are format-only corrections.",
+  "created": "2026-02-27",
+  "prompts": [
+    {
+      "id": "C3B_01",
+      "category": "clean_simple",
+      "instruction": "Create a Blueprint that prints Ready on BeginPlay.",
+      "expected_dsl": "BLUEPRINT: BP_Ready\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: PrintString [InString=\"Ready\"]\nEXEC n1.Then -> n2.Execute"
+    },
+    {
+      "id": "C3B_02",
+      "category": "clean_destroy",
+      "instruction": "Create a Blueprint that destroys itself on BeginPlay.",
+      "expected_dsl": "BLUEPRINT: BP_SelfDestroy\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: DestroyActor\nEXEC n1.Then -> n2.Execute"
+    },
+    {
+      "id": "C3B_03",
+      "category": "clean_variable",
+      "instruction": "Create a Blueprint with integer Count at 0. On BeginPlay set Count to 5 and print the value.",
+      "expected_dsl": "BLUEPRINT: BP_SetCount\nPARENT: Actor\nVAR Count: Int = 0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableSet [VarName=Count]\nNODE n3: PrintString\nEXEC n1.Then -> n2.Execute\nDATA 5 -> n2.Value [Int]\nEXEC n2.Then -> n3.Execute\nDATA n2.Value -> n3.InString [String]"
+    },
+    {
+      "id": "C3B_04",
+      "category": "clean_branch",
+      "instruction": "Create a Blueprint with bool IsReady. On BeginPlay if IsReady print Go. Else print Wait.",
+      "expected_dsl": "BLUEPRINT: BP_ReadyCheck\nPARENT: Actor\nVAR IsReady: Bool = true\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=IsReady]\nNODE n3: Branch\nNODE n4: PrintString [InString=\"Go\"]\nNODE n5: PrintString [InString=\"Wait\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Condition [Bool]\nEXEC n3.True -> n4.Execute\nEXEC n3.False -> n5.Execute"
+    },
+    {
+      "id": "C3B_05",
+      "category": "clean_overlap",
+      "instruction": "Create a Blueprint that on overlap prints Touched and destroys the overlapping actor.",
+      "expected_dsl": "BLUEPRINT: BP_TouchDestroy\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: PrintString [InString=\"Touched\"]\nNODE n3: DestroyActor\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nDATA n1.OtherActor -> n3.Target [Actor]"
+    },
+    {
+      "id": "C3B_06",
+      "category": "clean_delay",
+      "instruction": "Create a Blueprint that on BeginPlay waits 2 seconds then prints Done.",
+      "expected_dsl": "BLUEPRINT: BP_DelayPrint\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Delay [Duration=2.0]\nNODE n3: PrintString [InString=\"Done\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute"
+    },
+    {
+      "id": "C3B_07",
+      "category": "clean_timer",
+      "instruction": "Create a Blueprint that on BeginPlay starts a looping timer every 3 seconds. The timer prints Tick.",
+      "expected_dsl": "BLUEPRINT: BP_TickTimer\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"OnTick\", Time=3.0, Looping=true]\nNODE n3: Event_Custom [EventName=OnTick]\nNODE n4: PrintString [InString=\"Tick\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute"
+    },
+    {
+      "id": "C3B_08",
+      "category": "clean_cast",
+      "instruction": "Create a Blueprint that on overlap casts to Character. If success print Player. If fail print Other.",
+      "expected_dsl": "BLUEPRINT: BP_CastCheck\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: PrintString [InString=\"Player\"]\nNODE n4: PrintString [InString=\"Other\"]\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n3.Execute\nEXEC n2.CastFailed -> n4.Execute"
+    }
+  ]
+}

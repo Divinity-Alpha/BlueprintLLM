@@ -1,0 +1,74 @@
+{
+  "lesson_id": "correction_v5a",
+  "lesson_name": "Corrections: Anti-Forgetting Reinforcement",
+  "description": "11 targeted examples reinforcing patterns that regressed in v5: timer function names (T3_03: 100→72%), nested_valid_branch (92→29%), switch_with_ui (92→54%), debug_lifecycle (88→47%), enemy_proximity (91→41%).",
+  "created": "2026-02-28",
+  "prompts": [
+    {
+      "id": "C5A_01",
+      "category": "timer_function_print",
+      "instruction": "Create a Blueprint that on BeginPlay starts a looping timer every 2 seconds. The timer event prints Tick.",
+      "expected_dsl": "BLUEPRINT: BP_TimerPrint\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"OnTimer\", Time=2.0, Looping=true]\nNODE n3: Event_Custom [EventName=OnTimer]\nNODE n4: PrintString [InString=\"Tick\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute"
+    },
+    {
+      "id": "C5A_02",
+      "category": "timer_function_spawn",
+      "instruction": "Create a Blueprint that on BeginPlay starts a looping timer every 5 seconds called SpawnEnemy. The timer spawns BP_Enemy at actor location.",
+      "expected_dsl": "BLUEPRINT: BP_TimerSpawn\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"SpawnEnemy\", Time=5.0, Looping=true]\nNODE n3: Event_Custom [EventName=SpawnEnemy]\nNODE n4: GetActorLocation\nNODE n5: SpawnActorFromClass [ActorClass=BP_Enemy]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n5.Execute\nDATA n4.ReturnValue -> n5.SpawnTransform [Transform]"
+    },
+    {
+      "id": "C5A_03",
+      "category": "timer_function_counter",
+      "instruction": "Create a Blueprint with int Count at 0. On BeginPlay start looping timer every 1 second called Increment. Timer adds 1 to Count and prints the value.",
+      "expected_dsl": "BLUEPRINT: BP_TimerCount\nPARENT: Actor\nVAR Count: Int = 0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"Increment\", Time=1.0, Looping=true]\nNODE n3: Event_Custom [EventName=Increment]\nNODE n4: VariableGet [VarName=Count]\nNODE n5: AddInt [B=1]\nNODE n6: VariableSet [VarName=Count]\nNODE n7: PrintString\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n6.Execute\nDATA n4.Value -> n5.A [Int]\nDATA n5.ReturnValue -> n6.Value [Int]\nEXEC n6.Then -> n7.Execute\nDATA n6.Value -> n7.InString [String]"
+    },
+    {
+      "id": "C5A_04",
+      "category": "nested_isvalid_branch",
+      "instruction": "Create a Blueprint that on overlap casts to Character. If cast succeeds, check IsValid. If valid, check distance less than 500. If close print Near Player. Else print Far Player. If invalid print Invalid.",
+      "expected_dsl": "BLUEPRINT: BP_NestedValidCheck\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: GetDistanceTo\nNODE n6: LessThan [B=500.0]\nNODE n7: Branch\nNODE n8: PrintString [InString=\"Near Player\"]\nNODE n9: PrintString [InString=\"Far Player\"]\nNODE n10: PrintString [InString=\"Invalid\"]\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n4.Execute\nDATA n2.AsCharacter -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n7.Execute\nDATA n2.AsCharacter -> n5.OtherActor [Actor]\nDATA n5.ReturnValue -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute\nEXEC n7.False -> n9.Execute\nEXEC n4.False -> n10.Execute\nEXEC n2.CastFailed -> n10.Execute"
+    },
+    {
+      "id": "C5A_05",
+      "category": "nested_valid_destroy",
+      "instruction": "Create a Blueprint with actor variable Target. On pressing Fire check IsValid on Target. If valid, check distance less than 1000. If close, destroy Target and print Destroyed. If far print Too Far. If invalid print No Target.",
+      "expected_dsl": "BLUEPRINT: BP_ValidFireCheck\nPARENT: Actor\nVAR Target: Actor = None\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Fire\"]\nNODE n2: VariableGet [VarName=Target]\nNODE n3: IsValid\nNODE n4: Branch\nNODE n5: GetDistanceTo\nNODE n6: LessThan [B=1000.0]\nNODE n7: Branch\nNODE n8: DestroyActor\nNODE n9: PrintString [InString=\"Destroyed\"]\nNODE n10: PrintString [InString=\"Too Far\"]\nNODE n11: PrintString [InString=\"No Target\"]\nEXEC n1.Pressed -> n4.Execute\nDATA n2.Value -> n3.Input [Object]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n7.Execute\nDATA n2.Value -> n5.OtherActor [Actor]\nDATA n5.ReturnValue -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute\nDATA n2.Value -> n8.Target [Actor]\nEXEC n8.Then -> n9.Execute\nEXEC n7.False -> n10.Execute\nEXEC n4.False -> n11.Execute"
+    },
+    {
+      "id": "C5A_06",
+      "category": "switch_create_widget",
+      "instruction": "Create a Blueprint with int ScreenID. On pressing Menu, switch on ScreenID. Case 1 creates WBP_MainMenu and adds to viewport. Case 2 creates WBP_Settings. Case 3 creates WBP_Inventory.",
+      "expected_dsl": "BLUEPRINT: BP_SwitchUI\nPARENT: Actor\nVAR ScreenID: Int = 1\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Menu\"]\nNODE n2: VariableGet [VarName=ScreenID]\nNODE n3: SwitchOnInt\nNODE n4: CreateWidget [WidgetClass=WBP_MainMenu]\nNODE n5: AddToViewport\nNODE n6: CreateWidget [WidgetClass=WBP_Settings]\nNODE n7: AddToViewport\nNODE n8: CreateWidget [WidgetClass=WBP_Inventory]\nNODE n9: AddToViewport\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Selection [Int]\nEXEC n3.Case_1 -> n4.Execute\nEXEC n4.Then -> n5.Execute\nDATA n4.ReturnValue -> n5.Target [Widget]\nEXEC n3.Case_2 -> n6.Execute\nEXEC n6.Then -> n7.Execute\nDATA n6.ReturnValue -> n7.Target [Widget]\nEXEC n3.Case_3 -> n8.Execute\nEXEC n8.Then -> n9.Execute\nDATA n8.ReturnValue -> n9.Target [Widget]"
+    },
+    {
+      "id": "C5A_07",
+      "category": "switch_string_widget",
+      "instruction": "Create a Blueprint with string Mode. On BeginPlay switch on Mode. If Attack create WBP_Crosshair. If Build create WBP_BuildMenu. If Inventory create WBP_InventoryGrid. Each added to viewport.",
+      "expected_dsl": "BLUEPRINT: BP_ModeUI\nPARENT: Actor\nVAR Mode: String = \"Attack\"\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Mode]\nNODE n3: SwitchOnString\nNODE n4: CreateWidget [WidgetClass=WBP_Crosshair]\nNODE n5: AddToViewport\nNODE n6: CreateWidget [WidgetClass=WBP_BuildMenu]\nNODE n7: AddToViewport\nNODE n8: CreateWidget [WidgetClass=WBP_InventoryGrid]\nNODE n9: AddToViewport\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Selection [String]\nEXEC n3.Case_Attack -> n4.Execute\nEXEC n4.Then -> n5.Execute\nDATA n4.ReturnValue -> n5.Target [Widget]\nEXEC n3.Case_Build -> n6.Execute\nEXEC n6.Then -> n7.Execute\nDATA n6.ReturnValue -> n7.Target [Widget]\nEXEC n3.Case_Inventory -> n8.Execute\nEXEC n8.Then -> n9.Execute\nDATA n8.ReturnValue -> n9.Target [Widget]"
+    },
+    {
+      "id": "C5A_08",
+      "category": "lifecycle_full",
+      "instruction": "Create a Blueprint that on BeginPlay prints Spawned. On EndPlay prints Destroyed. On Tick prints Alive every frame.",
+      "expected_dsl": "BLUEPRINT: BP_Lifecycle\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: PrintString [InString=\"Spawned\"]\nNODE n3: Event_EndPlay\nNODE n4: PrintString [InString=\"Destroyed\"]\nNODE n5: Event_Tick\nNODE n6: PrintString [InString=\"Alive\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n5.Then -> n6.Execute"
+    },
+    {
+      "id": "C5A_09",
+      "category": "lifecycle_with_timer",
+      "instruction": "Create a Blueprint that on BeginPlay prints Started and starts a looping 3 second timer. Timer prints Heartbeat. On EndPlay clears the timer and prints Shutdown.",
+      "expected_dsl": "BLUEPRINT: BP_LifecycleTimer\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: PrintString [InString=\"Started\"]\nNODE n3: SetTimerByFunctionName [FunctionName=\"Beat\", Time=3.0, Looping=true]\nNODE n4: Event_Custom [EventName=Beat]\nNODE n5: PrintString [InString=\"Heartbeat\"]\nNODE n6: Event_EndPlay\nNODE n7: ClearTimerByFunctionName [FunctionName=\"Beat\"]\nNODE n8: PrintString [InString=\"Shutdown\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then -> n3.Execute\nEXEC n4.Then -> n5.Execute\nEXEC n6.Then -> n7.Execute\nEXEC n7.Then -> n8.Execute"
+    },
+    {
+      "id": "C5A_10",
+      "category": "enemy_distance_alert",
+      "instruction": "Create a Blueprint that on Tick gets distance to player pawn. If less than 500 print Alert. If less than 200 print Danger. Else print Safe.",
+      "expected_dsl": "BLUEPRINT: BP_ProximityAlert\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetPlayerPawn\nNODE n3: GetDistanceTo\nNODE n4: LessThan [B=200.0]\nNODE n5: Branch\nNODE n6: PrintString [InString=\"Danger\"]\nNODE n7: LessThan [B=500.0]\nNODE n8: Branch\nNODE n9: PrintString [InString=\"Alert\"]\nNODE n10: PrintString [InString=\"Safe\"]\nEXEC n1.Then -> n5.Execute\nDATA n2.ReturnValue -> n3.OtherActor [Actor]\nDATA n3.ReturnValue -> n4.A [Float]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n8.Execute\nDATA n3.ReturnValue -> n7.A [Float]\nDATA n7.ReturnValue -> n8.Condition [Bool]\nEXEC n8.True -> n9.Execute\nEXEC n8.False -> n10.Execute"
+    },
+    {
+      "id": "C5A_11",
+      "category": "enemy_chase_or_idle",
+      "instruction": "Create a Blueprint with bool IsChasing. On Tick get distance to player pawn. If less than 800 set IsChasing true and print Chasing. Else set IsChasing false and print Idle.",
+      "expected_dsl": "BLUEPRINT: BP_ChaseLogic\nPARENT: Actor\nVAR IsChasing: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_Tick\nNODE n2: GetPlayerPawn\nNODE n3: GetDistanceTo\nNODE n4: LessThan [B=800.0]\nNODE n5: Branch\nNODE n6: VariableSet [VarName=IsChasing]\nNODE n7: PrintString [InString=\"Chasing\"]\nNODE n8: VariableSet [VarName=IsChasing]\nNODE n9: PrintString [InString=\"Idle\"]\nEXEC n1.Then -> n5.Execute\nDATA n2.ReturnValue -> n3.OtherActor [Actor]\nDATA n3.ReturnValue -> n4.A [Float]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nDATA true -> n6.Value [Bool]\nEXEC n6.Then -> n7.Execute\nEXEC n5.False -> n8.Execute\nDATA false -> n8.Value [Bool]\nEXEC n8.Then -> n9.Execute"
+    }
+  ]
+}

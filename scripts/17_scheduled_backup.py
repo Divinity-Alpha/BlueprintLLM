@@ -21,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from backup_utils import (
     BACKUPS_DIR,
+    MIRROR_DIR,
     auto_backup,
     generate_manifest,
     has_changes_since_last,

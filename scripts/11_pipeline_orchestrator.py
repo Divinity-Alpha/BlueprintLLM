@@ -39,6 +39,7 @@ from error_handler import (
     RetryConfig, STEP_RETRY_CONFIGS,
     SubprocessMonitor, save_resume_state, load_resume_state, clear_resume_state,
 )
+import dashboard_writer as dw
 
 # ---------------------------------------------------------------------------
 # Step plans for each pipeline mode — used by PipelineLogger for timeline/ETA
@@ -167,6 +168,8 @@ class PipelineConfig:
         self.synthetic_data = self.root / "datasets" / "synthetic_train.jsonl"
         self.train_data = self.root / "datasets" / "train.jsonl"
         self.struct_dedup_cap = 5  # max entries per structural fingerprint
+        # Lessons to duplicate AFTER dedup (prevents catastrophic forgetting)
+        self.reinforce_lessons = ["lesson_01", "lesson_02"]
         self.val_data = self.root / "datasets" / "validation.jsonl"
         self.models_dir = self.root / "models"
         self.results_dir = self.root / "results"
@@ -632,7 +635,7 @@ def step_data_foundation(cfg, log, dry_run):
 
     # 1.4: Convert lessons
     lesson_dir = cfg.root / "lessons"
-    if lesson_dir.exists() and list(lesson_dir.glob("lesson_*.json")):
+    if lesson_dir.exists() and (list(lesson_dir.glob("lesson_*.json")) or list(lesson_dir.glob("correction_*.json"))):
         run_script(cfg, log, "13_lesson_to_training.py",
                    ["--lesson-dir", str(lesson_dir), "--output", str(cfg.lesson_data), "--no-append"],
                    "Converting lessons to training data", dry_run, allow_fail=True,
@@ -674,6 +677,37 @@ def step_data_foundation(cfg, log, dry_run):
             log.log(f"  {lc} lesson examples")
         # Deduplicate
         entries = _dedup_entries(entries, cfg.struct_dedup_cap, log)
+
+        # Reinforce foundational lessons: append duplicates AFTER dedup
+        if cfg.reinforce_lessons and cfg.lesson_data.exists():
+            reinforce_ids = set(cfg.reinforce_lessons)
+            dupes = []
+            with open(cfg.lesson_data) as f:
+                for l in f:
+                    l = l.strip()
+                    if not l:
+                        continue
+                    try:
+                        obj = json.loads(l)
+                        src = obj.get("source", "")
+                        # source format: "lesson:lesson_01:L01_01"
+                        parts = src.split(":")
+                        if len(parts) >= 2 and parts[1] in reinforce_ids:
+                            dupes.append(l)
+                    except (json.JSONDecodeError, AttributeError):
+                        continue
+            if dupes:
+                # Only keep unique outputs (one per prompt, skip variations)
+                seen = set()
+                unique_dupes = []
+                for d in dupes:
+                    h = hashlib.md5(json.loads(d).get("output", "").encode()).hexdigest()
+                    if h not in seen:
+                        seen.add(h)
+                        unique_dupes.append(d)
+                entries.extend(unique_dupes)
+                log.log(f"  Reinforced {len(unique_dupes)} entries from {sorted(reinforce_ids)}")
+
         with open(cfg.train_data, "w") as f:
             f.write("\n".join(entries) + "\n")
         log.log(f"  Total: {len(entries)} training examples")
@@ -869,7 +903,7 @@ def step_lesson_integration(cfg, log, dry_run):
     log.start_step("8", "Lesson Integration")
 
     lesson_dir = cfg.root / "lessons"
-    if not lesson_dir.exists() or not list(lesson_dir.glob("lesson_*.json")):
+    if not lesson_dir.exists() or not (list(lesson_dir.glob("lesson_*.json")) or list(lesson_dir.glob("correction_*.json"))):
         log.log("No lessons found. Skipping.")
         log.complete_step("8", "Lesson Integration", "No lessons")
         return
@@ -1076,6 +1110,23 @@ def run_pipeline(mode, dry_run=False, force=False, root=None, resume=False):
     # Register step plan for timeline and ETA tracking
     log.plog.set_step_plan(STEP_PLANS.get(mode, []))
 
+    # Initialize Mission Control dashboard
+    ver_tag = f"v{state.get('last_model_version', 0) + 1}"
+    try:
+        dw.reset_run(ver_tag, steps=[
+            {"number": 1, "name": "Data Foundation", "status": "pending"},
+            {"number": 2, "name": "Pre-Flight Checks", "status": "pending"},
+            {"number": 3, "name": "Model Setup", "status": "pending"},
+            {"number": 4, "name": "Training", "status": "pending"},
+            {"number": 5, "name": "Post-Training", "status": "pending"},
+            {"number": 6, "name": "Run exams", "status": "pending"},
+            {"number": 7, "name": "Run eval suite", "status": "pending"},
+            {"number": 8, "name": "Lesson Integration", "status": "pending"},
+            {"number": 9, "name": "Finalize", "status": "pending"},
+        ])
+    except Exception:
+        pass  # dashboard is non-fatal
+
     log.section(f"BLUEPRINT LLM PIPELINE — {mode.upper()}")
     log.log(f"Root: {cfg.root}")
     log.log(f"Time: {start.strftime('%Y-%m-%d %H:%M:%S')}")
@@ -1108,18 +1159,27 @@ def run_pipeline(mode, dry_run=False, force=False, root=None, resume=False):
         """Record step as completed for resume state."""
         log.completed_step_names.append(step_name)
 
+    def _dw(fn, *a, **kw):
+        """Non-fatal Mission Control dashboard call."""
+        try: fn(*a, **kw)
+        except Exception: pass
+
     try:
         # Steps 1-2: Data Foundation + Pre-Flight
         if mode in ("full", "data-only"):
             if not should_skip("step_data_foundation"):
+                _dw(dw.step_start, 1)
                 step_data_foundation(cfg, log, dry_run)
+                _dw(dw.step_done, 1)
                 mark_completed("step_data_foundation")
             else:
                 log.log("Skipping step_data_foundation (already completed)")
             if check_stop(): stopped = True
             if not stopped:
                 if not should_skip("step_preflight"):
+                    _dw(dw.step_start, 2)
                     data_hash = step_preflight(cfg, log, state, dry_run)
+                    _dw(dw.step_done, 2)
                     mark_completed("step_preflight")
                 else:
                     log.log("Skipping step_preflight (already completed)")
@@ -1131,7 +1191,10 @@ def run_pipeline(mode, dry_run=False, force=False, root=None, resume=False):
             if check_stop(): stopped = True
             if not stopped:
                 if not should_skip("step_train"):
+                    _dw(dw.step_done, 3)   # Model setup handled within training subprocess
+                    _dw(dw.step_start, 4)
                     model_path = step_train(cfg, log, state, dry_run, force, data_hash)
+                    _dw(dw.step_done, 4)
                     if model_path:
                         mark_completed("step_train")
                     else:
@@ -1141,7 +1204,9 @@ def run_pipeline(mode, dry_run=False, force=False, root=None, resume=False):
                     model_path = str(get_latest_model(cfg)) if get_latest_model(cfg) else None
             if not stopped and model_path and not check_stop():
                 if not should_skip("step_post_training"):
+                    _dw(dw.step_start, 5)
                     step_post_training(cfg, log, model_path, state, dry_run)
+                    _dw(dw.step_done, 5)
                     mark_completed("step_post_training")
                 else:
                     log.log("Skipping step_post_training (already completed)")
@@ -1152,25 +1217,33 @@ def run_pipeline(mode, dry_run=False, force=False, root=None, resume=False):
         if not stopped and mode == "full":
             if not check_stop():
                 if not should_skip("step_exam"):
+                    _dw(dw.step_start, 6)
                     step_exam(cfg, log, model_path, dry_run)
+                    _dw(dw.step_done, 6)
                     mark_completed("step_exam")
                 else:
                     log.log("Skipping step_exam (already completed)")
             if not check_stop():
                 if not should_skip("step_grading"):
+                    _dw(dw.step_start, 7)
                     eval_report = step_grading(cfg, log, model_path, state, dry_run)
+                    _dw(dw.step_done, 7)
                     mark_completed("step_grading")
                 else:
                     log.log("Skipping step_grading (already completed)")
             if not check_stop():
                 if not should_skip("step_lesson_integration"):
+                    _dw(dw.step_start, 8)
                     step_lesson_integration(cfg, log, dry_run)
+                    _dw(dw.step_done, 8)
                     mark_completed("step_lesson_integration")
                 else:
                     log.log("Skipping step_lesson_integration (already completed)")
             if not check_stop():
                 if not should_skip("step_dashboard_finalize"):
+                    _dw(dw.step_start, 9)
                     step_dashboard_finalize(cfg, log, dry_run)
+                    _dw(dw.step_done, 9)
                     mark_completed("step_dashboard_finalize")
                 else:
                     log.log("Skipping step_dashboard_finalize (already completed)")
@@ -1233,6 +1306,8 @@ def run_pipeline(mode, dry_run=False, force=False, root=None, resume=False):
     })
     state["runs"] = state["runs"][-50:]
     state["last_run"] = start.isoformat()
+
+    _dw(dw.set_idle)
 
     lp = log.close()
     if not dry_run:

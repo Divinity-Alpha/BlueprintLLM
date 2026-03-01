@@ -27,6 +27,70 @@ from pathlib import Path
 # Add parent to path
 sys.path.insert(0, str(Path(__file__).parent))
 
+from transformers import StoppingCriteria, StoppingCriteriaList
+
+
+class DSLStoppingCriteria(StoppingCriteria):
+    """Stop generation early once a complete DSL block is detected.
+
+    Checks every few tokens whether the output already contains
+    BLUEPRINT + GRAPH + NODE + (EXEC or DATA).  If so, and the
+    output ends with a double-newline or a non-DSL line, stop
+    immediately instead of burning the remaining token budget.
+    """
+
+    _DSL_PREFIXES = (
+        "BLUEPRINT:", "PARENT:", "CATEGORY:", "GRAPH:",
+        "VAR ", "NODE ", "EXEC ", "DATA ", "#",
+    )
+
+    def __init__(self, tokenizer, prompt_length, check_every=5):
+        self.tokenizer = tokenizer
+        self.prompt_length = prompt_length
+        self.check_every = check_every
+        self._calls = 0
+
+    def __call__(self, input_ids, scores, **kwargs):
+        self._calls += 1
+        gen_len = input_ids.shape[1] - self.prompt_length
+
+        # Too few tokens for a valid DSL — skip
+        if gen_len < 30:
+            return False
+
+        # Only decode every N tokens to keep overhead negligible
+        if self._calls % self.check_every != 0:
+            return False
+
+        text = self.tokenizer.decode(
+            input_ids[0][self.prompt_length:], skip_special_tokens=True,
+        )
+
+        # Only consider COMPLETE lines (ending with \n).
+        # The last line is still being generated — never evaluate it.
+        if "\n" not in text:
+            return False
+
+        completed_text = text.rsplit("\n", 1)[0]  # everything before last \n
+
+        # Must have all core DSL elements in completed lines
+        if not ("BLUEPRINT:" in completed_text and "GRAPH:" in completed_text
+                and "NODE " in completed_text
+                and ("EXEC " in completed_text or "DATA " in completed_text)):
+            return False
+
+        # Double newline = DSL block finished
+        if completed_text.rstrip(" ").endswith("\n"):
+            return True
+
+        # Last completed line is not a DSL keyword → junk started
+        lines = completed_text.split("\n")
+        last_complete = lines[-1].strip() if lines else ""
+        if last_complete and not any(last_complete.startswith(p) for p in self._DSL_PREFIXES):
+            return True
+
+        return False
+
 
 
 # Fallback system prompt — used only when model directory has no system_prompt.txt.
@@ -145,6 +209,8 @@ def generate_hf(model, tokenizer, prompt: str, max_tokens: int = 512,
         if tid is not None and tid != tokenizer.unk_token_id:
             stop_token_ids.append(tid)
 
+    dsl_stop = DSLStoppingCriteria(tokenizer, inputs["input_ids"].shape[1])
+
     with torch.no_grad():
         output = model.generate(
             **inputs,
@@ -154,6 +220,7 @@ def generate_hf(model, tokenizer, prompt: str, max_tokens: int = 512,
             top_p=0.9,
             repetition_penalty=1.1,
             eos_token_id=stop_token_ids,
+            stopping_criteria=StoppingCriteriaList([dsl_stop]),
         )
 
     # Decode only the new tokens
@@ -191,12 +258,26 @@ def extract_dsl(raw: str) -> str:
         if in_dsl and stripped and any(stripped.startswith(m) for m in [
             "## ", "Valid node", "Rules for", "---", "Line |",
             "**", "### ", "IN:", "OUT:", "Your output",
+            "END OUTPUT", "OUTPUT FORMAT",
         ]):
+            break
+        # Stop at hallucinated next-prompt or junk tokens
+        if in_dsl and stripped.startswith("Create a Blueprint"):
+            break
+        if in_dsl and "Event_Unknown" in stripped:
+            break
+        if in_dsl and stripped.startswith("(stypy"):
+            break
+        # Stop at bare braces (not DSL)
+        if in_dsl and stripped in ("{", "}"):
             break
         if in_dsl:
             dsl_lines.append(line)
 
     if dsl_lines:
+        # Strip trailing empty lines
+        while dsl_lines and not dsl_lines[-1].strip():
+            dsl_lines.pop()
         return '\n'.join(dsl_lines).strip()
 
     # Strategy 3: Just return everything, stripping obvious junk

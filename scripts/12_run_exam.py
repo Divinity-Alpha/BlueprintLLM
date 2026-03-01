@@ -28,7 +28,65 @@ from stop_signal_utils import is_stop_requested, clear_signal
 from backup_utils import auto_backup
 from pipeline_logger import get_logger as _get_pipeline_logger
 from error_handler import per_prompt_timeout
+from transformers import StoppingCriteria, StoppingCriteriaList
 plog = _get_pipeline_logger(step_prefix="6")
+try:
+    import dashboard_writer as dw
+except ImportError:
+    dw = None
+
+
+class DSLStoppingCriteria(StoppingCriteria):
+    """Stop generation early once a complete DSL block is detected."""
+
+    _DSL_PREFIXES = (
+        "BLUEPRINT:", "PARENT:", "CATEGORY:", "GRAPH:",
+        "VAR ", "NODE ", "EXEC ", "DATA ", "#",
+    )
+
+    def __init__(self, tokenizer, prompt_length, check_every=5):
+        self.tokenizer = tokenizer
+        self.prompt_length = prompt_length
+        self.check_every = check_every
+        self._calls = 0
+
+    def __call__(self, input_ids, scores, **kwargs):
+        self._calls += 1
+        gen_len = input_ids.shape[1] - self.prompt_length
+
+        if gen_len < 30:
+            return False
+
+        if self._calls % self.check_every != 0:
+            return False
+
+        text = self.tokenizer.decode(
+            input_ids[0][self.prompt_length:], skip_special_tokens=True,
+        )
+
+        # Only consider COMPLETE lines (ending with \n).
+        # The last line is still being generated — never evaluate it.
+        if "\n" not in text:
+            return False
+
+        completed_text = text.rsplit("\n", 1)[0]  # everything before last \n
+
+        if not ("BLUEPRINT:" in completed_text and "GRAPH:" in completed_text
+                and "NODE " in completed_text
+                and ("EXEC " in completed_text or "DATA " in completed_text)):
+            return False
+
+        # Double newline = DSL block finished
+        if completed_text.rstrip(" ").endswith("\n"):
+            return True
+
+        # Last completed line is not a DSL keyword → junk started
+        lines = completed_text.split("\n")
+        last_complete = lines[-1].strip() if lines else ""
+        if last_complete and not any(last_complete.startswith(p) for p in self._DSL_PREFIXES):
+            return True
+
+        return False
 
 # Per-prompt generation timeout (seconds)
 GENERATE_TIMEOUT = 300
@@ -140,11 +198,14 @@ def generate(model, tokenizer, instruction, max_tokens=512, temperature=0.1):
         if tid is not None and tid != tokenizer.unk_token_id:
             stop_ids.append(tid)
 
+    dsl_stop = DSLStoppingCriteria(tokenizer, inputs["input_ids"].shape[1])
+
     with torch.no_grad():
         output = model.generate(
             **inputs, max_new_tokens=max_tokens, temperature=temperature,
             do_sample=temperature > 0, top_p=0.9, repetition_penalty=1.1,
             eos_token_id=stop_ids,
+            stopping_criteria=StoppingCriteriaList([dsl_stop]),
         )
 
     raw = tokenizer.decode(output[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
@@ -168,12 +229,26 @@ def generate(model, tokenizer, instruction, max_tokens=512, temperature=0.1):
         if in_dsl and s and any(s.startswith(m) for m in [
             "## ", "Valid node", "Rules for", "---", "Line |",
             "**", "### ", "IN:", "OUT:", "Your output",
+            "END OUTPUT", "OUTPUT FORMAT",
         ]):
+            break
+        # Stop at hallucinated next-prompt or junk tokens
+        if in_dsl and s.startswith("Create a Blueprint"):
+            break
+        if in_dsl and "Event_Unknown" in s:
+            break
+        if in_dsl and s.startswith("(stypy"):
+            break
+        # Stop at bare braces (not DSL)
+        if in_dsl and s in ("{", "}"):
             break
         if in_dsl:
             dsl_lines.append(line)
 
     if dsl_lines:
+        # Strip trailing empty lines
+        while dsl_lines and not dsl_lines[-1].strip():
+            dsl_lines.pop()
         return '\n'.join(dsl_lines).strip(), raw
 
     return raw, raw
@@ -338,6 +413,30 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
         with open(results_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(result, ensure_ascii=False) + "\n")
 
+        # Update Mission Control dashboard
+        if dw:
+            try:
+                dw.update_exam_active(
+                    lesson["lesson_id"], lesson["lesson_name"],
+                    i + 1, len(lesson["prompts"]),
+                    last_prompt_time=elapsed,
+                    avg_prompt_time=sum(r["time_seconds"] for r in results) / max(len(results), 1),
+                )
+                dw.update_exam_progress(
+                    lesson["lesson_id"], lesson["lesson_name"],
+                    {
+                        "prompt_id": prompt["id"],
+                        "category": prompt["category"],
+                        "valid": validation["valid"] and not timed_out,
+                        "similarity": comparison["score"] * 100,
+                        "time_seconds": elapsed,
+                        "total_in_lesson": len(lesson["prompts"]),
+                    },
+                    total_exam_prompts=len(lesson["prompts"]),
+                )
+            except Exception:
+                pass
+
         detail = f"{prompt['id']} {'TIMEOUT' if timed_out else ('OK' if validation['valid'] else 'FAIL')}"
         plog.progress("6.3", i + 1, len(lesson["prompts"]), detail)
 
@@ -394,6 +493,13 @@ def run_exam(lesson_path, model_path, base_model, output_dir):
     print(f"{'='*60}\n")
     plog.complete_step("6.6", "Save exam results",
                         f"Avg similarity: {summary['avg_similarity_score']}%")
+
+    # Finalize lesson in Mission Control dashboard
+    if dw:
+        try:
+            dw.finalize_lesson(lesson["lesson_id"])
+        except Exception:
+            pass
 
     # Post-exam backup
     plog.start_step("6.7", "Post-exam backup")

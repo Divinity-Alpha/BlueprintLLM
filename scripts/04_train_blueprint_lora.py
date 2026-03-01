@@ -70,6 +70,10 @@ from error_handler import cuda_oom_retry, write_heartbeat
 
 logger = logging.getLogger(__name__)
 plog = _get_pipeline_logger(step_prefix="3")
+try:
+    import dashboard_writer as dw
+except ImportError:
+    dw = None
 
 
 # ============================================================
@@ -137,6 +141,20 @@ class GracefulStopCallback(TrainerCallback):
             detail = " ".join(detail_parts)
             plog.progress("4.3", state.global_step, self._max_steps,
                           detail, metrics=metrics if metrics else None)
+
+            # Update Mission Control dashboard
+            if dw:
+                try:
+                    dw.update_training(
+                        current_step=state.global_step,
+                        total_steps=self._max_steps,
+                        loss=loss if isinstance(loss, float) else 0,
+                        learning_rate=lr if isinstance(lr, float) else None,
+                        elapsed_seconds=state.log_history[-1].get("elapsed", None)
+                            if state.log_history else None,
+                    )
+                except Exception:
+                    pass
 
         if is_stop_requested():
             print("\n" + "=" * 60)

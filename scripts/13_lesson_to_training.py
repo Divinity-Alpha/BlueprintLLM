@@ -125,7 +125,8 @@ def main():
         # Clear output if not appending
         if args.no_append:
             Path(args.output).write_text("")
-        for lf in sorted(lesson_dir.glob("lesson_*.json")):
+        lesson_files = sorted(lesson_dir.glob("lesson_*.json")) + sorted(lesson_dir.glob("correction_*.json"))
+        for lf in lesson_files:
             lesson_to_training(str(lf), args.output, append=True)
     else:
         print("Specify --lesson or --lesson-dir")

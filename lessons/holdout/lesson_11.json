@@ -1,0 +1,128 @@
+{
+  "lesson_id": "lesson_11",
+  "lesson_name": "Arrays and Data Structures",
+  "description": "20 prompts covering array operations: Add, Remove, Get, Contains, Length, Clear, ForEachLoop with arrays, array+branch combos, building arrays dynamically.",
+  "created": "2026-02-27",
+  "prompts": [
+    {
+      "id": "L11_01",
+      "category": "array_add",
+      "instruction": "Create a Blueprint with a string array Inventory. On BeginPlay add Sword to the array and print the array length.",
+      "expected_dsl": "BLUEPRINT: BP_AddToArray\nPARENT: Actor\nVAR Inventory: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Inventory]\nNODE n3: ArrayAdd [Item=\"Sword\"]\nNODE n4: ArrayLength\nNODE n5: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.Then -> n5.Execute\nDATA n2.Value -> n4.Array [Array]\nDATA n4.ReturnValue -> n5.InString [String]"
+    },
+    {
+      "id": "L11_02",
+      "category": "array_remove",
+      "instruction": "Create a Blueprint with actor array Enemies. On pressing Clear, remove the first element from the array and print Removed.",
+      "expected_dsl": "BLUEPRINT: BP_RemoveFirst\nPARENT: Actor\nVAR Enemies: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Clear\"]\nNODE n2: VariableGet [VarName=Enemies]\nNODE n3: ArrayRemoveIndex [Index=0]\nNODE n4: PrintString [InString=\"Removed\"]\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.Then -> n4.Execute"
+    },
+    {
+      "id": "L11_03",
+      "category": "array_get",
+      "instruction": "Create a Blueprint with string array Items. On BeginPlay get the element at index 0 and print it.",
+      "expected_dsl": "BLUEPRINT: BP_GetFirst\nPARENT: Actor\nVAR Items: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Items]\nNODE n3: ArrayGet [Index=0]\nNODE n4: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.Array [Array]\nDATA n3.ReturnValue -> n4.InString [String]"
+    },
+    {
+      "id": "L11_04",
+      "category": "array_contains",
+      "instruction": "Create a Blueprint with string array Tags. On BeginPlay check if Tags contains Player. If yes print Is Player. If no print Not Player.",
+      "expected_dsl": "BLUEPRINT: BP_ContainsCheck\nPARENT: Actor\nVAR Tags: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Tags]\nNODE n3: ArrayContains [Item=\"Player\"]\nNODE n4: Branch\nNODE n5: PrintString [InString=\"Is Player\"]\nNODE n6: PrintString [InString=\"Not Player\"]\nEXEC n1.Then -> n4.Execute\nDATA n2.Value -> n3.Array [Array]\nDATA n3.ReturnValue -> n4.Condition [Bool]\nEXEC n4.True -> n5.Execute\nEXEC n4.False -> n6.Execute"
+    },
+    {
+      "id": "L11_05",
+      "category": "array_length_check",
+      "instruction": "Create a Blueprint with actor array Items. On BeginPlay get array length. If length greater than 0 print Has Items. Else print Empty.",
+      "expected_dsl": "BLUEPRINT: BP_LengthCheck\nPARENT: Actor\nVAR Items: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Items]\nNODE n3: ArrayLength\nNODE n4: GreaterThan [B=0]\nNODE n5: Branch\nNODE n6: PrintString [InString=\"Has Items\"]\nNODE n7: PrintString [InString=\"Empty\"]\nEXEC n1.Then -> n5.Execute\nDATA n2.Value -> n3.Array [Array]\nDATA n3.ReturnValue -> n4.A [Int]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n7.Execute"
+    },
+    {
+      "id": "L11_06",
+      "category": "array_foreach_print",
+      "instruction": "Create a Blueprint with string array Names. On BeginPlay use ForEachLoop to print every name in the array.",
+      "expected_dsl": "BLUEPRINT: BP_PrintNames\nPARENT: Actor\nVAR Names: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Names]\nNODE n3: ForEachLoop\nNODE n4: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n4.Execute\nDATA n3.ArrayElement -> n4.InString [String]"
+    },
+    {
+      "id": "L11_07",
+      "category": "array_clear",
+      "instruction": "Create a Blueprint with actor array Targets. On pressing Reset, clear the array and print Cleared.",
+      "expected_dsl": "BLUEPRINT: BP_ClearArray\nPARENT: Actor\nVAR Targets: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Reset\"]\nNODE n2: VariableGet [VarName=Targets]\nNODE n3: ArrayClear\nNODE n4: PrintString [InString=\"Cleared\"]\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.Then -> n4.Execute"
+    },
+    {
+      "id": "L11_08",
+      "category": "array_add_overlap",
+      "instruction": "Create a Blueprint with actor array Visitors. On overlap add the other actor to Visitors and print the array length.",
+      "expected_dsl": "BLUEPRINT: BP_TrackVisitors\nPARENT: Actor\nVAR Visitors: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: VariableGet [VarName=Visitors]\nNODE n3: ArrayAdd\nNODE n4: ArrayLength\nNODE n5: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n1.OtherActor -> n3.Item [Actor]\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.Then -> n5.Execute\nDATA n2.Value -> n4.Array [Array]\nDATA n4.ReturnValue -> n5.InString [String]"
+    },
+    {
+      "id": "L11_09",
+      "category": "array_foreach_destroy",
+      "instruction": "Create a Blueprint with actor array Enemies. On pressing Kill, ForEachLoop through all enemies and destroy each one. After loop print All Destroyed.",
+      "expected_dsl": "BLUEPRINT: BP_DestroyAll\nPARENT: Actor\nVAR Enemies: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Kill\"]\nNODE n2: VariableGet [VarName=Enemies]\nNODE n3: ForEachLoop\nNODE n4: DestroyActor\nNODE n5: PrintString [InString=\"All Destroyed\"]\nEXEC n1.Pressed -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n4.Execute\nDATA n3.ArrayElement -> n4.Target [Actor]\nEXEC n3.Completed -> n5.Execute"
+    },
+    {
+      "id": "L11_10",
+      "category": "array_find_nearest",
+      "instruction": "Create a Blueprint with actor array Targets. On BeginPlay ForEachLoop checking distance. Track closest in variable Nearest. After loop print nearest name.",
+      "expected_dsl": "BLUEPRINT: BP_FindNearest\nPARENT: Actor\nVAR Targets: Array<Actor>\nVAR Nearest: Actor = None\nVAR BestDist: Float = 999999.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Targets]\nNODE n3: ForEachLoop\nNODE n4: GetDistanceTo\nNODE n5: VariableGet [VarName=BestDist]\nNODE n6: LessThan\nNODE n7: Branch\nNODE n8: VariableSet [VarName=BestDist]\nNODE n9: VariableSet [VarName=Nearest]\nNODE n10: VariableGet [VarName=Nearest]\nNODE n11: GetDisplayName\nNODE n12: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n7.Execute\nDATA n3.ArrayElement -> n4.OtherActor [Actor]\nDATA n4.ReturnValue -> n6.A [Float]\nDATA n5.Value -> n6.B [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]\nEXEC n7.True -> n8.Execute\nDATA n4.ReturnValue -> n8.Value [Float]\nEXEC n8.Then -> n9.Execute\nDATA n3.ArrayElement -> n9.Value [Actor]\nEXEC n3.Completed -> n12.Execute\nDATA n10.Value -> n11.Target [Actor]\nDATA n11.ReturnValue -> n12.InString [String]"
+    },
+    {
+      "id": "L11_11",
+      "category": "array_random",
+      "instruction": "Create a Blueprint with string array Quotes. On pressing Random, get array length, generate random index, get element at that index, print it.",
+      "expected_dsl": "BLUEPRINT: BP_RandomQuote\nPARENT: Actor\nVAR Quotes: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Random\"]\nNODE n2: VariableGet [VarName=Quotes]\nNODE n3: ArrayLength\nNODE n4: RandomInteger [Min=0]\nNODE n5: ArrayGet\nNODE n6: PrintString\nEXEC n1.Pressed -> n6.Execute\nDATA n2.Value -> n3.Array [Array]\nDATA n3.ReturnValue -> n4.Max [Int]\nDATA n4.ReturnValue -> n5.Index [Int]\nDATA n2.Value -> n5.Array [Array]\nDATA n5.ReturnValue -> n6.InString [String]"
+    },
+    {
+      "id": "L11_12",
+      "category": "array_loop_spawn",
+      "instruction": "Create a Blueprint with vector array SpawnPoints. On BeginPlay ForEachLoop spawning BP_Enemy at each point. After loop print all spawned count.",
+      "expected_dsl": "BLUEPRINT: BP_SpawnFromArray\nPARENT: Actor\nVAR SpawnPoints: Array<Vector>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=SpawnPoints]\nNODE n3: ForEachLoop\nNODE n4: SpawnActorFromClass [ActorClass=BP_Enemy]\nNODE n5: VariableGet [VarName=SpawnPoints]\nNODE n6: ArrayLength\nNODE n7: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n4.Execute\nDATA n3.ArrayElement -> n4.SpawnTransform [Transform]\nEXEC n3.Completed -> n7.Execute\nDATA n5.Value -> n6.Array [Array]\nDATA n6.ReturnValue -> n7.InString [String]"
+    },
+    {
+      "id": "L11_13",
+      "category": "array_remove_overlap",
+      "instruction": "Create a Blueprint with actor array TrackedActors. On overlap add actor. On end overlap remove actor from array. Print count after each change.",
+      "expected_dsl": "BLUEPRINT: BP_TrackOverlap\nPARENT: Actor\nVAR TrackedActors: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: VariableGet [VarName=TrackedActors]\nNODE n3: ArrayAdd\nNODE n4: ArrayLength\nNODE n5: PrintString\nNODE n6: Event_ActorEndOverlap\nNODE n7: VariableGet [VarName=TrackedActors]\nNODE n8: ArrayRemove\nNODE n9: ArrayLength\nNODE n10: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n1.OtherActor -> n3.Item [Actor]\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.Then -> n5.Execute\nDATA n2.Value -> n4.Array [Array]\nDATA n4.ReturnValue -> n5.InString [String]\nEXEC n6.Then -> n8.Execute\nDATA n6.OtherActor -> n8.Item [Actor]\nDATA n7.Value -> n8.Array [Array]\nEXEC n8.Then -> n10.Execute\nDATA n7.Value -> n9.Array [Array]\nDATA n9.ReturnValue -> n10.InString [String]"
+    },
+    {
+      "id": "L11_14",
+      "category": "array_timer_add",
+      "instruction": "Create a Blueprint with int array Scores. Start a looping timer every 2 seconds. Each tick generate random 1-100 and add to Scores. Print array length. After 5 items clear timer.",
+      "expected_dsl": "BLUEPRINT: BP_TimerArray\nPARENT: Actor\nVAR Scores: Array<Int>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"AddScore\", Time=2.0, Looping=true]\nNODE n3: Event_Custom [EventName=AddScore]\nNODE n4: RandomInteger [Min=1, Max=100]\nNODE n5: VariableGet [VarName=Scores]\nNODE n6: ArrayAdd\nNODE n7: ArrayLength\nNODE n8: PrintString\nNODE n9: GreaterThan [B=4]\nNODE n10: Branch\nNODE n11: ClearTimerByFunctionName [FunctionName=\"AddScore\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n6.Execute\nDATA n4.ReturnValue -> n6.Item [Int]\nDATA n5.Value -> n6.Array [Array]\nEXEC n6.Then -> n8.Execute\nDATA n5.Value -> n7.Array [Array]\nDATA n7.ReturnValue -> n8.InString [String]\nEXEC n8.Then -> n10.Execute\nDATA n7.ReturnValue -> n9.A [Int]\nDATA n9.ReturnValue -> n10.Condition [Bool]\nEXEC n10.True -> n11.Execute"
+    },
+    {
+      "id": "L11_15",
+      "category": "array_last_element",
+      "instruction": "Create a Blueprint with string array Log. On BeginPlay get array length, subtract 1, get element at that index. Print the last element.",
+      "expected_dsl": "BLUEPRINT: BP_LastElement\nPARENT: Actor\nVAR Log: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Log]\nNODE n3: ArrayLength\nNODE n4: SubtractInt [B=1]\nNODE n5: ArrayGet\nNODE n6: PrintString\nEXEC n1.Then -> n6.Execute\nDATA n2.Value -> n3.Array [Array]\nDATA n3.ReturnValue -> n4.A [Int]\nDATA n4.ReturnValue -> n5.Index [Int]\nDATA n2.Value -> n5.Array [Array]\nDATA n5.ReturnValue -> n6.InString [String]"
+    },
+    {
+      "id": "L11_16",
+      "category": "array_filter_distance",
+      "instruction": "Create a Blueprint with actor array AllActors. On BeginPlay ForEachLoop. Check distance less than 500 for each. If close, add to a NearbyActors array. After loop print nearby count.",
+      "expected_dsl": "BLUEPRINT: BP_FilterNearby\nPARENT: Actor\nVAR AllActors: Array<Actor>\nVAR NearbyActors: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=AllActors]\nNODE n3: ForEachLoop\nNODE n4: GetDistanceTo\nNODE n5: LessThan [B=500.0]\nNODE n6: Branch\nNODE n7: VariableGet [VarName=NearbyActors]\nNODE n8: ArrayAdd\nNODE n9: VariableGet [VarName=NearbyActors]\nNODE n10: ArrayLength\nNODE n11: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n6.Execute\nDATA n3.ArrayElement -> n4.OtherActor [Actor]\nDATA n4.ReturnValue -> n5.A [Float]\nDATA n5.ReturnValue -> n6.Condition [Bool]\nEXEC n6.True -> n8.Execute\nDATA n3.ArrayElement -> n8.Item [Actor]\nDATA n7.Value -> n8.Array [Array]\nEXEC n3.Completed -> n11.Execute\nDATA n9.Value -> n10.Array [Array]\nDATA n10.ReturnValue -> n11.InString [String]"
+    },
+    {
+      "id": "L11_17",
+      "category": "array_switch_add",
+      "instruction": "Create a Blueprint with int PickupType and string array CollectedTypes. On overlap switch on PickupType. Case 1 adds Health. Case 2 adds Ammo. Case 3 adds Shield. Print array length.",
+      "expected_dsl": "BLUEPRINT: BP_TypeCollector\nPARENT: Actor\nVAR PickupType: Int = 1\nVAR CollectedTypes: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: VariableGet [VarName=PickupType]\nNODE n3: SwitchOnInt\nNODE n4: VariableGet [VarName=CollectedTypes]\nNODE n5: ArrayAdd [Item=\"Health\"]\nNODE n6: ArrayAdd [Item=\"Ammo\"]\nNODE n7: ArrayAdd [Item=\"Shield\"]\nNODE n8: ArrayLength\nNODE n9: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Selection [Int]\nEXEC n3.Case_1 -> n5.Execute\nDATA n4.Value -> n5.Array [Array]\nEXEC n3.Case_2 -> n6.Execute\nDATA n4.Value -> n6.Array [Array]\nEXEC n3.Case_3 -> n7.Execute\nDATA n4.Value -> n7.Array [Array]\nEXEC n5.Then -> n9.Execute\nEXEC n6.Then -> n9.Execute\nEXEC n7.Then -> n9.Execute\nDATA n4.Value -> n8.Array [Array]\nDATA n8.ReturnValue -> n9.InString [String]"
+    },
+    {
+      "id": "L11_18",
+      "category": "array_empty_check",
+      "instruction": "Create a Blueprint with actor array Queue. On pressing Next, check if array length equals 0. If empty print Queue Empty. If not, get first element, remove index 0, print the element name.",
+      "expected_dsl": "BLUEPRINT: BP_QueueProcess\nPARENT: Actor\nVAR Queue: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Next\"]\nNODE n2: VariableGet [VarName=Queue]\nNODE n3: ArrayLength\nNODE n4: EqualEqual [B=0]\nNODE n5: Branch\nNODE n6: PrintString [InString=\"Queue Empty\"]\nNODE n7: ArrayGet [Index=0]\nNODE n8: ArrayRemoveIndex [Index=0]\nNODE n9: GetDisplayName\nNODE n10: PrintString\nEXEC n1.Pressed -> n5.Execute\nDATA n2.Value -> n3.Array [Array]\nDATA n3.ReturnValue -> n4.A [Int]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n6.Execute\nEXEC n5.False -> n8.Execute\nDATA n2.Value -> n7.Array [Array]\nDATA n7.ReturnValue -> n9.Target [Actor]\nDATA n2.Value -> n8.Array [Array]\nEXEC n8.Then -> n10.Execute\nDATA n9.ReturnValue -> n10.InString [String]"
+    },
+    {
+      "id": "L11_19",
+      "category": "array_foreach_valid",
+      "instruction": "Create a Blueprint with actor array Targets. On BeginPlay ForEachLoop. For each, check IsValid. If valid print name. After loop print Done.",
+      "expected_dsl": "BLUEPRINT: BP_ValidCheck\nPARENT: Actor\nVAR Targets: Array<Actor>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Targets]\nNODE n3: ForEachLoop\nNODE n4: IsValid\nNODE n5: Branch\nNODE n6: GetDisplayName\nNODE n7: PrintString\nNODE n8: PrintString [InString=\"Done\"]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.LoopBody -> n5.Execute\nDATA n3.ArrayElement -> n4.Input [Object]\nDATA n4.ReturnValue -> n5.Condition [Bool]\nEXEC n5.True -> n7.Execute\nDATA n3.ArrayElement -> n6.Target [Actor]\nDATA n6.ReturnValue -> n7.InString [String]\nEXEC n3.Completed -> n8.Execute"
+    },
+    {
+      "id": "L11_20",
+      "category": "array_build_inventory",
+      "instruction": "Create a Blueprint with string array Inventory. On BeginPlay add Sword, Shield, Potion to the array. Then ForEachLoop printing each item. After loop print the total count.",
+      "expected_dsl": "BLUEPRINT: BP_BuildInventory\nPARENT: Actor\nVAR Inventory: Array<String>\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Inventory]\nNODE n3: ArrayAdd [Item=\"Sword\"]\nNODE n4: ArrayAdd [Item=\"Shield\"]\nNODE n5: ArrayAdd [Item=\"Potion\"]\nNODE n6: ForEachLoop\nNODE n7: PrintString\nNODE n8: ArrayLength\nNODE n9: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.Array [Array]\nEXEC n3.Then -> n4.Execute\nDATA n2.Value -> n4.Array [Array]\nEXEC n4.Then -> n5.Execute\nDATA n2.Value -> n5.Array [Array]\nEXEC n5.Then -> n6.Execute\nDATA n2.Value -> n6.Array [Array]\nEXEC n6.LoopBody -> n7.Execute\nDATA n6.ArrayElement -> n7.InString [String]\nEXEC n6.Completed -> n9.Execute\nDATA n2.Value -> n8.Array [Array]\nDATA n8.ReturnValue -> n9.InString [String]"
+    }
+  ]
+}

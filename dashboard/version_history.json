@@ -1,0 +1,193 @@
+{
+  "versions": [
+    {
+      "version": "v2",
+      "date": "2026-02-27T08:00:00",
+      "training_examples": 391,
+      "training_time_seconds": 29880,
+      "system_prompt_chars": 5660,
+      "eval": {
+        "pass_rate": 0.82,
+        "avg_score": 0.78,
+        "perfect_scores": 2,
+        "avg_gen_time": 221
+      },
+      "exam_summary": {
+        "total_prompts": 44,
+        "valid_syntax_pct": 2.0,
+        "avg_similarity": 1.5
+      },
+      "lessons_tested": [
+        "L01",
+        "L02"
+      ],
+      "lesson_scores": {}
+    },
+    {
+      "version": "v3",
+      "date": "2026-02-27T14:00:00",
+      "training_examples": 391,
+      "training_time_seconds": 2816,
+      "system_prompt_chars": 463,
+      "eval": {
+        "pass_rate": 0.91,
+        "avg_score": 0.88,
+        "perfect_scores": 4,
+        "avg_gen_time": 68
+      },
+      "exam_summary": {
+        "total_prompts": 164,
+        "valid_syntax_pct": 85.4,
+        "avg_similarity": 56.0
+      },
+      "lessons_tested": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05",
+        "L06",
+        "L07",
+        "L08"
+      ],
+      "lesson_scores": {
+        "L01": {
+          "syntax": 80,
+          "similarity": 61.9
+        },
+        "L02": {
+          "syntax": 79.2,
+          "similarity": 63.8
+        },
+        "L03": {
+          "syntax": 95,
+          "similarity": 59.7
+        },
+        "L04": {
+          "syntax": 95,
+          "similarity": 45.2
+        },
+        "L05": {
+          "syntax": 80,
+          "similarity": 51.4
+        },
+        "L06": {
+          "syntax": 85,
+          "similarity": 53.8
+        },
+        "L07": {
+          "syntax": 90,
+          "similarity": 53.6
+        },
+        "L08": {
+          "syntax": 80,
+          "similarity": 58.6
+        }
+      }
+    },
+    {
+      "version": "v4",
+      "date": "2026-02-27T19:00:00",
+      "training_examples": 414,
+      "training_time_seconds": 2860,
+      "system_prompt_chars": 463,
+      "eval": {
+        "pass_rate": 1.0,
+        "avg_score": 0.936,
+        "perfect_scores": 7,
+        "avg_gen_time": 41
+      },
+      "exam_summary": {
+        "total_prompts": 80,
+        "valid_syntax_pct": 95.0,
+        "avg_similarity": 63.2
+      },
+      "lessons_tested": [
+        "L07",
+        "L08",
+        "L09",
+        "L10"
+      ],
+      "lesson_scores": {
+        "L07": {
+          "syntax": 100,
+          "similarity": 66.2
+        },
+        "L08": {
+          "syntax": 95,
+          "similarity": 63.9
+        },
+        "L09": {
+          "syntax": 100,
+          "similarity": 73.3
+        },
+        "L10": {
+          "syntax": 85,
+          "similarity": 49.0
+        }
+      }
+    },
+    {
+      "version": "v5",
+      "date": "2026-02-28T00:03:00",
+      "training_examples": 587,
+      "training_time_seconds": 17844,
+      "system_prompt_chars": 463,
+      "eval": {
+        "pass_rate": 1.0,
+        "avg_score": 0.925,
+        "perfect_scores": 7,
+        "avg_gen_time": 37
+      },
+      "exam_summary": {
+        "total_prompts": 80,
+        "valid_syntax_pct": 91.0,
+        "avg_similarity": 62.0
+      },
+      "lessons_tested": [
+        "L01",
+        "L02",
+        "L03",
+        "L04"
+      ],
+      "lesson_scores": {
+        "L01": {
+          "syntax": 95,
+          "similarity": 65.0
+        },
+        "L02": {
+          "syntax": 85,
+          "similarity": 60.0
+        },
+        "L03": {
+          "syntax": 90,
+          "similarity": 62.0
+        },
+        "L04": {
+          "syntax": 94,
+          "similarity": 61.0
+        }
+      }
+    },
+    {
+      "version": "v6",
+      "date": "2026-03-01T00:21:32.263575",
+      "training_examples": 0,
+      "training_time_seconds": 0,
+      "system_prompt_chars": 0,
+      "eval": {
+        "pass_rate": 1.0,
+        "avg_score": 0.979,
+        "perfect_scores": 9,
+        "avg_gen_time": 40.6
+      },
+      "exam_summary": {
+        "total_prompts": 0,
+        "valid_syntax_pct": 0.0,
+        "avg_similarity": 0.0
+      },
+      "lessons_tested": [],
+      "lesson_scores": {}
+    }
+  ]
+}

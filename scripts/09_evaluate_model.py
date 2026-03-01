@@ -38,6 +38,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 from pipeline_logger import get_logger as _get_pipeline_logger
 from error_handler import per_prompt_timeout
 plog = _get_pipeline_logger(step_prefix="7")
+try:
+    import dashboard_writer as dw
+except ImportError:
+    dw = None
 
 # Per-prompt generation timeout (seconds)
 GENERATE_TIMEOUT = 300
@@ -662,6 +666,20 @@ def main():
             json.dump(report, f, indent=2)
         print(f"\nDetailed report saved to: {report_path}")
         plog.complete_step("7.4", "Generate report", str(report_path))
+
+        # Update Mission Control version history
+        if dw:
+            try:
+                import re as _re
+                _ver_match = _re.search(r'v(\d+)', args.model)
+                _ver_tag = f"v{_ver_match.group(1)}" if _ver_match else None
+                if _ver_tag:
+                    dw.append_version_history(
+                        version_tag=_ver_tag,
+                        eval_results=report,
+                    )
+            except Exception:
+                pass
 
 
 if __name__ == "__main__":

@@ -1,0 +1,128 @@
+{
+  "lesson_id": "lesson_12",
+  "lesson_name": "Edge Cases and Unusual Patterns",
+  "description": "20 prompts testing edge cases: empty blueprints, unusual node combos, ambiguous prompts, maximum complexity, error recovery patterns, uncommon events.",
+  "created": "2026-02-27",
+  "prompts": [
+    {
+      "id": "L12_01",
+      "category": "minimal_bp",
+      "instruction": "Create the simplest possible Blueprint. Just an actor with BeginPlay that does nothing else.",
+      "expected_dsl": "BLUEPRINT: BP_Empty\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay"
+    },
+    {
+      "id": "L12_02",
+      "category": "many_prints",
+      "instruction": "Create a Blueprint that on BeginPlay uses a Sequence with 4 outputs. Each output prints a different number: 1, 2, 3, 4.",
+      "expected_dsl": "BLUEPRINT: BP_FourPrints\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Sequence\nNODE n3: PrintString [InString=\"1\"]\nNODE n4: PrintString [InString=\"2\"]\nNODE n5: PrintString [InString=\"3\"]\nNODE n6: PrintString [InString=\"4\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Then_0 -> n3.Execute\nEXEC n2.Then_1 -> n4.Execute\nEXEC n2.Then_2 -> n5.Execute\nEXEC n2.Then_3 -> n6.Execute"
+    },
+    {
+      "id": "L12_03",
+      "category": "double_delay",
+      "instruction": "Create a Blueprint that on BeginPlay waits 1 second, prints First, waits 2 more seconds, prints Second, waits 3 more seconds, prints Third.",
+      "expected_dsl": "BLUEPRINT: BP_TripleDelay\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: Delay [Duration=1.0]\nNODE n3: PrintString [InString=\"First\"]\nNODE n4: Delay [Duration=2.0]\nNODE n5: PrintString [InString=\"Second\"]\nNODE n6: Delay [Duration=3.0]\nNODE n7: PrintString [InString=\"Third\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n4.Completed -> n5.Execute\nEXEC n5.Then -> n6.Execute\nEXEC n6.Completed -> n7.Execute"
+    },
+    {
+      "id": "L12_04",
+      "category": "no_variables",
+      "instruction": "Create a Blueprint with no variables. On overlap print Hello. On end overlap print Goodbye. On Tick print Alive.",
+      "expected_dsl": "BLUEPRINT: BP_NoVars\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: PrintString [InString=\"Hello\"]\nNODE n3: Event_ActorEndOverlap\nNODE n4: PrintString [InString=\"Goodbye\"]\nNODE n5: Event_Tick\nNODE n6: PrintString [InString=\"Alive\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n5.Then -> n6.Execute"
+    },
+    {
+      "id": "L12_05",
+      "category": "multi_var_types",
+      "instruction": "Create a Blueprint with string Name set to Player, int Level set to 1, float Health set to 100, and bool IsAlive set to true. On BeginPlay print the Name.",
+      "expected_dsl": "BLUEPRINT: BP_MultiVars\nPARENT: Actor\nVAR Name: String = \"Player\"\nVAR Level: Int = 1\nVAR Health: Float = 100.0\nVAR IsAlive: Bool = true\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Name]\nNODE n3: PrintString\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.InString [String]"
+    },
+    {
+      "id": "L12_06",
+      "category": "event_only",
+      "instruction": "Create a Blueprint with three custom events: OnAttack, OnDefend, OnHeal. OnAttack prints Attacking. OnDefend prints Defending. OnHeal prints Healing.",
+      "expected_dsl": "BLUEPRINT: BP_ThreeEvents\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_Custom [EventName=OnAttack]\nNODE n2: PrintString [InString=\"Attacking\"]\nNODE n3: Event_Custom [EventName=OnDefend]\nNODE n4: PrintString [InString=\"Defending\"]\nNODE n5: Event_Custom [EventName=OnHeal]\nNODE n6: PrintString [InString=\"Healing\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n5.Then -> n6.Execute"
+    },
+    {
+      "id": "L12_07",
+      "category": "deep_chain",
+      "instruction": "Create a Blueprint that on BeginPlay calls DestroyActor on self, which should be the entire graph. Just two nodes and one exec connection.",
+      "expected_dsl": "BLUEPRINT: BP_ImmediateDestroy\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: DestroyActor\nEXEC n1.Then -> n2.Execute"
+    },
+    {
+      "id": "L12_08",
+      "category": "flipflop_three_times",
+      "instruction": "Create a Blueprint that on pressing Toggle uses FlipFlop. Path A prints ON and sets bool State to true. Path B prints OFF and sets State to false.",
+      "expected_dsl": "BLUEPRINT: BP_ToggleState\nPARENT: Actor\nVAR State: Bool = false\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Toggle\"]\nNODE n2: FlipFlop\nNODE n3: PrintString [InString=\"ON\"]\nNODE n4: VariableSet [VarName=State]\nNODE n5: PrintString [InString=\"OFF\"]\nNODE n6: VariableSet [VarName=State]\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.A -> n3.Execute\nEXEC n3.Then -> n4.Execute\nDATA true -> n4.Value [Bool]\nEXEC n2.B -> n5.Execute\nEXEC n5.Then -> n6.Execute\nDATA false -> n6.Value [Bool]"
+    },
+    {
+      "id": "L12_09",
+      "category": "doonce_reset",
+      "instruction": "Create a Blueprint that on overlap uses DoOnce to print First Time. On pressing Reset, reset the DoOnce so it can fire again.",
+      "expected_dsl": "BLUEPRINT: BP_DoOnceReset\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: DoOnce\nNODE n3: PrintString [InString=\"First Time\"]\nNODE n4: Event_InputAction [ActionName=\"Reset\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute\nEXEC n4.Pressed -> n2.Reset"
+    },
+    {
+      "id": "L12_10",
+      "category": "data_only",
+      "instruction": "Create a Blueprint with float Speed at 10 and float Multiplier at 2. On BeginPlay multiply Speed by Multiplier and print the result.",
+      "expected_dsl": "BLUEPRINT: BP_DataCalc\nPARENT: Actor\nVAR Speed: Float = 10.0\nVAR Multiplier: Float = 2.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Speed]\nNODE n3: VariableGet [VarName=Multiplier]\nNODE n4: MultiplyFloat\nNODE n5: PrintString\nEXEC n1.Then -> n5.Execute\nDATA n2.Value -> n4.A [Float]\nDATA n3.Value -> n4.B [Float]\nDATA n4.ReturnValue -> n5.InString [String]"
+    },
+    {
+      "id": "L12_11",
+      "category": "ambiguous_light",
+      "instruction": "Make a light switch. When pressed it turns the light on or off.",
+      "expected_dsl": "BLUEPRINT: BP_LightSwitch\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Use\"]\nNODE n2: FlipFlop\nNODE n3: SetVisibility [NewVisibility=true]\nNODE n4: SetVisibility [NewVisibility=false]\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.A -> n3.Execute\nEXEC n2.B -> n4.Execute"
+    },
+    {
+      "id": "L12_12",
+      "category": "ambiguous_pickup",
+      "instruction": "Make something the player can pick up that gives them points.",
+      "expected_dsl": "BLUEPRINT: BP_PointPickup\nPARENT: Actor\nVAR Points: Int = 10\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: VariableGet [VarName=Points]\nNODE n4: PrintString\nNODE n5: DestroyActor\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n4.Execute\nDATA n3.Value -> n4.InString [String]\nEXEC n4.Then -> n5.Execute"
+    },
+    {
+      "id": "L12_13",
+      "category": "gate_full",
+      "instruction": "Create a Blueprint with a Gate. On pressing Open, open the gate. On pressing Close, close it. On pressing Toggle, toggle it. On Tick enter the gate. Gate exit prints Passing.",
+      "expected_dsl": "BLUEPRINT: BP_FullGate\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Open\"]\nNODE n2: Gate\nNODE n3: Event_InputAction [ActionName=\"Close\"]\nNODE n4: Event_InputAction [ActionName=\"Toggle\"]\nNODE n5: Event_Tick\nNODE n6: PrintString [InString=\"Passing\"]\nEXEC n1.Pressed -> n2.Open\nEXEC n3.Pressed -> n2.Close\nEXEC n4.Pressed -> n2.Toggle\nEXEC n5.Then -> n2.Enter\nEXEC n2.Exit -> n6.Execute"
+    },
+    {
+      "id": "L12_14",
+      "category": "multigate_cycle",
+      "instruction": "Create a Blueprint that on pressing Next uses MultiGate with 3 outputs cycling. Output 0 prints Red. Output 1 prints Green. Output 2 prints Blue.",
+      "expected_dsl": "BLUEPRINT: BP_ColorCycle\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Next\"]\nNODE n2: MultiGate [Loop=true]\nNODE n3: PrintString [InString=\"Red\"]\nNODE n4: PrintString [InString=\"Green\"]\nNODE n5: PrintString [InString=\"Blue\"]\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.Out_0 -> n3.Execute\nEXEC n2.Out_1 -> n4.Execute\nEXEC n2.Out_2 -> n5.Execute"
+    },
+    {
+      "id": "L12_15",
+      "category": "two_inputs",
+      "instruction": "Create a Blueprint that on pressing Jump prints Jumped. On pressing Crouch prints Crouched. Both events are independent.",
+      "expected_dsl": "BLUEPRINT: BP_TwoInputs\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Jump\"]\nNODE n2: PrintString [InString=\"Jumped\"]\nNODE n3: Event_InputAction [ActionName=\"Crouch\"]\nNODE n4: PrintString [InString=\"Crouched\"]\nEXEC n1.Pressed -> n2.Execute\nEXEC n3.Pressed -> n4.Execute"
+    },
+    {
+      "id": "L12_16",
+      "category": "self_reference",
+      "instruction": "Create a Blueprint that on BeginPlay gets its own location, gets its own display name, and prints both.",
+      "expected_dsl": "BLUEPRINT: BP_SelfInfo\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: GetActorLocation\nNODE n3: GetDisplayName\nNODE n4: PrintString\nNODE n5: PrintString\nEXEC n1.Then -> n4.Execute\nDATA n2.ReturnValue -> n4.InString [String]\nEXEC n4.Then -> n5.Execute\nDATA n3.ReturnValue -> n5.InString [String]"
+    },
+    {
+      "id": "L12_17",
+      "category": "cast_both",
+      "instruction": "Create a Blueprint that on overlap tries CastToCharacter. If that succeeds print Character. If fails try CastToPawn. If that succeeds print Pawn. If both fail print Unknown.",
+      "expected_dsl": "BLUEPRINT: BP_DualCast\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: PrintString [InString=\"Character\"]\nNODE n4: CastToPawn\nNODE n5: PrintString [InString=\"Pawn\"]\nNODE n6: PrintString [InString=\"Unknown\"]\nEXEC n1.Then -> n2.Execute\nDATA n1.OtherActor -> n2.Object [Actor]\nEXEC n2.CastSucceeded -> n3.Execute\nEXEC n2.CastFailed -> n4.Execute\nDATA n1.OtherActor -> n4.Object [Actor]\nEXEC n4.CastSucceeded -> n5.Execute\nEXEC n4.CastFailed -> n6.Execute"
+    },
+    {
+      "id": "L12_18",
+      "category": "nested_doonce",
+      "instruction": "Create a Blueprint that on overlap uses DoOnce. Inside DoOnce, use another DoOnce. First prints First Visit. Second prints Bonus. So first overlap triggers both, subsequent overlaps trigger nothing.",
+      "expected_dsl": "BLUEPRINT: BP_NestedDoOnce\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_ActorBeginOverlap\nNODE n2: DoOnce\nNODE n3: PrintString [InString=\"First Visit\"]\nNODE n4: DoOnce\nNODE n5: PrintString [InString=\"Bonus\"]\nEXEC n1.Then -> n2.Execute\nEXEC n2.Completed -> n3.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n4.Completed -> n5.Execute"
+    },
+    {
+      "id": "L12_19",
+      "category": "math_heavy",
+      "instruction": "Create a Blueprint with float A at 10, float B at 3. On BeginPlay compute A plus B, A minus B, A times B, A divided by B. Print each result using Sequence.",
+      "expected_dsl": "BLUEPRINT: BP_MathOps\nPARENT: Actor\nVAR A: Float = 10.0\nVAR B: Float = 3.0\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=A]\nNODE n3: VariableGet [VarName=B]\nNODE n4: Sequence\nNODE n5: AddFloat\nNODE n6: PrintString\nNODE n7: SubtractFloat\nNODE n8: PrintString\nNODE n9: MultiplyFloat\nNODE n10: PrintString\nNODE n11: DivideFloat\nNODE n12: PrintString\nEXEC n1.Then -> n4.Execute\nEXEC n4.Then_0 -> n6.Execute\nDATA n2.Value -> n5.A [Float]\nDATA n3.Value -> n5.B [Float]\nDATA n5.ReturnValue -> n6.InString [String]\nEXEC n4.Then_1 -> n8.Execute\nDATA n2.Value -> n7.A [Float]\nDATA n3.Value -> n7.B [Float]\nDATA n7.ReturnValue -> n8.InString [String]\nEXEC n4.Then_2 -> n10.Execute\nDATA n2.Value -> n9.A [Float]\nDATA n3.Value -> n9.B [Float]\nDATA n9.ReturnValue -> n10.InString [String]\nEXEC n4.Then_3 -> n12.Execute\nDATA n2.Value -> n11.A [Float]\nDATA n3.Value -> n11.B [Float]\nDATA n11.ReturnValue -> n12.InString [String]"
+    },
+    {
+      "id": "L12_20",
+      "category": "complete_character",
+      "instruction": "Create a character Blueprint with Health at 100, string Name. On BeginPlay print the name. On AnyDamage subtract. If health below 0 print dead and destroy. On overlap with pickup add 25 health.",
+      "expected_dsl": "BLUEPRINT: BP_FullCharacter\nPARENT: Character\nVAR Health: Float = 100.0\nVAR Name: String = \"Hero\"\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: VariableGet [VarName=Name]\nNODE n3: PrintString\nNODE n4: Event_AnyDamage\nNODE n5: VariableGet [VarName=Health]\nNODE n6: SubtractFloat\nNODE n7: VariableSet [VarName=Health]\nNODE n8: LessThan [B=0.0]\nNODE n9: Branch\nNODE n10: PrintString [InString=\"Dead\"]\nNODE n11: DestroyActor\nNODE n12: Event_ActorBeginOverlap\nNODE n13: VariableGet [VarName=Health]\nNODE n14: AddFloat [B=25.0]\nNODE n15: VariableSet [VarName=Health]\nEXEC n1.Then -> n3.Execute\nDATA n2.Value -> n3.InString [String]\nEXEC n4.Then -> n7.Execute\nDATA n5.Value -> n6.A [Float]\nDATA n4.Damage -> n6.B [Float]\nDATA n6.ReturnValue -> n7.Value [Float]\nEXEC n7.Then -> n9.Execute\nDATA n7.Value -> n8.A [Float]\nDATA n8.ReturnValue -> n9.Condition [Bool]\nEXEC n9.True -> n10.Execute\nEXEC n10.Then -> n11.Execute\nEXEC n12.Then -> n15.Execute\nDATA n13.Value -> n14.A [Float]\nDATA n14.ReturnValue -> n15.Value [Float]"
+    }
+  ]
+}

@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 BACKUPS_DIR = PROJECT_ROOT / "backups"
 HISTORY_FILE = BACKUPS_DIR / "backup_history.json"
+MIRROR_DIR = Path("D:/BlueprintLLMBackup")
 
 # What gets backed up (relative to PROJECT_ROOT)
 BACKUP_DIRS = ["datasets", "results", "lessons"]
@@ -76,6 +77,25 @@ def _save_history(history: list):
     BACKUPS_DIR.mkdir(parents=True, exist_ok=True)
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(history, f, indent=2, ensure_ascii=False)
+
+
+def _mirror_to_external(local_backup: Path, label: str):
+    """Mirror a local backup to the external drive (D:\\BlueprintLLMBackup).
+
+    Silently skips if the mirror drive is not available.
+    """
+    if not MIRROR_DIR.parent.exists():
+        logger.warning(f"Mirror drive not available: {MIRROR_DIR.parent}")
+        return
+    try:
+        mirror_dest = MIRROR_DIR / label
+        mirror_dest.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(local_backup, mirror_dest, dirs_exist_ok=True)
+        logger.info(f"  Mirrored to {mirror_dest}")
+        print(f"[Backup] Mirrored to {mirror_dest}")
+    except Exception as e:
+        logger.warning(f"  Mirror failed (non-fatal): {e}")
+        print(f"[Backup] Mirror to D: failed (non-fatal): {e}")
 
 
 def _find_latest_model_dir() -> Path | None:
@@ -206,6 +226,9 @@ def auto_backup(trigger: str, version: str = None, lesson: str = None) -> Path |
     with open(backup_dir / "manifest.json", "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2)
 
+    # Mirror to external drive
+    _mirror_to_external(backup_dir, label)
+
     # Update history
     history = _load_history()
     entry = {
@@ -217,6 +240,7 @@ def auto_backup(trigger: str, version: str = None, lesson: str = None) -> Path |
         "lesson": lesson,
         "file_count": len(manifest),
         "path": str(backup_dir),
+        "mirror_path": str(MIRROR_DIR / label),
     }
     history.append(entry)
     _save_history(history)
@@ -263,6 +287,11 @@ def cleanup_backups():
         if backup_path.exists():
             shutil.rmtree(backup_path)
             logger.info(f"  Cleaned up old backup: {entry['label']}")
+        # Also clean up mirror copy
+        mirror_path = MIRROR_DIR / entry["label"]
+        if mirror_path.exists():
+            shutil.rmtree(mirror_path)
+            logger.info(f"  Cleaned up mirror: {entry['label']}")
         removed_labels.add(entry["label"])
 
     # Update history

@@ -838,7 +838,7 @@ def step_post_training(cfg, log, model_path, state, dry_run):
 # STEP 6: Exam
 # ===========================================================================
 
-def step_exam(cfg, log, model_path, dry_run):
+def step_exam(cfg, log, model_path, state, dry_run):
     """Steps 6.x: Auto-detect latest lessons and run exams."""
     log.section("STEP 6: Exam")
     log.start_step("6", "Exam")
@@ -855,6 +855,8 @@ def step_exam(cfg, log, model_path, dry_run):
         log.complete_step("6", "Exam", "No lessons")
         return
 
+    exam_start = time.time()
+
     log.log(f"Found {len(lesson_files)} lesson(s) to examine")
     for lf in lesson_files:
         run_script(cfg, log, "12_run_exam.py",
@@ -862,7 +864,70 @@ def step_exam(cfg, log, model_path, dry_run):
                    f"Exam: {lf.name}", dry_run, allow_fail=True, timeout=14400,
                    step_category="exam")
 
+    # --- Build combined summary of all exams from this run ---
+    _save_combined_exam_summary(cfg, log, state, exam_start, dry_run)
+
     log.complete_step("6", "Exam", f"{len(lesson_files)} lessons examined")
+
+
+def _save_combined_exam_summary(cfg, log, state, exam_start, dry_run):
+    """Collect per-lesson summaries from this run into one combined file."""
+    if dry_run:
+        return
+    exams_dir = cfg.root / "results" / "exams"
+    if not exams_dir.exists():
+        return
+
+    version = state.get("last_model_version", 0)
+
+    # For each lesson, pick the most recent summary written after exam_start
+    lesson_summaries = []
+    for sf in sorted(exams_dir.glob("exam_lesson_*_summary.json")):
+        try:
+            if sf.stat().st_mtime >= exam_start:
+                with open(sf, encoding="utf-8") as f:
+                    lesson_summaries.append(json.load(f))
+        except (OSError, json.JSONDecodeError):
+            pass
+
+    if not lesson_summaries:
+        log.log("No exam summaries found for combined file.", "WARN")
+        return
+
+    # Aggregate stats
+    total_prompts = sum(s.get("total_prompts", 0) for s in lesson_summaries)
+    total_valid = sum(s.get("valid_syntax", 0) for s in lesson_summaries)
+    weighted_score_sum = sum(
+        s.get("avg_similarity_score", 0) * s.get("total_prompts", 0)
+        for s in lesson_summaries
+    )
+    avg_score = round(weighted_score_sum / total_prompts, 2) if total_prompts else 0
+    passed = sum(1 for s in lesson_summaries if s.get("avg_similarity_score", 0) >= 70)
+
+    combined = {
+        "version": f"v{version}",
+        "model": lesson_summaries[0].get("model", ""),
+        "base_model": lesson_summaries[0].get("base_model", ""),
+        "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S"),
+        "total_lessons": len(lesson_summaries),
+        "total_prompts": total_prompts,
+        "total_valid_syntax": total_valid,
+        "valid_syntax_pct": round(total_valid / total_prompts * 100, 1) if total_prompts else 0,
+        "avg_score": avg_score,
+        "passed": passed,
+        "failed": len(lesson_summaries) - passed,
+        "lessons": lesson_summaries,
+    }
+
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_path = exams_dir / f"exam_all_summaries_v{version}_{ts}.json"
+    try:
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(combined, f, indent=2)
+        log.log(f"Combined exam summary: {out_path.name}  "
+                f"({passed}/{len(lesson_summaries)} passed, avg {avg_score}%)")
+    except OSError as e:
+        log.log(f"Failed to write combined summary: {e}", "WARN")
 
 
 # ===========================================================================
@@ -1218,7 +1283,7 @@ def run_pipeline(mode, dry_run=False, force=False, root=None, resume=False):
             if not check_stop():
                 if not should_skip("step_exam"):
                     _dw(dw.step_start, 6)
-                    step_exam(cfg, log, model_path, dry_run)
+                    step_exam(cfg, log, model_path, state, dry_run)
                     _dw(dw.step_done, 6)
                     mark_completed("step_exam")
                 else:

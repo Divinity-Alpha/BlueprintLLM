@@ -1,0 +1,114 @@
+{
+  "lesson_id": "lesson_12",
+  "lesson_name": "Edge Cases and Unusual Patterns",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v5\\final",
+  "timestamp": "20260228_123104",
+  "total_prompts": 20,
+  "valid_syntax": 16,
+  "valid_syntax_pct": 80.0,
+  "avg_similarity_score": 60.7,
+  "timeout_count": 0,
+  "holdout": true,
+  "per_category": {
+    "minimal_bp": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 75.0
+    },
+    "many_prints": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 64.3
+    },
+    "double_delay": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 87.5
+    },
+    "no_variables": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 83.3
+    },
+    "multi_var_types": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 66.7
+    },
+    "event_only": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 16.7
+    },
+    "deep_chain": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 66.7
+    },
+    "flipflop_three_times": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 70.6
+    },
+    "doonce_reset": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 40.0
+    },
+    "data_only": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 57.1
+    },
+    "ambiguous_light": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 60.0
+    },
+    "ambiguous_pickup": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 42.9
+    },
+    "gate_full": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 64.3
+    },
+    "multigate_cycle": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 75.0
+    },
+    "two_inputs": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 77.8
+    },
+    "self_reference": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 58.3
+    },
+    "cast_both": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 75.0
+    },
+    "nested_doonce": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 83.3
+    },
+    "math_heavy": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 26.5
+    },
+    "complete_character": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 23.5
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "lesson_id": "lesson_11",
+  "lesson_name": "Arrays and Data Structures",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v5\\final",
+  "timestamp": "20260228_121134",
+  "total_prompts": 20,
+  "valid_syntax": 15,
+  "valid_syntax_pct": 75.0,
+  "avg_similarity_score": 42.4,
+  "timeout_count": 0,
+  "holdout": true,
+  "per_category": {
+    "array_add": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 35.7
+    },
+    "array_remove": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 45.5
+    },
+    "array_get": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 54.5
+    },
+    "array_contains": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 60.0
+    },
+    "array_length_check": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 64.7
+    },
+    "array_foreach_print": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 91.7
+    },
+    "array_clear": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 54.5
+    },
+    "array_add_overlap": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 20.0
+    },
+    "array_foreach_destroy": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 78.6
+    },
+    "array_find_nearest": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 34.4
+    },
+    "array_random": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 37.5
+    },
+    "array_loop_spawn": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 44.4
+    },
+    "array_remove_overlap": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 11.5
+    },
+    "array_timer_add": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 26.9
+    },
+    "array_last_element": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 31.2
+    },
+    "array_filter_distance": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 46.4
+    },
+    "array_switch_add": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 29.6
+    },
+    "array_empty_check": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 12.0
+    },
+    "array_foreach_valid": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 33.3
+    },
+    "array_build_inventory": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 34.6
+    }
+  }
+}

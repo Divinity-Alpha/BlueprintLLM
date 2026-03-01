@@ -1,43 +1,41 @@
 Waiting for pipeline to finish...
-  Pipeline still running: step 6.2 - Load model for exam
-  Pipeline still running: step 6.2 - Load model for exam
-  Pipeline still running: step 6.2 - Load model for exam
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.2 - Load model for exam
-  Pipeline still running: step 6.2 - Load model for exam
-  Pipeline still running: step 6.2 - Load model for exam
-  Pipeline still running: step 6.2 - Load model for exam
-  Pipeline still running: step 6.2 - Load model for exam
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
-  Pipeline still running: step 6.3 - Run prompts
+Pipeline is idle.
+Model: C:\BlueprintLLM\models\blueprint-lora-v5\final
+Found 2 holdout lessons: ['lesson_11.json', 'lesson_12.json']
+
+Running exam: lesson_11.json with blueprint-lora-v5
+
+============================================================
+  EXAM: Arrays and Data Structures
+  20 prompts
+  Model: C:\BlueprintLLM\models\blueprint-lora-v5\final
+============================================================
+
+Loaded system prompt from C:\BlueprintLLM\models\blueprint-lora-v5\system_prompt.txt (463 chars)
+Loading base model: meta-llama/Meta-Llama-3.1-70B
+
+STDERR: heckpoint shards:  37%|###6      | 11/30 [18:52<59:10, 186.85s/it]
+Loading checkpoint shards:  40%|####      | 12/30 [28:51<1:33:41, 312.31s/it]
+Loading checkpoint shards:  43%|####3     | 13/30 [43:04<2:14:52, 476.05s/it]
+Loading checkpoint shards:  47%|####6     | 14/30 [51:07<2:07:29, 478.12s/it]
+
+Running exam: lesson_12.json with blueprint-lora-v5
+Traceback (most recent call last):
+  File "C:\BlueprintLLM\scripts\run_holdout_exams.py", line 145, in <module>
+    
+  File "C:\BlueprintLLM\scripts\run_holdout_exams.py", line 49, in run_exam
+    
+    
+  File "C:\Program Files\Python311\Lib\subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\subprocess.py", line 1630, in _communicate
+    raise TimeoutExpired(self.args, orig_timeout)
+subprocess.TimeoutExpired: Command '['C:\\BlueprintLLM\\venv\\Scripts\\python.exe', 'C:\\BlueprintLLM\\scripts\\12_run_exam.py', '--lesson', 'C:\\BlueprintLLM\\lessons\\holdout\\lesson_12.json', '--model', 'C:\\BlueprintLLM\\models\\blueprint-lora-v5\\final']' timed out after 3600 seconds
+3 - Run prompts
   Pipeline still running: step 6.3 - Run prompts
   Pipeline still running: step 6.3 - Run prompts
   Pipeline still running: step 6.3 - Run prompts
@@ -347,3 +345,24 @@ Waiting for pipeline to finish...
   Pipeline still running: step 7.2 - Run test suite
   Pipeline still running: step 7.2 - Run test suite
   Pipeline still running: step 7.2 - Run test suite
+Pipeline is idle.
+Model: C:\BlueprintLLM\models\blueprint-lora-v5\final
+Found 2 holdout lessons: ['lesson_11.json', 'lesson_12.json']
+
+Running exam: lesson_11.json with blueprint-lora-v5
+
+============================================================
+  EXAM: Arrays and Data Structures
+  20 prompts
+  Model: C:\BlueprintLLM\models\blueprint-lora-v5\final
+============================================================
+
+Loaded system prompt from C:\BlueprintLLM\models\blueprint-lora-v5\system_prompt.txt (463 chars)
+Loading base model: meta-llama/Meta-Llama-3.1-70B
+
+STDERR: ding checkpoint shards:  60%|######    | 18/30 [28:35<47:20, 236.67s/it]
+Loading checkpoint shards:  63%|######3   | 19/30 [33:56<48:01, 261.98s/it]
+Loading checkpoint shards:  67%|######6   | 20/30 [39:29<47:13, 283.31s/it]
+Loading checkpoint shards:  70%|#######   | 21/30 [48:42<54:37, 364.19s/it]
+
+Running exam: lesson_12.json with blueprint-lora-v5

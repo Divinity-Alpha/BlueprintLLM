@@ -1,7 +1,7 @@
 {
-  "last_run": "2026-02-27T14:01:00.372517",
-  "last_training_data_hash": "c20dcde85915e577",
-  "last_model_version": 4,
+  "last_run": "2026-02-27T19:06:06.540881",
+  "last_training_data_hash": "ff48b2274612f318",
+  "last_model_version": 5,
   "runs": [
     {
       "timestamp": "2026-02-21T07:11:04.682951",
@@ -334,6 +334,18 @@
         "passed": 11,
         "avg_score": 0.936,
         "avg_time": 41.25
+      }
+    },
+    {
+      "timestamp": "2026-02-27T19:06:06.540881",
+      "duration": 17844,
+      "version": 5,
+      "errors": 29,
+      "eval": {
+        "total": 11,
+        "passed": 11,
+        "avg_score": 0.925,
+        "avg_time": 36.7
       }
     }
   ]

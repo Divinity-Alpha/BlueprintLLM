@@ -226,5 +226,56 @@
       "passed": 17,
       "avg_score": 0.49
     }
+  },
+  {
+    "cycle": 6,
+    "version": "v6",
+    "date": "2026-02-28",
+    "dataset_size": 662,
+    "lesson_data_size": 0,
+    "epochs": 3,
+    "learning_rate": 0.0002,
+    "training_time_seconds": null,
+    "total_steps": 49,
+    "initial_loss": 2.8755,
+    "final_loss": 0.2431,
+    "eval_loss": 0.19676415622234344,
+    "train_accuracy": 0.9467326179146767,
+    "eval_accuracy": 0.9587449580430984,
+    "node_scores": {
+      "Event_BeginPlay": 0.875,
+      "Sequence": 0.643,
+      "PrintString": 0.875,
+      "Delay": 0.875,
+      "Event_ActorBeginOverlap": 0.833,
+      "Event_ActorEndOverlap": 0.833,
+      "Event_Tick": 0.833,
+      "VariableGet": 0.667,
+      "Event_Custom": 0.167,
+      "DestroyActor": 0.667,
+      "Event_InputAction": 0.778,
+      "FlipFlop": 0.706,
+      "VariableSet": 0.706,
+      "DoOnce": 0.833,
+      "MultiplyFloat": 0.571,
+      "SetVisibility": 0.6,
+      "CastToCharacter": 0.75,
+      "Gate": 0.643,
+      "MultiGate": 0.75,
+      "GetActorLocation": 0.583,
+      "GetDisplayName": 0.583,
+      "CastToPawn": 0.75,
+      "AddFloat": 0.265,
+      "SubtractFloat": 0.265,
+      "DivideFloat": 0.265,
+      "Event_AnyDamage": 0.235,
+      "LessThan": 0.235,
+      "Branch": 0.235
+    },
+    "eval_summary": {
+      "total": 20,
+      "passed": 16,
+      "avg_score": 0.607
+    }
   }
 ]

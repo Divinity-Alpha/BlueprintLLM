@@ -1,0 +1,113 @@
+{
+  "lesson_id": "lesson_08",
+  "lesson_name": "UI Widgets and HUD Patterns",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v6\\final",
+  "base_model": "meta-llama/Meta-Llama-3.1-70B",
+  "timestamp": "20260228_223251",
+  "total_prompts": 20,
+  "valid_syntax": 18,
+  "valid_syntax_pct": 90.0,
+  "avg_similarity_score": 92.1,
+  "per_category": {
+    "ui_create_basic": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_remove": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_toggle": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 57.1
+    },
+    "ui_delayed": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_overlap_show": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_with_cast": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 91.7
+    },
+    "ui_doonce": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_branch_show": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_sequence_multi": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 75.0
+    },
+    "ui_valid_remove": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 100.0
+    },
+    "ui_timer_show": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_flipflop_swap": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 95.8
+    },
+    "ui_distance_trigger": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_create_store": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 93.3
+    },
+    "ui_endplay_cleanup": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_gate_controlled": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 95.2
+    },
+    "ui_foreach_create": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_input_close": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 95.0
+    },
+    "ui_multigate": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "ui_complete_flow": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 38.5
+    }
+  }
+}

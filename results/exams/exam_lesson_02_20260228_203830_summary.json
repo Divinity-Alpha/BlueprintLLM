@@ -1,0 +1,88 @@
+{
+  "lesson_id": "lesson_02",
+  "lesson_name": "Corrections: Variables, Events, Complex Nodes",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v6\\final",
+  "base_model": "meta-llama/Meta-Llama-3.1-70B",
+  "timestamp": "20260228_203830",
+  "total_prompts": 24,
+  "valid_syntax": 21,
+  "valid_syntax_pct": 87.5,
+  "avg_similarity_score": 94.3,
+  "per_category": {
+    "branch": {
+      "count": 2,
+      "valid": 2,
+      "avg_score": 96.2
+    },
+    "variable_set_get": {
+      "count": 2,
+      "valid": 1,
+      "avg_score": 95.9
+    },
+    "custom_event": {
+      "count": 2,
+      "valid": 2,
+      "avg_score": 77.8
+    },
+    "gate": {
+      "count": 2,
+      "valid": 2,
+      "avg_score": 95.0
+    },
+    "spawn_actor": {
+      "count": 2,
+      "valid": 2,
+      "avg_score": 100.0
+    },
+    "foreach": {
+      "count": 2,
+      "valid": 2,
+      "avg_score": 100.0
+    },
+    "distance_check": {
+      "count": 2,
+      "valid": 2,
+      "avg_score": 96.5
+    },
+    "set_visibility": {
+      "count": 2,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "sequence": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 91.7
+    },
+    "rotating_actor": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "overlap_event": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "play_sound": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "doonce": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "math_chain": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 50.0
+    },
+    "multi_event": {
+      "count": 2,
+      "valid": 2,
+      "avg_score": 100.0
+    }
+  }
+}

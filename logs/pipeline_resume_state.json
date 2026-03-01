@@ -16,22 +16,29 @@
         "step": "Training summary",
         "category": "encoding",
         "message": "exit 1: encoding",
-        "timestamp": "2026-02-27T15:28:25.999127",
+        "timestamp": "2026-02-27T21:07:46.051115",
         "attempt": 0
       },
       {
         "step": "Training summary",
         "category": "encoding",
         "message": "exit 1: encoding",
-        "timestamp": "2026-02-27T15:28:36.047946",
+        "timestamp": "2026-02-27T21:07:56.098189",
         "attempt": 1
+      },
+      {
+        "step": "Health check v5",
+        "category": "unknown",
+        "message": "exit 2: unknown",
+        "timestamp": "2026-02-27T21:07:56.204141",
+        "attempt": 0
       }
     ],
-    "message": "  ERR| UnicodeEncodeError: 'charmap' codec can't encode character '\\u2502' in position 10: character maps to <undefined>"
+    "message": "  FAILED (exit 2, category=unknown)"
   },
   "state_snapshot": {
-    "last_training_data_hash": "c20dcde85915e577",
-    "last_model_version": 4
+    "last_training_data_hash": "ff48b2274612f318",
+    "last_model_version": 5
   },
-  "timestamp": "2026-02-27T18:53:10.330658"
+  "timestamp": "2026-02-28T00:03:30.748329"
 }

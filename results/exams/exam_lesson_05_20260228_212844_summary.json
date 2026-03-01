@@ -1,0 +1,113 @@
+{
+  "lesson_id": "lesson_05",
+  "lesson_name": "IsValid Checks and Defensive Patterns",
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v6\\final",
+  "base_model": "meta-llama/Meta-Llama-3.1-70B",
+  "timestamp": "20260228_212844",
+  "total_prompts": 20,
+  "valid_syntax": 19,
+  "valid_syntax_pct": 95.0,
+  "avg_similarity_score": 94.5,
+  "per_category": {
+    "isvalid_basic": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_cast": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_destroy": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_overlap_cast": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 93.8
+    },
+    "isvalid_timer_check": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_array": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_spawn_check": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_get_player": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_before_distance": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_doonce_cast": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "cast_to_controller": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_sequence_checks": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 21.4
+    },
+    "isvalid_set_after_spawn": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "cast_with_variable": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_conditional_destroy": {
+      "count": 1,
+      "valid": 0,
+      "avg_score": 95.2
+    },
+    "isvalid_gate_pattern": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 94.1
+    },
+    "isvalid_multi_cast": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_foreach_destroy": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_safe_distance": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 100.0
+    },
+    "isvalid_complete_pattern": {
+      "count": 1,
+      "valid": 1,
+      "avg_score": 85.7
+    }
+  }
+}

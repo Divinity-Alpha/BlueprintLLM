@@ -1,16 +1,16 @@
 {
   "status": "running",
-  "run_id": "b8d3556f",
+  "run_id": "4a5a6355",
   "step_id": "",
   "description": "",
-  "timestamp": "2026-02-28T00:03:29.123592",
-  "cycle_start_time": 1772240766.540881,
-  "elapsed_seconds": 17842.6,
+  "timestamp": "2026-03-01T00:21:41.652417",
+  "cycle_start_time": 1772319611.03274,
+  "elapsed_seconds": 26490.6,
   "completed_steps": [
     {
       "step": "1",
       "name": "Data Foundation",
-      "duration": 4.1,
+      "duration": 7.43,
       "status": "complete"
     },
     {
@@ -22,43 +22,43 @@
     {
       "step": "2",
       "name": "Pre-Flight Checks",
-      "duration": 3.32,
+      "duration": 3.35,
       "status": "complete"
     },
     {
       "step": "5.1",
       "name": "Verify model output",
-      "duration": 0.01,
+      "duration": 0.0,
       "status": "complete"
     },
     {
       "step": "5",
       "name": "Post-Training",
-      "duration": 20.46,
+      "duration": 20.37,
       "status": "complete"
     },
     {
       "step": "6",
       "name": "Exam",
-      "duration": 9953.07,
+      "duration": 13733.17,
       "status": "complete"
     },
     {
       "step": "7",
       "name": "Evaluation",
-      "duration": 564.92,
+      "duration": 606.94,
       "status": "complete"
     },
     {
       "step": "8",
       "name": "Lesson Integration",
-      "duration": 4.7,
+      "duration": 8.13,
       "status": "complete"
     },
     {
       "step": "9",
       "name": "Dashboard & Finalize",
-      "duration": 0.12,
+      "duration": 0.11,
       "status": "complete"
     }
   ],
@@ -116,7 +116,7 @@
     {
       "step": "3.2",
       "name": "Load training dataset",
-      "eta_seconds": 0.2
+      "eta_seconds": 0.1
     },
     {
       "step": "3.3",
@@ -126,7 +126,7 @@
     {
       "step": "3.4",
       "name": "Load base model + quantize",
-      "eta_seconds": 168.3
+      "eta_seconds": 162.2
     },
     {
       "step": "3.5",
@@ -136,7 +136,7 @@
     {
       "step": "3.6",
       "name": "Configure SFT Trainer",
-      "eta_seconds": 1.7
+      "eta_seconds": 1.4
     },
     {
       "step": "4",
@@ -146,7 +146,7 @@
     {
       "step": "4.1",
       "name": "Pre-training backup",
-      "eta_seconds": 0.1
+      "eta_seconds": 1.2
     },
     {
       "step": "4.2",
@@ -617,33 +617,33 @@
     "step_id": "",
     "category": "unknown",
     "message": "exit 2: unknown",
-    "timestamp": "2026-02-27T21:07:56.201484"
+    "timestamp": "2026-02-28T20:22:23.175593"
   },
   "retry_info": {
     "step_id": "",
     "attempt": 1,
     "max_retries": 1,
-    "timestamp": "2026-02-27T21:07:56.204141"
+    "timestamp": "2026-02-28T20:22:23.176531"
   },
   "error_history": [
     {
       "step_id": "",
       "category": "encoding",
       "message": "exit 1: encoding",
-      "timestamp": "2026-02-27T21:07:46.049703"
+      "timestamp": "2026-02-28T20:22:13.008835"
     },
     {
       "step_id": "",
       "category": "encoding",
       "message": "exit 1: encoding",
-      "timestamp": "2026-02-27T21:07:56.098189"
+      "timestamp": "2026-02-28T20:22:23.058934"
     },
     {
       "step_id": "",
       "category": "unknown",
       "message": "exit 2: unknown",
-      "timestamp": "2026-02-27T21:07:56.201484"
+      "timestamp": "2026-02-28T20:22:23.175593"
     }
   ],
-  "eta_remaining_seconds": 172.9
+  "eta_remaining_seconds": 167.5
 }

@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "C:\BlueprintLLM\scripts\run_holdout_exams.py", line 150, in <module>
+    run_exam(lesson, model_path)
+  File "C:\BlueprintLLM\scripts\run_holdout_exams.py", line 54, in run_exam
+    result = subprocess.run(
+             ^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\subprocess.py", line 1630, in _communicate
+    raise TimeoutExpired(self.args, orig_timeout)
+subprocess.TimeoutExpired: Command '['C:\\BlueprintLLM\\venv\\Scripts\\python.exe', 'C:\\BlueprintLLM\\scripts\\12_run_exam.py', '--lesson', 'C:\\BlueprintLLM\\lessons\\holdout\\lesson_12.json', '--model', 'C:\\BlueprintLLM\\models\\blueprint-lora-v5\\final']' timed out after 3600 seconds

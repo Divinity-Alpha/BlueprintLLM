@@ -1,0 +1,435 @@
+{
+  "model": "C:\\BlueprintLLM\\models\\blueprint-lora-v6\\final",
+  "date": "2026-03-01T00:21:32.263575",
+  "summary": {
+    "total": 11,
+    "passed": 11,
+    "avg_score": 0.979,
+    "avg_time": 40.63
+  },
+  "results": [
+    {
+      "test_id": "T1_01",
+      "tier": 1,
+      "prompt": "Create a Blueprint that prints 'Hello World' when the game starts.",
+      "passed": true,
+      "score": 1.0,
+      "output": "BLUEPRINT: BP_HelloWorld\nPARENT: Actor\n\nGRAPH: EventGraph\n\nNODE n1: Event_BeginPlay\nNODE n2: PrintString [InString=\"Hello World\"]\n\nEXEC n1.Then -> n2.Execute",
+      "generation_time": 17.27,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 4,
+          "expected": 4
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 1,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_id": "T1_02",
+      "tier": 1,
+      "prompt": "Create a Blueprint that destroys itself on begin play.",
+      "passed": true,
+      "score": 1.0,
+      "output": "BLUEPRINT: BP_SelfDestroy\nPARENT: Actor\n\nGRAPH: EventGraph\n\nNODE n1: Event_BeginPlay\nNODE n2: DestroyActor\n\nEXEC n1.Then -> n2.Execute",
+      "generation_time": 14.53,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 1,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_id": "T1_03",
+      "tier": 1,
+      "prompt": "Make an Actor Blueprint that prints 'Game Over' at the start.",
+      "passed": true,
+      "score": 1.0,
+      "output": "BLUEPRINT: BP_GameOver\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: PrintString [InString=\"Game Over\"]\nEXEC n1.Then -> n2.Execute",
+      "generation_time": 15.42,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 1,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_id": "T2_01",
+      "tier": 2,
+      "prompt": "Create a Blueprint for an actor that rotates continuously on the yaw axis.",
+      "passed": true,
+      "score": 1.0,
+      "output": "BLUEPRINT: BP_RotatingYaw\nPARENT: Actor\n\nGRAPH: EventGraph\n\nNODE n1: Event_Tick\nNODE n2: GetWorldDeltaSeconds\nNODE n3: MultiplyFloat [B=0.25]\nNODE n4: MakeRotator [Yaw=1.0]\nNODE n5: AddActorLocalRotation\n\nEXEC n1.Then -> n5.Execute\n\nDATA n1.DeltaSeconds -> n3.A [Float]\nDATA n3.ReturnValue -> n4.Yaw [Float]\nDATA n4.ReturnValue -> n5.DeltaRotation [Rotator]",
+      "generation_time": 38.49,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 3,
+          "expected": 3
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 1,
+          "expected": 1
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 1,
+          "data_found": 3
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_id": "T2_02",
+      "tier": 2,
+      "prompt": "Create a Blueprint that toggles a light on and off when the player presses E.",
+      "passed": true,
+      "score": 0.82,
+      "output": "BLUEPRINT: BP_ToggleLight\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Toggle\"]\nNODE n2: PrintString [InString=\"Toggle activated\"]\nNODE n3: ToggleVisibility\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.Then -> n3.Execute",
+      "generation_time": 27.14,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "nodes": {
+          "score": 10,
+          "max": 20,
+          "found": 1,
+          "expected": 2
+        },
+        "connections": {
+          "score": 7,
+          "max": 15,
+          "exec_found": 2,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing expected node: FlipFlop",
+        "Too few EXEC connections: got 2, expected >= 3"
+      ]
+    },
+    {
+      "test_id": "T2_03",
+      "tier": 2,
+      "prompt": "Create a Blueprint that prints a message when a player overlaps with it.",
+      "passed": true,
+      "score": 1.0,
+      "output": "BLUEPRINT: BP_OverlapTrigger\nPARENT: Actor\n\nGRAPH: EventGraph\n\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: PrintString [InString=\"Player Entered\"]\n\nEXEC n1.Then -> n2.Execute\nEXEC n2.CastSucceeded -> n3.Execute\n\nDATA n1.OtherActor -> n2.Object [Actor]",
+      "generation_time": 29.5,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 3,
+          "expected": 3
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 1,
+          "expected": 1
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 2,
+          "data_found": 1
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_id": "T3_01",
+      "tier": 3,
+      "prompt": "Create a health pickup that adds 25 health on overlap and then destroys itself.",
+      "passed": true,
+      "score": 1.0,
+      "output": "BLUEPRINT: BP_HealthPickup\nPARENT: Actor\nCATEGORY: Pickups\n\nGRAPH: EventGraph\n\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: GetVar [Variable=CurrentHealth]\nNODE n4: AddFloat [B=25]\nNODE n5: SetVar [Variable=CurrentHealth]\nNODE n6: PlaySound [Sound=PickupSound]\nNODE n7: DestroyActor\n\nEXEC n1.Then -> n2.Execute\nEXEC n2.CastSucceeded -> n3.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n4.Then -> n5.Execute\nEXEC n5.Then -> n6.Execute\nEXEC n6.Then -> n7.Execute\n\nDATA n1.OtherActor -> n2.Object [Actor]\nDATA n3.Value -> n4.A [Float]\nDATA n4.ReturnValue -> n5.Value [Float]",
+      "generation_time": 68.66,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 4,
+          "expected": 4
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 6,
+          "data_found": 3
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_id": "T3_02",
+      "tier": 3,
+      "prompt": "Create a health system with 100 max HP that checks if health reaches zero and destroys the actor.",
+      "passed": true,
+      "score": 1.0,
+      "output": "BLUEPRINT: BP_HealthSystem\nPARENT: Actor\nCATEGORY: Gameplay\n\nVAR CurrentHealth: Float = 100\nVAR MaxHealth: Float = 100\n\nGRAPH: EventGraph\n\nNODE n1: Event AnyDamage\nNODE n2: VariableGet [VarName=CurrentHealth]\nNODE n3: SubtractFloat [B=0]\nNODE n4: ClampFloat [Min=0.0, Max=100]\nNODE n5: VariableSet [VarName=CurrentHealth]\nNODE n6: LessEqualFloat [B=0.0]\nNODE n7: Branch\nNODE n8: DestroyActor\nNODE n9: PrintString [InString=\"Damage Taken\"]\n\nEXEC n1.Then -> n5.Execute\nEXEC n5.Then -> n7.Execute\nEXEC n7.True -> n8.Execute\nEXEC n7.False -> n9.Execute\n\nDATA n2.Value -> n3.A [Float]\nDATA n3.ReturnValue -> n4.Value [Float]\nDATA n4.ReturnValue -> n5.Value [Float]\nDATA n5.Value -> n6.A [Float]\nDATA n6.ReturnValue -> n7.Condition [Bool]",
+      "generation_time": 74.34,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 5,
+          "expected": 5
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 4,
+          "data_found": 5
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_id": "T3_03",
+      "tier": 3,
+      "prompt": "Create a Blueprint with a timer that prints 'Tick' every 2 seconds.",
+      "passed": true,
+      "score": 1.0,
+      "output": "BLUEPRINT: BP_TimerPrint\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_BeginPlay\nNODE n2: SetTimerByFunctionName [FunctionName=\"OnTimer\", Time=2.0, Looping=true]\nNODE n3: Event_CustomEvent [EventName=\"OnTimer\"]\nNODE n4: PrintString [InString=\"Tick\"]\nEXEC n1.Then -> n2.Execute\nEXEC n3.Then -> n4.Execute",
+      "generation_time": 32.3,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 2,
+          "data_found": 0
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_id": "T4_01",
+      "tier": 4,
+      "prompt": "Create a door that opens when a player presses E within 200 units. The door should rotate 90 degrees on the yaw axis.",
+      "passed": true,
+      "score": 1.0,
+      "output": "BLUEPRINT: BP_Door\nPARENT: Actor\nGRAPH: EventGraph\nNODE n1: Event_InputAction [ActionName=\"Open\"]\nNODE n2: PrintString [InString=\"Open activated\"]\nNODE n3: GetPlayerPawn\nNODE n4: GetDistanceTo\nNODE n5: LessThan [B=200.0]\nNODE n6: Branch\nNODE n7: AddActorLocalRotation [DeltaRotation=(Pitch=0,Yaw=90,Roll=0)]\nEXEC n1.Pressed -> n2.Execute\nEXEC n2.Then -> n6.Execute\nDATA n3.ReturnValue -> n4.OtherActor [Actor]\nDATA n4.ReturnValue -> n5.A [Float]\nDATA n5.ReturnValue -> n6.Condition [Bool]\nEXEC n6.True -> n7.Execute",
+      "generation_time": 56.64,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 20,
+          "max": 20,
+          "found": 5,
+          "expected": 5
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 3,
+          "data_found": 3
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_id": "T4_02",
+      "tier": 4,
+      "prompt": "Create a coin pickup Blueprint that adds 1 to a coin counter, plays a sound, and destroys itself when a player overlaps.",
+      "passed": true,
+      "score": 0.95,
+      "output": "BLUEPRINT: BP_Coin\nPARENT: Actor\nCATEGORY: Pickups\n\nGRAPH: EventGraph\n\nNODE n1: Event_ActorBeginOverlap\nNODE n2: CastToCharacter\nNODE n3: GetVar [Variable=CoinCounter]\nNODE n4: AddFloat [B=1.0]\nNODE n5: SetVar [Variable=CoinCounter]\nNODE n6: PlaySoundAtLocation [Sound=PickupSound]\nNODE n7: DestroyActor\n\nEXEC n1.Then -> n2.Execute\nEXEC n2.CastSucceeded -> n3.Execute\nEXEC n3.Then -> n4.Execute\nEXEC n4.Then -> n5.Execute\nEXEC n5.Then -> n6.Execute\nEXEC n6.Then -> n7.Execute\n\nDATA n1.OtherActor -> n2.Object [Actor]\nDATA n3.Value -> n4.A [Float]\nDATA n4.ReturnValue -> n5.Value [Float]",
+      "generation_time": 72.65,
+      "checks": {
+        "structure": {
+          "score": 30,
+          "max": 30
+        },
+        "keywords": {
+          "score": 15,
+          "max": 20,
+          "found": 3,
+          "expected": 4
+        },
+        "nodes": {
+          "score": 20,
+          "max": 20,
+          "found": 2,
+          "expected": 2
+        },
+        "connections": {
+          "score": 15,
+          "max": 15,
+          "exec_found": 6,
+          "data_found": 3
+        },
+        "parseable": {
+          "score": 15,
+          "max": 15
+        }
+      },
+      "errors": [
+        "Missing required keyword: 'VAR'"
+      ]
+    }
+  ]
+}
